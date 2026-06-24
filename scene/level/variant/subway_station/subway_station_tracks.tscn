@@ -178,6 +178,10 @@ script = ExtResource("13_bny0e")
 y_sort_enabled = true
 tile_set = ExtResource("14_bg27g")
 
+[node name="Reticle" type="TileMapLayer" parent="." unique_id=160299275]
+y_sort_enabled = true
+tile_set = ExtResource("14_bg27g")
+
 [node name="CombatUI" parent="." unique_id=889214481 instance=ExtResource("15_tgd4t")]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=44297935]

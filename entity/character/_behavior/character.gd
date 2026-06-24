@@ -275,7 +275,7 @@ func update_ranges(movement_range: RangeStruct, interactable_range: Array[Vector
 	GameState.current_level.draw_range(attack_only_tiles, attack_atlas_coords)
 	GameState.current_level.draw_range(overlap_tiles, overlap_atlas_coords)
 	GameState.current_level.draw_range(interactable_range, Global.RETICLE_INTERACTABLE_ATLAS_COORDS)
-	GameState.current_level.map.set_cell(current_tile, 0, Global.RETICLE_MOVE_ALTAS_COORDS)
+	GameState.current_level.reticle.set_cell(current_tile, 0, Global.RETICLE_MOVE_ALTAS_COORDS)
 	GameState.current_level.select_tile(current_tile)
 	
 	return skill_range

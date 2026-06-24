@@ -23,6 +23,8 @@ var grid: Grid
 var combat_ui: CombatUI = $CombatUI
 @onready
 var map: TileMapLayer = $Map
+@onready
+var reticle: TileMapLayer = $Reticle
 
 
 func _ready() -> void:
@@ -41,7 +43,6 @@ func _on_encounter_started() -> void:
 	_encounter_started = true
 	_current_cell_x = grid.region.position.x
 	_time_per_grid_tile =  GRID_DRAW_TIME/ grid.size.x
-	map_complete = true
 
 
 func _on_encounter_ended() -> void:
@@ -67,7 +68,7 @@ func _process(delta: float) -> void:
 			_time_since_grid_tile = 0
 			if not _reverse_build_grid:
 				for y in range(grid.region.position.y, grid.region.end.y):
-					if not grid.is_point_solid(Vector2i(_current_cell_x,y)):
+					if not grid.is_point_solid(Vector2i(_current_cell_x,y)) or  Vector2i(_current_cell_x,y) in grid.enemy_tiles + grid.ally_tiles:
 						if Vector2i(_current_cell_x,y) + Vector2i.UP in grid.cells:
 							map.set_cell(Vector2i(_current_cell_x,y), 0, Vector2.RIGHT)
 						else:
@@ -92,23 +93,23 @@ func _process(delta: float) -> void:
 
 func reset_map() -> void:
 	for tile in grid.cells:
-		map.set_cell(tile)
+		reticle.set_cell(tile)
 
 func draw_range(tiles: Array[Vector2i], atlas_coords: Vector2i) -> void:
 	for tile in tiles:
-		map.set_cell(tile, 0, atlas_coords)
+		reticle.set_cell(tile, 0, atlas_coords)
 
 
 func select_tile(tile: Vector2i, select := true) -> void:
 	
-	var atlas_coords: Vector2i = map.get_cell_atlas_coords(tile)
+	var atlas_coords: Vector2i = reticle.get_cell_atlas_coords(tile)
 		
 	if select:
 		atlas_coords.x = 1
-		map.set_cell(tile, 0, atlas_coords)
+		reticle.set_cell(tile, 0, atlas_coords)
 	else:
 		atlas_coords.x = 0
-		map.set_cell(tile, 0, atlas_coords)
+		reticle.set_cell(tile, 0, atlas_coords)
 
 
 func get_interactable_tiles(tiles: Array[Vector2i]) -> Array[Vector2i]:

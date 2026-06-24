@@ -7,7 +7,13 @@ var cells: Array[Vector2i]:
 	get:
 		return _cells
 var _enemy_tiles: Array[Vector2i]
+var enemy_tiles: Array[Vector2i]:
+	get:
+		return _enemy_tiles
 var _ally_tiles: Array[Vector2i]
+var ally_tiles: Array[Vector2i]:
+	get:
+		return _ally_tiles
 var _prop_tiles: Array[Vector2i]
 
 func _init(level: Level) -> void:

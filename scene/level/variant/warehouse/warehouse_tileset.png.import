@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dveqqeiul2lj3"
-path="res://.godot/imported/subway_station_tile_set.png-f950142aebf701a687763a64e66d76e6.ctex"
+uid="uid://cxjbkf2auwpiu"
+path="res://.godot/imported/warehouse_tileset.png-6c1f9b4224d899a9b6433e242a9d8803.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scene/level/variant/subway_station/_sprite/subway_station_tile_set.png"
-dest_files=["res://.godot/imported/subway_station_tile_set.png-f950142aebf701a687763a64e66d76e6.ctex"]
+source_file="res://scene/level/variant/warehouse/warehouse_tileset.png"
+dest_files=["res://.godot/imported/warehouse_tileset.png-6c1f9b4224d899a9b6433e242a9d8803.ctex"]
 
 [params]
 

@@ -105,9 +105,9 @@ func _highlight_targets(target_tile: Vector2i, highlight := true) -> void:
 					if not is_floor:
 						continue
 					
-					var atlas_coords := GameState.current_level.map.get_cell_atlas_coords(target_tile)
+					var atlas_coords := GameState.current_level.reticle.get_cell_atlas_coords(target_tile)
 					atlas_coords.x = 1
-					GameState.current_level.map.set_cell(tile, 0, atlas_coords)
+					GameState.current_level.reticle.set_cell(tile, 0, atlas_coords)
 	else:
 		GameState.current_level.select_tile(target_tile, highlight)
 
