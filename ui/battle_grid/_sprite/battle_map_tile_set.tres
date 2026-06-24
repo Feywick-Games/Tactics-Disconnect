@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://5dfqqlx3fkjg"]
+[gd_resource type="TileSet" format=3 uid="uid://5dfqqlx3fkjg"]
 
 [ext_resource type="Texture2D" uid="uid://biwhwer1crvs7" path="res://ui/battle_grid/_sprite/reticle.png" id="1_srj5c"]
 

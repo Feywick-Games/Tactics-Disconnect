@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://biudwwsx1di8t"]
 
-[ext_resource type="Script" path="res://scene/game/_behavior/game.gd" id="1_h64b8"]
+[ext_resource type="Script" uid="uid://bdmlqwx8kxay7" path="res://scene/game/_behavior/game.gd" id="1_h64b8"]
 [ext_resource type="PackedScene" uid="uid://7ayix768h0gh" path="res://scene/level/variant/subway_station/subway_station_tracks.tscn" id="2_i2k0w"]
 
 [sub_resource type="GDScript" id="GDScript_42g76"]

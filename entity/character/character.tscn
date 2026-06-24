@@ -1,13 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://dk85fb2a3ag81"]
+[gd_scene load_steps=15 format=3 uid="uid://dk85fb2a3ag81"]
 
-[ext_resource type="Script" path="res://entity/character/_behavior/character.gd" id="1_84jh7"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="2_2g4r5"]
-[ext_resource type="Script" path="res://node/animation/directional_animator.gd" id="2_vs4rm"]
+[ext_resource type="Script" uid="uid://bxmx6f2p5oxn3" path="res://entity/character/_behavior/character.gd" id="1_84jh7"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_2g4r5"]
+[ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="2_vs4rm"]
 [ext_resource type="Texture2D" uid="uid://b8k687sb6a6rk" path="res://ui/health_bar/_sprite/health_bar_background.png" id="3_ccsml"]
 [ext_resource type="Texture2D" uid="uid://b34r5h2blmmla" path="res://ui/health_bar/_sprite/health_bar_progress.png" id="4_5lxke"]
 [ext_resource type="Texture2D" uid="uid://dka74tswf81nh" path="res://ui/health_bar/_sprite/damage_bar_progress.png" id="4_8mprc"]
 [ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="4_eqor8"]
-[ext_resource type="Script" path="res://entity/character/_behavior/status_label_manager.gd" id="6_1nyw1"]
+[ext_resource type="Script" uid="uid://cuotsodjscwta" path="res://entity/character/_behavior/status_label_manager.gd" id="6_1nyw1"]
+[ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="9_uenv8"]
 
 [sub_resource type="Animation" id="Animation_2gelk"]
 length = 0.001
@@ -180,9 +181,9 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2no37"]
 _data = {
-"RESET": SubResource("Animation_2gelk"),
-"hit": SubResource("Animation_leh64"),
-"miss": SubResource("Animation_clwql")
+&"RESET": SubResource("Animation_2gelk"),
+&"hit": SubResource("Animation_leh64"),
+&"miss": SubResource("Animation_clwql")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_laiw5"]
@@ -242,7 +243,7 @@ script = ExtResource("6_1nyw1")
 [node name="LabelAnimator" type="AnimationPlayer" parent="StatusLabelManager"]
 root_node = NodePath("../../CharacterSprite")
 libraries = {
-"": SubResource("AnimationLibrary_2no37")
+&"": SubResource("AnimationLibrary_2no37")
 }
 
 [node name="StatusLabel" type="Label" parent="StatusLabelManager"]
@@ -269,3 +270,6 @@ script = ExtResource("2_vs4rm")
 
 [node name="SkillAnimator" type="AnimationPlayer" parent="."]
 script = ExtResource("2_vs4rm")
+
+[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="."]
+script = ExtResource("9_uenv8")

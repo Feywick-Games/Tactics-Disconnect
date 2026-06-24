@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bcnpnplhpud5y"]
 
-[ext_resource type="Script" path="res://ui/turn_display/_behavior/turn_portrait.gd" id="1_egx1p"]
+[ext_resource type="Script" uid="uid://2qyte71pf454" path="res://ui/turn_display/_behavior/turn_portrait.gd" id="1_egx1p"]
 [ext_resource type="Texture2D" uid="uid://bnaof4rcviqee" path="res://entity/character/ally/_sprite/turn_portrait_small.png" id="2_wjbv8"]
 [ext_resource type="Texture2D" uid="uid://ck7ju73ierpxf" path="res://entity/character/ally/_sprite/turn_portrait_full_ally_1.png" id="3_4o6fg"]
 [ext_resource type="FontFile" uid="uid://c5u4kdxxyrrmr" path="res://ui/font/dogicabold.ttf" id="4_uw6gj"]
@@ -39,8 +39,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4qkdn"]
 _data = {
-"RESET": SubResource("Animation_66erf"),
-"turn_start": SubResource("Animation_v1sgi")
+&"RESET": SubResource("Animation_66erf"),
+&"turn_start": SubResource("Animation_v1sgi")
 }
 
 [node name="TurnPortrait" type="Control"]

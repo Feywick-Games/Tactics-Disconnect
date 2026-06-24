@@ -85,6 +85,8 @@ var hit_chance_label: Label = $HealthBar/HitChanceLabel
 var damage_bar: TextureProgressBar = $HealthBar/DamageBar
 @onready
 var status_label_manager: StatusLabelManager = $StatusLabelManager
+@onready
+var sfx_player: AudioStreamPlayer2D = $SfxPlayer
 
 func _ready() -> void:
 	health_bar.hide()

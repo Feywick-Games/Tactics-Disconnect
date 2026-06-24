@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=4 format=3 uid="uid://bg1ldnkshjcy8"]
+[gd_resource type="TileSet" format=3 uid="uid://bg1ldnkshjcy8"]
 
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://entity/weapon/_data/broom.tres" id="1_2gnn8"]
 [ext_resource type="Texture2D" uid="uid://dwpuomxva06bp" path="res://entity/weapon/_sprite/dummy_weapon.png" id="5_s4esl"]

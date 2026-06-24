@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cm7s3l5cikm6u" path="res://entity/character/ally/ally.tscn" id="1_telll"]
 [ext_resource type="Texture2D" uid="uid://ctrrubge6r45p" path="res://entity/character/ally/chaz/_sprite/chaz_idle_down.png" id="2_4tvf7"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="2_ey6y0"]
-[ext_resource type="Script" path="res://data/combat/skill.gd" id="2_qq2rq"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_ey6y0"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_qq2rq"]
 [ext_resource type="Texture2D" uid="uid://bf5ryjrutpfj1" path="res://entity/character/ally/chaz/_sprite/chaz_combat_idle_down.png" id="3_2e3h7"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="3_2xm6s"]
 [ext_resource type="Texture2D" uid="uid://b5n7mlhj67tan" path="res://entity/character/ally/chaz/_sprite/chaz_combat_idle_up.png" id="4_cwwrv"]
@@ -488,15 +488,15 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wpweh"]
 _data = {
-"RESET": SubResource("Animation_cscvr"),
-"combat_idle_down": SubResource("Animation_kynjq"),
-"combat_idle_left": SubResource("Animation_tmg2g"),
-"combat_idle_right": SubResource("Animation_r6jlk"),
-"combat_idle_up": SubResource("Animation_k5e4p"),
-"idle_down": SubResource("Animation_ywvt0"),
-"idle_left": SubResource("Animation_0wanu"),
-"idle_right": SubResource("Animation_1ea7d"),
-"idle_up": SubResource("Animation_nj5vh")
+&"RESET": SubResource("Animation_cscvr"),
+&"combat_idle_down": SubResource("Animation_kynjq"),
+&"combat_idle_left": SubResource("Animation_tmg2g"),
+&"combat_idle_right": SubResource("Animation_r6jlk"),
+&"combat_idle_up": SubResource("Animation_k5e4p"),
+&"idle_down": SubResource("Animation_ywvt0"),
+&"idle_left": SubResource("Animation_0wanu"),
+&"idle_right": SubResource("Animation_1ea7d"),
+&"idle_up": SubResource("Animation_nj5vh")
 }
 
 [node name="Chaz" instance=ExtResource("1_telll")]

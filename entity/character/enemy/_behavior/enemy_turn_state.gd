@@ -100,7 +100,6 @@ func _take_custom_action() -> void:
 func _process_custom_action(_delta: float) -> void:
 	pass
 
-
 func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 	var current_target: Ally
 	

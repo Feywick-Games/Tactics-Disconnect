@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://bhfdokg7y4yll"]
 
-[ext_resource type="Script" path="res://ui/_behavior/combat_ui.gd" id="1_d34a4"]
-[ext_resource type="Script" path="res://ui/turn_display/_behavior/turn_display.gd" id="1_xgp2v"]
+[ext_resource type="Script" uid="uid://kmie07ujhpn" path="res://ui/_behavior/combat_ui.gd" id="1_d34a4"]
+[ext_resource type="Script" uid="uid://dxun7rvd6nx2" path="res://ui/turn_display/_behavior/turn_display.gd" id="1_xgp2v"]
 [ext_resource type="Texture2D" uid="uid://dnkx7jyewlkxh" path="res://ui/battle_timer/battle_timer_under.png" id="2_sbk1j"]
 [ext_resource type="Texture2D" uid="uid://caqbtr4v8posy" path="res://ui/battle_timer/battle_timer_over.png" id="3_fndsw"]
 [ext_resource type="Texture2D" uid="uid://cycr83c35trtu" path="res://ui/battle_timer/battle_timer_fill.png" id="4_cy5jr"]
-[ext_resource type="Script" path="res://ui/battle_timer/_behavior/battle_timer.gd" id="5_tvp2d"]
-[ext_resource type="Script" path="res://ui/sticker/_behavior/sticker_layout.gd" id="6_0110n"]
+[ext_resource type="Script" uid="uid://bjc6tj0lu66ca" path="res://ui/battle_timer/_behavior/battle_timer.gd" id="5_tvp2d"]
+[ext_resource type="Script" uid="uid://bo76metijv2vr" path="res://ui/sticker/_behavior/sticker_layout.gd" id="6_0110n"]
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="7_k13u7"]
 [ext_resource type="Texture2D" uid="uid://c1xbsgyj5cgwq" path="res://ui/sticker/_sprite/sticker_push_punch.png" id="8_ibp8q"]
 

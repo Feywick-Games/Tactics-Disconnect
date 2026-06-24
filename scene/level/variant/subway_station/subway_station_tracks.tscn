@@ -1,238 +1,192 @@
-[gd_scene load_steps=28 format=4 uid="uid://7ayix768h0gh"]
+[gd_scene format=4 uid="uid://7ayix768h0gh"]
 
-[ext_resource type="Script" path="res://scene/level/_behavior/level.gd" id="1_ub6j7"]
+[ext_resource type="Script" uid="uid://7pypr8grgl4t" path="res://scene/level/_behavior/level.gd" id="1_ub6j7"]
 [ext_resource type="TileSet" uid="uid://c53pqkcffyymf" path="res://scene/level/variant/subway_station/_sprite/subway_station_tile_set.tres" id="2_7h7cu"]
 [ext_resource type="TileSet" uid="uid://bg1ldnkshjcy8" path="res://entity/weapon/_sprite/improvised_weapon_tileset.tres" id="3_ndi1j"]
 [ext_resource type="PackedScene" uid="uid://c3ow1ifjec62m" path="res://entity/character/ally/izzy/izzy.tscn" id="5_0a6gs"]
 [ext_resource type="PackedScene" uid="uid://cvxylcvrvrkbl" path="res://entity/character/enemy/shadow_hand/shadow_hand.tscn" id="5_5pryk"]
 [ext_resource type="PackedScene" uid="uid://r5sdcdlxfmjr" path="res://entity/character/ally/chaz/chaz.tscn" id="6_i4enw"]
-[ext_resource type="Script" path="res://data/combat/skill.gd" id="7_wvt8d"]
-[ext_resource type="Script" path="res://entity/character/_behavior/basic_skill_state.gd" id="8_henma"]
-[ext_resource type="Script" path="res://data/combat/status_effect.gd" id="9_w2jvj"]
-[ext_resource type="Script" path="res://data/combat/reaction.gd" id="10_6ahgn"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="7_wvt8d"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="8_henma"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="9_w2jvj"]
+[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="10_6ahgn"]
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="10_ikoss"]
 [ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://entity/character/ally/izzy/_special/push_skill.tres" id="11_k006v"]
-[ext_resource type="Script" path="res://entity/character/_behavior/cheap_shot_reaction_state.gd" id="11_vqa37"]
+[ext_resource type="Script" uid="uid://k0aef4avj0d7" path="res://entity/character/_behavior/cheap_shot_reaction_state.gd" id="11_vqa37"]
 [ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="12_jgucg"]
-[ext_resource type="Script" path="res://node/camera/tracking_camera.gd" id="13_bny0e"]
+[ext_resource type="Script" uid="uid://8xawka3fldcr" path="res://node/camera/tracking_camera.gd" id="13_bny0e"]
 [ext_resource type="TileSet" uid="uid://5dfqqlx3fkjg" path="res://ui/battle_grid/_sprite/battle_map_tile_set.tres" id="14_bg27g"]
 [ext_resource type="PackedScene" uid="uid://bhfdokg7y4yll" path="res://ui/combat_ui.tscn" id="15_tgd4t"]
 
 [sub_resource type="Resource" id="Resource_inb1m"]
 script = ExtResource("9_w2jvj")
-status = 0
 value = 4
-duration = 1
 
-[sub_resource type="Resource" id="Resource_2iucj"]
+[sub_resource type="Resource" id="Resource_02xug"]
 resource_local_to_scene = true
 script = ExtResource("7_wvt8d")
 name = "Punch"
-sticker = ExtResource("10_ikoss")
 character_animation = "basic_attack"
-skill_animation = ""
-max_range = 1
-min_range = 0
-range_shape = 0
 state = ExtResource("8_henma")
-cool_down = 0
 status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_inb1m")])
-aoe = Array[Vector2i]([Vector2i(0, 0)])
-range_type = 0
-direct = true
 is_animated = true
 
-[sub_resource type="Resource" id="Resource_7437m"]
+[sub_resource type="Resource" id="Resource_bw7l4"]
 resource_local_to_scene = true
 script = ExtResource("7_wvt8d")
 name = "Punch"
-sticker = ExtResource("10_ikoss")
 character_animation = "basic_attack"
-skill_animation = ""
-max_range = 1
-min_range = 0
-range_shape = 0
 state = ExtResource("8_henma")
-cool_down = 0
 status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_inb1m")])
-aoe = Array[Vector2i]([Vector2i(0, 0)])
-range_type = 0
-direct = true
 is_animated = true
 
-[sub_resource type="Resource" id="Resource_ugdwf"]
+[sub_resource type="Resource" id="Resource_edw0v"]
 resource_local_to_scene = true
 script = ExtResource("7_wvt8d")
 name = "Punch"
-sticker = ExtResource("10_ikoss")
 character_animation = "basic_attack"
-skill_animation = ""
-max_range = 1
-min_range = 0
-range_shape = 0
 state = ExtResource("8_henma")
-cool_down = 0
 status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_inb1m")])
-aoe = Array[Vector2i]([Vector2i(0, 0)])
-range_type = 0
-direct = true
 is_animated = true
 
-[sub_resource type="Resource" id="Resource_il71y"]
+[sub_resource type="Resource" id="Resource_leexs"]
 resource_local_to_scene = true
 script = ExtResource("7_wvt8d")
 name = "Punch"
-sticker = ExtResource("10_ikoss")
 character_animation = "basic_attack"
-skill_animation = ""
-max_range = 1
-min_range = 0
-range_shape = 0
 state = ExtResource("8_henma")
-cool_down = 0
 status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_inb1m")])
-aoe = Array[Vector2i]([Vector2i(0, 0)])
-range_type = 0
-direct = true
 is_animated = true
 
 [sub_resource type="Resource" id="Resource_lxfmk"]
 script = ExtResource("9_w2jvj")
-status = 0
 value = 2
-duration = 1
 
 [sub_resource type="Resource" id="Resource_bvir6"]
 script = ExtResource("10_6ahgn")
 name = "Cheap Shot"
-sticker = ExtResource("10_ikoss")
 character_animation = "idle"
-skill_animation = ""
-max_range = 1
-min_range = 0
-range_shape = 0
 state = ExtResource("11_vqa37")
-cool_down = 0
 status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_lxfmk")])
-aoe = Array[Vector2i]([Vector2i(0, 0)])
-range_type = 0
-direct = true
-is_animated = false
 
 [sub_resource type="Resource" id="Resource_n0ksn"]
 script = ExtResource("9_w2jvj")
-status = 0
 value = 4
-duration = 1
 
 [sub_resource type="Resource" id="Resource_j27ow"]
 script = ExtResource("7_wvt8d")
 name = "Slingshot"
-sticker = ExtResource("10_ikoss")
 character_animation = "idle"
-skill_animation = ""
 max_range = 5
-min_range = 0
-range_shape = 0
 state = ExtResource("8_henma")
-cool_down = 0
 status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_n0ksn")])
-aoe = Array[Vector2i]([Vector2i(0, 0)])
 range_type = 1
-direct = true
-is_animated = false
 
 [sub_resource type="Resource" id="Resource_hfxwl"]
 script = ExtResource("7_wvt8d")
 name = "Kick"
-sticker = ExtResource("10_ikoss")
 character_animation = "idle"
-skill_animation = ""
 max_range = 2
-min_range = 0
 range_shape = 1
 state = ExtResource("8_henma")
-cool_down = 0
 status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_n0ksn")])
 aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
-range_type = 0
-direct = true
-is_animated = false
 
-[node name="SubwayStationTracks" type="Node2D"]
+[node name="SubwayStationTracks" type="Node2D" unique_id=2146508345]
 y_sort_enabled = true
 script = ExtResource("1_ub6j7")
 
-[node name="Wall" type="TileMapLayer" parent="."]
-z_index = -1
-tile_map_data = PackedByteArray("AAAEAAUAAgAAAAAAAAAEAAQAAgAAAAAAAAAEAAMAAgAAAAAAAAAEAAIAAgABAAAAAAAEAAYAAgAAAAAAAAAEAAcAAgAHAAAAAAAEAAgAAgAGAAAAAAAEAAkAAgAFAAAAAAAEAAoAAgAEAAAAAAAEAAsAAgAAAAAAAAAEAAwAAgAAAAAAAAAEAA0AAgAAAAAAAAAEAA4AAgAAAAAAAAAEAA8AAgAAAAAAAAAEABAAAgAAAAAAAAAEABEAAgAAAAAAAAAEABIAAgAAAAAAAAAFAAIAAgAAAAAAABAGAAIAAgAAAAAAABAHAAIAAgAAAAAAABAIAAIAAgAAAAAAABAJAAIAAgAAAAAAABAKAAIAAgAAAAAAABALAAIAAgAAAAAAABAMAAIAAgADAAAAAAA=")
-tile_set = ExtResource("2_7h7cu")
-collision_enabled = false
-
-[node name="Floor" type="TileMapLayer" parent="."]
-z_index = -1
-tile_map_data = PackedByteArray("AAAEAAQAAgADAAcAAAAEAAUAAgADAAcAAAAGAAQAAgAAAAUAAAAGAAUAAgAAAAUAAAAGAAYAAgAAAAUAAAAHAAQAAgAAAAUAAAAHAAUAAgAAAAUAAAAHAAYAAgAAAAUAAAAIAAQAAgAAAAUAAAAIAAUAAgAAAAUAAAAIAAYAAgAAAAUAAAAJAAQAAgAAAAUAAAAJAAUAAgAAAAUAAAAJAAYAAgAAAAUAAAAKAAQAAgAAAAUAAAAKAAUAAgAAAAUAAAAKAAYAAgAAAAUAAAALAAQAAgAAAAUAAAALAAUAAgAAAAUAAAALAAYAAgAAAAUAAAAMAAQAAgACAAUAAAAMAAUAAgACAAUAAAAMAAYAAgACAAUAAAANAAQAAgAEAAUAAAANAAUAAgAEAAUAAAANAAYAAgAEAAUAAAAOAAQAAgAFAAUAAAAOAAUAAgAFAAUAAAAOAAYAAgAFAAUAAAAEAAYAAgADAAcAAAAFAAkAAgAAAAUAAAAFAA4AAgAAAAUAAAAFAA8AAgAAAAUAAAAFABAAAgAAAAUAAAAFABEAAgAAAAUAAAAFABIAAgAAAAcAAAAGAAcAAgAAAAUAAAAGAAgAAgAAAAUAAAAGAAkAAgAAAAUAAAAGAAoAAgAAAAUAAAAGAAsAAgAAAAUAAAAGAAwAAgAAAAUAAAAGAA0AAgAAAAUAAAAGAA4AAgAAAAUAAAAGAA8AAgAAAAUAAAAGABAAAgAAAAUAAAAGABEAAgAAAAUAAAAGABIAAgAAAAcAAAAHAAcAAgAAAAUAAAAHAAgAAgAAAAUAAAAHAAkAAgAAAAUAAAAHAAoAAgAAAAUAAAAHAAsAAgAAAAUAAAAHAAwAAgAAAAUAAAAHAA0AAgAAAAUAAAAHAA4AAgAAAAUAAAAHAA8AAgAAAAUAAAAHABAAAgAAAAUAAAAHABEAAgAAAAUAAAAHABIAAgAAAAcAAAAIAAcAAgAAAAUAAAAIAAgAAgAAAAUAAAAIAAkAAgAAAAUAAAAIAAoAAgAAAAUAAAAIAAsAAgAAAAUAAAAIAAwAAgAAAAUAAAAIAA0AAgAAAAUAAAAIAA4AAgAAAAUAAAAIAA8AAgAAAAUAAAAIABAAAgAAAAUAAAAIABEAAgAAAAUAAAAIABIAAgAAAAcAAAAJAAcAAgAAAAUAAAAJAAgAAgAAAAUAAAAJAAkAAgAAAAUAAAAJAAoAAgAAAAUAAAAJAAsAAgAAAAUAAAAJAAwAAgAAAAUAAAAJAA0AAgAAAAUAAAAJAA4AAgAAAAUAAAAJAA8AAgAAAAUAAAAJABAAAgAAAAUAAAAJABEAAgAAAAUAAAAJABIAAgAAAAcAAAAKAAcAAgAAAAUAAAAKAAgAAgAAAAUAAAAKAAkAAgAAAAUAAAAKAAoAAgAAAAUAAAAKAAsAAgAAAAUAAAAKAAwAAgAAAAUAAAAKAA0AAgAAAAUAAAAKAA4AAgAAAAUAAAAKAA8AAgAAAAUAAAAKABAAAgAAAAUAAAAKABEAAgAAAAUAAAAKABIAAgAAAAcAAAALAAcAAgAAAAUAAAALAAgAAgAAAAUAAAALAAkAAgAAAAUAAAALAAoAAgAAAAUAAAALAAsAAgAAAAUAAAALAAwAAgAAAAUAAAALAA0AAgAAAAUAAAALAA4AAgAAAAUAAAALAA8AAgAAAAUAAAALABAAAgAAAAUAAAALABEAAgAAAAUAAAALABIAAgAAAAcAAAAMAAcAAgACAAUAAAAMAAgAAgACAAUAAAAMAAkAAgACAAUAAAAMAAoAAgACAAUAAAAMAAsAAgACAAUAAAAMAAwAAgACAAUAAAAMAA0AAgACAAUAAAAMAA4AAgACAAUAAAAMAA8AAgACAAUAAAAMABAAAgACAAUAAAAMABEAAgACAAUAAAAMABIAAgADAAUAAAANAAcAAgAEAAUAAAANAAgAAgAEAAUAAAANAAkAAgAEAAUAAAANAAoAAgAEAAUAAAANAAsAAgAEAAUAAAANAAwAAgAEAAUAAAANAA0AAgAEAAUAAAANAA4AAgAEAAUAAAANAA8AAgAEAAUAAAANABAAAgAEAAUAAAANABEAAgAEAAUAAAANABIAAgAEAAUAAAAOAAcAAgAFAAUAAAAOAAgAAgAFAAUAAAAOAAkAAgAFAAUAAAAOAAoAAgAFAAUAAAAOAAsAAgAFAAUAAAAOAAwAAgAFAAUAAAAOAA0AAgAFAAUAAAAOAA4AAgAFAAUAAAAOAA8AAgAFAAUAAAAOABAAAgAFAAUAAAAOABEAAgAFAAUAAAAOABIAAgAFAAUAAAAEABAAAgADAAcAAAAEAA8AAgADAAcAAAAEAA4AAgADAAcAAAAEAA0AAgADAAcAAAAEAAwAAgADAAcAAAAEAAsAAgADAAcAAAAEAAoAAgADAAcAAAAEAAkAAgADAAcAAAAFAAgAAgAAAAUAAAAFAAcAAgAAAAUAAAAFAAYAAgAAAAUAAAAFAAUAAgAAAAUAAAAFAAQAAgAAAAUAAAAEAAcAAgADAAcAAAAEAAgAAgADAAcAAAAFAAoAAgAAAAUAAAAFAAsAAgAAAAUAAAAFAAwAAgAAAAUAAAAFAA0AAgAAAAUAAAAEABEAAgADAAcAAAAPAAQAAgAEAAUAAAAPAAUAAgAEAAUAAAAPAAYAAgAEAAUAAAAPAAcAAgAEAAUAAAAPAAgAAgAEAAUAAAAPAAkAAgAEAAUAAAAPAAoAAgAEAAUAAAAPAAsAAgAEAAUAAAAPAAwAAgAEAAUAAAAPAA0AAgAEAAUAAAAPAA4AAgAEAAUAAAAPAA8AAgAEAAUAAAAPABAAAgAEAAUAAAAPABEAAgAEAAUAAAAPABIAAgAEAAUAAAAEAAMAAgADAAcAAAAFAAMAAgAAAAUAAAAGAAMAAgAAAAUAAAAHAAMAAgAAAAUAAAAIAAMAAgAAAAUAAAAJAAMAAgAAAAUAAAAKAAMAAgAAAAUAAAALAAMAAgAAAAUAAAAMAAIAAgABAAcAAAAMAAMAAgACAAUAAAANAAIAAgAEAAUAAAANAAMAAgAEAAUAAAAOAAIAAgAFAAUAAAAOAAMAAgAFAAUAAAAPAAIAAgAEAAUAAAAPAAMAAgAEAAUAAAALAAIAAgACAAcAAAAKAAIAAgACAAcAAAAJAAIAAgACAAcAAAAIAAIAAgACAAcAAAAHAAIAAgACAAcAAAAGAAIAAgACAAcAAAAFAAIAAgACAAcAAAAEAAIAAgAEAAcAAAA=")
-tile_set = ExtResource("2_7h7cu")
-
-[node name="Props" type="TileMapLayer" parent="."]
+[node name="Floor4" type="TileMapLayer" parent="." unique_id=1444917204]
+z_index = 4
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAFAAkAAgACAAoAAAAFAA0AAgADAAoAAAAFAA4AAgACAAoAAAAJAAUAAgADAAoAAAAJAAYAAgACAAoAAAAFAAQAAgACAAoAAAAFAAMAAgADAAoAAAAFAAgAAgADAAoAAAAJAAwAAgADAAoAAAAJAA0AAgACAAoAAAAIAAkAAgAAAAkAAAA=")
+position = Vector2(0, -96)
+tile_map_data = PackedByteArray("AAAFAAEAAgACAAUAAAAGAAEAAgACAAUAAAAHAAEAAgAAAAUAAAAIAAEAAgAAAAUAAAAJAAEAAgAAAAUAAAAKAAEAAgAAAAUAAAAKAAIAAgAAAAUAAAALAAIAAgAAAAUAAAALAAEAAgAAAAUAAAAJAAIAAgAAAAUAAAAIAAIAAgAAAAUAAAAHAAIAAgAAAAUAAAAMAAIAAgAAAAUAAAAMAAEAAgAAAAUAAAANAAIAAgAAAAUAAAANAAEAAgAAAAUAAAAOAAEAAgAAAAUAAAAPAAEAAgAAAAUAAAAQAAEAAgAAAAUAAAARAAEAAgAAAAUAAAASAAEAAgAAAAUAAAATAAEAAgAAAAUAAAAUAAEAAgAAAAUAAAAVAAEAAgAAAAUAAAAVAAIAAgAAAAUAAAAUAAIAAgAAAAUAAAATAAIAAgAAAAUAAAASAAIAAgAAAAUAAAARAAIAAgAAAAUAAAAQAAIAAgAAAAUAAAAPAAIAAgAAAAUAAAAOAAIAAgAAAAUAAAA=")
 tile_set = ExtResource("2_7h7cu")
 
-[node name="ImprovisedWeapon" type="TileMapLayer" parent="."]
+[node name="Floor3" type="TileMapLayer" parent="." unique_id=769825978]
+z_index = 3
+y_sort_enabled = true
+position = Vector2(0, -72)
+tile_map_data = PackedByteArray("AAAFAAIAAgAAAAcAAAAGAAIAAgAAAAcAAAA=")
+tile_set = ExtResource("2_7h7cu")
+
+[node name="Floor2" type="TileMapLayer" parent="." unique_id=1457893865]
+z_index = 2
+y_sort_enabled = true
+position = Vector2(0, -48)
+tile_map_data = PackedByteArray("AAAFAAMAAgAAAAcAAAAGAAMAAgAAAAcAAAA=")
+tile_set = ExtResource("2_7h7cu")
+
+[node name="Floor1" type="TileMapLayer" parent="." unique_id=353676981]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, -24)
+tile_map_data = PackedByteArray("AAAGAAQAAgAAAAcAAAAFAAQAAgAAAAcAAAA=")
+tile_set = ExtResource("2_7h7cu")
+
+[node name="Floor" type="TileMapLayer" parent="." unique_id=512045593]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAEAAQAAgAAAAUAAAAEAAUAAgAAAAUAAAAGAAQAAgAAAAUAAAAGAAUAAgAAAAcAAAAGAAYAAgAAAAUAAAAHAAQAAgAAAAUAAAAHAAUAAgAAAAUAAAAHAAYAAgAAAAUAAAAIAAQAAgAAAAUAAAAIAAUAAgAAAAUAAAAIAAYAAgAAAAUAAAAJAAQAAgAAAAUAAAAJAAUAAgAAAAUAAAAJAAYAAgAAAAUAAAAKAAQAAgAAAAUAAAAKAAUAAgAAAAUAAAAKAAYAAgAAAAUAAAALAAQAAgAAAAUAAAALAAUAAgAAAAUAAAALAAYAAgAAAAUAAAAMAAQAAgAAAAUAAAAMAAUAAgAAAAUAAAAMAAYAAgAAAAUAAAAOAAQAAgAFAAUAAAAOAAUAAgAFAAUAAAAOAAYAAgAFAAUAAAAEAAYAAgAAAAUAAAAFAAkAAgAAAAUAAAAFAA4AAgAAAAUAAAAFAA8AAgAAAAUAAAAGAAcAAgAAAAUAAAAGAAgAAgAAAAUAAAAGAAkAAgAAAAUAAAAGAAoAAgAAAAUAAAAGAAsAAgAAAAUAAAAGAAwAAgAAAAUAAAAGAA0AAgAAAAUAAAAGAA4AAgAAAAUAAAAGAA8AAgAAAAUAAAAHAAcAAgAAAAUAAAAHAAgAAgAAAAUAAAAHAAkAAgAAAAUAAAAHAAoAAgAAAAUAAAAHAAsAAgAAAAUAAAAHAAwAAgAAAAUAAAAHAA0AAgAAAAUAAAAHAA4AAgAAAAUAAAAHAA8AAgAAAAUAAAAIAAcAAgAAAAUAAAAIAAgAAgAAAAUAAAAIAAkAAgAAAAUAAAAIAAoAAgAAAAUAAAAIAAsAAgAAAAUAAAAIAAwAAgAAAAUAAAAIAA0AAgAAAAUAAAAIAA4AAgAAAAUAAAAIAA8AAgAAAAUAAAAJAAcAAgAAAAUAAAAJAAgAAgAAAAUAAAAJAAkAAgAAAAUAAAAJAAoAAgAAAAUAAAAJAAsAAgAAAAUAAAAJAAwAAgAAAAUAAAAJAA0AAgAAAAUAAAAJAA4AAgAAAAUAAAAJAA8AAgAAAAUAAAAKAAcAAgAAAAUAAAAKAAgAAgAAAAUAAAAKAAkAAgAAAAUAAAAKAAoAAgAAAAUAAAAKAAsAAgAAAAUAAAAKAAwAAgAAAAUAAAAKAA0AAgAAAAUAAAAKAA4AAgAAAAUAAAAKAA8AAgAAAAUAAAALAAcAAgAAAAUAAAALAAgAAgAAAAUAAAALAAkAAgAAAAUAAAALAAoAAgAAAAUAAAALAAsAAgAAAAUAAAALAAwAAgAAAAUAAAALAA0AAgAAAAUAAAALAA4AAgAAAAUAAAALAA8AAgAAAAUAAAAMAAcAAgAAAAUAAAAMAAgAAgAAAAUAAAAMAAkAAgAAAAUAAAAMAAoAAgAAAAUAAAAMAAsAAgAAAAUAAAAMAAwAAgAAAAUAAAAMAA0AAgAAAAUAAAAMAA4AAgAAAAUAAAAMAA8AAgAAAAUAAAAOAAcAAgAFAAUAAAAOAAgAAgAFAAUAAAAOAAkAAgAFAAUAAAAOAAoAAgAFAAUAAAAOAAsAAgAFAAUAAAAOAAwAAgAFAAUAAAAOAA0AAgAFAAUAAAAOAA4AAgAFAAUAAAAOAA8AAgAFAAUAAAAEAA8AAgAAAAUAAAAEAA4AAgAAAAUAAAAEAA0AAgAAAAUAAAAEAAwAAgAAAAUAAAAEAAsAAgAAAAUAAAAEAAoAAgAAAAUAAAAEAAkAAgAAAAUAAAAFAAgAAgAAAAUAAAAFAAcAAgAAAAUAAAAFAAYAAgAAAAUAAAAFAAUAAgAAAAcAAAAFAAQAAgAAAAUAAAAEAAcAAgAAAAUAAAAEAAgAAgAAAAUAAAAFAAoAAgAAAAUAAAAFAAsAAgAAAAUAAAAFAAwAAgAAAAUAAAAFAA0AAgAAAAUAAAAPAAQAAgAEAAUAAAAPAAUAAgAEAAUAAAAPAAYAAgAEAAUAAAAPAAcAAgAEAAUAAAAPAAgAAgAEAAUAAAAPAAkAAgAEAAUAAAAPAAoAAgAEAAUAAAAPAAsAAgAEAAUAAAAPAAwAAgAEAAUAAAAPAA0AAgAEAAUAAAAPAA4AAgAEAAUAAAAPAA8AAgAEAAUAAAAEAAMAAgAAAAUAAAAFAAMAAgAAAAUAAAAGAAMAAgAAAAUAAAAHAAMAAgAAAAUAAAAIAAMAAgAAAAUAAAAJAAMAAgAAAAUAAAAKAAMAAgAAAAUAAAALAAMAAgAAAAUAAAAMAAIAAgAAAAUAAAAMAAMAAgAAAAUAAAAOAAIAAgAFAAUAAAAOAAMAAgAFAAUAAAAPAAIAAgAEAAUAAAAPAAMAAgAEAAUAAAALAAIAAgAAAAUAAAAKAAIAAgAAAAUAAAAJAAIAAgAAAAUAAAAIAAIAAgAAAAUAAAAHAAIAAgAAAAUAAAAGAAIAAgAAAAUAAAAFAAIAAgAAAAUAAAAEAAIAAgAAAAUAAAANAA8AAgAEAAUAAAANAA4AAgAEAAUAAAANAA0AAgAEAAUAAAANAAwAAgAEAAUAAAANAAsAAgAEAAUAAAANAAoAAgAEAAUAAAANAAkAAgAEAAUAAAANAAgAAgAEAAUAAAANAAcAAgAEAAUAAAANAAYAAgAEAAUAAAANAAUAAgAEAAUAAAANAAQAAgAEAAUAAAANAAMAAgAEAAUAAAANAAIAAgAEAAUAAAA=")
+tile_set = ExtResource("2_7h7cu")
+
+[node name="Props" type="TileMapLayer" parent="." unique_id=895447242]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAAAAsAAgAAAAAAABABAAsAAgAAAAAAABACAAsAAgAAAAAAABADAAsAAgAAAAAAABAEAAMAAgAAAAAAAAAEAAQAAgAAAAAAAAAEAAUAAgAAAAAAAAAEAAYAAgAAAAAAAAAEAAcAAgAGAAAAAAAEAAoAAgAAAAAAAAAFAAIAAgAAAAAAABAGAAIAAgAAAAAAABAHAAIAAgAAAAAAABAIAAIAAgAAAAAAABAJAAIAAgAAAAAAABAKAAIAAgAAAAAAABALAAIAAgAAAAAAABAEAAIAAgABAAAAAAAEAAgAAgAFAAAAAAAEAAkAAgAEAAAAAAAEAAsAAgACAAAAAAAIAAgAAgAAAAkAAAAGAAgAAgACAAoAAAAGAAoAAgADAAoAAAAGAAsAAgACAAoAAAAKAAoAAgADAAoAAAAKAAsAAgACAAoAAAAKAAUAAgADAAoAAAAKAAYAAgACAAoAAAA=")
+tile_set = ExtResource("2_7h7cu")
+
+[node name="ImprovisedWeapon" type="TileMapLayer" parent="." unique_id=26947459]
 position = Vector2(-10, 0)
 tile_set = ExtResource("3_ndi1j")
 
-[node name="ShadowHand" parent="." instance=ExtResource("5_5pryk")]
+[node name="ShadowHand" parent="." unique_id=1132316288 instance=ExtResource("5_5pryk")]
 position = Vector2(90, 215)
-basic_skill = SubResource("Resource_2iucj")
+basic_skill = SubResource("Resource_02xug")
 
-[node name="ShadowHand3" parent="." instance=ExtResource("5_5pryk")]
+[node name="ShadowHand3" parent="." unique_id=134267814 instance=ExtResource("5_5pryk")]
 position = Vector2(14, 160)
-basic_skill = SubResource("Resource_7437m")
+basic_skill = SubResource("Resource_bw7l4")
 
-[node name="ShadowHand2" parent="." instance=ExtResource("5_5pryk")]
+[node name="ShadowHand2" parent="." unique_id=377793779 instance=ExtResource("5_5pryk")]
 position = Vector2(69, 178)
-basic_skill = SubResource("Resource_ugdwf")
+basic_skill = SubResource("Resource_edw0v")
 
-[node name="ShadowHand4" parent="." instance=ExtResource("5_5pryk")]
+[node name="ShadowHand4" parent="." unique_id=1727137790 instance=ExtResource("5_5pryk")]
 position = Vector2(-80, 256)
-basic_skill = SubResource("Resource_il71y")
+basic_skill = SubResource("Resource_leexs")
 
-[node name="Izzy" parent="." instance=ExtResource("5_0a6gs")]
+[node name="Izzy" parent="." unique_id=1102113605 instance=ExtResource("5_0a6gs")]
 position = Vector2(-30, 229)
 follow_order = 0
 reactions = Array[ExtResource("10_6ahgn")]([SubResource("Resource_bvir6")])
 
-[node name="Chaz" parent="." instance=ExtResource("6_i4enw")]
+[node name="Chaz" parent="." unique_id=2133105863 instance=ExtResource("6_i4enw")]
 position = Vector2(-117, 275)
 follow_order = 1
 basic_skill = SubResource("Resource_j27ow")
 special = ExtResource("11_k006v")
 
-[node name="Mei" parent="." instance=ExtResource("12_jgucg")]
-position = Vector2(-117, 228)
+[node name="Mei" parent="." unique_id=699753243 instance=ExtResource("12_jgucg")]
+position = Vector2(-203, 249)
 follow_order = 1
 basic_skill = SubResource("Resource_hfxwl")
 
-[node name="TrackingCamera" type="Camera2D" parent="."]
+[node name="TrackingCamera" type="Camera2D" parent="." unique_id=740813969]
 position = Vector2(37, 141)
 script = ExtResource("13_bny0e")
 
-[node name="Map" type="TileMapLayer" parent="."]
-z_index = -1
+[node name="Map" type="TileMapLayer" parent="." unique_id=1037902148]
 y_sort_enabled = true
 tile_set = ExtResource("14_bg27g")
 
-[node name="CombatUI" parent="." instance=ExtResource("15_tgd4t")]
+[node name="CombatUI" parent="." unique_id=889214481 instance=ExtResource("15_tgd4t")]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=44297935]
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=446104743]
 visible = false
 color = Color(0.355314, 0.355314, 0.355314, 1)
 
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=858719871]
 visible = false
 position = Vector2(390, 117)
 rotation = -2.61799

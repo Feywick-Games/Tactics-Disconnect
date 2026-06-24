@@ -31,6 +31,10 @@ var range_type: Combat.RangeType = Combat.RangeType.MELEE
 var direct := true
 @export
 var is_animated := false
+@export
+var cast_sfx: AudioStream
+@export
+var hit_sfx: AudioStream
 
 var cool_down_status: int
 

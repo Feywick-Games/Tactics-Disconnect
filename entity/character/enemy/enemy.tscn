@@ -1,16 +1,16 @@
 [gd_scene load_steps=16 format=3 uid="uid://cqgaf4b8quup7"]
 
 [ext_resource type="PackedScene" uid="uid://dk85fb2a3ag81" path="res://entity/character/character.tscn" id="1_13rsw"]
-[ext_resource type="Script" path="res://entity/character/enemy/_behavior/enemy.gd" id="2_iqt36"]
+[ext_resource type="Script" uid="uid://byid5qtttkmo2" path="res://entity/character/enemy/_behavior/enemy.gd" id="2_iqt36"]
 [ext_resource type="PackedScene" uid="uid://bn875t12gh6w2" path="res://entity/character/enemy/_packed_scene/turn_portrait_enemy_1.tscn" id="3_fh3m0"]
-[ext_resource type="Script" path="res://entity/character/enemy/_behavior/enemy_roam_state.gd" id="3_yk16s"]
-[ext_resource type="Script" path="res://entity/character/enemy/_behavior/enemy_turn_state.gd" id="4_w2x43"]
-[ext_resource type="Script" path="res://data/combat/skill.gd" id="6_ju21i"]
-[ext_resource type="Script" path="res://data/combat/status_effect.gd" id="7_g3nm3"]
-[ext_resource type="Script" path="res://entity/character/_behavior/basic_skill_state.gd" id="7_vjtmd"]
+[ext_resource type="Script" uid="uid://cq5nca81q2fd3" path="res://entity/character/enemy/_behavior/enemy_roam_state.gd" id="3_yk16s"]
+[ext_resource type="Script" uid="uid://dqg6epws457xo" path="res://entity/character/enemy/_behavior/enemy_turn_state.gd" id="4_w2x43"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="6_ju21i"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="7_g3nm3"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="7_vjtmd"]
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="8_oqdqr"]
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://entity/weapon/_data/broom.tres" id="10_01dq5"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="11_biaq8"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="11_biaq8"]
 
 [sub_resource type="Resource" id="Resource_inb1m"]
 script = ExtResource("7_g3nm3")
@@ -33,6 +33,7 @@ status_effects = Array[ExtResource("7_g3nm3")]([SubResource("Resource_inb1m")])
 aoe = Array[Vector2i]([Vector2i(0, 0)])
 range_type = 0
 direct = true
+is_animated = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6u03y"]
 resource_local_to_scene = true

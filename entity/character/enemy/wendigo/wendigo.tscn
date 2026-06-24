@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cqgaf4b8quup7" path="res://entity/character/enemy/enemy.tscn" id="1_dcng5"]
 [ext_resource type="Texture2D" uid="uid://bxlxtatdmpf2f" path="res://entity/character/enemy/wendigo/_sprite/wendigo_idle_down.png" id="2_v40vf"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="2_wgphm"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_wgphm"]
 [ext_resource type="Texture2D" uid="uid://cnvl8t2re8h1u" path="res://entity/character/enemy/wendigo/_sprite/wendigo_idle_up.png" id="3_81goh"]
 [ext_resource type="Texture2D" uid="uid://cxw3oao81eo4n" path="res://entity/character/enemy/wendigo/_sprite/wendigo_combat_idle_up.png" id="4_boisd"]
 [ext_resource type="Texture2D" uid="uid://dyoddom05auvr" path="res://entity/character/enemy/wendigo/_sprite/wendigo_combat_idle_down.png" id="5_336yy"]
@@ -490,15 +490,15 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1pgat"]
 _data = {
-"RESET": SubResource("Animation_r617u"),
-"combat_idle_down": SubResource("Animation_mawoi"),
-"combat_idle_left": SubResource("Animation_2alnt"),
-"combat_idle_right": SubResource("Animation_dnpnt"),
-"combat_idle_up": SubResource("Animation_qjynx"),
-"idle_down": SubResource("Animation_7yrya"),
-"idle_left": SubResource("Animation_gfkwm"),
-"idle_right": SubResource("Animation_yk5c1"),
-"idle_up": SubResource("Animation_8m65i")
+&"RESET": SubResource("Animation_r617u"),
+&"combat_idle_down": SubResource("Animation_mawoi"),
+&"combat_idle_left": SubResource("Animation_2alnt"),
+&"combat_idle_right": SubResource("Animation_dnpnt"),
+&"combat_idle_up": SubResource("Animation_qjynx"),
+&"idle_down": SubResource("Animation_7yrya"),
+&"idle_left": SubResource("Animation_gfkwm"),
+&"idle_right": SubResource("Animation_yk5c1"),
+&"idle_up": SubResource("Animation_8m65i")
 }
 
 [node name="Wendigo" instance=ExtResource("1_dcng5")]
