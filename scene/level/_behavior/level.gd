@@ -3,12 +3,14 @@ extends Node2D
 
 const GRID_DRAW_TIME: float = 1
 
-var map_complete: bool
 var _encounter_started: bool
 var _time_since_grid_tile: float = 0
 var _current_cell_x: int = 0
 var _time_per_grid_tile
 var _reverse_build_grid := false
+
+var map_complete: bool
+var grid: Grid
 
 @onready
 var _floor_layer: TileMapLayer = $Floor
@@ -16,15 +18,12 @@ var _floor_layer: TileMapLayer = $Floor
 var _prop_layer: TileMapLayer = $Props
 @onready
 var _improvised_weapon_layer: TileMapLayer = $ImprovisedWeapon
-
-var grid: Grid
-
 @onready
 var combat_ui: CombatUI = $CombatUI
 @onready
-var map: TileMapLayer = $Map
+var map: TileMapLayer = $Floor/Map
 @onready
-var reticle: TileMapLayer = $Reticle
+var reticle: TileMapLayer = $Floor/Map/Reticle
 
 
 func _ready() -> void:
@@ -69,7 +68,7 @@ func _process(delta: float) -> void:
 			if not _reverse_build_grid:
 				for y in range(grid.region.position.y, grid.region.end.y):
 					if not grid.is_point_solid(Vector2i(_current_cell_x,y)) or  Vector2i(_current_cell_x,y) in grid.enemy_tiles + grid.ally_tiles:
-						if Vector2i(_current_cell_x,y) + Vector2i.UP in grid.cells:
+						if grid.region.has_point(Vector2i(_current_cell_x,y) + Vector2i.UP):
 							map.set_cell(Vector2i(_current_cell_x,y), 0, Vector2.RIGHT)
 						else:
 							map.set_cell(Vector2i(_current_cell_x,y), 0, Vector2i.ZERO)
@@ -80,8 +79,7 @@ func _process(delta: float) -> void:
 					map_complete = true
 			else:
 				for y in range(grid.region.position.y, grid.region.end.y):
-					if Vector2i(_current_cell_x,y) in grid.cells:
-						#if Vector2i(_current_cell_x,y) + Vector2i.UP in _grid_cells:
+					if grid.region.has_point(Vector2i(_current_cell_x,y)):
 						map.set_cell(Vector2i(_current_cell_x,y))
 				
 				_current_cell_x -=  1
@@ -92,8 +90,8 @@ func _process(delta: float) -> void:
 
 
 func reset_map() -> void:
-	for tile in grid.cells:
-		reticle.set_cell(tile)
+	reticle.clear()
+
 
 func draw_range(tiles: Array[Vector2i], atlas_coords: Vector2i) -> void:
 	for tile in tiles:
@@ -136,17 +134,17 @@ func _populate_grid() -> void:
 			var source_id = _floor_layer.get_cell_source_id(tile)
 			var prop_source_id = _prop_layer.get_cell_source_id(tile)
 			var improv_weapon_source_id = _improvised_weapon_layer.get_cell_source_id(tile)
-			if source_id == -1 or _floor_layer.get_cell_tile_data(tile).get_custom_data("border"):
+			var floor_tile_data : TileData = _floor_layer.get_cell_tile_data(tile)
+			if source_id == -1 or \
+			(floor_tile_data and floor_tile_data.has_custom_data("border") and floor_tile_data.get_custom_data("border")):
 				grid.lock_cell(tile)
 			else:
 				grid.add_cell(tile)
 				if prop_source_id != -1 or improv_weapon_source_id != -1:
 					var tile_data: TileData = _prop_layer.get_cell_tile_data(tile)
-					if tile_data and tile_data.get_custom_data("impassable"):
-						grid.lock_cell(tile)
-					else:
+					if tile_data and tile_data.has_custom_data("impassable") and tile_data.get_custom_data("impassable"):
 						grid.add_prop(tile)
-					
+
 
 func get_interactable(tile: Vector2i) -> ImprovisedWeapon:
 	var tile_data: TileData = _improvised_weapon_layer.get_cell_tile_data(tile)

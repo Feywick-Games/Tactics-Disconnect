@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxjbkf2auwpiu"
-path="res://.godot/imported/warehouse_tileset.png-6c1f9b4224d899a9b6433e242a9d8803.ctex"
+uid="uid://bykyhuwy2mml7"
+path="res://.godot/imported/peggy_idle_down.png-e636807702509bdd09ad0fdebf2ba29d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scene/level/variant/warehouse/warehouse_tileset.png"
-dest_files=["res://.godot/imported/warehouse_tileset.png-6c1f9b4224d899a9b6433e242a9d8803.ctex"]
+source_file="res://entity/character/ally/peggy/_sprite/peggy_idle_down.png"
+dest_files=["res://.godot/imported/peggy_idle_down.png-e636807702509bdd09ad0fdebf2ba29d.ctex"]
 
 [params]
 

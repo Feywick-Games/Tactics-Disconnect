@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cqgaf4b8quup7"]
+[gd_scene format=3 uid="uid://cqgaf4b8quup7"]
 
 [ext_resource type="PackedScene" uid="uid://dk85fb2a3ag81" path="res://entity/character/character.tscn" id="1_13rsw"]
 [ext_resource type="Script" uid="uid://byid5qtttkmo2" path="res://entity/character/enemy/_behavior/enemy.gd" id="2_iqt36"]
@@ -11,31 +11,21 @@
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="8_oqdqr"]
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://entity/weapon/_data/broom.tres" id="10_01dq5"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="11_biaq8"]
+[ext_resource type="Texture2D" uid="uid://bykyhuwy2mml7" path="res://entity/character/ally/peggy/_sprite/peggy_idle_down.png" id="12_ejq46"]
 
 [sub_resource type="Resource" id="Resource_inb1m"]
 script = ExtResource("7_g3nm3")
-status = 0
 value = 4
-duration = 1
 
 [sub_resource type="Resource" id="Resource_3dmcj"]
 script = ExtResource("6_ju21i")
 name = "Punch"
-sticker = ExtResource("8_oqdqr")
 character_animation = "idle"
-skill_animation = ""
-max_range = 1
-min_range = 0
-range_shape = 0
 state = ExtResource("7_vjtmd")
 cool_down = 1
 status_effects = Array[ExtResource("7_g3nm3")]([SubResource("Resource_inb1m")])
-aoe = Array[Vector2i]([Vector2i(0, 0)])
-range_type = 0
-direct = true
-is_animated = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6u03y"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7emr5"]
 resource_local_to_scene = true
 shader = ExtResource("11_biaq8")
 shader_parameter/highlighted = false
@@ -44,7 +34,7 @@ shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p01wl"]
 size = Vector2(22, 10)
 
-[node name="Enemy" groups=["enemy"] instance=ExtResource("1_13rsw")]
+[node name="Enemy" unique_id=1334997669 groups=["enemy"] instance=ExtResource("1_13rsw")]
 position = Vector2(0, 5)
 script = ExtResource("2_iqt36")
 damage_priority = 0.5
@@ -60,17 +50,12 @@ turn_state = ExtResource("4_w2x43")
 basic_skill = SubResource("Resource_3dmcj")
 special = ExtResource("10_01dq5")
 
-[node name="CharacterSprite" parent="." index="0"]
-material = SubResource("ShaderMaterial_6u03y")
-position = Vector2(0, 9)
-offset = Vector2(0, -20)
+[node name="CharacterSprite" parent="." index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_7emr5")
+position = Vector2(0, -4)
+texture = ExtResource("12_ejq46")
+offset = Vector2(0, -18)
+hframes = 2
 
-[node name="HealthBar" parent="CharacterSprite" index="0"]
-offset_left = -17.0
-offset_top = -63.0
-offset_right = 16.0
-offset_bottom = -51.0
-value = 99.0
-
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="3" unique_id=974221274]
 shape = SubResource("RectangleShape2D_p01wl")

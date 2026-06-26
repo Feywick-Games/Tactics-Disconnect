@@ -1,0 +1,206 @@
+[gd_scene format=4 uid="uid://nti3u5lqo4sy"]
+
+[ext_resource type="Script" uid="uid://7pypr8grgl4t" path="res://scene/level/_behavior/level.gd" id="1_q1hxj"]
+[ext_resource type="TileSet" uid="uid://ds2bj4u4yhws6" path="res://scene/level/variant/alley/alley_tile_set.tres" id="2_ndno1"]
+[ext_resource type="TileSet" uid="uid://5dfqqlx3fkjg" path="res://ui/battle_grid/_sprite/battle_map_tile_set.tres" id="3_ndno1"]
+[ext_resource type="TileSet" uid="uid://bg1ldnkshjcy8" path="res://entity/weapon/_sprite/improvised_weapon_tileset.tres" id="4_b6nyy"]
+[ext_resource type="PackedScene" uid="uid://c3ow1ifjec62m" path="res://entity/character/ally/izzy/izzy.tscn" id="5_c38kb"]
+[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="6_41vbx"]
+[ext_resource type="Script" uid="uid://k0aef4avj0d7" path="res://entity/character/_behavior/cheap_shot_reaction_state.gd" id="7_atdio"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="8_k82rh"]
+[ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="9_p5evn"]
+[ext_resource type="PackedScene" uid="uid://r5sdcdlxfmjr" path="res://entity/character/ally/chaz/chaz.tscn" id="10_ymq17"]
+[ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="11_0hr4q"]
+[ext_resource type="PackedScene" uid="uid://bhfdokg7y4yll" path="res://ui/combat_ui.tscn" id="12_8u7tc"]
+[ext_resource type="PackedScene" uid="uid://cqgaf4b8quup7" path="res://entity/character/enemy/enemy.tscn" id="13_wu2vm"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="14_t3utf"]
+[ext_resource type="Texture2D" uid="uid://bykyhuwy2mml7" path="res://entity/character/ally/peggy/_sprite/peggy_idle_down.png" id="15_ew1cl"]
+
+[sub_resource type="Resource" id="Resource_lxfmk"]
+script = ExtResource("8_k82rh")
+value = 2
+
+[sub_resource type="Resource" id="Resource_bvir6"]
+script = ExtResource("6_41vbx")
+name = "Cheap Shot"
+character_animation = "idle"
+state = ExtResource("7_atdio")
+status_effects = Array[ExtResource("8_k82rh")]([SubResource("Resource_lxfmk")])
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q1hxj"]
+resource_local_to_scene = true
+shader = ExtResource("14_t3utf")
+shader_parameter/highlighted = false
+shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4kywx"]
+resource_local_to_scene = true
+shader = ExtResource("14_t3utf")
+shader_parameter/highlighted = false
+shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ndno1"]
+resource_local_to_scene = true
+shader = ExtResource("14_t3utf")
+shader_parameter/highlighted = false
+shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b6nyy"]
+resource_local_to_scene = true
+shader = ExtResource("14_t3utf")
+shader_parameter/highlighted = false
+shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
+
+[node name="Alley" type="Node2D" unique_id=2146508345]
+y_sort_enabled = true
+script = ExtResource("1_q1hxj")
+
+[node name="Background" type="ColorRect" parent="." unique_id=27318891]
+z_index = -100
+custom_minimum_size = Vector2(640, 360)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.10980392, 0.101960786, 0.14901961, 1)
+
+[node name="Floor" type="TileMapLayer" parent="." unique_id=512045593]
+z_index = -3
+y_sort_enabled = true
+position = Vector2(10, 0)
+tile_map_data = PackedByteArray("AAD4////AAAAAAAAAAALAAYAAAAIAAAAAAALAAUAAAAIAAAAAAAFAAUAAAAIAAAAAAAFAAYAAAAIAAAAAAAGAAYAAAAIAAAAAAAGAAUAAAAJAAAAAAAHAAUAAAAKAAAAAAAHAAYAAAAIAAAAAAAIAAYAAAAIAAAAAAAIAAUAAAAIAAAAAAAJAAUAAAAIAAAAAAAJAAYAAAAIAAAAAAAKAAYAAAAIAAAAAAAKAAUAAAAJAAAAAAAMAAYAAAAIAAAAAAAMAAUAAAAIAAAAAAAMAAQAAAAIAAAAAAAMAAMAAAAIAAAAAAAMAAIAAAAIAAAAAAANAAIAAAAIAAAAAAANAAMAAAAIAAAAAAANAAQAAAAIAAAAAAANAAUAAAAIAAAAAAANAAYAAAAIAAAAAAANAAcAAAAIAAAAAAANAAkAAAAIAAAAAAAOAAoAAAAIAAAAAAAOAAkAAAAKAAAAAAAOAAgAAAAIAAAAAAAOAAcAAAAIAAAAAAAOAAYAAAAIAAAAAAAOAAUAAAAIAAAAAAAOAAQAAAAIAAAAAAAOAAMAAAAIAAAAAAAOAAIAAAAIAAAAAAAPAAIAAAAIAAAAAAAPAAMAAAAIAAAAAAAPAAQAAAAIAAAAAAAPAAUAAAAIAAAAAAAPAAYAAAAIAAAAAAAPAAcAAAAIAAAAAAAPAAgAAAAIAAAAAAAPAAkAAAAIAAAAAAAPAAoAAAAIAAAAAAAQAAoAAAAIAAAAAAAQAAkAAAAIAAAAAAAQAAgAAAAIAAAAAAAQAAcAAAAIAAAAAAAQAAYAAAAIAAAAAAAQAAUAAAAIAAAAAAAQAAQAAAAIAAAAAAAQAAMAAAAJAAAAAAAQAAIAAAAIAAAAAAARAAIAAAAIAAAAAAARAAMAAAAIAAAAAAARAAQAAAAIAAAAAAARAAUAAAAIAAAAAAARAAYAAAAIAAAAAAARAAcAAAAIAAAAAAARAAgAAAAIAAAAAAARAAkAAAAIAAAAAAARAAoAAAAIAAAAAAASAAoAAAAIAAAAAAASAAkAAAAIAAAAAAASAAgAAAAIAAAAAAASAAcAAAAIAAAAAAASAAYAAAAIAAAAAAASAAUAAAAIAAAAAAASAAQAAAAIAAAAAAASAAMAAAAIAAAAAAASAAIAAAAIAAAAAAATAAIAAAAIAAAAAAATAAMAAAAIAAAAAAATAAQAAAAJAAAAAAATAAUAAAAKAAAAAAATAAYAAAAIAAAAAAATAAcAAAAIAAAAAAATAAgAAAAIAAAAAAATAAkAAAAIAAAAAAATAAoAAAAIAAAAAAANAAoAAAAIAAAAAAANAAgAAAAIAAAAAAA=")
+tile_set = ExtResource("2_ndno1")
+
+[node name="Map" type="TileMapLayer" parent="Floor" unique_id=1037902148]
+z_index = 1
+y_sort_enabled = true
+tile_set = ExtResource("3_ndno1")
+
+[node name="Reticle" type="TileMapLayer" parent="Floor/Map" unique_id=160299275]
+z_index = 1
+y_sort_enabled = true
+tile_set = ExtResource("3_ndno1")
+
+[node name="Walls" type="TileMapLayer" parent="." unique_id=1477243635]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(10, 0)
+tile_map_data = PackedByteArray("AAALAAQAAAACAAEAAAAKAAQAAAABAAEAAAAJAAQAAAACAAEAAAAIAAQAAAABAAEAAAAHAAQAAAACAAEAAAAGAAQAAAABAAEAAAAFAAQAAAACAAEAAAALAAEAAAAGAAEAAAALAAAAAAAGAAAAAAAKAAAAAAAFAAAAAAAJAAAAAAAFAAAAAAAIAAAAAAAFAAAAAAAHAAAAAAAFAAAAAAAGAAAAAAAFAAAAAAAFAAAAAAAFAAAAAAAKAAEAAAAFAAEAAAAJAAEAAAAFAAEAAAAIAAEAAAAFAAEAAAAHAAEAAAAFAAEAAAAGAAEAAAAFAAEAAAAFAAEAAAAFAAEAAAALAAMAAAABAAAAAAALAAIAAAABAAAAAAAKAAIAAAABAAAAAAAKAAMAAAABAAAAAAAJAAIAAAABAAAAAAAIAAIAAAABAAAAAAAIAAMAAAABAAAAAAAJAAMAAAABAAAAAAAHAAMAAAABAAAAAAAHAAIAAAABAAAAAAAGAAIAAAABAAAAAAAFAAIAAAABAAAAAAAGAAMAAAABAAAAAAAFAAMAAAABAAAAAAAMAAAAAAABAAAAAAANAAAAAAABAAAAAAAOAAAAAAABAAAAAAAPAAAAAAABAAAAAAAQAAAAAAABAAAAAAARAAAAAAABAAAAAAASAAAAAAABAAAAAAATAAAAAAABAAAAAAAMAAEAAAABAAEAAAANAAEAAAABAAEAAAAOAAEAAAABAAEAAAAPAAEAAAABAAEAAAAQAAEAAAACAAEAAAARAAEAAAABAAEAAAASAAEAAAACAAEAAAATAAEAAAABAAEAAAA=")
+tile_set = ExtResource("2_ndno1")
+
+[node name="Props" type="TileMapLayer" parent="." unique_id=895447242]
+y_sort_enabled = true
+position = Vector2(10, 0)
+tile_map_data = PackedByteArray("AAANAAUAAAAHAAkAAAAOAAIAAAADAAoAAAAOAAEAAAADAAkAAAARAAEAAAADAAkAAAARAAIAAAADAAoAAAAKAAUAAAAFAAoAAAAJAAUAAAAGAAoAAAARAAgAAAACAAoAAAAQAAgAAAABAAoAAAARAAkAAAACAAoAAAAPAAIAAAAEAAoAAAAPAAEAAAAEAAkAAAASAAEAAAAEAAkAAAASAAIAAAAEAAoAAAANAAYAAAAHAAoAAAANAAcAAAAHAAsAAAAOAAUAAAAIAAkAAAAOAAYAAAAIAAoAAAAOAAcAAAAIAAsAAAAPAAQAAAAJAAgAAAAPAAUAAAAJAAkAAAAPAAYAAAAJAAoAAAAPAAcAAAAJAAsAAAAQAAQAAAAKAAgAAAAQAAUAAAAKAAkAAAAQAAYAAAAKAAoAAAAQAAcAAAAKAAsAAAARAAQAAAALAAgAAAARAAUAAAALAAkAAAARAAYAAAALAAoAAAARAAcAAAALAAsAAAAOAAQAAAAIAAgAAAANAAIAAAAFAAoAAAA=")
+tile_set = ExtResource("2_ndno1")
+
+[node name="ImprovisedWeapon" type="TileMapLayer" parent="." unique_id=26947459]
+position = Vector2(-10, 0)
+tile_set = ExtResource("4_b6nyy")
+
+[node name="Izzy" parent="." unique_id=1102113605 instance=ExtResource("5_c38kb")]
+position = Vector2(265, 195)
+follow_order = 0
+reactions = Array[ExtResource("6_41vbx")]([SubResource("Resource_bvir6")])
+
+[node name="Chaz" parent="." unique_id=642596448 instance=ExtResource("10_ymq17")]
+position = Vector2(385, 165)
+
+[node name="Mei" parent="." unique_id=1357384696 instance=ExtResource("11_0hr4q")]
+position = Vector2(325, 195)
+
+[node name="CombatUI" parent="." unique_id=889214481 instance=ExtResource("12_8u7tc")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=44297935]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=446104743]
+visible = false
+color = Color(0.355314, 0.355314, 0.355314, 1)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=858719871]
+visible = false
+position = Vector2(390, 117)
+rotation = -2.61799
+color = Color(0.306923, 0.306923, 0.306923, 1)
+
+[node name="Enemy" parent="." unique_id=775193411 instance=ExtResource("13_wu2vm")]
+position = Vector2(505, 315)
+
+[node name="HealthBar" parent="Enemy" index="0" unique_id=1956210959]
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 24.0
+offset_bottom = -8.0
+pivot_offset = Vector2(0, 0)
+
+[node name="StatusLabelManager" parent="Enemy" index="1" unique_id=1517281646]
+pivot_offset = Vector2(0, 0)
+
+[node name="CharacterSprite" parent="Enemy" index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_q1hxj")
+position = Vector2(0, 7)
+texture = ExtResource("15_ew1cl")
+offset = Vector2(0, -18)
+hframes = 2
+
+[node name="Enemy2" parent="." unique_id=1334997669 instance=ExtResource("13_wu2vm")]
+position = Vector2(475, 135)
+
+[node name="HealthBar" parent="Enemy2" index="0" unique_id=1956210959]
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 24.0
+offset_bottom = -8.0
+pivot_offset = Vector2(0, 0)
+
+[node name="StatusLabelManager" parent="Enemy2" index="1" unique_id=1517281646]
+pivot_offset = Vector2(0, 0)
+
+[node name="CharacterSprite" parent="Enemy2" index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_4kywx")
+texture = ExtResource("15_ew1cl")
+offset = Vector2(0, -18)
+hframes = 2
+
+[node name="Enemy3" parent="." unique_id=99175378 instance=ExtResource("13_wu2vm")]
+position = Vector2(415, 285)
+
+[node name="HealthBar" parent="Enemy3" index="0" unique_id=1956210959]
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 24.0
+offset_bottom = -8.0
+pivot_offset = Vector2(0, 0)
+
+[node name="StatusLabelManager" parent="Enemy3" index="1" unique_id=1517281646]
+pivot_offset = Vector2(0, 0)
+
+[node name="CharacterSprite" parent="Enemy3" index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_ndno1")
+position = Vector2(-1, 6)
+texture = ExtResource("15_ew1cl")
+offset = Vector2(0, -18)
+hframes = 2
+
+[node name="Enemy4" parent="." unique_id=578864682 instance=ExtResource("13_wu2vm")]
+position = Vector2(445, 285)
+
+[node name="HealthBar" parent="Enemy4" index="0" unique_id=1956210959]
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 24.0
+offset_bottom = -8.0
+pivot_offset = Vector2(0, 0)
+
+[node name="StatusLabelManager" parent="Enemy4" index="1" unique_id=1517281646]
+pivot_offset = Vector2(0, 0)
+
+[node name="CharacterSprite" parent="Enemy4" index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_b6nyy")
+position = Vector2(0, 7)
+texture = ExtResource("15_ew1cl")
+offset = Vector2(0, -18)
+hframes = 2
+
+[editable path="Enemy"]
+[editable path="Enemy2"]
+[editable path="Enemy3"]
+[editable path="Enemy4"]

@@ -100,7 +100,7 @@ func _highlight_targets(target_tile: Vector2i, highlight := true) -> void:
 				GameState.current_level.select_tile(tile, highlight)
 			else:
 				if highlight:
-					var is_floor := tile in GameState.current_level.grid.cells
+					var is_floor := GameState.current_level.grid.region.has_point(tile)
 					
 					if not is_floor:
 						continue

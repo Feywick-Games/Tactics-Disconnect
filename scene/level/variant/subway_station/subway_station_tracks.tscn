@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="9_w2jvj"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="10_6ahgn"]
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="10_ikoss"]
-[ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://entity/character/ally/izzy/_special/push_skill.tres" id="11_k006v"]
 [ext_resource type="Script" uid="uid://k0aef4avj0d7" path="res://entity/character/_behavior/cheap_shot_reaction_state.gd" id="11_vqa37"]
 [ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="12_jgucg"]
 [ext_resource type="Script" uid="uid://8xawka3fldcr" path="res://node/camera/tracking_camera.gd" id="13_bny0e"]
@@ -21,6 +20,15 @@
 [sub_resource type="Resource" id="Resource_inb1m"]
 script = ExtResource("9_w2jvj")
 value = 4
+
+[sub_resource type="Resource" id="Resource_bn0gd"]
+resource_local_to_scene = true
+script = ExtResource("7_wvt8d")
+name = "Punch"
+character_animation = "basic_attack"
+state = ExtResource("8_henma")
+status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_inb1m")])
+is_animated = true
 
 [sub_resource type="Resource" id="Resource_02xug"]
 resource_local_to_scene = true
@@ -41,15 +49,6 @@ status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_inb1m")])
 is_animated = true
 
 [sub_resource type="Resource" id="Resource_edw0v"]
-resource_local_to_scene = true
-script = ExtResource("7_wvt8d")
-name = "Punch"
-character_animation = "basic_attack"
-state = ExtResource("8_henma")
-status_effects = Array[ExtResource("9_w2jvj")]([SubResource("Resource_inb1m")])
-is_animated = true
-
-[sub_resource type="Resource" id="Resource_leexs"]
 resource_local_to_scene = true
 script = ExtResource("7_wvt8d")
 name = "Punch"
@@ -140,19 +139,19 @@ tile_set = ExtResource("3_ndi1j")
 
 [node name="ShadowHand" parent="." unique_id=1132316288 instance=ExtResource("5_5pryk")]
 position = Vector2(90, 215)
-basic_skill = SubResource("Resource_02xug")
+basic_skill = SubResource("Resource_bn0gd")
 
 [node name="ShadowHand3" parent="." unique_id=134267814 instance=ExtResource("5_5pryk")]
 position = Vector2(14, 160)
-basic_skill = SubResource("Resource_bw7l4")
+basic_skill = SubResource("Resource_02xug")
 
 [node name="ShadowHand2" parent="." unique_id=377793779 instance=ExtResource("5_5pryk")]
 position = Vector2(69, 178)
-basic_skill = SubResource("Resource_edw0v")
+basic_skill = SubResource("Resource_bw7l4")
 
 [node name="ShadowHand4" parent="." unique_id=1727137790 instance=ExtResource("5_5pryk")]
 position = Vector2(-80, 256)
-basic_skill = SubResource("Resource_leexs")
+basic_skill = SubResource("Resource_edw0v")
 
 [node name="Izzy" parent="." unique_id=1102113605 instance=ExtResource("5_0a6gs")]
 position = Vector2(-30, 229)
@@ -163,7 +162,6 @@ reactions = Array[ExtResource("10_6ahgn")]([SubResource("Resource_bvir6")])
 position = Vector2(-117, 275)
 follow_order = 1
 basic_skill = SubResource("Resource_j27ow")
-special = ExtResource("11_k006v")
 
 [node name="Mei" parent="." unique_id=699753243 instance=ExtResource("12_jgucg")]
 position = Vector2(-203, 249)

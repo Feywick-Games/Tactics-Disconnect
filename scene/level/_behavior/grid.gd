@@ -2,10 +2,6 @@ class_name Grid
 extends AStarGrid2D
 
 var _unit_registry: Dictionary
-var _cells: Array[Vector2i]
-var cells: Array[Vector2i]:
-	get:
-		return _cells
 var _enemy_tiles: Array[Vector2i]
 var enemy_tiles: Array[Vector2i]:
 	get:
@@ -16,9 +12,9 @@ var ally_tiles: Array[Vector2i]:
 		return _ally_tiles
 var _prop_tiles: Array[Vector2i]
 
+
 func _init(level: Level) -> void:
 	region = Rect2i()
-	cell_shape = AStarGrid2D.CELL_SHAPE_ISOMETRIC_DOWN
 	default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	cell_size = Global.TILE_SIZE
@@ -62,7 +58,6 @@ func update_unit_registry(tile: Vector2i, unit: Character) -> void:
 
 func add_cell(tile: Vector2i) -> void:
 	set_point_solid(tile, false)
-	_cells.append(tile)
 
 
 func lock_cell(tile: Vector2i) -> void:
@@ -89,10 +84,10 @@ func get_unit_from_tile(tile: Vector2i) -> Character:
 		
 func get_nearest_available_tile(world_position: Vector2) -> Vector2i:
 	var tile := GameState.current_level.world_to_tile(world_position)
-	
+	var rect := region
 	if not region.has_point(tile):
 		print(region)
-	
+	var solid := is_point_solid(tile)
 	return get_id_path(tile, tile, true)[-1]
 
 
@@ -114,6 +109,7 @@ func get_tile_distance(start_tile, end_tile) -> int:
 		set_point_solid(end_tile)
 	
 	return out
+
 
 func is_path_blocked(from_tile: Vector2i, to_tile: Vector2i, blocked_tiles: Array[Vector2i]) -> bool:
 	var start := Vector2(from_tile) 
@@ -175,7 +171,7 @@ is_range := false, direct := false) -> RangeStruct:
 								range_struct.range_tiles.append(tile)
 							else:
 								range_struct.blocked_tiles.append(tile)
-				elif tile in cells and id_path.size() == 0 and is_point_solid(tile):
+				elif region.has_point(tile) and id_path.size() == 0 and is_point_solid(tile):
 					set_point_solid(tile, false)
 					var check_path := get_id_path(unit_tile, tile)
 					if check_path.size() <= max_distance + 1 and check_path.size() > min_distance:

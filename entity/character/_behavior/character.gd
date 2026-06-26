@@ -38,7 +38,7 @@ var reactions: Array[Reaction]
 @export
 var max_health: int = 20
 @export
-var _movement_range: int = 3
+var _movement_range: int = 2
 var _movement_modifier: int
 var movement_range: int:
 	get:
@@ -222,7 +222,6 @@ func process_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState)
 func create_range_astar(range_struct: RangeStruct, manhattan_range: int) -> AStarGrid2D:
 	var astar := AStarGrid2D.new()
 	astar.region = Rect2i(current_tile - Vector2i(manhattan_range, manhattan_range),  (Vector2i(manhattan_range, manhattan_range) * 2) + Vector2i.ONE)
-	astar.cell_shape = AStarGrid2D.CELL_SHAPE_ISOMETRIC_DOWN
 	astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	astar.cell_size = Global.TILE_SIZE

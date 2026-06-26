@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c01os2oy5ipq0"
-path="res://.godot/imported/chaz_idle_up.png-d5c53db1754e385fca9aeed9a5e38b34.ctex"
+uid="uid://dhi1320e44ybf"
+path="res://.godot/imported/alley_tile_set.png-89bf46ec909e116e518e73276821fc85.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entity/character/ally/chaz/_sprite/chaz_idle_up.png"
-dest_files=["res://.godot/imported/chaz_idle_up.png-d5c53db1754e385fca9aeed9a5e38b34.ctex"]
+source_file="res://scene/level/variant/alley/alley_tile_set.png"
+dest_files=["res://.godot/imported/alley_tile_set.png-89bf46ec909e116e518e73276821fc85.ctex"]
 
 [params]
 
