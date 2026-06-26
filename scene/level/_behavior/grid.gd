@@ -1,7 +1,7 @@
 class_name Grid
 extends AStarGrid2D
 
-var _unit_registry: Dictionary
+var _unit_registry: Dictionary[Vector2i, Character]
 var _enemy_tiles: Array[Vector2i]
 var enemy_tiles: Array[Vector2i]:
 	get:
@@ -84,16 +84,20 @@ func get_unit_from_tile(tile: Vector2i) -> Character:
 		
 func get_nearest_available_tile(world_position: Vector2) -> Vector2i:
 	var tile := GameState.current_level.world_to_tile(world_position)
-	var rect := region
 	if not region.has_point(tile):
 		print(region)
-	var solid := is_point_solid(tile)
 	return get_id_path(tile, tile, true)[-1]
 
 
-func get_tile_distance(start_tile, end_tile) -> int:
+func get_tile_distance(start_tile: Vector2i, end_tile: Vector2i, disable_unit_blocks := false) -> int:
 	var revert_start := false
 	var revert_end := false
+	
+	if disable_unit_blocks:
+		for tile in _unit_registry.keys():
+			set_point_solid(_unit_registry[tile].current_tile, false)
+			
+	
 	if is_point_solid(start_tile):
 		set_point_solid(start_tile, false)
 		revert_start = true
@@ -102,6 +106,10 @@ func get_tile_distance(start_tile, end_tile) -> int:
 		revert_end = true
 		
 	var out : int = get_id_path(start_tile, end_tile).size() - 1
+	
+	if disable_unit_blocks:
+		for tile in _unit_registry.keys():
+			set_point_solid(_unit_registry[tile].current_tile)
 	
 	if revert_start:
 		set_point_solid(start_tile)

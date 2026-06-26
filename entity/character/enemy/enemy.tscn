@@ -25,7 +25,7 @@ state = ExtResource("7_vjtmd")
 cool_down = 1
 status_effects = Array[ExtResource("7_g3nm3")]([SubResource("Resource_inb1m")])
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7emr5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ejq46"]
 resource_local_to_scene = true
 shader = ExtResource("11_biaq8")
 shader_parameter/highlighted = false
@@ -35,7 +35,6 @@ shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 size = Vector2(22, 10)
 
 [node name="Enemy" unique_id=1334997669 groups=["enemy"] instance=ExtResource("1_13rsw")]
-position = Vector2(0, 5)
 script = ExtResource("2_iqt36")
 damage_priority = 0.5
 basic_skill_priority = 0.5
@@ -49,10 +48,11 @@ init_state = ExtResource("3_yk16s")
 turn_state = ExtResource("4_w2x43")
 basic_skill = SubResource("Resource_3dmcj")
 special = ExtResource("10_01dq5")
+max_health = 40
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_7emr5")
-position = Vector2(0, -4)
+material = SubResource("ShaderMaterial_ejq46")
+position = Vector2(0, 1)
 texture = ExtResource("12_ejq46")
 offset = Vector2(0, -18)
 hframes = 2

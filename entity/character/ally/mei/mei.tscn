@@ -530,6 +530,12 @@ special = ExtResource("7_as5tn")
 reactions = Array[ExtResource("8_foua0")]([ExtResource("8_5ecx1")])
 _movement_range = 3
 
+[node name="HealthBar" parent="." index="0" unique_id=1956210959]
+offset_left = -17.0
+offset_top = -38.0
+offset_right = 23.0
+offset_bottom = 2.0
+
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
 material = SubResource("ShaderMaterial_2qvxt")
 position = Vector2(0, 0)

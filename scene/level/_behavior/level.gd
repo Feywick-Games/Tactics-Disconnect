@@ -134,7 +134,7 @@ func _populate_grid() -> void:
 			var source_id = _floor_layer.get_cell_source_id(tile)
 			var prop_source_id = _prop_layer.get_cell_source_id(tile)
 			var improv_weapon_source_id = _improvised_weapon_layer.get_cell_source_id(tile)
-			var floor_tile_data : TileData = _floor_layer.get_cell_tile_data(tile)
+			var floor_tile_data : TileData =  _floor_layer.get_cell_tile_data(tile) if source_id != -1 else null
 			if source_id == -1 or \
 			(floor_tile_data and floor_tile_data.has_custom_data("border") and floor_tile_data.get_custom_data("border")):
 				grid.lock_cell(tile)

@@ -1,5 +1,5 @@
 class_name Character
-extends CharacterBody2D
+extends Node2D
 
 signal died
 signal target_hit
