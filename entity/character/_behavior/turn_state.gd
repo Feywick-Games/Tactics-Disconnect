@@ -35,8 +35,7 @@ func enter() -> void:
 func calc_default_ranges() -> void:
 	_movement_range = GameState.current_level.grid.request_range(_character.current_tile, 0, _character.movement_range, Combat.RangeShape.DIAMOND)
 	_starting_movement_range = _movement_range
-	_interactable_range = GameState.current_level.grid.request_range(_character.current_tile, 0, _character.movement_range + 1, Combat.RangeShape.DIAMOND).blocked_tiles
-	_interactable_range = GameState.current_level.get_interactable_tiles(_interactable_range)
+	_interactable_range = GameState.current_level.get_interactable_tiles(_movement_range.range_tiles)
 	_movement_astar = _character.create_range_astar(_movement_range, _character.movement_range)
 
 

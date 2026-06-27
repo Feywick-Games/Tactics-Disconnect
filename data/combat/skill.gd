@@ -27,6 +27,7 @@ var status_effects: Array[StatusEffect]
 var aoe: Array[Vector2i] = [Vector2i.ZERO]
 @export
 var range_type: Combat.RangeType = Combat.RangeType.MELEE
+# to pierce
 @export
 var direct := true
 @export

@@ -99,7 +99,7 @@ color = Color(0.306923, 0.306923, 0.306923, 1)
 position = Vector2(565, 135)
 
 [node name="Enemy2" parent="." unique_id=1334997669 instance=ExtResource("13_wu2vm")]
-position = Vector2(475, 135)
+position = Vector2(475, 105)
 
 [node name="Enemy3" parent="." unique_id=99175378 instance=ExtResource("13_wu2vm")]
 position = Vector2(205, 195)

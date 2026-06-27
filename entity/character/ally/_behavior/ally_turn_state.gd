@@ -88,8 +88,7 @@ func update(delta: float) -> State:
 			force_redraw = true
 		if interacted:
 			_movement_range = RangeStruct.new()
-			_interactable_range = GameState.grid.current_level.request_range(_ally.current_tile, 0, _ally.movement_range + 1, Combat.RangeShape.DIAMOND,).blocked_tiles
-			_interactable_range = GameState.current_level.get_interactable_tiles(_interactable_range)
+			_interactable_range = GameState.current_level.get_interactable_tiles(_movement_range.range_tiles)
 	
 
 	return _current_state

@@ -10,7 +10,7 @@ var _ally_tiles: Array[Vector2i]
 var ally_tiles: Array[Vector2i]:
 	get:
 		return _ally_tiles
-var _prop_tiles: Array[Vector2i]
+var _passable_tiles: Array[Vector2i]
 
 
 func _init() -> void:
@@ -64,15 +64,14 @@ func lock_cell(tile: Vector2i) -> void:
 	set_point_solid(tile, true)
 
 
-func add_prop(tile: Vector2i) -> void:
-	set_point_solid(tile, true)
-	_prop_tiles.append(tile)
+func add_passable(tile: Vector2i) -> void:
+	_passable_tiles.append(tile)
 
 
 func erase_prop(tile: Vector2i) -> void:
 	if is_point_solid(tile):
 		set_point_solid(tile, false)
-	_prop_tiles.erase(tile)
+	_passable_tiles.erase(tile)
 
 
 func get_unit_from_tile(tile: Vector2i) -> Character:
@@ -118,17 +117,11 @@ func get_tile_distance(start_tile: Vector2i, end_tile: Vector2i, disable_unit_bl
 
 
 func is_path_blocked(from_tile: Vector2i, to_tile: Vector2i, blocked_tiles: Array[Vector2i]) -> bool:
-	var start := Vector2(from_tile) 
-	var destination := Vector2(to_tile)
-	var path := destination - start
+	var path : Array[Vector2i] = Geometry2D.bresenham_line(from_tile, to_tile)
 
-	for i in range(1, path.length()):
-		var weight : float = i + .45
-		var lerp_pos: Vector2 = start.lerp(destination, weight / float(path.length()))
-		var point: Vector2i = Vector2i(Vector2(lerp_pos).round())
-		
+	for point : Vector2i in path:
 		if region.has_point(point):
-			if is_point_solid(point) or point in blocked_tiles:
+			if is_point_solid(point) or (point in blocked_tiles and point != to_tile):
 				return true
 	return false
 
@@ -145,7 +138,7 @@ is_range := false, direct := false) -> RangeStruct:
 		_pass_tiles.append(unit_tile)
 	
 	if is_range:
-		for tile in _prop_tiles:
+		for tile in _passable_tiles:
 			set_point_solid(tile, false)
 			_pass_tiles.append(tile)
 		for tile: Vector2i in _unit_registry.keys():
@@ -165,35 +158,27 @@ is_range := false, direct := false) -> RangeStruct:
 					continue
 			
 			var tile := Vector2i(x,y)
+			
 			if region.has_point(tile):
 				var id_path: Array[Vector2i] = get_id_path(unit_tile, tile)
 				if id_path.size() <= max_distance + 1 and id_path.size() > min_distance:
 					if not is_point_solid(tile):
-						if not direct:
+						if direct:
 							range_struct.range_tiles.append(tile)
-						else:
-							if not is_path_blocked(unit_tile, tile, _unit_tiles):
-								range_struct.range_tiles.append(tile)
-							else:
-								range_struct.blocked_tiles.append(tile)
-				elif region.has_point(tile) and id_path.size() == 0 and is_point_solid(tile):
-					set_point_solid(tile, false)
-					var check_path := get_id_path(unit_tile, tile)
-					if check_path.size() <= max_distance + 1 and check_path.size() > min_distance:
-						range_struct.blocked_tiles.append(tile)
-					set_point_solid(tile, true)
+						elif not is_path_blocked(unit_tile, tile, _unit_tiles):
+							range_struct.range_tiles.append(tile)
 
 	for tile in _unit_tiles:
 		set_point_solid(tile, true)
-
+	
+	# remove tiles that can be passed through but not stood on.
 	for tile in _pass_tiles:
 		if tile != unit_tile:
 			var tile_idx: int = range_struct.range_tiles.find(tile)
 			
 			if tile_idx != -1:
 				range_struct.range_tiles.remove_at(tile_idx)
-				range_struct.blocked_tiles.append(tile)
-			
+				
 		set_point_solid(tile, true)
 	
 	if is_range:

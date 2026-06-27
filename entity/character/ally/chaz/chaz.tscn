@@ -26,8 +26,9 @@ max_range = 4
 state = ExtResource("3_jfry1")
 status_effects = Array[ExtResource("4_a4nkn")]([SubResource("Resource_n0ksn")])
 range_type = 1
+direct = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d1jqu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jfry1"]
 resource_local_to_scene = true
 shader = ExtResource("2_ey6y0")
 shader_parameter/highlighted = false
@@ -523,21 +524,19 @@ basic_skill = SubResource("Resource_sfhtk")
 special = ExtResource("6_f6ndk")
 reactions = Array[ExtResource("2_iylvh")]([ExtResource("3_2xm6s")])
 
-[node name="HealthBar" parent="." index="0"]
-offset_left = -16.0
+[node name="HealthBar" parent="." index="0" unique_id=1956210959]
 offset_top = -48.0
-offset_right = 24.0
 offset_bottom = -8.0
 pivot_offset = Vector2(0, 0)
 
-[node name="StatusLabelManager" parent="." index="1"]
+[node name="StatusLabelManager" parent="." index="1" unique_id=1517281646]
 pivot_offset = Vector2(0, 0)
 
-[node name="CharacterSprite" parent="." index="2"]
-material = SubResource("ShaderMaterial_d1jqu")
+[node name="CharacterSprite" parent="." index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_jfry1")
 position = Vector2(0, -2)
 texture = ExtResource("2_4tvf7")
 offset = Vector2(0, -15)
 
-[node name="ActionAnimator" parent="." index="5"]
+[node name="ActionAnimator" parent="." index="5" unique_id=2058618678]
 libraries/ = SubResource("AnimationLibrary_wpweh")

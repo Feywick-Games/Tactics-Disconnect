@@ -133,17 +133,14 @@ func _populate_grid() -> void:
 			var tile := Vector2i(x,y)
 			var source_id : int = _floor_layer.get_cell_source_id(tile)
 			var prop_source_id : int = _prop_layer.get_cell_source_id(tile)
-			var item_source_id : int = _item_layer.get_cell_source_id(tile)
-			var floor_tile_data : TileData =  _floor_layer.get_cell_tile_data(tile) if source_id != -1 else null
-			if source_id == -1 or \
-			(floor_tile_data and floor_tile_data.has_custom_data("border") and floor_tile_data.get_custom_data("border")):
+			if source_id == -1:
 				grid.lock_cell(tile)
-			else:
-				grid.add_cell(tile)
-				if prop_source_id != -1 or item_source_id != -1:
-					var tile_data: TileData = _prop_layer.get_cell_tile_data(tile)
-					if tile_data and tile_data.has_custom_data("impassable") and tile_data.get_custom_data("impassable"):
-						grid.add_prop(tile)
+			elif prop_source_id != -1:
+				var tile_data: TileData = _prop_layer.get_cell_tile_data(tile)
+				if tile_data and tile_data.has_custom_data("passable") and not tile_data.get_custom_data("passable"):
+					grid.lock_cell(tile)
+				if tile_data and tile_data.has_custom_data("range_passable") and tile_data.get_custom_data("range_passable"):
+					grid.add_passable(tile)
 
 
 func get_interactable(tile: Vector2i) -> Item:
