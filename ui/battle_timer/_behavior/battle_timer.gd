@@ -24,11 +24,13 @@ func _on_encounter_ended() -> void:
 func _on_turn_started(unit: Character) -> void:
 	if unit is Ally:
 		show()
-		value = 0
+		
 		running = true
 	else:
-		hide()
-	
+		self.modulate = Color.GRAY
+	value = 0
+
+
 func _on_turn_ended() -> void:
 	running = false
 	

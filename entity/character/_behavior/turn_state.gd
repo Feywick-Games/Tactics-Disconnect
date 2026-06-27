@@ -12,7 +12,6 @@ var _interactable_range: Array[Vector2i]
 var _tile_path: Array[Vector2i]
 var _time_since_move: float = 0
 var _movement_astar: AStarGrid2D
-var _range_astar: AStarGrid2D
 var _start_tile: Vector2i
 var _exiting := false
 var _encounter_ended := false
@@ -20,11 +19,26 @@ var _highlighted_tile: Vector2i
 
 func enter() -> void:
 	_character = state_machine.state_owner as Character
+	_start_tile = _character.current_tile
+	_highlighted_tile = _start_tile
 	_character.start_turn()
 	EventBus.encounter_ended.connect(_on_encounter_ended)
+	calc_default_ranges()
 	
 	if _character.is_animated:
 		_character.animator.play_directional("idle")
+	
+	_starting_movement_range = _movement_range
+
+
+# caculates movement and interactable ranges. Generates astars
+func calc_default_ranges() -> void:
+	_movement_range = GameState.current_level.grid.request_range(_character.current_tile, 0, _character.movement_range, Combat.RangeShape.DIAMOND)
+	_starting_movement_range = _movement_range
+	_interactable_range = GameState.current_level.grid.request_range(_character.current_tile, 0, _character.movement_range + 1, Combat.RangeShape.DIAMOND).blocked_tiles
+	_interactable_range = GameState.current_level.get_interactable_tiles(_interactable_range)
+	_movement_astar = _character.create_range_astar(_movement_range, _character.movement_range)
+
 
 func update(_delta: float) -> State:
 	if _encounter_ended:
@@ -64,7 +78,7 @@ func _highlight_targets(target_tile: Vector2i, highlight := true) -> void:
 	
 	var highlighted_tiles: Array[Vector2i]
 	GameState.current_level.reset_map()
-	var temp_range := _character.update_ranges(_movement_range, _interactable_range)
+	_character.update_ranges(_movement_range, _interactable_range)
 	var status_effects: Array[StatusEffect]
 	
 	if not GameState.current_level.get_interactable(target_tile):
@@ -76,14 +90,10 @@ func _highlight_targets(target_tile: Vector2i, highlight := true) -> void:
 			aoe = _character.special.aoe
 			range_type = _character.special.range_type
 			status_effects = _character.special.status_effects
-		elif _character.attack_state == Combat.AttackState.IMPROV:
-			aoe = _character.improvised_weapon.aoe
-			range_type = _character.improvised_weapon.range_type
-			status_effects = _character.improvised_weapon.status_effects
-		elif _character.attack_state == Combat.AttackState.IMPROV_THROW:
-			aoe = _character.improvised_weapon.throw_aoe
-			range_type = Combat.RangeType.RANGED
-			status_effects = _character.improvised_weapon.status_effects
+		elif _character.attack_state == Combat.AttackState.ITEM:
+			aoe = _character.item.aoe
+			range_type = _character.item.range_type
+			status_effects = _character.item.status_effects
 
 		
 		for tile_offset in aoe:
@@ -100,7 +110,8 @@ func _highlight_targets(target_tile: Vector2i, highlight := true) -> void:
 				GameState.current_level.select_tile(tile, highlight)
 			else:
 				if highlight:
-					var is_floor := GameState.current_level.grid.region.has_point(tile)
+					var is_floor := GameState.current_level.grid.region.has_point(tile) \
+					and GameState.current_level.grid.is_point_solid(tile)
 					
 					if not is_floor:
 						continue

@@ -13,7 +13,7 @@ var ally_tiles: Array[Vector2i]:
 var _prop_tiles: Array[Vector2i]
 
 
-func _init(level: Level) -> void:
+func _init() -> void:
 	region = Rect2i()
 	default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
@@ -84,8 +84,6 @@ func get_unit_from_tile(tile: Vector2i) -> Character:
 		
 func get_nearest_available_tile(world_position: Vector2) -> Vector2i:
 	var tile := GameState.current_level.world_to_tile(world_position)
-	if not region.has_point(tile):
-		print(region)
 	return get_id_path(tile, tile, true)[-1]
 
 
@@ -123,8 +121,7 @@ func is_path_blocked(from_tile: Vector2i, to_tile: Vector2i, blocked_tiles: Arra
 	var start := Vector2(from_tile) 
 	var destination := Vector2(to_tile)
 	var path := destination - start
-	var path_length = path.length()
-		
+
 	for i in range(1, path.length()):
 		var weight : float = i + .45
 		var lerp_pos: Vector2 = start.lerp(destination, weight / float(path.length()))

@@ -4,7 +4,6 @@ extends State
 var _character: Character
 var _target_tile: Vector2i
 var _skill: Skill
-var _unit_targets: Array[Character]
 var _action_to_process: int = 1
 var _exiting := false
 var _desired_target_count: int

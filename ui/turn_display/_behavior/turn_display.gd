@@ -57,11 +57,10 @@ func _start_turn() -> void:
 	var turn_portait := _turn_portraits[_current_unit_idx]
 	turn_portait.display_full_portrait()
 	
-	EventBus.cam_follow_requested.emit(_current_unit)
 	_turn_pending = true
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if visible:
 		if not _battle_started and not _units.is_empty() and GameState.current_level.map_complete:
 			var units_waiting := false

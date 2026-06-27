@@ -17,7 +17,7 @@ var _floor_layer: TileMapLayer = $Floor
 @onready
 var _prop_layer: TileMapLayer = $Props
 @onready
-var _improvised_weapon_layer: TileMapLayer = $ImprovisedWeapon
+var _item_layer: TileMapLayer = $Item
 @onready
 var combat_ui: CombatUI = $CombatUI
 @onready
@@ -113,14 +113,14 @@ func select_tile(tile: Vector2i, select := true) -> void:
 func get_interactable_tiles(tiles: Array[Vector2i]) -> Array[Vector2i]:
 	var interactable_tiles: Array[Vector2i]
 	for tile in tiles:
-		if _improvised_weapon_layer.get_cell_source_id(tile) != -1:
+		if _item_layer.get_cell_source_id(tile) != -1:
 			interactable_tiles.append(tile)
 	
 	return interactable_tiles
 
 
 func _populate_grid() -> void:
-	grid = Grid.new(self)
+	grid = Grid.new()
 	var o_rect: Rect2i = _floor_layer.get_used_rect()
 	if grid.region.size.x + grid.region.size.y == 0:
 		grid.update_region(o_rect)
@@ -133,31 +133,31 @@ func _populate_grid() -> void:
 			var tile := Vector2i(x,y)
 			var source_id = _floor_layer.get_cell_source_id(tile)
 			var prop_source_id = _prop_layer.get_cell_source_id(tile)
-			var improv_weapon_source_id = _improvised_weapon_layer.get_cell_source_id(tile)
+			var item_source_id = _item_layer.get_cell_source_id(tile)
 			var floor_tile_data : TileData =  _floor_layer.get_cell_tile_data(tile) if source_id != -1 else null
 			if source_id == -1 or \
 			(floor_tile_data and floor_tile_data.has_custom_data("border") and floor_tile_data.get_custom_data("border")):
 				grid.lock_cell(tile)
 			else:
 				grid.add_cell(tile)
-				if prop_source_id != -1 or improv_weapon_source_id != -1:
+				if prop_source_id != -1 or item_source_id != -1:
 					var tile_data: TileData = _prop_layer.get_cell_tile_data(tile)
 					if tile_data and tile_data.has_custom_data("impassable") and tile_data.get_custom_data("impassable"):
 						grid.add_prop(tile)
 
 
-func get_interactable(tile: Vector2i) -> ImprovisedWeapon:
-	var tile_data: TileData = _improvised_weapon_layer.get_cell_tile_data(tile)
+func get_interactable(tile: Vector2i) -> Item:
+	var tile_data: TileData = _item_layer.get_cell_tile_data(tile)
 	if tile_data:
-		return tile_data.get_custom_data("improvised_weapon") as ImprovisedWeapon
+		return tile_data.get_custom_data("item") as Item
 	return
 
 
-func take_interactable(tile: Vector2i) -> ImprovisedWeapon:
-	var weapon: ImprovisedWeapon = get_interactable(tile)
-	_improvised_weapon_layer.set_cell(tile, -1)
+func take_interactable(tile: Vector2i) -> Item:
+	var item: Item = get_interactable(tile)
+	_item_layer.set_cell(tile, -1)
 	grid.erase_prop(tile)
-	return weapon
+	return item
 
 
 func get_subtile_position(world_position: Vector2) -> Vector2:

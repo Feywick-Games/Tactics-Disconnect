@@ -7,12 +7,11 @@ var _enemy: Enemy
 var _target: Character
 var _full_attack_range := RangeStruct.new()
 var _full_special_range := RangeStruct.new()
-var _special_atlas_coords: Vector2i = Global.RETICLE_SPECIAL_1_ALTAS_COORDS
-var _special_overlap_atlas_coords: Vector2i = Global.RETICLE_CURE_1_ATLAS_COORDS
 var _is_acting := false
 var _is_processing_custom := false
 var _time_highlight: float = 0
 var _has_highlighted := false
+var _range_astar: AStarGrid2D
 
 
 class TargetPriority:
@@ -34,11 +33,6 @@ func enter() -> void:
 	var units_on_field: Array[Node] = _enemy.get_tree().get_nodes_in_group("ally")
 	units_on_field.shuffle()
 	var target_list: Array[Ally]
-	_start_tile = _enemy.current_tile
-	_movement_range = GameState.current_level.grid.request_range(_enemy.current_tile, 0,  _enemy.movement_range, Combat.RangeShape.DIAMOND)
-	_movement_astar = _enemy.create_range_astar(_movement_range, _enemy.movement_range)
-	_interactable_range =  GameState.current_level.grid.request_range(_enemy.current_tile, 0,  _enemy.movement_range + 1, Combat.RangeShape.DIAMOND).blocked_tiles
-	_interactable_range = GameState.current_level.get_interactable_tiles(_interactable_range)
 	for tile: Vector2i in _movement_range.range_tiles:
 		var valid_tiles := GameState.current_level.grid.request_range(tile, _enemy.basic_skill.min_range, _enemy.basic_skill.max_range, _enemy.basic_skill.range_shape, true)
 		_full_attack_range.absorb(valid_tiles)
@@ -178,7 +172,6 @@ func _pick_tile() -> Vector2i:
 		var min_distance: int = start_distance
 		for tile: Vector2i in _movement_range.range_tiles:
 			var dist: int = GameState.current_level.grid.get_tile_distance(tile, _target.current_tile, true)
-			print(_target.character_name)
 			if dist < min_distance:
 				min_distance = dist
 				desired_tile = tile

@@ -7,4 +7,4 @@ var status: Combat.Status
 var value: int
 @export
 var duration: int = 1
-var multiplier: int = 1
+var multiplier: float = 1

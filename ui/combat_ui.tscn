@@ -20,23 +20,16 @@ offset_bottom = 40.0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 
-[node name="TurnDisplay" type="BoxContainer" parent="MarginContainer" unique_id=1113997059]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1626537509]
 layout_mode = 2
-vertical = true
-script = ExtResource("1_xgp2v")
 
-[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1629645335]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=1629645335]
 texture_filter = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -64.0
-offset_bottom = 64.0
-grow_horizontal = 0
+layout_mode = 2
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 
-[node name="BattleTimer" type="TextureProgressBar" parent="MarginContainer2" unique_id=618262420]
+[node name="BattleTimer" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/MarginContainer2" unique_id=618262420]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 16.0
@@ -46,6 +39,11 @@ texture_under = ExtResource("2_sbk1j")
 texture_over = ExtResource("3_fndsw")
 texture_progress = ExtResource("4_cy5jr")
 script = ExtResource("5_tvp2d")
+
+[node name="TurnDisplay" type="BoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1113997059]
+layout_mode = 2
+vertical = true
+script = ExtResource("1_xgp2v")
 
 [node name="MarginContainer3" type="MarginContainer" parent="." unique_id=1189455006]
 anchors_preset = 2
