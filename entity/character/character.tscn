@@ -1,13 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://dk85fb2a3ag81"]
+[gd_scene format=3 uid="uid://dk85fb2a3ag81"]
 
-[ext_resource type="Script" path="res://entity/character/_behavior/character.gd" id="1_84jh7"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="2_2g4r5"]
-[ext_resource type="Script" path="res://node/animation/directional_animator.gd" id="2_vs4rm"]
+[ext_resource type="Script" uid="uid://bxmx6f2p5oxn3" path="res://entity/character/_behavior/character.gd" id="1_84jh7"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_2g4r5"]
+[ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="2_vs4rm"]
 [ext_resource type="Texture2D" uid="uid://b8k687sb6a6rk" path="res://ui/health_bar/_sprite/health_bar_background.png" id="3_ccsml"]
 [ext_resource type="Texture2D" uid="uid://b34r5h2blmmla" path="res://ui/health_bar/_sprite/health_bar_progress.png" id="4_5lxke"]
 [ext_resource type="Texture2D" uid="uid://dka74tswf81nh" path="res://ui/health_bar/_sprite/damage_bar_progress.png" id="4_8mprc"]
 [ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="4_eqor8"]
-[ext_resource type="Script" path="res://entity/character/_behavior/status_label_manager.gd" id="6_1nyw1"]
+[ext_resource type="Script" uid="uid://cuotsodjscwta" path="res://entity/character/_behavior/status_label_manager.gd" id="6_1nyw1"]
+[ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="9_uenv8"]
 
 [sub_resource type="Animation" id="Animation_2gelk"]
 length = 0.001
@@ -180,9 +181,9 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2no37"]
 _data = {
-"RESET": SubResource("Animation_2gelk"),
-"hit": SubResource("Animation_leh64"),
-"miss": SubResource("Animation_clwql")
+&"RESET": SubResource("Animation_2gelk"),
+&"hit": SubResource("Animation_leh64"),
+&"miss": SubResource("Animation_clwql")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_laiw5"]
@@ -191,24 +192,25 @@ shader = ExtResource("2_2g4r5")
 shader_parameter/highlighted = false
 shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 
-[node name="Character" type="CharacterBody2D"]
+[node name="Character" type="CharacterBody2D" unique_id=2026809601]
 y_sort_enabled = true
 collision_layer = 0
 script = ExtResource("1_84jh7")
 _evasion = 5
 
-[node name="HealthBar" type="TextureProgressBar" parent="."]
+[node name="HealthBar" type="TextureProgressBar" parent="." unique_id=1956210959]
 z_index = 1
 z_as_relative = false
 offset_left = -16.0
-offset_top = -48.0
+offset_top = -47.0
 offset_right = 24.0
-offset_bottom = -8.0
+offset_bottom = -7.0
+pivot_offset = Vector2(26, 29)
 value = 67.0
 rounded = true
 texture_progress = ExtResource("4_5lxke")
 
-[node name="DamageBar" type="TextureProgressBar" parent="HealthBar"]
+[node name="DamageBar" type="TextureProgressBar" parent="HealthBar" unique_id=1283647699]
 show_behind_parent = true
 z_index = 1
 z_as_relative = false
@@ -220,7 +222,7 @@ rounded = true
 texture_under = ExtResource("3_ccsml")
 texture_progress = ExtResource("4_8mprc")
 
-[node name="HitChanceLabel" type="Label" parent="HealthBar"]
+[node name="HitChanceLabel" type="Label" parent="HealthBar" unique_id=1810161448]
 layout_mode = 0
 offset_left = -3.0
 offset_top = -7.0
@@ -232,20 +234,19 @@ theme_override_fonts/font = ExtResource("4_eqor8")
 theme_override_font_sizes/font_size = 8
 horizontal_alignment = 1
 
-[node name="StatusLabelManager" type="Control" parent="."]
+[node name="StatusLabelManager" type="Control" parent="." unique_id=1517281646]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+pivot_offset = Vector2(10, -19)
 script = ExtResource("6_1nyw1")
 
-[node name="LabelAnimator" type="AnimationPlayer" parent="StatusLabelManager"]
+[node name="LabelAnimator" type="AnimationPlayer" parent="StatusLabelManager" unique_id=1170129262]
 root_node = NodePath("../../CharacterSprite")
-libraries = {
-"": SubResource("AnimationLibrary_2no37")
-}
+libraries/ = SubResource("AnimationLibrary_2no37")
 
-[node name="StatusLabel" type="Label" parent="StatusLabelManager"]
+[node name="StatusLabel" type="Label" parent="StatusLabelManager" unique_id=843845372]
 layout_mode = 0
 offset_left = -19.0
 offset_top = -64.0
@@ -259,13 +260,16 @@ theme_override_font_sizes/font_size = 8
 text = "MISS"
 horizontal_alignment = 1
 
-[node name="CharacterSprite" type="Sprite2D" parent="."]
+[node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
 material = SubResource("ShaderMaterial_laiw5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=974221274]
 
-[node name="ActionAnimator" type="AnimationPlayer" parent="."]
+[node name="ActionAnimator" type="AnimationPlayer" parent="." unique_id=2058618678]
 script = ExtResource("2_vs4rm")
 
-[node name="SkillAnimator" type="AnimationPlayer" parent="."]
+[node name="SkillAnimator" type="AnimationPlayer" parent="." unique_id=1671960451]
 script = ExtResource("2_vs4rm")
+
+[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=846521504]
+script = ExtResource("9_uenv8")

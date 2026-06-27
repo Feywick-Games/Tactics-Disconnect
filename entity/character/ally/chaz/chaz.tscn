@@ -1,15 +1,34 @@
-[gd_scene load_steps=20 format=3 uid="uid://r5sdcdlxfmjr"]
+[gd_scene format=3 uid="uid://r5sdcdlxfmjr"]
 
 [ext_resource type="PackedScene" uid="uid://cm7s3l5cikm6u" path="res://entity/character/ally/ally.tscn" id="1_telll"]
 [ext_resource type="Texture2D" uid="uid://ctrrubge6r45p" path="res://entity/character/ally/chaz/_sprite/chaz_idle_down.png" id="2_4tvf7"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="2_ey6y0"]
-[ext_resource type="Script" path="res://data/combat/skill.gd" id="2_qq2rq"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_ey6y0"]
+[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="2_iylvh"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_qq2rq"]
 [ext_resource type="Texture2D" uid="uid://bf5ryjrutpfj1" path="res://entity/character/ally/chaz/_sprite/chaz_combat_idle_down.png" id="3_2e3h7"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="3_2xm6s"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_jfry1"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="4_a4nkn"]
 [ext_resource type="Texture2D" uid="uid://b5n7mlhj67tan" path="res://entity/character/ally/chaz/_sprite/chaz_combat_idle_up.png" id="4_cwwrv"]
 [ext_resource type="Texture2D" uid="uid://c01os2oy5ipq0" path="res://entity/character/ally/chaz/_sprite/chaz_idle_up.png" id="5_l0hun"]
+[ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="5_uuy70"]
+[ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://entity/character/ally/izzy/_special/push_skill.tres" id="6_f6ndk"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_543c8"]
+[sub_resource type="Resource" id="Resource_n0ksn"]
+script = ExtResource("4_a4nkn")
+value = 4
+
+[sub_resource type="Resource" id="Resource_sfhtk"]
+script = ExtResource("2_qq2rq")
+name = "Slingshot"
+character_animation = "idle"
+max_range = 4
+state = ExtResource("3_jfry1")
+status_effects = Array[ExtResource("4_a4nkn")]([SubResource("Resource_n0ksn")])
+range_type = 1
+direct = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jfry1"]
 resource_local_to_scene = true
 shader = ExtResource("2_ey6y0")
 shader_parameter/highlighted = false
@@ -488,27 +507,36 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wpweh"]
 _data = {
-"RESET": SubResource("Animation_cscvr"),
-"combat_idle_down": SubResource("Animation_kynjq"),
-"combat_idle_left": SubResource("Animation_tmg2g"),
-"combat_idle_right": SubResource("Animation_r6jlk"),
-"combat_idle_up": SubResource("Animation_k5e4p"),
-"idle_down": SubResource("Animation_ywvt0"),
-"idle_left": SubResource("Animation_0wanu"),
-"idle_right": SubResource("Animation_1ea7d"),
-"idle_up": SubResource("Animation_nj5vh")
+&"RESET": SubResource("Animation_cscvr"),
+&"combat_idle_down": SubResource("Animation_kynjq"),
+&"combat_idle_left": SubResource("Animation_tmg2g"),
+&"combat_idle_right": SubResource("Animation_r6jlk"),
+&"combat_idle_up": SubResource("Animation_k5e4p"),
+&"idle_down": SubResource("Animation_ywvt0"),
+&"idle_left": SubResource("Animation_0wanu"),
+&"idle_right": SubResource("Animation_1ea7d"),
+&"idle_up": SubResource("Animation_nj5vh")
 }
 
-[node name="Chaz" instance=ExtResource("1_telll")]
-is_animated = true
+[node name="Chaz" unique_id=1270059331 instance=ExtResource("1_telll")]
 character_name = "Chaz"
-reactions = Array[ExtResource("2_qq2rq")]([ExtResource("3_2xm6s")])
+basic_skill = SubResource("Resource_sfhtk")
+special = ExtResource("6_f6ndk")
+reactions = Array[ExtResource("2_iylvh")]([ExtResource("3_2xm6s")])
 
-[node name="CharacterSprite" parent="." index="2"]
-material = SubResource("ShaderMaterial_543c8")
+[node name="HealthBar" parent="." index="0" unique_id=1956210959]
+offset_top = -48.0
+offset_bottom = -8.0
+pivot_offset = Vector2(0, 0)
+
+[node name="StatusLabelManager" parent="." index="1" unique_id=1517281646]
+pivot_offset = Vector2(0, 0)
+
+[node name="CharacterSprite" parent="." index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_jfry1")
+position = Vector2(0, -2)
 texture = ExtResource("2_4tvf7")
+offset = Vector2(0, -15)
 
-[node name="ActionAnimator" parent="." index="5"]
-libraries = {
-"": SubResource("AnimationLibrary_wpweh")
-}
+[node name="ActionAnimator" parent="." index="5" unique_id=2058618678]
+libraries/ = SubResource("AnimationLibrary_wpweh")

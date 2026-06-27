@@ -6,7 +6,7 @@ signal statuses_displayed
 @export
 var miss_color: Color = "#70e0d5"
 @export
-var miss_outline_color = "#1e6485"
+var miss_outline_color: Color = "#1e6485"
 @export
 var damage_color: Color = "#f7f7f5"
 @export
@@ -17,7 +17,7 @@ var stun_color: Color = "#de9b54"
 @onready
 var animator: AnimationPlayer = $LabelAnimator
 @onready
-var status_label = $StatusLabel
+var status_label : Label = $StatusLabel
 
 var _started_animations: int
 var _queued_statuses: Array[StatusEffect]
@@ -41,7 +41,7 @@ func _play_status_effect(effect: StatusEffect) -> void:
 	if not effect:
 		animator.queue("miss")
 	elif effect.status == Combat.Status.HIT:
-		_damage_value = effect.value * effect.multiplier
+		_damage_value = floor(effect.value * effect.multiplier)
 		animator.queue("hit")
 	
 
@@ -51,7 +51,7 @@ func add_status_effect(effect: StatusEffect) -> void:
 		_queued_statuses.append(effect)
 	
 	
-func _on_animation_completed(anim: String) -> void:
+func _on_animation_completed(_anim: String) -> void:
 	_completed_animations += 1 
 	if _completed_animations == _started_animations:
 		_queued_statuses.clear()

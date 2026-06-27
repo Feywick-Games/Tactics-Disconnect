@@ -27,10 +27,15 @@ var status_effects: Array[StatusEffect]
 var aoe: Array[Vector2i] = [Vector2i.ZERO]
 @export
 var range_type: Combat.RangeType = Combat.RangeType.MELEE
+# to pierce
 @export
 var direct := true
 @export
 var is_animated := false
+@export
+var cast_sfx: AudioStream
+@export
+var hit_sfx: AudioStream
 
 var cool_down_status: int
 
@@ -43,7 +48,7 @@ func is_ready() -> bool:
 	return cool_down_status == cool_down
 
 func get_hit_damage() -> int:
-	var damage_status := status_effects.filter(func(x): return true if (x as StatusEffect).status == Combat.Status.HIT else false)
+	var damage_status := status_effects.filter(func(x: StatusEffect) -> bool: return true if x.status == Combat.Status.HIT else false)
 	if not damage_status.is_empty():
 		return damage_status[0].value
 	else:

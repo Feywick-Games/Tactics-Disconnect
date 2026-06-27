@@ -1,6 +1,0 @@
-[gd_resource type="CanvasTexture" load_steps=2 format=3 uid="uid://0o3r3wabgk44"]
-
-[ext_resource type="Texture2D" uid="uid://6qtrtdnamwoo" path="res://scene/level/variant/music_district/convenience_store/_sprite/music_district_convenience_store_tile_set.png" id="1_dcycc"]
-
-[resource]
-diffuse_texture = ExtResource("1_dcycc")

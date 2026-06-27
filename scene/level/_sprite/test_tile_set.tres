@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=10 format=3 uid="uid://ph0vvwjj2fg4"]
+[gd_resource type="TileSet" format=3 uid="uid://ph0vvwjj2fg4"]
 
 [ext_resource type="Texture2D" uid="uid://difcignuluahh" path="res://scene/level/_sprite/test_isometric_tile_set.png" id="1_2sdns"]
 [ext_resource type="PackedScene" uid="uid://d0tl4xn5wsemf" path="res://scene/level/common/_prop/prop_cube.tscn" id="2_4cgii"]

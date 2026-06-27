@@ -1,14 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://cm7s3l5cikm6u"]
+[gd_scene format=3 uid="uid://cm7s3l5cikm6u"]
 
 [ext_resource type="PackedScene" uid="uid://dk85fb2a3ag81" path="res://entity/character/character.tscn" id="1_sdb2p"]
-[ext_resource type="Script" path="res://entity/character/ally/_behavior/ally.gd" id="2_dd86s"]
+[ext_resource type="Script" uid="uid://chq8hk2b7dwdl" path="res://entity/character/ally/_behavior/ally.gd" id="2_dd86s"]
 [ext_resource type="Texture2D" uid="uid://c5ummn06gg4w3" path="res://entity/character/ally/_sprite/ally.png" id="2_momam"]
-[ext_resource type="Script" path="res://entity/character/ally/_behavior/ally_roam_state.gd" id="3_8jy3i"]
+[ext_resource type="Script" uid="uid://bg612it6b18p5" path="res://entity/character/ally/_behavior/ally_roam_state.gd" id="3_8jy3i"]
 [ext_resource type="PackedScene" uid="uid://f4x7mg2o6cwa" path="res://entity/character/ally/_packed_scene/turn_portrait_ally_1.tscn" id="3_ugt4g"]
-[ext_resource type="Script" path="res://entity/character/ally/_behavior/ally_turn_state.gd" id="4_4us3o"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="6_153dm"]
+[ext_resource type="Script" uid="uid://djcfelq0k45il" path="res://entity/character/ally/_behavior/ally_turn_state.gd" id="4_4us3o"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="6_153dm"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3xvm1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_smhek"]
 resource_local_to_scene = true
 shader = ExtResource("6_153dm")
 shader_parameter/highlighted = false
@@ -17,7 +17,7 @@ shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p01wl"]
 size = Vector2(12, 6)
 
-[node name="Ally" groups=["ally"] instance=ExtResource("1_sdb2p")]
+[node name="Ally" unique_id=264392964 groups=["ally"] instance=ExtResource("1_sdb2p")]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("2_dd86s")
@@ -27,17 +27,17 @@ turn_portrait_scene = ExtResource("3_ugt4g")
 init_state = ExtResource("3_8jy3i")
 turn_state = ExtResource("4_4us3o")
 
-[node name="CharacterSprite" parent="." index="2"]
-material = SubResource("ShaderMaterial_3xvm1")
+[node name="CharacterSprite" parent="." index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_smhek")
 position = Vector2(0, 9)
 texture = ExtResource("2_momam")
 offset = Vector2(0, -20)
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="3"]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="3" unique_id=245401563]
 target_desired_distance = 32.0
 avoidance_enabled = true
 radius = 20.0
 
-[node name="CollisionShape2D" parent="." index="4"]
+[node name="CollisionShape2D" parent="." index="4" unique_id=974221274]
 position = Vector2(-0.5, -2)
 shape = SubResource("RectangleShape2D_p01wl")

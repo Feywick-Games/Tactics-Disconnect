@@ -1,44 +1,38 @@
-[gd_scene load_steps=28 format=3 uid="uid://bctkkdhwjgs0u"]
+[gd_scene format=3 uid="uid://bctkkdhwjgs0u"]
 
 [ext_resource type="PackedScene" uid="uid://cm7s3l5cikm6u" path="res://entity/character/ally/ally.tscn" id="1_2hyto"]
 [ext_resource type="PackedScene" uid="uid://0vhq1ufxesi7" path="res://entity/character/ally/mei/_packed_scene/mei_turn_portrait.tscn" id="2_6fea8"]
 [ext_resource type="Texture2D" uid="uid://hqtvgvbj0hk6" path="res://entity/character/ally/mei/_sprite/mei_idle_down.png" id="2_446ld"]
 [ext_resource type="Texture2D" uid="uid://gj5ykhi8ncdt" path="res://entity/character/ally/mei/_sprite/mei_idle_up.png" id="3_in48b"]
-[ext_resource type="Script" path="res://data/combat/skill.gd" id="3_y0fl4"]
-[ext_resource type="Script" path="res://entity/character/_behavior/basic_skill_state.gd" id="4_1eaca"]
-[ext_resource type="Script" path="res://data/combat/status_effect.gd" id="4_u3oph"]
+[ext_resource type="AudioStream" uid="uid://7yyjci604ojm" path="res://data/sfx/combat/swing.ogg" id="3_xs5to"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="3_y0fl4"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="4_1eaca"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="4_u3oph"]
+[ext_resource type="AudioStream" uid="uid://b30sxiykj4mbk" path="res://data/sfx/combat/blunt_impact.ogg" id="4_ugnqj"]
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="5_84nbx"]
 [ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://entity/character/ally/izzy/_special/push_skill.tres" id="7_as5tn"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="8_5ecx1"]
-[ext_resource type="Script" path="res://data/combat/reaction.gd" id="8_foua0"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="8_txnat"]
+[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="8_foua0"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_txnat"]
 [ext_resource type="Texture2D" uid="uid://cqim6rtvxrc0d" path="res://entity/character/ally/mei/_sprite/mei_combat_idle_down.png" id="14_4727j"]
 [ext_resource type="Texture2D" uid="uid://davlp3vj88r17" path="res://entity/character/ally/mei/_sprite/mei_combat_idle_up.png" id="15_wbqvo"]
 
 [sub_resource type="Resource" id="Resource_n0ksn"]
 script = ExtResource("4_u3oph")
-status = 0
 value = 4
-duration = 1
 
 [sub_resource type="Resource" id="Resource_1kfok"]
 script = ExtResource("3_y0fl4")
 name = "Kick"
-sticker = ExtResource("5_84nbx")
 character_animation = "idle"
-skill_animation = ""
-max_range = 2
-min_range = 0
-range_shape = 0
+range_shape = 1
 state = ExtResource("4_1eaca")
-cool_down = 0
 status_effects = Array[ExtResource("4_u3oph")]([SubResource("Resource_n0ksn")])
 aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
-range_type = 0
-direct = true
-is_animated = false
+cast_sfx = ExtResource("3_xs5to")
+hit_sfx = ExtResource("4_ugnqj")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_riopu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2qvxt"]
 resource_local_to_scene = true
 shader = ExtResource("8_txnat")
 shader_parameter/highlighted = false
@@ -517,36 +511,38 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jbnk6"]
 _data = {
-"RESET": SubResource("Animation_8c2px"),
-"combat_idle_down": SubResource("Animation_ka1aj"),
-"combat_idle_left": SubResource("Animation_63hmn"),
-"combat_idle_right": SubResource("Animation_qnx4o"),
-"combat_idle_up": SubResource("Animation_t28sb"),
-"idle_down": SubResource("Animation_pdnha"),
-"idle_left": SubResource("Animation_yu0rp"),
-"idle_right": SubResource("Animation_jgfnk"),
-"idle_up": SubResource("Animation_umejw")
+&"RESET": SubResource("Animation_8c2px"),
+&"combat_idle_down": SubResource("Animation_ka1aj"),
+&"combat_idle_left": SubResource("Animation_63hmn"),
+&"combat_idle_right": SubResource("Animation_qnx4o"),
+&"combat_idle_up": SubResource("Animation_t28sb"),
+&"idle_down": SubResource("Animation_pdnha"),
+&"idle_left": SubResource("Animation_yu0rp"),
+&"idle_right": SubResource("Animation_jgfnk"),
+&"idle_up": SubResource("Animation_umejw")
 }
 
-[node name="Mei" instance=ExtResource("1_2hyto")]
-is_animated = true
+[node name="Mei" unique_id=912296346 instance=ExtResource("1_2hyto")]
 character_name = "Mei"
 turn_portrait_scene = ExtResource("2_6fea8")
 basic_skill = SubResource("Resource_1kfok")
 special = ExtResource("7_as5tn")
 reactions = Array[ExtResource("8_foua0")]([ExtResource("8_5ecx1")])
+_movement_range = 3
 
-[node name="CharacterSprite" parent="." index="2"]
-material = SubResource("ShaderMaterial_riopu")
-position = Vector2(0, 2)
+[node name="HealthBar" parent="." index="0" unique_id=1956210959]
+offset_left = -17.0
+offset_right = 23.0
+
+[node name="CharacterSprite" parent="." index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_2qvxt")
+position = Vector2(0, 0)
 texture = ExtResource("2_446ld")
-offset = Vector2(0, -16)
+offset = Vector2(0, -14)
 
-[node name="CollisionShape2D" parent="." index="4"]
+[node name="CollisionShape2D" parent="." index="4" unique_id=974221274]
 position = Vector2(-1, -1)
 
-[node name="ActionAnimator" parent="." index="5"]
-libraries = {
-"": SubResource("AnimationLibrary_jbnk6")
-}
+[node name="ActionAnimator" parent="." index="5" unique_id=2058618678]
+libraries/ = SubResource("AnimationLibrary_jbnk6")
 speed_scale = 0.526

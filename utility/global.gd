@@ -8,7 +8,7 @@ enum PhysicsLayers {
 }
 
 const PLAYER_SPEED: float = 50
-const TILE_SIZE := Vector2i(48, 24)
+const TILE_SIZE := Vector2i(30, 30)
 
 const BATTLE_MAP_ATLAS_COORDS := Vector2.ZERO
 const RETICLE_MOVE_ALTAS_COORDS := Vector2i(0,1)

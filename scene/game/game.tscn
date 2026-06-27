@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://biudwwsx1di8t"]
+[gd_scene format=3 uid="uid://biudwwsx1di8t"]
 
-[ext_resource type="Script" path="res://scene/game/_behavior/game.gd" id="1_h64b8"]
-[ext_resource type="PackedScene" uid="uid://7ayix768h0gh" path="res://scene/level/variant/subway_station/subway_station_tracks.tscn" id="2_i2k0w"]
+[ext_resource type="Script" uid="uid://bdmlqwx8kxay7" path="res://scene/game/_behavior/game.gd" id="1_h64b8"]
+[ext_resource type="PackedScene" uid="uid://nti3u5lqo4sy" path="res://scene/level/alley/alley_1.tscn" id="2_pw1yp"]
 
 [sub_resource type="GDScript" id="GDScript_42g76"]
 script/source = "extends SubViewportContainer
@@ -14,10 +14,10 @@ var previous_screen_buffer: ImageTexture = ImageTexture.new()
 	#self.previous_screen_buffer = ImageTexture.create_from_image( image)
 "
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" unique_id=1708488857]
 script = ExtResource("1_h64b8")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=904174406]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -25,37 +25,24 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0605303, 0.0605303, 0.0605303, 1)
 
-[node name="LevelViewportContainer" type="SubViewportContainer" parent="."]
+[node name="LevelViewportContainer" type="SubViewportContainer" parent="." unique_id=1211502279]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+stretch_shrink = 2
 script = SubResource("GDScript_42g76")
 
-[node name="LevelViewport" type="SubViewport" parent="LevelViewportContainer"]
+[node name="LevelViewport" type="SubViewport" parent="LevelViewportContainer" unique_id=1672208821]
 transparent_bg = true
 handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
 canvas_cull_mask = 4294967293
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="SubwayStationTracks" parent="LevelViewportContainer/LevelViewport" instance=ExtResource("2_i2k0w")]
-
-[node name="PeekViewportContainer" type="SubViewportContainer" parent="."]
-visible = false
-modulate = Color(1, 1, 1, 0.5)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-
-[node name="PeekViewport" type="SubViewport" parent="PeekViewportContainer"]
-transparent_bg = true
-handle_input_locally = false
-canvas_cull_mask = 4294967294
-size = Vector2i(640, 360)
-render_target_update_mode = 0
+[node name="Alley" parent="LevelViewportContainer/LevelViewport" unique_id=2146508345 instance=ExtResource("2_pw1yp")]

@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsr6tiqnovwyn"]
-
-[ext_resource type="Texture2D" uid="uid://dwpuomxva06bp" path="res://entity/weapon/_sprite/dummy_weapon.png" id="1_ci0u0"]
-[ext_resource type="Script" path="res://entity/weapon/_behavior/improvised_weapon.gd" id="1_lt6sy"]
-
-[node name="Node2D" type="Sprite2D"]
-texture = ExtResource("1_ci0u0")
-offset = Vector2(0, -10)
-script = ExtResource("1_lt6sy")

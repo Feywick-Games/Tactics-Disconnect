@@ -31,7 +31,7 @@ func _on_animation_finished(_anim: String) -> void:
 
 
 func can_use() -> bool:
-	if not _target.status.filter(func(x): return x.status == Combat.Status.HIT).is_empty():
+	if not _target.status.filter(func(x: StatusEffect) -> bool: return x.status == Combat.Status.HIT).is_empty():
 		var directions: Array[Vector2i] = [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
 		var valid_tiles: Array[Vector2i] = [_character.current_tile]
 		

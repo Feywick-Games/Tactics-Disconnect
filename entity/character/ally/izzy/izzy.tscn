@@ -1,42 +1,33 @@
-[gd_scene load_steps=27 format=3 uid="uid://c3ow1ifjec62m"]
+[gd_scene format=3 uid="uid://c3ow1ifjec62m"]
 
 [ext_resource type="PackedScene" uid="uid://cm7s3l5cikm6u" path="res://entity/character/ally/ally.tscn" id="1_abh6s"]
-[ext_resource type="Script" path="res://data/combat/skill.gd" id="2_d2041"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_d2041"]
 [ext_resource type="PackedScene" uid="uid://bap3a4oqvrftr" path="res://entity/character/ally/izzy/_packed_scene/izzy_turn_portrait.tscn" id="2_y0p6f"]
-[ext_resource type="Script" path="res://data/combat/status_effect.gd" id="3_jkw71"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="3_jkw71"]
 [ext_resource type="Texture2D" uid="uid://chfg67t7nwyc2" path="res://entity/character/ally/izzy/_sprite/izzy_idle_down.png" id="3_sk6vo"]
-[ext_resource type="Script" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_tnq7t"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_tnq7t"]
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="4_sniu6"]
 [ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://entity/character/ally/izzy/_special/push_skill.tres" id="6_j04wh"]
 [ext_resource type="Texture2D" uid="uid://bel6ycldg65i6" path="res://entity/character/ally/izzy/_sprite/izzy_idle_up.png" id="6_wmewt"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="8_07m0v"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_07m0v"]
+[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="8_143ow"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="8_igswm"]
 [ext_resource type="Texture2D" uid="uid://bmng0nysy3gjd" path="res://entity/character/ally/izzy/_sprite/izzy_combat_idle_up.png" id="15_0j56j"]
 [ext_resource type="Texture2D" uid="uid://pbfod4mftla6" path="res://entity/character/ally/izzy/_sprite/izzy_combat_idle_down.png" id="16_3ocq5"]
 
 [sub_resource type="Resource" id="Resource_xdj1t"]
 script = ExtResource("3_jkw71")
-status = 0
 value = 4
-duration = 1
 
 [sub_resource type="Resource" id="Resource_v85yj"]
 script = ExtResource("2_d2041")
 name = "Punch"
-sticker = ExtResource("4_sniu6")
 character_animation = "idle"
-skill_animation = ""
-max_range = 1
-min_range = 0
-range_shape = 0
 state = ExtResource("3_tnq7t")
 cool_down = 1
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_xdj1t")])
-aoe = Array[Vector2i]([Vector2i(0, 0)])
-range_type = 0
-direct = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_10s6d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_143ow"]
 resource_local_to_scene = true
 shader = ExtResource("8_07m0v")
 shader_parameter/highlighted = false
@@ -515,30 +506,38 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hs5m1"]
 _data = {
-"RESET": SubResource("Animation_tjtew"),
-"combat_idle_down": SubResource("Animation_21amu"),
-"combat_idle_left": SubResource("Animation_yp81w"),
-"combat_idle_right": SubResource("Animation_ume1i"),
-"combat_idle_up": SubResource("Animation_bmi5h"),
-"idle_down": SubResource("Animation_0tlu4"),
-"idle_left": SubResource("Animation_a75ug"),
-"idle_right": SubResource("Animation_hv0d0"),
-"idle_up": SubResource("Animation_6us76")
+&"RESET": SubResource("Animation_tjtew"),
+&"combat_idle_down": SubResource("Animation_21amu"),
+&"combat_idle_left": SubResource("Animation_yp81w"),
+&"combat_idle_right": SubResource("Animation_ume1i"),
+&"combat_idle_up": SubResource("Animation_bmi5h"),
+&"idle_down": SubResource("Animation_0tlu4"),
+&"idle_left": SubResource("Animation_a75ug"),
+&"idle_right": SubResource("Animation_hv0d0"),
+&"idle_up": SubResource("Animation_6us76")
 }
 
-[node name="Izzy" instance=ExtResource("1_abh6s")]
-position = Vector2(0, -2)
+[node name="Izzy" unique_id=907728875 instance=ExtResource("1_abh6s")]
 follow_order = 1
-is_animated = true
 character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
 basic_skill = SubResource("Resource_v85yj")
 special = ExtResource("6_j04wh")
-reactions = Array[ExtResource("2_d2041")]([ExtResource("8_igswm")])
+reactions = Array[ExtResource("8_143ow")]([ExtResource("8_igswm")])
+
+[node name="HealthBar" parent="." index="0"]
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 24.0
+offset_bottom = -8.0
+pivot_offset = Vector2(0, 0)
+
+[node name="StatusLabelManager" parent="." index="1"]
+pivot_offset = Vector2(0, 0)
 
 [node name="CharacterSprite" parent="." index="2"]
-material = SubResource("ShaderMaterial_10s6d")
-position = Vector2(0, 3)
+material = SubResource("ShaderMaterial_143ow")
+position = Vector2(1, -1)
 texture = ExtResource("3_sk6vo")
 offset = Vector2(0, -16)
 
@@ -546,6 +545,4 @@ offset = Vector2(0, -16)
 position = Vector2(-1, 0)
 
 [node name="ActionAnimator" parent="." index="5"]
-libraries = {
-"": SubResource("AnimationLibrary_hs5m1")
-}
+libraries/ = SubResource("AnimationLibrary_hs5m1")

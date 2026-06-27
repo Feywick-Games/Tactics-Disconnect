@@ -57,11 +57,10 @@ func _start_turn() -> void:
 	var turn_portait := _turn_portraits[_current_unit_idx]
 	turn_portait.display_full_portrait()
 	
-	EventBus.cam_follow_requested.emit(_current_unit)
 	_turn_pending = true
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if visible:
 		if not _battle_started and not _units.is_empty() and GameState.current_level.map_complete:
 			var units_waiting := false
@@ -75,9 +74,9 @@ func _process(delta: float) -> void:
 			if _battle_started:
 				_start_turn()
 	if _turn_pending:
-		if get_viewport().get_camera_2d().in_position:
-			_turn_pending = false
-			EventBus.turn_started.emit(_current_unit)
+		#if get_viewport().get_camera_2d().in_position:
+		_turn_pending = false
+		EventBus.turn_started.emit(_current_unit)
 
 
 func _on_encounter_started() -> void:
@@ -111,7 +110,7 @@ func _on_unit_died(unit: Character) -> void:
 	if not _units.is_empty():
 		var idx: int = _units.find(unit)
 		_units.remove_at(idx)
-		var child = _turn_portraits[idx]
+		var child: Node = _turn_portraits[idx]
 		_turn_portraits.remove_at(idx)
 		child.queue_free()
 		

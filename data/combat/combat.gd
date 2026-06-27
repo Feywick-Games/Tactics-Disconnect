@@ -3,8 +3,7 @@ class_name Combat
 enum AttackState {
 	BASIC,
 	SPECIAL,
-	IMPROV,
-	IMPROV_THROW
+	ITEM
 }
 
 enum Status {

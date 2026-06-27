@@ -1,42 +1,35 @@
-[gd_scene load_steps=10 format=3 uid="uid://bhfdokg7y4yll"]
+[gd_scene format=3 uid="uid://bhfdokg7y4yll"]
 
-[ext_resource type="Script" path="res://ui/_behavior/combat_ui.gd" id="1_d34a4"]
-[ext_resource type="Script" path="res://ui/turn_display/_behavior/turn_display.gd" id="1_xgp2v"]
+[ext_resource type="Script" uid="uid://kmie07ujhpn" path="res://ui/_behavior/combat_ui.gd" id="1_d34a4"]
+[ext_resource type="Script" uid="uid://dxun7rvd6nx2" path="res://ui/turn_display/_behavior/turn_display.gd" id="1_xgp2v"]
 [ext_resource type="Texture2D" uid="uid://dnkx7jyewlkxh" path="res://ui/battle_timer/battle_timer_under.png" id="2_sbk1j"]
 [ext_resource type="Texture2D" uid="uid://caqbtr4v8posy" path="res://ui/battle_timer/battle_timer_over.png" id="3_fndsw"]
 [ext_resource type="Texture2D" uid="uid://cycr83c35trtu" path="res://ui/battle_timer/battle_timer_fill.png" id="4_cy5jr"]
-[ext_resource type="Script" path="res://ui/battle_timer/_behavior/battle_timer.gd" id="5_tvp2d"]
-[ext_resource type="Script" path="res://ui/sticker/_behavior/sticker_layout.gd" id="6_0110n"]
+[ext_resource type="Script" uid="uid://bjc6tj0lu66ca" path="res://ui/battle_timer/_behavior/battle_timer.gd" id="5_tvp2d"]
+[ext_resource type="Script" uid="uid://bo76metijv2vr" path="res://ui/sticker/_behavior/sticker_layout.gd" id="6_0110n"]
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="7_k13u7"]
 [ext_resource type="Texture2D" uid="uid://c1xbsgyj5cgwq" path="res://ui/sticker/_sprite/sticker_push_punch.png" id="8_ibp8q"]
 
-[node name="CombatUI" type="CanvasLayer"]
+[node name="CombatUI" type="CanvasLayer" unique_id=788298229]
 script = ExtResource("1_d34a4")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=458944826]
 texture_filter = 1
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 
-[node name="TurnDisplay" type="BoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1626537509]
 layout_mode = 2
-vertical = true
-script = ExtResource("1_xgp2v")
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=1629645335]
 texture_filter = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -64.0
-offset_bottom = 64.0
-grow_horizontal = 0
+layout_mode = 2
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 
-[node name="BattleTimer" type="TextureProgressBar" parent="MarginContainer2"]
+[node name="BattleTimer" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/MarginContainer2" unique_id=618262420]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 16.0
@@ -47,7 +40,12 @@ texture_over = ExtResource("3_fndsw")
 texture_progress = ExtResource("4_cy5jr")
 script = ExtResource("5_tvp2d")
 
-[node name="MarginContainer3" type="MarginContainer" parent="."]
+[node name="TurnDisplay" type="BoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1113997059]
+layout_mode = 2
+vertical = true
+script = ExtResource("1_xgp2v")
+
+[node name="MarginContainer3" type="MarginContainer" parent="." unique_id=1189455006]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -57,17 +55,17 @@ grow_vertical = 0
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_bottom = 8
 
-[node name="StickerLayout" type="HBoxContainer" parent="MarginContainer3"]
+[node name="StickerLayout" type="HBoxContainer" parent="MarginContainer3" unique_id=587997664]
 texture_filter = 1
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 script = ExtResource("6_0110n")
 
-[node name="BasicSkillSticker" type="TextureRect" parent="MarginContainer3/StickerLayout"]
+[node name="BasicSkillSticker" type="TextureRect" parent="MarginContainer3/StickerLayout" unique_id=447291771]
 layout_mode = 2
 texture = ExtResource("7_k13u7")
 
-[node name="StickerHighlight" type="ReferenceRect" parent="MarginContainer3/StickerLayout/BasicSkillSticker"]
+[node name="StickerHighlight" type="ReferenceRect" parent="MarginContainer3/StickerLayout/BasicSkillSticker" unique_id=859490508]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
@@ -84,11 +82,11 @@ grow_horizontal = 2
 grow_vertical = 2
 editor_only = false
 
-[node name="SpecialSticker" type="TextureRect" parent="MarginContainer3/StickerLayout"]
+[node name="SpecialSticker" type="TextureRect" parent="MarginContainer3/StickerLayout" unique_id=648701146]
 layout_mode = 2
 texture = ExtResource("8_ibp8q")
 
-[node name="MarginContainer4" type="MarginContainer" parent="."]
+[node name="MarginContainer4" type="MarginContainer" parent="." unique_id=1438316497]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -103,7 +101,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_constants/margin_bottom = 64
 
-[node name="SkillLabel" type="Label" parent="MarginContainer4"]
+[node name="SkillLabel" type="Label" parent="MarginContainer4" unique_id=1059656198]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.964706, 0.964706, 0.964706, 1)

@@ -1,10 +1,10 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://5dfqqlx3fkjg"]
+[gd_resource type="TileSet" format=3 uid="uid://5dfqqlx3fkjg"]
 
 [ext_resource type="Texture2D" uid="uid://biwhwer1crvs7" path="res://ui/battle_grid/_sprite/reticle.png" id="1_srj5c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rf23c"]
 texture = ExtResource("1_srj5c")
-texture_region_size = Vector2i(32, 16)
+texture_region_size = Vector2i(30, 30)
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -23,9 +23,8 @@ texture_region_size = Vector2i(32, 16)
 1:7/0 = 0
 
 [resource]
-tile_shape = 1
 tile_layout = 5
-tile_size = Vector2i(48, 24)
+tile_size = Vector2i(30, 30)
 physics_layer_0/collision_layer = 1
 navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_rf23c")

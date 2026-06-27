@@ -12,7 +12,6 @@ var _highlighter_is_ally: bool
 var _damage_taken := false
 var _reaction_state: ReactionState
 var _is_processing := false
-var _reactions_to_process: int
 var _requested_state: State
 
 func enter() -> void:
@@ -79,10 +78,10 @@ func _display_health() -> void:
 		_character.hit_chance_label.hide()
 		(_character.sprite.material as ShaderMaterial).set_shader_parameter("highlighted", false)
 	if not _damage_taken:
-		var multiplier: int = 1
+		var multiplier: float = 1
 		if _highlighter_is_ally:
 			if GameState.battle_timer.value < GameState.battle_timer.max_value * .25:
-				multiplier = 2.0
+				multiplier = 1.5
 			elif GameState.battle_timer.value > GameState.battle_timer.max_value * .75:
 				multiplier = .5
 			
@@ -92,15 +91,8 @@ func _display_health() -> void:
 			if effect.status == Combat.Status.HIT:
 				_character.health_bar.value = _character.health - (effect.value * multiplier)
 		
-		var hit_chance: int
-		
-		if Vector2(_character.facing).dot(Vector2(_highlighted_direction)) < 0.1:
-			hit_chance = int((float(_highlighted_accuracy) / float(_character.evasion)) * 100)
-		elif _character.facing != Vector2i.ZERO: 
-			hit_chance = 100
-		else:
-			hit_chance = 0
-		
+		var hit_chance: int = _character.calculate_hit_chance(_highlighted_direction, _highlighted_accuracy)
+
 		_character.hit_chance_label.text = str(hit_chance) + "%" 
 		
 		var hit_chance_color: Color

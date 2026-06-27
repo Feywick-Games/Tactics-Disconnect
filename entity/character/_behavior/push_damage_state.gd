@@ -32,6 +32,6 @@ func update(delta: float) -> State:
 				var damage_state := DamageState.new(_skill, _direction, INF, collided)
 				_o_target.state_requested.emit(damage_state)
 				collided.emit()
-			_take_damage()
+			_character.take_damage(_skill, _direction, _hit_chance, _multiplier)
 			_is_pushing = false
 	return

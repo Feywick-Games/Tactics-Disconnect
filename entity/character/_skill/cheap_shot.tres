@@ -1,29 +1,16 @@
-[gd_resource type="Resource" script_class="Reaction" load_steps=6 format=3 uid="uid://dhfa1k013dq5o"]
+[gd_resource type="Resource" script_class="Reaction" format=3 uid="uid://dhfa1k013dq5o"]
 
-[ext_resource type="Script" path="res://data/combat/reaction.gd" id="1_bh517"]
-[ext_resource type="Script" path="res://entity/character/_behavior/cheap_shot_reaction_state.gd" id="2_3hmip"]
-[ext_resource type="Script" path="res://data/combat/status_effect.gd" id="3_fqle7"]
+[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="1_bh517"]
+[ext_resource type="Script" uid="uid://k0aef4avj0d7" path="res://entity/character/_behavior/cheap_shot_reaction_state.gd" id="2_3hmip"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="3_fqle7"]
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="4_uscgx"]
 
 [sub_resource type="Resource" id="Resource_lxfmk"]
 script = ExtResource("3_fqle7")
-status = 0
 value = 2
-duration = 1
 
 [resource]
 script = ExtResource("1_bh517")
-name = ""
-sticker = ExtResource("4_uscgx")
 character_animation = "idle"
-skill_animation = ""
-max_range = 1
-min_range = 0
-range_shape = 0
 state = ExtResource("2_3hmip")
-cool_down = 0
 status_effects = Array[ExtResource("3_fqle7")]([SubResource("Resource_lxfmk")])
-aoe = Array[Vector2i]([Vector2i(0, 0)])
-range_type = 0
-direct = true
-is_animated = false

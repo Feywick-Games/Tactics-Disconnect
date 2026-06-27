@@ -1,12 +1,12 @@
 [gd_scene load_steps=38 format=3 uid="uid://cvxylcvrvrkbl"]
 
 [ext_resource type="PackedScene" uid="uid://cqgaf4b8quup7" path="res://entity/character/enemy/enemy.tscn" id="1_gtf1f"]
-[ext_resource type="Script" path="res://data/combat/skill.gd" id="2_5ajag"]
-[ext_resource type="Shader" path="res://entity/character/_material/character_sprite.gdshader" id="2_6ll05"]
-[ext_resource type="Script" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_iytxh"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_5ajag"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_6ll05"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_iytxh"]
 [ext_resource type="Texture2D" uid="uid://gfqd42vmukeq" path="res://entity/character/enemy/shadow_hand/shadow_hand_idle_down.png" id="3_u6rdn"]
 [ext_resource type="Texture2D" uid="uid://yexq1ge2r3he" path="res://entity/character/enemy/shadow_hand/shadow_hand_idle_up.png" id="4_pi00s"]
-[ext_resource type="Script" path="res://data/combat/status_effect.gd" id="4_x1rpn"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="4_x1rpn"]
 [ext_resource type="Texture2D" uid="uid://dssw5p8dug6wj" path="res://entity/character/enemy/shadow_hand/shadow_hand_combat_idle_down.png" id="5_e5gkk"]
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="5_ey0e2"]
 [ext_resource type="Texture2D" uid="uid://bycwwgw8gdka2" path="res://entity/character/enemy/shadow_hand/shadow_hand_combat_idle_up.png" id="6_ndah6"]
@@ -1081,23 +1081,23 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7bsyh"]
 _data = {
-"RESET": SubResource("Animation_btjvw"),
-"basic_attack_down": SubResource("Animation_q0pmb"),
-"basic_attack_left": SubResource("Animation_3usi1"),
-"basic_attack_right": SubResource("Animation_m1nvy"),
-"basic_attack_up": SubResource("Animation_i0r8w"),
-"combat_idle_down": SubResource("Animation_c27va"),
-"combat_idle_left": SubResource("Animation_vn0b4"),
-"combat_idle_right": SubResource("Animation_laip1"),
-"combat_idle_up": SubResource("Animation_u0cfi"),
-"idle_down": SubResource("Animation_sdypn"),
-"idle_left": SubResource("Animation_wlpyt"),
-"idle_right": SubResource("Animation_2q0fv"),
-"idle_up": SubResource("Animation_84cvb"),
-"ranged_attack_down": SubResource("Animation_ki53r"),
-"ranged_attack_left": SubResource("Animation_hwar7"),
-"ranged_attack_right": SubResource("Animation_f11ki"),
-"ranged_attack_up": SubResource("Animation_5odvk")
+&"RESET": SubResource("Animation_btjvw"),
+&"basic_attack_down": SubResource("Animation_q0pmb"),
+&"basic_attack_left": SubResource("Animation_3usi1"),
+&"basic_attack_right": SubResource("Animation_m1nvy"),
+&"basic_attack_up": SubResource("Animation_i0r8w"),
+&"combat_idle_down": SubResource("Animation_c27va"),
+&"combat_idle_left": SubResource("Animation_vn0b4"),
+&"combat_idle_right": SubResource("Animation_laip1"),
+&"combat_idle_up": SubResource("Animation_u0cfi"),
+&"idle_down": SubResource("Animation_sdypn"),
+&"idle_left": SubResource("Animation_wlpyt"),
+&"idle_right": SubResource("Animation_2q0fv"),
+&"idle_up": SubResource("Animation_84cvb"),
+&"ranged_attack_down": SubResource("Animation_ki53r"),
+&"ranged_attack_left": SubResource("Animation_hwar7"),
+&"ranged_attack_right": SubResource("Animation_f11ki"),
+&"ranged_attack_up": SubResource("Animation_5odvk")
 }
 
 [node name="ShadowHand" instance=ExtResource("1_gtf1f")]
@@ -1117,5 +1117,5 @@ texture = ExtResource("3_u6rdn")
 
 [node name="ActionAnimator" parent="." index="4"]
 libraries = {
-"": SubResource("AnimationLibrary_7bsyh")
+&"": SubResource("AnimationLibrary_7bsyh")
 }
