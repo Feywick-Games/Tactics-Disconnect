@@ -44,26 +44,3 @@ func change_state(state : State) -> void:
 	state.state_machine = self
 	state.enter()
 	_current_state = state
-
-
-func get_owner_node(type : StringName, recursive := false) -> Node:
-	if not state_owner.is_class(type):
-		var candidates : Array[Node] = state_owner.find_children("*", type, recursive)
-		if not candidates.is_empty():
-			return candidates[0]
-	else:
-		return state_owner
-	return null
-
-
-func get_owner_nodes(type : StringName, recursive := false) -> Array[Node]:
-	var out : Array[Node] = []
-	if state_owner.get_class() == type:
-		out.append(state_owner)
-	var candidates : Array[Node] = state_owner.find_children("*", type, recursive)
-	out.append_array(candidates)
-	return out
-
-
-func get_owner_node_by_unique_name(u_name : StringName):
-	return state_owner.get_node("%" + u_name)

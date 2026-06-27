@@ -6,7 +6,7 @@ signal statuses_displayed
 @export
 var miss_color: Color = "#70e0d5"
 @export
-var miss_outline_color = "#1e6485"
+var miss_outline_color: Color = "#1e6485"
 @export
 var damage_color: Color = "#f7f7f5"
 @export
@@ -17,7 +17,7 @@ var stun_color: Color = "#de9b54"
 @onready
 var animator: AnimationPlayer = $LabelAnimator
 @onready
-var status_label = $StatusLabel
+var status_label : Label = $StatusLabel
 
 var _started_animations: int
 var _queued_statuses: Array[StatusEffect]

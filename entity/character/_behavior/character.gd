@@ -133,7 +133,6 @@ func drop_weapon() -> void:
 	#TODO play drop animation on skill animator
 
 
-
 func process_status_effect(effect: StatusEffect) -> void:
 	if effect.status == Combat.Status.HIT:
 		health -= round(effect.value * effect.multiplier)
@@ -164,7 +163,7 @@ func end_turn() -> void:
 	for effect: StatusEffect in status:
 		effect.duration -= 1
 	
-	status = status.filter(func(x: StatusEffect): return x.duration > 0)
+	status = status.filter(func(x: StatusEffect) -> float: return x.duration > 0)
 	
 	for effect: StatusEffect in status:
 		process_status_effect(effect)

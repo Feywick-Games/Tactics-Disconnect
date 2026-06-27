@@ -92,7 +92,7 @@ func get_tile_distance(start_tile: Vector2i, end_tile: Vector2i, disable_unit_bl
 	var revert_end := false
 	
 	if disable_unit_blocks:
-		for tile in _unit_registry.keys():
+		for tile: Vector2i in _unit_registry.keys():
 			set_point_solid(_unit_registry[tile].current_tile, false)
 			
 	
@@ -106,7 +106,7 @@ func get_tile_distance(start_tile: Vector2i, end_tile: Vector2i, disable_unit_bl
 	var out : int = get_id_path(start_tile, end_tile).size() - 1
 	
 	if disable_unit_blocks:
-		for tile in _unit_registry.keys():
+		for tile: Vector2i in _unit_registry.keys():
 			set_point_solid(_unit_registry[tile].current_tile)
 	
 	if revert_start:
@@ -148,7 +148,7 @@ is_range := false, direct := false) -> RangeStruct:
 		for tile in _prop_tiles:
 			set_point_solid(tile, false)
 			_pass_tiles.append(tile)
-		for tile in _unit_registry.keys():
+		for tile: Vector2i in _unit_registry.keys():
 			if tile != unit_tile:
 				set_point_solid(tile, false)
 				_unit_tiles.append(tile)

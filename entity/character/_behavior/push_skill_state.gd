@@ -44,7 +44,7 @@ func enter() -> void:
 		
 		if unit:
 			_o_target = unit
-	var skill_range = GameState.current_level.grid.request_range(_target_tile, 0, 
+	var skill_range: RangeStruct = GameState.current_level.grid.request_range(_target_tile, 0, 
 		_max_push_distance, Combat.RangeShape.CROSS, true, true
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
@@ -79,7 +79,7 @@ func update(delta: float) -> State:
 					_time_since_increment = 0
 					increment += 1
 					if increment > _max_push_distance:
-						var unit = GameState.current_level.grid.get_unit_from_tile(_target_tile)
+						var unit: Character = GameState.current_level.grid.get_unit_from_tile(_target_tile)
 						var damage_state := DamageState.new(_skill, _character.facing,  _character.accuracy, _character.target_hit)
 						unit.state_requested.emit(damage_state)
 						if not _skill.is_animated: 
@@ -92,7 +92,7 @@ func update(delta: float) -> State:
 				
 			# TODO account for push animation
 			else:
-				var is_hit = _target_unit.is_hit(_character.accuracy)
+				var is_hit: bool = _target_unit.is_hit(_character.accuracy)
 				if is_hit:
 					_tile_path = _tile_path.slice(0, increment + 1)
 					var push_damage_state := PushDamageState.new(_tile_path, _o_target, _skill, _direction, INF, _character.target_hit)

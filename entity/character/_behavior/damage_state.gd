@@ -42,7 +42,6 @@ func _on_hit() -> void:
 	_hit = true
 
 
-
 func update(delta: float) -> State:
 	var parent_state: State = super.update(delta)
 	if parent_state:

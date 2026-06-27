@@ -73,7 +73,7 @@ func enter() -> void:
 	if not should_custom:
 		_target = _pick_target(target_list, all_allies)
 		if _target:
-			var target_tile = _pick_tile()
+			var target_tile: Vector2i = _pick_tile()
 			_attack_range = _enemy.update_ranges(_movement_range,  _interactable_range)
 			_tile_path = _movement_astar.get_id_path(_enemy.current_tile, target_tile)
 	else:
@@ -107,7 +107,7 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 				continue
 			target_priority.distance = 1 - (target_priority.distance/float(_enemy.movement_range))
 			target_priority.distance *= Enemy.DISTANCE_PRIORITY
-			var damage_likelihood =  float(_enemy.accuracy) / float(target.evasion)
+			var damage_likelihood: float =  float(_enemy.accuracy) / float(target.evasion)
 			target_priority.knock_out_likelihood = 1 if target.health - _enemy.basic_skill.get_hit_damage() < 0 else 0
 			target_priority.knock_out_likelihood *= damage_likelihood
 		_is_acting = false
@@ -120,7 +120,7 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 			var enemy_max_skill_range: float = max(_enemy.basic_skill.max_range, _enemy.special.max_range)
 			target_priority.distance = 1 - (target_priority.distance/float(enemy_max_skill_range))
 
-			var damage_likelihood =  float(_enemy.accuracy) / float(target.evasion)
+			var damage_likelihood: float =  float(_enemy.accuracy) / float(target.evasion)
 			target_priority.knock_out_likelihood = 1 if target.health - _enemy.basic_skill.get_hit_damage() < 0 else 0
 			target_priority.knock_out_likelihood *= damage_likelihood * _enemy.knock_out_priority
 			if target.current_tile in _full_attack_range.range_tiles: 
@@ -161,7 +161,7 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 
 
 func _pick_tile() -> Vector2i:
-	var desired_skill = _enemy.basic_skill if _enemy.attack_state == Combat.AttackState.BASIC else _enemy.special
+	var desired_skill: Skill = _enemy.basic_skill if _enemy.attack_state == Combat.AttackState.BASIC else _enemy.special
 	var skill_state: SkillState = (desired_skill.state.new(desired_skill, _target.current_tile) as SkillState)
 	#var ideal_distance: int = desired_skill.max_range
 	var desired_tile: Vector2i = _start_tile

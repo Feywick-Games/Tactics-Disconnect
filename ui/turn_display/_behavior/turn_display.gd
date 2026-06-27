@@ -110,7 +110,7 @@ func _on_unit_died(unit: Character) -> void:
 	if not _units.is_empty():
 		var idx: int = _units.find(unit)
 		_units.remove_at(idx)
-		var child = _turn_portraits[idx]
+		var child: Node = _turn_portraits[idx]
 		_turn_portraits.remove_at(idx)
 		child.queue_free()
 		

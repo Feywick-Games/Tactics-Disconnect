@@ -6,7 +6,7 @@ const GRID_DRAW_TIME: float = 1
 var _encounter_started: bool
 var _time_since_grid_tile: float = 0
 var _current_cell_x: int = 0
-var _time_per_grid_tile
+var _time_per_grid_tile: float
 var _reverse_build_grid := false
 
 var map_complete: bool
@@ -131,9 +131,9 @@ func _populate_grid() -> void:
 	for y:int in range(o_rect.position.y, o_rect.end.y):
 		for x:int in range(o_rect.position.x, o_rect.end.x):
 			var tile := Vector2i(x,y)
-			var source_id = _floor_layer.get_cell_source_id(tile)
-			var prop_source_id = _prop_layer.get_cell_source_id(tile)
-			var item_source_id = _item_layer.get_cell_source_id(tile)
+			var source_id : int = _floor_layer.get_cell_source_id(tile)
+			var prop_source_id : int = _prop_layer.get_cell_source_id(tile)
+			var item_source_id : int = _item_layer.get_cell_source_id(tile)
 			var floor_tile_data : TileData =  _floor_layer.get_cell_tile_data(tile) if source_id != -1 else null
 			if source_id == -1 or \
 			(floor_tile_data and floor_tile_data.has_custom_data("border") and floor_tile_data.get_custom_data("border")):
