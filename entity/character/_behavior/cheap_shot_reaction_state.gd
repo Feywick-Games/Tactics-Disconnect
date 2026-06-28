@@ -13,8 +13,7 @@ func enter() -> void:
 	_character.animator.animation_finished.connect(_on_animation_finished)
 	var damage_state := DamageState.new(_reaction, direction, INF, _character.target_hit, 1, false)
 	_target.state_requested.emit(damage_state)
-	if not _reaction.is_animated:
-		_character.notify_impact()
+	_character.notify_impact()
 
 
 func update(delta: float) -> State:

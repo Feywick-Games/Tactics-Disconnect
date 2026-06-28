@@ -173,8 +173,7 @@ func process_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState)
 	var dir := Vector2(tile - current_tile).normalized()
 	facing = Vector2i(dir)
 	
-	if is_animated:
-		animator.play_directional("idle", dir)
+	animator.play_directional("idle", dir)
 	
 	
 	if tile in attack_range.range_tiles:
@@ -302,11 +301,10 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 		var map_position := GameState.current_level.tile_to_world(current_tile)
 		if path_position.distance_to(global_position) > SNAP_DISTANCE:
 			var dir: Vector2 = (path_position - global_position).normalized()
-			global_position += dir * Global.PLAYER_SPEED * 4.0 * delta
+			global_position += dir * Global.PLAYER_SPEED * delta
 			global_position = global_position.snapped(Vector2(2,1))
-			if is_animated:
-				var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
-				animator.play_directional(animation, anim_dir)
+			var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
+			animator.play_directional(animation, anim_dir)
 		if not path_position.distance_to(global_position) > SNAP_DISTANCE:
 			if len(tile_path) == 1:
 				global_position = path_position.round()

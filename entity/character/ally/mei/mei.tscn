@@ -53,6 +53,7 @@ material = SubResource("ShaderMaterial_donae")
 position = Vector2(0, 0)
 texture = ExtResource("13_f7r05")
 offset = Vector2(0, -14)
+flip_h = true
 vframes = 3
 
 [node name="CollisionShape2D" parent="." index="4" unique_id=974221274]

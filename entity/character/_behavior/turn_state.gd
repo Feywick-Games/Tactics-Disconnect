@@ -26,8 +26,7 @@ func enter() -> void:
 	EventBus.encounter_ended.connect(_on_encounter_ended)
 	calc_default_ranges()
 	
-	if _character.is_animated:
-		_character.animator.play_directional("idle")
+	_character.animator.play_directional("idle")
 	
 	_starting_movement_range = _movement_range
 

@@ -7,8 +7,7 @@ func enter() -> void:
 	super.enter()
 	#TODO make directional animations
 	_direction = VectorF.snap_direction(_target_tile - _character.current_tile)
-	if _character.is_animated:
-		_character.animator.play_directional(_skill.character_animation, _direction)
+	_character.animator.play_directional(_skill.character_animation, _direction)
 	
 	if not _skill.skill_animation.is_empty():
 		_character.skill_animator.play_directional(_skill.skill_animation, _direction)

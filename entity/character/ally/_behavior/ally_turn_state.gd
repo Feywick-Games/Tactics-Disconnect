@@ -37,20 +37,32 @@ func update(delta: float) -> State:
 		
 		if reticle_dir != Vector2i.ZERO and _time_since_update_reticle > TIME_TILL_UPDATE_RETICLE:
 			_time_since_update_reticle = 0
+			# facing will favor not rotating when angle is 45 degrees
 			hover_tile = _attack_range.get_neighbor(hover_tile, reticle_dir)
-
-	if Input.is_action_pressed("move") and not acted:
-		var n_vec : Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-		if _ally.current_tile + Vector2i(n_vec) in _movement_range.range_tiles:
-			_tile_path = [_ally.current_tile + Vector2i(n_vec)]
-			_moving = true
 			
-	elif acted and _highlighted_tile != hover_tile and \
-	(hover_tile in _attack_range.range_tiles or hover_tile in _interactable_range):
-		_highlight_targets(hover_tile)
-		_highlighted_tile = hover_tile
-		
+			
+			var face_vec: Vector2 = hover_tile - _ally.current_tile
+			
+			if not is_equal_approx(abs(face_vec.x), abs(face_vec.y)):
+				face_vec = Vector2i(VectorF.snap_direction(face_vec.normalized()))
+				_ally.facing = face_vec
+				_ally.animator.play_directional("idle", _ally.facing)
+			
+	
 	if not _moving:
+		if Input.is_action_pressed("move") and not acted:
+			var n_vec : Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+			if _ally.current_tile + Vector2i(n_vec) in _movement_range.range_tiles:
+				_tile_path = [_ally.current_tile + Vector2i(n_vec)]
+				_moving = true
+			_ally.facing = n_vec
+			_ally.animator.play_directional("idle", _ally.facing)
+			
+		elif acted and _highlighted_tile != hover_tile and \
+		(hover_tile in _attack_range.range_tiles or hover_tile in _interactable_range):
+			_highlight_targets(hover_tile)
+			_highlighted_tile = hover_tile
+		
 		if Input.is_action_just_pressed("guard"):
 				_ally.get_viewport().set_input_as_handled()
 				_ally.facing = Vector2i.ZERO

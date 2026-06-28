@@ -21,8 +21,9 @@ func enter() -> void:
 	EventBus.tiles_highlighted.connect(_on_tiles_highlighted)
 	EventBus.reaction_requested.connect(_on_reaction_requested)
 	_character.state_requested.connect(_on_state_requested)
+	# TODO: Replace with combat idle
 	if _character.is_animated:
-		_character.animator.play_directional("combat_idle", Vector2.ZERO)
+		_character.animator.play_directional("idle", Vector2.ZERO)
 
 
 func _on_state_requested(state: State) -> void:

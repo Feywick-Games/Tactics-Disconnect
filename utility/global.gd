@@ -7,7 +7,7 @@ enum PhysicsLayers {
 	ALLY = 3
 }
 
-const PLAYER_SPEED: float = 50
+const PLAYER_SPEED: float = 150
 const TILE_SIZE := Vector2i(30, 30)
 
 const BATTLE_MAP_ATLAS_COORDS := Vector2.ZERO
