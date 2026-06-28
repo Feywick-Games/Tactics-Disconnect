@@ -74,6 +74,11 @@ func erase_prop(tile: Vector2i) -> void:
 	_passable_tiles.erase(tile)
 
 
+func is_point_solid_ignore_unit(tile: Vector2i) -> bool:
+	return is_point_solid(tile) and not tile in _unit_registry.keys()
+	
+	
+
 func get_unit_from_tile(tile: Vector2i) -> Character:
 	if _unit_registry.has(tile):
 		return _unit_registry[tile]
@@ -93,7 +98,7 @@ func get_tile_distance(start_tile: Vector2i, end_tile: Vector2i, disable_unit_bl
 	if disable_unit_blocks:
 		for tile: Vector2i in _unit_registry.keys():
 			set_point_solid(_unit_registry[tile].current_tile, false)
-			
+	
 	
 	if is_point_solid(start_tile):
 		set_point_solid(start_tile, false)

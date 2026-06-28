@@ -37,7 +37,8 @@ func enter() -> void:
 			break
 	
 	var collision_point := _target_tile + (_direction * (_max_push_distance + 1))
-	if GameState.current_level.grid.is_point_solid(collision_point):
+	if GameState.current_level.grid.region.has_point(collision_point) and \
+	GameState.current_level.grid.is_point_solid(collision_point):
 		_max_is_collision = true
 		
 		var unit := GameState.current_level.grid.get_unit_from_tile(collision_point)

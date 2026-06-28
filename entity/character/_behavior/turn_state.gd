@@ -16,6 +16,7 @@ var _start_tile: Vector2i
 var _exiting := false
 var _encounter_ended := false
 var _highlighted_tile: Vector2i
+var _moving := false
 
 func enter() -> void:
 	_character = state_machine.state_owner as Character
@@ -54,6 +55,8 @@ func physics_update(delta: float) -> State:
 	if _time_since_move > Character.TIME_PER_MOVE:
 		_time_since_move = 0
 		_tile_path =  _character.process_movement(delta, _tile_path)
+		if _tile_path.is_empty():
+			_moving = false
 	return
 
 
@@ -70,7 +73,7 @@ func _on_encounter_ended() -> void:
 	
 	
 	
-func _highlight_targets(target_tile: Vector2i, highlight := true) -> void:
+func _highlight_targets(target_tile: Vector2i) -> void:
 	var direction: Vector2 = VectorF.snap_direction(target_tile - _character.current_tile)
 	var aoe: Array[Vector2i]
 	var range_type: Combat.RangeType
@@ -105,21 +108,16 @@ func _highlight_targets(target_tile: Vector2i, highlight := true) -> void:
 			
 			highlighted_tiles.append(tile)
 			
-			if tile in _attack_range.range_tiles:
-				GameState.current_level.select_tile(tile, highlight)
-			else:
-				if highlight:
-					var is_floor := GameState.current_level.grid.region.has_point(tile) \
-					and GameState.current_level.grid.is_point_solid(tile)
-					
-					if not is_floor:
-						continue
-					
-					var atlas_coords := GameState.current_level.reticle.get_cell_atlas_coords(target_tile)
-					atlas_coords.x = 1
-					GameState.current_level.reticle.set_cell(tile, 0, atlas_coords)
-	else:
-		GameState.current_level.select_tile(target_tile, highlight)
+			if not tile in _attack_range.range_tiles:
+				var is_valid := GameState.current_level.grid.region.has_point(tile) \
+				and not GameState.current_level.grid.is_point_solid_ignore_unit(tile)
+				
+				if not is_valid:
+					continue
+				
 
-	if highlight:
-		EventBus.tiles_highlighted.emit(highlighted_tiles, status_effects, _character.accuracy, Vector2i(direction), _character is Ally)
+			GameState.current_level.select_tile(tile)
+	else:
+		GameState.current_level.select_tile(target_tile)
+
+	EventBus.tiles_highlighted.emit(highlighted_tiles, status_effects, _character.accuracy, Vector2i(direction), _character is Ally)

@@ -202,7 +202,7 @@ func update(delta: float) -> State:
 				if not _has_highlighted:
 					_movement_range = RangeStruct.new()
 					_has_highlighted = true
-					_highlight_targets(_target.current_tile, true)
+					_highlight_targets(_target.current_tile)
 				_time_highlight += delta
 		elif _exiting or (_tile_path.is_empty() and not _is_acting):
 			_enemy.end_turn()
