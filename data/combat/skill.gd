@@ -2,11 +2,19 @@ class_name Skill
 extends Resource
 
 const DEFAULT_STICKER: Texture2D= preload("res://ui/sticker/_sprite/sticker_basic_attack.png")
+const UI_SMALL_DIMENSIONS: Vector2i = Vector2i(16,16)
+const UI_LARGE_DIMENSIONS: Vector2i = Vector2i(60,60)
+const DEFAULT_UI_SMALL: Texture2D = preload("res://ui/skill_select/_sprite/skill_select_small.png")
+const DEFAULT_UI_LARGE: Texture2D = preload("res://ui/skill_select/_sprite/skill_select_large.png")
 
 @export
-var name: String
+var ui_small: Texture2D = DEFAULT_UI_SMALL
 @export
-var sticker: Texture2D = DEFAULT_STICKER
+var ui_large: Texture2D = DEFAULT_UI_LARGE
+@export
+var name: String
+@export_multiline
+var flavor_text: String
 @export
 var character_animation: String
 @export

@@ -17,20 +17,13 @@ var previous_screen_buffer: ImageTexture = ImageTexture.new()
 [node name="Game" type="Node" unique_id=1708488857]
 script = ExtResource("1_h64b8")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=904174406]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0605303, 0.0605303, 0.0605303, 1)
-
 [node name="LevelViewportContainer" type="SubViewportContainer" parent="." unique_id=1211502279]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 stretch = true
 stretch_shrink = 2
 script = SubResource("GDScript_42g76")

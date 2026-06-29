@@ -20,6 +20,9 @@ var is_animated := false
 var character_name: String
 @export
 var turn_portrait_scene: PackedScene
+@export
+var small_portrait: Texture2D
+
 
 @export_category("Gameplay")
 @export
@@ -30,8 +33,6 @@ var init_state: GDScript
 var turn_state: GDScript
 @export
 var basic_skill: Skill
-@export
-var special: Skill
 @export
 var reactions: Array[Reaction]
 
@@ -69,6 +70,7 @@ var item: Item
 # TODO remove
 var processing_action := false
 var reacting := false
+var special: Skill
 
 var _state_machine: StateMachine
 
@@ -108,7 +110,9 @@ func start_encounter() -> void:
 	damage_bar.step = float(health_bar.max_value) / HEALTH_BAR_PIXEL_WIDTH
 
 
+
 func end_encounter() -> void:
+	#TODO: A fun animation!
 	pass
 
 

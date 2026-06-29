@@ -7,8 +7,6 @@
 [ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="4_1eaca"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="4_u3oph"]
 [ext_resource type="AudioStream" uid="uid://b30sxiykj4mbk" path="res://data/sfx/combat/blunt_impact.ogg" id="4_ugnqj"]
-[ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="5_84nbx"]
-[ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://entity/character/ally/izzy/_special/push_skill.tres" id="7_as5tn"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="8_5ecx1"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="8_foua0"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_txnat"]
@@ -30,7 +28,7 @@ aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
 cast_sfx = ExtResource("3_xs5to")
 hit_sfx = ExtResource("4_ugnqj")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_donae"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_347bk"]
 resource_local_to_scene = true
 shader = ExtResource("8_txnat")
 shader_parameter/highlighted = false
@@ -40,7 +38,6 @@ shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 character_name = "Mei"
 turn_portrait_scene = ExtResource("2_6fea8")
 basic_skill = SubResource("Resource_1kfok")
-special = ExtResource("7_as5tn")
 reactions = Array[ExtResource("8_foua0")]([ExtResource("8_5ecx1")])
 _movement_range = 3
 
@@ -49,7 +46,7 @@ offset_left = -17.0
 offset_right = 23.0
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_donae")
+material = SubResource("ShaderMaterial_347bk")
 position = Vector2(0, 0)
 texture = ExtResource("13_f7r05")
 offset = Vector2(0, -14)

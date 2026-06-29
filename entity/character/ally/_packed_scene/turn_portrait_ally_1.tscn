@@ -1,5 +1,5 @@
-[gd_scene load_steps=2 format=3 uid="uid://f4x7mg2o6cwa"]
+[gd_scene format=3 uid="uid://f4x7mg2o6cwa"]
 
 [ext_resource type="PackedScene" uid="uid://bcnpnplhpud5y" path="res://ui/turn_display/_packed_scene/turn_portrait.tscn" id="1_n8vio"]
 
-[node name="TurnPortrait" instance=ExtResource("1_n8vio")]
+[node name="TurnPortrait" unique_id=536368809 instance=ExtResource("1_n8vio")]

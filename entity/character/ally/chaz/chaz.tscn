@@ -7,8 +7,8 @@
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="3_2xm6s"]
 [ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_jfry1"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="4_a4nkn"]
-[ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="5_uuy70"]
-[ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://entity/character/ally/izzy/_special/push_skill.tres" id="6_f6ndk"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="5_p3pb6"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="6_78ula"]
 [ext_resource type="Texture2D" uid="uid://co1ekey8q8lj4" path="res://entity/character/ally/chaz/_sprite/chaz_unit_sprite.png" id="10_p3pb6"]
 
 [sub_resource type="Resource" id="Resource_n0ksn"]
@@ -25,7 +25,7 @@ status_effects = Array[ExtResource("4_a4nkn")]([SubResource("Resource_n0ksn")])
 range_type = 1
 direct = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_78ula"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iylvh"]
 resource_local_to_scene = true
 shader = ExtResource("2_ey6y0")
 shader_parameter/highlighted = false
@@ -167,7 +167,6 @@ _data = {
 [node name="Chaz" unique_id=1270059331 instance=ExtResource("1_telll")]
 character_name = "Chaz"
 basic_skill = SubResource("Resource_sfhtk")
-special = ExtResource("6_f6ndk")
 reactions = Array[ExtResource("2_iylvh")]([ExtResource("3_2xm6s")])
 
 [node name="HealthBar" parent="." index="0" unique_id=1956210959]
@@ -179,7 +178,7 @@ pivot_offset = Vector2(0, 0)
 pivot_offset = Vector2(0, 0)
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_78ula")
+material = SubResource("ShaderMaterial_iylvh")
 position = Vector2(0, -2)
 texture = ExtResource("10_p3pb6")
 offset = Vector2(0, -15)

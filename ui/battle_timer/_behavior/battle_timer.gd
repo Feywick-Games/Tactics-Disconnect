@@ -26,6 +26,7 @@ func _on_turn_started(unit: Character) -> void:
 		show()
 		
 		running = true
+		self.modulate = Color.WHITE
 	else:
 		self.modulate = Color.GRAY
 	value = 0

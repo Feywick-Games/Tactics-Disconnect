@@ -15,7 +15,7 @@ var _sticker_parent: TextureRect =  _sticker_highlight.get_parent()
 
 func _ready() -> void:
 	hide()
-	EventBus.turn_started.connect(_on_turn_started)
+	#EventBus.turn_started.connect(_on_turn_started)
 
 
 func _on_turn_started(unit: Character) -> void:

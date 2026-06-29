@@ -8,9 +8,10 @@
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="6_41vbx"]
 [ext_resource type="Script" uid="uid://k0aef4avj0d7" path="res://entity/character/_behavior/cheap_shot_reaction_state.gd" id="7_atdio"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="8_k82rh"]
-[ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="9_p5evn"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="10_vcdsl"]
 [ext_resource type="PackedScene" uid="uid://r5sdcdlxfmjr" path="res://entity/character/ally/chaz/chaz.tscn" id="10_ymq17"]
 [ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="11_0hr4q"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="11_tql3s"]
 [ext_resource type="PackedScene" uid="uid://bhfdokg7y4yll" path="res://ui/combat_ui.tscn" id="12_8u7tc"]
 [ext_resource type="PackedScene" uid="uid://cqgaf4b8quup7" path="res://entity/character/enemy/enemy.tscn" id="13_wu2vm"]
 
@@ -71,15 +72,15 @@ position = Vector2(-10, 0)
 tile_set = ExtResource("4_b6nyy")
 
 [node name="Izzy" parent="." unique_id=1102113605 instance=ExtResource("5_c38kb")]
-position = Vector2(385, 195)
-follow_order = 0
+position = Vector2(385, 135)
 reactions = Array[ExtResource("6_41vbx")]([SubResource("Resource_bvir6")])
 
 [node name="Chaz" parent="." unique_id=642596448 instance=ExtResource("10_ymq17")]
-position = Vector2(385, 165)
+position = Vector2(355, 75)
+skills_dealt = 2
 
 [node name="Mei" parent="." unique_id=1357384696 instance=ExtResource("11_0hr4q")]
-position = Vector2(325, 195)
+position = Vector2(355, 165)
 
 [node name="CombatUI" parent="." unique_id=889214481 instance=ExtResource("12_8u7tc")]
 
@@ -105,4 +106,4 @@ position = Vector2(475, 105)
 position = Vector2(205, 195)
 
 [node name="Enemy4" parent="." unique_id=578864682 instance=ExtResource("13_wu2vm")]
-position = Vector2(445, 285)
+position = Vector2(475, 315)

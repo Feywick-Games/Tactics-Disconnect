@@ -13,7 +13,7 @@ var _is_first_turn := false
 
 func _ready() -> void:
 	EventBus.turn_ended.connect(_start_turn)
-	EventBus.encounter_started.connect(_on_encounter_started)
+	EventBus.skills_selected.connect(_on_first_skills_selected)
 	hide()
 
 
@@ -79,7 +79,8 @@ func _process(_delta: float) -> void:
 		EventBus.turn_started.emit(_current_unit)
 
 
-func _on_encounter_started() -> void:
+func _on_first_skills_selected() -> void:
+	EventBus.skills_selected.disconnect(_on_first_skills_selected)
 	_turn_pending = false
 	_is_first_turn = true
 	if not visible:
@@ -98,6 +99,7 @@ func _on_encounter_started() -> void:
 		var turn_portrait: TurnPortrait = unit.turn_portrait_scene.instantiate()
 		turn_portrait.set_portrait_name(unit.character_name)
 		_turn_portraits.append(turn_portrait)
+
 
 func _increment_unit_index(val: int = 1) -> void:
 	if _current_unit_idx + val < len(_units):

@@ -23,3 +23,9 @@ signal reaction_requested(unit: Character)
 signal timed_out
 @warning_ignore("unused_signal")
 signal timer_stopped
+@warning_ignore("unused_signal")
+signal skill_progress_ready
+@warning_ignore("unused_signal")
+signal skills_selected
+@warning_ignore("unused_signal")
+signal skill_select_opened
