@@ -7,10 +7,20 @@ var _small_portrait: Sprite2D = $SmallPortrait
 var _full_portrait: Sprite2D = $FullPortrait
 @onready
 var _animation_player: AnimationPlayer = $AnimationPlayer
+var _character: Character
 
 
 func _ready() -> void:
 	reset_portrait()
+
+
+func update() -> void:
+	if _character.special:
+		$SmallPortrait/SpecialIcon.texture = _character.special.ui_small
+		$FullPortrait/SpecialIcon.texture = _character.special.ui_small
+	else:
+		$SmallPortrait/SpecialIcon.hide()
+		$FullPortrait/SpecialIcon.hide()
 
 
 func display_full_portrait() -> void:
@@ -29,5 +39,6 @@ func reset_portrait() -> void:
 	custom_minimum_size = Vector2(20,20)
 
 
-func set_portrait_name(portrait_name: String) -> void:
-	$FullPortrait/Label.text = portrait_name
+func set_up(character: Character) -> void:
+	_character = character
+	$FullPortrait/Label.text = character.character_name

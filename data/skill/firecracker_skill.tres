@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://bqo8sq4s2xdqn"]
+
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="1_mti8u"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="2_iuub7"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="2_pppiw"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="3_pppiw"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="4_wlp52"]
+
+[sub_resource type="Resource" id="Resource_4npnc"]
+script = ExtResource("2_iuub7")
+value = 3
+metadata/_custom_type_script = "uid://c5gnxjiq5craw"
+
+[resource]
+script = ExtResource("1_mti8u")
+flavor_text = "Toss a firecracker for a small scattered explosion. Make 'em dance."
+max_range = 3
+state = ExtResource("2_pppiw")
+status_effects = Array[ExtResource("2_iuub7")]([SubResource("Resource_4npnc")])
+aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(-1, 1), Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, -1)])
+range_type = 1
+metadata/_custom_type_script = "uid://de4pxhpt4mw5u"

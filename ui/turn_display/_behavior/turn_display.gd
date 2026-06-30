@@ -50,13 +50,15 @@ func _start_turn() -> void:
 		_is_first_turn = false
 		for turn_portrait: TurnPortrait in _turn_portraits:
 			add_child(turn_portrait)
-
+	
+	for _turn_portrait: TurnPortrait in _turn_portraits:
+		_turn_portrait.update()
+	
 	_turn_portraits[_current_unit_idx].reset_portrait()
 	move_child(_turn_portraits[_current_unit_idx], -1)
 	_increment_unit_index()
 	var turn_portait := _turn_portraits[_current_unit_idx]
 	turn_portait.display_full_portrait()
-	
 	_turn_pending = true
 
 
@@ -97,7 +99,7 @@ func _on_first_skills_selected() -> void:
 		_units.append(unit)
 		unit.died.connect(_on_unit_died.bind(unit))
 		var turn_portrait: TurnPortrait = unit.turn_portrait_scene.instantiate()
-		turn_portrait.set_portrait_name(unit.character_name)
+		turn_portrait.set_up(unit)
 		_turn_portraits.append(turn_portrait)
 
 

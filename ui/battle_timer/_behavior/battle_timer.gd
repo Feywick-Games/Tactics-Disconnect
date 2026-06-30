@@ -10,15 +10,22 @@ func _ready() -> void:
 	value = 0
 	max_value = Global.TIMER_MAX_VALUE
 	EventBus.timer_stopped.connect(_on_timer_stopped)
-	hide()
+	EventBus.skill_select_opened.connect(_on_timer_stopped)
+	EventBus.skills_selected.connect(_on_skills_selected)
+	#hide()
 
 
 func _on_timer_stopped() -> void:
 	running = false
 
 
+func _on_skills_selected() -> void:
+	running = true
+
+
 func _on_encounter_ended() -> void:
-	hide()
+	#hide()
+	pass
 
 
 func _on_turn_started(unit: Character) -> void:

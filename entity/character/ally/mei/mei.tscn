@@ -8,8 +8,10 @@
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="4_u3oph"]
 [ext_resource type="AudioStream" uid="uid://b30sxiykj4mbk" path="res://data/sfx/combat/blunt_impact.ogg" id="4_ugnqj"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="8_5ecx1"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="8_donae"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="8_foua0"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_txnat"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="9_6mqmc"]
 [ext_resource type="Texture2D" uid="uid://dewnewtudvcvl" path="res://entity/character/ally/mei/_sprite/mei_unit_sprite.png" id="13_f7r05"]
 [ext_resource type="AnimationLibrary" uid="uid://ewg20gm6aiio" path="res://entity/character/_data/basic_animations.tres" id="14_donae"]
 
@@ -28,7 +30,7 @@ aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
 cast_sfx = ExtResource("3_xs5to")
 hit_sfx = ExtResource("4_ugnqj")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_347bk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2qvxt"]
 resource_local_to_scene = true
 shader = ExtResource("8_txnat")
 shader_parameter/highlighted = false
@@ -46,7 +48,7 @@ offset_left = -17.0
 offset_right = 23.0
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_347bk")
+material = SubResource("ShaderMaterial_2qvxt")
 position = Vector2(0, 0)
 texture = ExtResource("13_f7r05")
 offset = Vector2(0, -14)

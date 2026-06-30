@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcnpnplhpud5y"]
+[gd_scene format=3 uid="uid://bcnpnplhpud5y"]
 
 [ext_resource type="Script" uid="uid://2qyte71pf454" path="res://ui/turn_display/_behavior/turn_portrait.gd" id="1_egx1p"]
 [ext_resource type="Texture2D" uid="uid://bnaof4rcviqee" path="res://entity/character/ally/_sprite/turn_portrait_small.png" id="2_wjbv8"]
 [ext_resource type="Texture2D" uid="uid://ck7ju73ierpxf" path="res://entity/character/ally/_sprite/turn_portrait_full_ally_1.png" id="3_4o6fg"]
 [ext_resource type="FontFile" uid="uid://c5u4kdxxyrrmr" path="res://ui/font/dogicabold.ttf" id="4_uw6gj"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="5_lyams"]
 
 [sub_resource type="Animation" id="Animation_66erf"]
 length = 0.001
@@ -43,29 +44,37 @@ _data = {
 &"turn_start": SubResource("Animation_v1sgi")
 }
 
-[node name="TurnPortrait" type="Control"]
+[node name="TurnPortrait" type="Control" unique_id=1652300559]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_egx1p")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=552612329]
 root_node = NodePath("../SmallPortrait")
-libraries = {
-"": SubResource("AnimationLibrary_4qkdn")
-}
+libraries/ = SubResource("AnimationLibrary_4qkdn")
 
-[node name="SmallPortrait" type="Sprite2D" parent="."]
+[node name="SmallPortrait" type="Sprite2D" parent="." unique_id=1066073387]
 texture = ExtResource("2_wjbv8")
 centered = false
 hframes = 4
 
-[node name="FullPortrait" type="Sprite2D" parent="."]
+[node name="SpecialIcon" type="Sprite2D" parent="SmallPortrait" unique_id=1787723907]
+position = Vector2(30, 8)
+texture = ExtResource("5_lyams")
+hframes = 2
+
+[node name="FullPortrait" type="Sprite2D" parent="." unique_id=102064676]
 texture = ExtResource("3_4o6fg")
 centered = false
 hframes = 7
 
-[node name="Label" type="Label" parent="FullPortrait"]
+[node name="SpecialIcon" type="Sprite2D" parent="FullPortrait" unique_id=1555864502]
+position = Vector2(70, 8)
+texture = ExtResource("5_lyams")
+hframes = 2
+
+[node name="Label" type="Label" parent="FullPortrait" unique_id=674781161]
 offset_left = 2.0
 offset_top = 53.0
 offset_right = 61.0

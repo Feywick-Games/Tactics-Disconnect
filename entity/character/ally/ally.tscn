@@ -8,10 +8,10 @@
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="3_yu75v"]
 [ext_resource type="Script" uid="uid://djcfelq0k45il" path="res://entity/character/ally/_behavior/ally_turn_state.gd" id="4_4us3o"]
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://entity/item/_data/bash.tres" id="4_8qh5r"]
-[ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://entity/character/ally/izzy/_special/push_skill.tres" id="5_fsllm"]
+[ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://data/skill/push_skill.tres" id="5_fsllm"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="6_153dm"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6it85"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yu75v"]
 resource_local_to_scene = true
 shader = ExtResource("6_153dm")
 shader_parameter/highlighted = false
@@ -32,7 +32,7 @@ init_state = ExtResource("3_8jy3i")
 turn_state = ExtResource("4_4us3o")
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_6it85")
+material = SubResource("ShaderMaterial_yu75v")
 position = Vector2(0, 9)
 texture = ExtResource("2_momam")
 offset = Vector2(0, -20)

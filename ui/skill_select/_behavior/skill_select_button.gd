@@ -14,18 +14,21 @@ var _skill: Skill
 var _skill_tex := AtlasTexture.new()
 var _skill_tex_disable := AtlasTexture.new()
 var selected := false
+var has_skill: bool:
+	get:
+		return _skill != null
 
 @onready
 var focus_material: ShaderMaterial = load("res://ui/skill_select/_material/button_focus_material.tres")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	disabled = true
 	_empty_tex.atlas = UI_EMPTY_ATLAS
 	_empty_tex.region = Rect2(Vector2.ZERO, Skill.UI_SMALL_DIMENSIONS)
-	_empty_tex.atlas = UI_EMPTY_ATLAS
-	_empty_tex.region = Rect2(Vector2(Skill.UI_SMALL_DIMENSIONS.x, 0), Skill.UI_SMALL_DIMENSIONS)
-	texture_disabled = _empty_tex
+	_empty_tex_disable.atlas = UI_EMPTY_ATLAS
+	_empty_tex_disable.region = Rect2(Vector2(Skill.UI_SMALL_DIMENSIONS.x, 0), Skill.UI_SMALL_DIMENSIONS)
+	texture_normal = _empty_tex
+	texture_disabled = _empty_tex_disable
 	pressed.connect(_on_button_pressed)
 	focus_entered.connect(_on_focus_entered)
 	focus_exited.connect(_on_focus_exited)
@@ -58,7 +61,6 @@ func reset() -> void:
 
 
 func unload() -> void:
-	disabled = true
 	texture_disabled = _empty_tex
 	_skill = null
 	_ally = null
@@ -67,7 +69,6 @@ func unload() -> void:
 
 
 func setup(ally: Ally, skill: Skill) -> void:
-	disabled = false
 	_skill_tex = AtlasTexture.new()
 	_skill_tex.atlas = skill.ui_small
 	_skill_tex.region = Rect2(Vector2.ZERO, Skill.UI_SMALL_DIMENSIONS)

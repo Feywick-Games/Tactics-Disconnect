@@ -46,7 +46,7 @@ bg_color = Color(0.38039216, 0.27058825, 0.3647059, 1)
 [node name="CombatUI" type="CanvasLayer" unique_id=788298229]
 script = ExtResource("1_d34a4")
 
-[node name="Default" type="PanelContainer" parent="." unique_id=1722263771]
+[node name="CombatPanel" type="PanelContainer" parent="." unique_id=1722263771]
 custom_minimum_size = Vector2(160, 360)
 custom_maximum_size = Vector2(160, 360)
 offset_right = 160.0
@@ -56,18 +56,18 @@ size_flags_vertical = 0
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxTexture_lj3ej")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Default" unique_id=1858205998]
+[node name="VBoxContainer" type="VBoxContainer" parent="CombatPanel" unique_id=1858205998]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 10
 
-[node name="MarginContainer2" type="MarginContainer" parent="Default/VBoxContainer" unique_id=1629645335]
+[node name="MarginContainer2" type="MarginContainer" parent="CombatPanel/VBoxContainer" unique_id=1629645335]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 
-[node name="BattleTimer" type="TextureProgressBar" parent="Default/VBoxContainer/MarginContainer2" unique_id=618262420]
+[node name="BattleTimer" type="TextureProgressBar" parent="CombatPanel/VBoxContainer/MarginContainer2" unique_id=618262420]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 16.0
@@ -78,14 +78,15 @@ texture_over = ExtResource("3_fndsw")
 texture_progress = ExtResource("4_cy5jr")
 script = ExtResource("5_tvp2d")
 
-[node name="MarginContainer" type="MarginContainer" parent="Default/VBoxContainer" unique_id=354752036]
+[node name="MarginContainer" type="MarginContainer" parent="CombatPanel/VBoxContainer" unique_id=354752036]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Default/VBoxContainer/MarginContainer" unique_id=884471705]
+[node name="HBoxContainer" type="HBoxContainer" parent="CombatPanel/VBoxContainer/MarginContainer" unique_id=884471705]
 layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="SkillProgress" type="ProgressBar" parent="Default/VBoxContainer/MarginContainer/HBoxContainer" unique_id=213505277]
+[node name="SkillProgress" type="ProgressBar" parent="CombatPanel/VBoxContainer/MarginContainer/HBoxContainer" unique_id=213505277]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(12, 220)
 layout_mode = 2
@@ -98,20 +99,20 @@ show_percentage = false
 script = ExtResource("7_x5dgg")
 active_material = ExtResource("7_783s8")
 
-[node name="TurnDisplay" type="BoxContainer" parent="Default/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1113997059]
+[node name="TurnDisplay" type="BoxContainer" parent="CombatPanel/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1113997059]
 custom_minimum_size = Vector2(160, 0)
 custom_maximum_size = Vector2(160, -1)
 layout_mode = 2
 vertical = true
 script = ExtResource("1_xgp2v")
 
-[node name="MarginContainer3" type="MarginContainer" parent="Default" unique_id=1189455006]
+[node name="MarginContainer3" type="MarginContainer" parent="CombatPanel" unique_id=1189455006]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_bottom = 8
 
-[node name="StickerLayout" type="HBoxContainer" parent="Default/MarginContainer3" unique_id=587997664]
+[node name="StickerLayout" type="HBoxContainer" parent="CombatPanel/MarginContainer3" unique_id=587997664]
 process_mode = 4
 visible = false
 texture_filter = 1
@@ -119,11 +120,11 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 script = ExtResource("6_0110n")
 
-[node name="BasicSkillSticker" type="TextureRect" parent="Default/MarginContainer3/StickerLayout" unique_id=447291771]
+[node name="BasicSkillSticker" type="TextureRect" parent="CombatPanel/MarginContainer3/StickerLayout" unique_id=447291771]
 layout_mode = 2
 texture = ExtResource("7_k13u7")
 
-[node name="StickerHighlight" type="ReferenceRect" parent="Default/MarginContainer3/StickerLayout/BasicSkillSticker" unique_id=859490508]
+[node name="StickerHighlight" type="ReferenceRect" parent="CombatPanel/MarginContainer3/StickerLayout/BasicSkillSticker" unique_id=859490508]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
@@ -140,11 +141,12 @@ grow_horizontal = 2
 grow_vertical = 2
 editor_only = false
 
-[node name="SpecialSticker" type="TextureRect" parent="Default/MarginContainer3/StickerLayout" unique_id=648701146]
+[node name="SpecialSticker" type="TextureRect" parent="CombatPanel/MarginContainer3/StickerLayout" unique_id=648701146]
 layout_mode = 2
 texture = ExtResource("8_ibp8q")
 
 [node name="SkillSelect" type="PanelContainer" parent="." unique_id=1241665158]
+visible = false
 custom_minimum_size = Vector2(160, 360)
 custom_maximum_size = Vector2(160, 360)
 offset_right = 160.0

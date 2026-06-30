@@ -17,10 +17,6 @@ var special_priority: float = 0.75
 @export_range(0,1)
 var custom_priority: float = 0
 
-@export_category("Gameplay")
-var default_special: Skill
-
 
 func _ready() -> void:
 	super._ready()
-	special = default_special

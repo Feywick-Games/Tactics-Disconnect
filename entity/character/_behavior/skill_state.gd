@@ -32,7 +32,9 @@ func end_turn() -> void:
 
 func exit() -> void:
 	super.exit()
-	_skill.cool_down_status = 0
+	if _character is Ally:
+		if _skill == _character.special:
+			_character.special = null
 
 
 func calc_skill_likelihood(strike_tile : Vector2i) -> float:

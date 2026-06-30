@@ -30,6 +30,15 @@ var go_button: TextureButton = %GoButton
 func _ready() -> void:
 	EventBus.encounter_started.connect(_on_skill_select_opened)
 	EventBus.skill_select_opened.connect(_on_skill_select_opened)
+	go_button.pressed.connect(_on_go_button_pressed)
+	hide()
+
+
+func _on_go_button_pressed() -> void:
+	for unit: Ally in unit_skills_selected.keys():
+		unit.special = unit_skills_selected[unit]
+		unit.current_skill_hand.erase(unit.special)
+	EventBus.skills_selected.emit()
 	hide()
 
 
@@ -71,7 +80,7 @@ func _generate_button_neighbors() -> void:
 	for button_list: UnitSkillList in %UnitSkills.get_children():
 		button_matrix.append([])
 		for button: SkillSelectButton in button_list.skill_buttons:
-			if not button.disabled or button.selected:
+			if button.has_skill and (not button.disabled or button.selected):
 				button_matrix[-1].append(button)
 		
 	for y in range(button_matrix.size()):

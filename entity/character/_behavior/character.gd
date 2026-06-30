@@ -34,6 +34,8 @@ var turn_state: GDScript
 @export
 var basic_skill: Skill
 @export
+var special: Skill
+@export
 var reactions: Array[Reaction]
 
 @export_category("Unit Stats")
@@ -70,7 +72,6 @@ var item: Item
 # TODO remove
 var processing_action := false
 var reacting := false
-var special: Skill
 
 var _state_machine: StateMachine
 
@@ -99,8 +100,6 @@ func _ready() -> void:
 
 
 func start_encounter() -> void:
-	if special:
-		special.cool_down_status = special.cool_down
 	health = max_health
 	health_bar.max_value = max_health
 	health_bar.value = health
@@ -147,11 +146,6 @@ func process_status_effect(effect: StatusEffect) -> void:
 
 
 func start_turn() -> void:
-	basic_skill.cool_down_status = min(basic_skill.cool_down_status + 1, basic_skill.cool_down)
-	
-	if special:
-		special.cool_down_status = min(special.cool_down_status + 1, special.cool_down)
-
 	health_bar.value = health
 	health_bar.show()
 

@@ -28,8 +28,6 @@ var range_shape: Combat.RangeShape = Combat.RangeShape.DIAMOND
 @export
 var state: GDScript
 @export
-var cool_down: int
-@export
 var status_effects: Array[StatusEffect]
 @export
 var aoe: Array[Vector2i] = [Vector2i.ZERO]
@@ -45,15 +43,13 @@ var cast_sfx: AudioStream
 @export
 var hit_sfx: AudioStream
 
-var cool_down_status: int
 
 func _init() -> void:
 	resource_local_to_scene = true
-	cool_down_status = cool_down
 
 
 func is_ready() -> bool:
-	return cool_down_status == cool_down
+	return true
 
 func get_hit_damage() -> int:
 	var damage_status := status_effects.filter(func(x: StatusEffect) -> bool: return true if x.status == Combat.Status.HIT else false)
