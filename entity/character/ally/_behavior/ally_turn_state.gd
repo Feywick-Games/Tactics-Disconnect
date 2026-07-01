@@ -9,6 +9,8 @@ var force_redraw := false
 var _time_since_update_reticle : float = 0
 var _input_buffered: Callable
 var _skill_select_opened := false
+var _wait_range: RangeStruct
+var waited := false
 
 func enter() -> void:
 	super.enter()
@@ -67,15 +69,27 @@ func _on_skill_select_pressed() -> void:
 	if GameState.is_skill_select_ready:
 		_skill_select_opened = true
 		EventBus.skill_select_opened.emit()
+		
+		_ally.attack_state = Combat.AttackState.BASIC
+		
+		if acted:
+			EventBus.tiles_highlighted.emit(
+				[] as Array[Vector2i], [] as Array[StatusEffect], 0, Vector2i.ZERO, true
+			)
+		force_redraw = true
+		
 	
 	
 func _on_movememen_input(input_vec: Vector2i) -> State:
 	var hover_tile: Vector2i = _highlighted_tile
 	
-	if acted:
+	if acted or waited:
 		if input_vec != Vector2i.ZERO:
 			# facing will favor not rotating when angle is 45 degrees
-			hover_tile = _attack_range.get_neighbor(hover_tile, input_vec)
+			if acted:
+				hover_tile = _attack_range.get_neighbor(hover_tile, input_vec) 
+			else:
+				hover_tile = _wait_range.get_neighbor(hover_tile, input_vec)
 			
 			var face_vec: Vector2 = hover_tile - _ally.current_tile
 			
@@ -84,9 +98,13 @@ func _on_movememen_input(input_vec: Vector2i) -> State:
 				_ally.facing = face_vec
 				_ally.animator.play_directional("idle", _ally.facing)
 			
-		if _highlighted_tile != hover_tile and \
-		(hover_tile in _attack_range.range_tiles or hover_tile in _interactable_range):
-			_highlight_targets(hover_tile)
+		if _highlighted_tile != hover_tile:
+			if acted:
+				_highlight_targets(hover_tile)
+			elif waited:
+				GameState.current_level.select_tile(_highlighted_tile, false)
+				GameState.current_level.select_tile(hover_tile, true)
+			
 			_highlighted_tile = hover_tile
 	else:
 		if _ally.current_tile + Vector2i(input_vec) in _movement_range.range_tiles:
@@ -97,13 +115,35 @@ func _on_movememen_input(input_vec: Vector2i) -> State:
 	
 	return
 
+
 func _on_guard_pressed() -> State:
 	_ally.get_viewport().set_input_as_handled()
-	_ally.facing = Vector2i.ZERO
+	waited = true
 	#TODO add exit animation where they align themselves on the tile 
 	_ally.global_position = GameState.current_level.tile_to_world(_ally.current_tile)
-	_ally.end_turn()
-	return CharacterCombatIdleState.new()
+	_wait_range = RangeStruct.new()
+	_wait_range.range_tiles = [
+		_ally.current_tile + Vector2i.LEFT, _ally.current_tile + Vector2i.RIGHT
+		, _ally.current_tile + Vector2i.UP, _ally.current_tile + Vector2i.DOWN
+	]
+	
+	GameState.current_level.reset_map()
+	
+	for tile : Vector2i in _wait_range.range_tiles:
+		if tile - _ally.current_tile == Vector2i.RIGHT:
+			GameState.current_level.draw_range([tile], Global.RETICLE_FACING_RIGHT)
+		elif tile - _ally.current_tile == Vector2i.DOWN:
+			GameState.current_level.draw_range([tile], Global.RETICLE_FACING_DOWN)
+		elif tile - _ally.current_tile == Vector2i.LEFT:
+			GameState.current_level.draw_range([tile], Global.RETICLE_FACING_LEFT)
+		else:
+			GameState.current_level.draw_range([tile], Global.RETICLE_FACING_UP)
+
+	_highlighted_tile = _ally.current_tile + _ally.facing
+	GameState.current_level.select_tile(_highlighted_tile)
+	
+	return
+
 
 
 func _on_cancel_pressed() -> State:
@@ -112,6 +152,10 @@ func _on_cancel_pressed() -> State:
 		EventBus.tiles_highlighted.emit(
 			[] as Array[Vector2i], [] as Array[StatusEffect], 0, Vector2i.ZERO, true
 		)
+		_movement_range = _starting_movement_range
+		force_redraw = true
+	elif waited:
+		waited = false
 		_movement_range = _starting_movement_range
 		force_redraw = true
 	return
@@ -124,8 +168,6 @@ func _on_special_pressed() -> State:
 		_ally.attack_state = Combat.AttackState.BASIC
 	elif _ally.attack_state == Combat.AttackState.ITEM:
 		_ally.attack_state = Combat.AttackState.ITEM
-	force_redraw = true
-		
 		
 	if acted:
 		EventBus.tiles_highlighted.emit(
@@ -138,20 +180,22 @@ func _on_special_pressed() -> State:
 
 func _on_accept_pressed() -> State:
 	var current_state: State
-	if not acted:
-		acted = true
-		force_redraw = true
-		_movement_range = RangeStruct.new()
-		_highlighted_tile = _ally.current_tile + _ally.facing
-	elif  Input.is_action_just_pressed("accept") and acted:
+	if waited:
+		end_turn()
+	elif acted:
 		current_state = _ally.process_action(_highlighted_tile, _attack_range, self)
 		if current_state:
 			force_redraw = true
 		if interacted:
 			_movement_range = RangeStruct.new()
-			_interactable_range = GameState.current_level.get_interactable_tiles(_movement_range.range_tiles)
-	
+			_interactable_range = GameState.current_level.get_interactable_tiles(_movement_range.range_tiles)	
+	else:
+		acted = true
+		force_redraw = true
+		_movement_range = RangeStruct.new()
+		_highlighted_tile = _ally.current_tile + _ally.facing
 	return current_state
+
 
 func physics_update(delta: float) -> State:
 	var current_tile: Vector2i = _ally.current_tile
