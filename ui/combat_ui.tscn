@@ -46,7 +46,6 @@ bg_color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 script = ExtResource("1_d34a4")
 
 [node name="CombatPanel" type="PanelContainer" parent="." unique_id=1722263771]
-visible = false
 custom_minimum_size = Vector2(160, 360)
 custom_maximum_size = Vector2(160, 360)
 offset_right = 160.0
@@ -146,6 +145,7 @@ layout_mode = 2
 texture = ExtResource("8_ibp8q")
 
 [node name="SkillSelect" type="PanelContainer" parent="." unique_id=1241665158]
+visible = false
 custom_minimum_size = Vector2(160, 360)
 custom_maximum_size = Vector2(160, 360)
 offset_right = 160.0

@@ -26,7 +26,6 @@ character_animation = "idle"
 range_shape = 1
 state = ExtResource("4_1eaca")
 status_effects = Array[ExtResource("4_u3oph")]([SubResource("Resource_n0ksn")])
-aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
 cast_sfx = ExtResource("3_xs5to")
 hit_sfx = ExtResource("4_ugnqj")
 

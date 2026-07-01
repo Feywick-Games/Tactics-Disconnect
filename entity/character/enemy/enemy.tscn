@@ -187,7 +187,7 @@ material = SubResource("ShaderMaterial_7emr5")
 position = Vector2(0, 1)
 texture = ExtResource("12_ejq46")
 offset = Vector2(0, -18)
-vframes = 4
+vframes = 3
 
 [node name="CollisionShape2D" parent="." index="3" unique_id=974221274]
 shape = SubResource("RectangleShape2D_p01wl")
