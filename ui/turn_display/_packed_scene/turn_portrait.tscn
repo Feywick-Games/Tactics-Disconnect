@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://bnaof4rcviqee" path="res://entity/character/ally/_sprite/turn_portrait_small.png" id="2_wjbv8"]
 [ext_resource type="Texture2D" uid="uid://ck7ju73ierpxf" path="res://entity/character/ally/_sprite/turn_portrait_full_ally_1.png" id="3_4o6fg"]
 [ext_resource type="FontFile" uid="uid://c5u4kdxxyrrmr" path="res://ui/font/dogicabold.ttf" id="4_uw6gj"]
-[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="5_lyams"]
 
 [sub_resource type="Animation" id="Animation_66erf"]
 length = 0.001
@@ -59,20 +58,10 @@ texture = ExtResource("2_wjbv8")
 centered = false
 hframes = 4
 
-[node name="SpecialIcon" type="Sprite2D" parent="SmallPortrait" unique_id=1787723907]
-position = Vector2(30, 8)
-texture = ExtResource("5_lyams")
-hframes = 2
-
 [node name="FullPortrait" type="Sprite2D" parent="." unique_id=102064676]
 texture = ExtResource("3_4o6fg")
 centered = false
 hframes = 7
-
-[node name="SpecialIcon" type="Sprite2D" parent="FullPortrait" unique_id=1555864502]
-position = Vector2(70, 8)
-texture = ExtResource("5_lyams")
-hframes = 2
 
 [node name="Label" type="Label" parent="FullPortrait" unique_id=674781161]
 offset_left = 2.0

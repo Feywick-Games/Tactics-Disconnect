@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://1b4s8nyecy85" path="res://entity/character/_behavior/push_skill_state.gd" id="2_m6ah6"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="3_f2nxr"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="4_hf5mm"]
-[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="5_dlvoi"]
+[ext_resource type="Texture2D" uid="uid://coa7cv3cuilvn" path="res://ui/skill_select/_sprite/skill_select_throw.png" id="5_20208"]
 
 [sub_resource type="Resource" id="Resource_dj1am"]
 script = ExtResource("3_f2nxr")
@@ -17,6 +17,7 @@ value = 4
 
 [resource]
 script = ExtResource("1_20208")
+ui_small = ExtResource("5_20208")
 name = "Push"
 flavor_text = "Hold A to send the opponent flying up to 5 spaces"
 skill_animation = "idle"

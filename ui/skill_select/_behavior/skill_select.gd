@@ -19,7 +19,7 @@ var skill_damage_label: Label = %DamageLabel
 @onready
 var range_label: Label = %RangeLabel
 @onready
-var aoe_display: AoeDisplay = %AoeDisplay
+var aoe_display: PanelContainer = %AoeDisplay
 @onready
 var flavor_text_label: Label = %FlavorText
 @onready
@@ -87,8 +87,7 @@ func _generate_button_neighbors() -> void:
 		for x in range(button_matrix[y].size()):
 			var button: SkillSelectButton = button_matrix[y][x]
 			if button.selected:
-				# minus one is due to sharing a vbox container with the character sprite
-				x = button.get_index() - 1
+				x = button.get_index()
 			
 			var left_neighbor := Vector2i(x-1,y)
 			var right_neighbor := Vector2i(x+1,y)

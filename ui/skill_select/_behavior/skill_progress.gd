@@ -21,6 +21,7 @@ func _ready() -> void:
 func _on_skills_selected() -> void:
 	value = 0
 	material = null
+	GameState.is_skill_select_ready = false
 
 
 func _progress_bar_full() -> void:

@@ -64,8 +64,9 @@ func update(delta: float) -> State:
 	
 	
 func _on_skill_select_pressed() -> void:
-	_skill_select_opened = true
-	EventBus.skill_select_opened.emit()
+	if GameState.is_skill_select_ready:
+		_skill_select_opened = true
+		EventBus.skill_select_opened.emit()
 	
 	
 func _on_movememen_input(input_vec: Vector2i) -> State:
@@ -142,7 +143,7 @@ func _on_accept_pressed() -> State:
 		force_redraw = true
 		_movement_range = RangeStruct.new()
 		_highlighted_tile = _ally.current_tile + _ally.facing
-	elif  Input.is_action_just_pressed("accept") and acted and _highlighted_tile != _ally.current_tile:
+	elif  Input.is_action_just_pressed("accept") and acted:
 		current_state = _ally.process_action(_highlighted_tile, _attack_range, self)
 		if current_state:
 			force_redraw = true

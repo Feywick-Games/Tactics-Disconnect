@@ -19,7 +19,6 @@
 [ext_resource type="Texture2D" uid="uid://im7d1hlkamrm" path="res://ui/skill_select/_sprite/skill_portrait_large.tres" id="14_aodrh"]
 [ext_resource type="Texture2D" uid="uid://dgfvy6r6euw80" path="res://ui/skill_select/_sprite/skill_damage_bg.png" id="15_ldlo4"]
 [ext_resource type="PackedScene" uid="uid://df28cltbdfj46" path="res://ui/skill_select/_packed_scene/unit_skill_list.tscn" id="16_ldlo4"]
-[ext_resource type="Script" uid="uid://ckaeclvtl5vle" path="res://ui/skill_select/_behavior/aoe_display.gd" id="17_ouag7"]
 [ext_resource type="Texture2D" uid="uid://c4uuseoxq4cs3" path="res://ui/skill_select/_sprite/go_button.tres" id="17_x2wyr"]
 [ext_resource type="Texture2D" uid="uid://j7vcaum0wxr6" path="res://ui/skill_select/_sprite/go_button_pressed.tres" id="22_ddd4e"]
 [ext_resource type="Texture2D" uid="uid://dgadll1iljejh" path="res://ui/skill_select/_sprite/go_button_hover.tres" id="22_werr3"]
@@ -38,15 +37,16 @@ bg_color = Color(0.8784314, 0.62352943, 0.36862746, 1)
 texture = ExtResource("11_vmh3g")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s57jr"]
-bg_color = Color(0.38039216, 0.27058825, 0.3647059, 1)
+bg_color = Color(0.32156864, 0.19607843, 0.45882353, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aodrh"]
-bg_color = Color(0.38039216, 0.27058825, 0.3647059, 1)
+bg_color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
 [node name="CombatUI" type="CanvasLayer" unique_id=788298229]
 script = ExtResource("1_d34a4")
 
 [node name="CombatPanel" type="PanelContainer" parent="." unique_id=1722263771]
+visible = false
 custom_minimum_size = Vector2(160, 360)
 custom_maximum_size = Vector2(160, 360)
 offset_right = 160.0
@@ -146,7 +146,6 @@ layout_mode = 2
 texture = ExtResource("8_ibp8q")
 
 [node name="SkillSelect" type="PanelContainer" parent="." unique_id=1241665158]
-visible = false
 custom_minimum_size = Vector2(160, 360)
 custom_maximum_size = Vector2(160, 360)
 offset_right = 160.0
@@ -156,6 +155,9 @@ size_flags_vertical = 0
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxTexture_tn4br")
 script = ExtResource("12_t6stw")
+aoe_empty_color = Color(0.22745098, 0.16078432, 0.36862746, 1)
+aoe_origin_color = Color(0.92941177, 1, 1, 1)
+aoe_fill_color = Color(0.9098039, 0.23921569, 0.42745098, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SkillSelect" unique_id=367068634]
 layout_mode = 2
@@ -257,7 +259,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_s57jr")
-script = ExtResource("17_ouag7")
 
 [node name="MarginContainer" type="MarginContainer" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay" unique_id=2069650285]
 layout_mode = 2
@@ -276,151 +277,151 @@ columns = 5
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=64488192]
+[node name="ColorRect2" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1071336175]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect3" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1968360956]
+[node name="ColorRect3" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1752734660]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect4" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1835005713]
+[node name="ColorRect4" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1563437656]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect5" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=989211209]
+[node name="ColorRect5" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1452495650]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect6" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1243434558]
+[node name="ColorRect6" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=240487472]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect7" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1995028773]
+[node name="ColorRect7" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=571621113]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect8" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1683365082]
+[node name="ColorRect8" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=179716546]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect9" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=2066292093]
+[node name="ColorRect9" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=234264262]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect10" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1190776069]
+[node name="ColorRect10" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1411984737]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect11" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=2137987491]
+[node name="ColorRect11" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=395493470]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect12" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1578211431]
+[node name="ColorRect12" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=582674055]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect13" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1273564212]
+[node name="ColorRect13" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=36786285]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect14" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=265251706]
+[node name="ColorRect14" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=984409956]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect15" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1762849840]
+[node name="ColorRect15" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1802432763]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect16" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1551971479]
+[node name="ColorRect16" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1916457542]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect17" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=595545751]
+[node name="ColorRect17" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=41359733]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect18" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=178438656]
+[node name="ColorRect18" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1713839754]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect19" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1434922954]
+[node name="ColorRect19" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=173961725]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect20" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=2146210384]
+[node name="ColorRect20" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1337168540]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect21" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1751980930]
+[node name="ColorRect21" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1922942447]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect22" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=964085014]
+[node name="ColorRect22" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=664721974]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect23" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=593816595]
+[node name="ColorRect23" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1072589792]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect24" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=495290682]
+[node name="ColorRect24" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1028155280]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
-[node name="ColorRect25" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=628384447]
+[node name="ColorRect25" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=962115726]
 custom_minimum_size = Vector2(10, 10)
 custom_maximum_size = Vector2(10, 10)
 layout_mode = 2
-color = Color(0.2627451, 0.1882353, 0.27058825, 1)
+color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
 [node name="SkillTextContainer" type="MarginContainer" parent="SkillSelect/VBoxContainer" unique_id=528305178]
 layout_mode = 2

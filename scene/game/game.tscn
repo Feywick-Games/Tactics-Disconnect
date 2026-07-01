@@ -25,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 stretch = true
-stretch_shrink = 2
+stretch_shrink = 3
 script = SubResource("GDScript_42g76")
 
 [node name="LevelViewport" type="SubViewport" parent="LevelViewportContainer" unique_id=1672208821]

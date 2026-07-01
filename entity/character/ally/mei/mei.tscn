@@ -30,7 +30,7 @@ aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
 cast_sfx = ExtResource("3_xs5to")
 hit_sfx = ExtResource("4_ugnqj")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2qvxt"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_donae"]
 resource_local_to_scene = true
 shader = ExtResource("8_txnat")
 shader_parameter/highlighted = false
@@ -48,11 +48,10 @@ offset_left = -17.0
 offset_right = 23.0
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_2qvxt")
+material = SubResource("ShaderMaterial_donae")
 position = Vector2(0, 0)
 texture = ExtResource("13_f7r05")
 offset = Vector2(0, -14)
-flip_h = true
 vframes = 3
 
 [node name="CollisionShape2D" parent="." index="4" unique_id=974221274]

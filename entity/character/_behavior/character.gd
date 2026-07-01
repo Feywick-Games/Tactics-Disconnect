@@ -187,7 +187,8 @@ func process_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState)
 		var unit: Character
 		
 		for aoe_tile in aoe:
-			unit = GameState.current_level.grid.get_unit_from_tile(tile + aoe_tile)
+			var offset_rotated: = Vector2i(Vector2(aoe_tile).rotated(Vector2(facing).angle()))
+			unit = GameState.current_level.grid.get_unit_from_tile(tile + offset_rotated)
 			if unit:
 				break
 		
