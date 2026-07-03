@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://1olldk31cxwg"]
+
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="1_e6vaf"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="2_ce0ms"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="2_j8fil"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="3_j8fil"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="4_upbgl"]
+
+[sub_resource type="Resource" id="Resource_e6vaf"]
+script = ExtResource("2_ce0ms")
+status = 3
+value = -8
+metadata/_custom_type_script = "uid://c5gnxjiq5craw"
+
+[resource]
+script = ExtResource("1_e6vaf")
+name = "Flirty Gaze"
+flavor_text = "Bat your eyelashes to stop your enemies in their tracks."
+character_animation = "idle"
+max_range = 3
+state = ExtResource("2_j8fil")
+status_effects = Array[ExtResource("2_ce0ms")]([SubResource("Resource_e6vaf")])
+range_type = 1
+metadata/_custom_type_script = "uid://de4pxhpt4mw5u"

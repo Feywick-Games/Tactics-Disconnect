@@ -26,6 +26,7 @@ func update(_delta: float) -> State:
 
 
 func exit() -> void:
+	_character.action_processed.emit()
 	_reaction.processed = true
 
 

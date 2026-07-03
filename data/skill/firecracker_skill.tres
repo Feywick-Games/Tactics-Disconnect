@@ -16,6 +16,7 @@ script = ExtResource("1_mti8u")
 ui_small = ExtResource("5_iuub7")
 name = "Firecracker"
 flavor_text = "Toss a firecracker for a small scattered explosion. Make 'em dance."
+character_animation = "idle"
 max_range = 3
 state = ExtResource("2_pppiw")
 status_effects = Array[ExtResource("2_iuub7")]([SubResource("Resource_4npnc")])

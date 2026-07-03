@@ -18,7 +18,8 @@ func _hit_targets(aoe: Array[Vector2i], range_type: Combat.RangeType) -> void:
 	_action_to_process = 0
 	for tile_offset in aoe:
 		var tile: Vector2i
-		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(_direction.angle()))
+		print("direction: " + str(rad_to_deg(_direction.angle())))
+		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(_direction.angle()).round())
 		if range_type == Combat.RangeType.MELEE:
 			tile = _character.current_tile + Vector2i(_direction) + offset_rotated
 		else:
@@ -29,6 +30,7 @@ func _hit_targets(aoe: Array[Vector2i], range_type: Combat.RangeType) -> void:
 			_action_to_process += 1
 			var damage_state := DamageState.new(_skill, _direction, _character.accuracy, _character.target_hit)
 			unit.state_requested.emit(damage_state)
+	
 	if not _skill.is_animated:
 		await _character.get_tree().create_timer(1).timeout
 		_character.notify_impact()

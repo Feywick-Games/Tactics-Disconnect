@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_jfry1"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="4_a4nkn"]
 [ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://data/skill/push_skill.tres" id="4_uuy70"]
-[ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://entity/item/_data/bash.tres" id="5_f6ndk"]
+[ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="5_f6ndk"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="5_p3pb6"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="6_78ula"]
 [ext_resource type="Texture2D" uid="uid://co1ekey8q8lj4" path="res://entity/character/ally/chaz/_sprite/chaz_unit_sprite.png" id="10_p3pb6"]

@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://ipqdqm3f4xnq" path="res://ui/skill_select/_sprite/skill_title_bg.png" id="12_0xnnb"]
 [ext_resource type="Script" uid="uid://c75u3t3tkruq1" path="res://ui/skill_select/_behavior/skill_select.gd" id="12_t6stw"]
 [ext_resource type="FontFile" uid="uid://cs5prw3u7po3j" path="res://ui/font/aseprite.otf" id="13_kie5x"]
+[ext_resource type="FontFile" uid="uid://csbndd6gje51v" path="res://ui/font/Early GameBoy.ttf" id="13_riw5p"]
 [ext_resource type="Texture2D" uid="uid://im7d1hlkamrm" path="res://ui/skill_select/_sprite/skill_portrait_large.tres" id="14_aodrh"]
 [ext_resource type="Texture2D" uid="uid://dgfvy6r6euw80" path="res://ui/skill_select/_sprite/skill_damage_bg.png" id="15_ldlo4"]
 [ext_resource type="PackedScene" uid="uid://df28cltbdfj46" path="res://ui/skill_select/_packed_scene/unit_skill_list.tscn" id="16_ldlo4"]
@@ -78,6 +79,8 @@ texture_progress = ExtResource("4_cy5jr")
 script = ExtResource("5_tvp2d")
 
 [node name="MarginContainer" type="MarginContainer" parent="CombatPanel/VBoxContainer" unique_id=354752036]
+custom_maximum_size = Vector2(160, 220)
+clip_contents = true
 layout_mode = 2
 theme_override_constants/margin_left = 20
 
@@ -112,14 +115,13 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_bottom = 8
 
 [node name="StickerLayout" type="HBoxContainer" parent="CombatPanel/MarginContainer3" unique_id=587997664]
-process_mode = 4
-visible = false
 texture_filter = 1
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 script = ExtResource("6_0110n")
 
 [node name="BasicSkillSticker" type="TextureRect" parent="CombatPanel/MarginContainer3/StickerLayout" unique_id=447291771]
+visible = false
 layout_mode = 2
 texture = ExtResource("7_k13u7")
 
@@ -144,8 +146,17 @@ editor_only = false
 layout_mode = 2
 texture = ExtResource("8_ibp8q")
 
+[node name="SpecialLabel" type="Label" parent="CombatPanel/MarginContainer3/StickerLayout" unique_id=1637388866]
+custom_minimum_size = Vector2(80, 0)
+custom_maximum_size = Vector2(80, -1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_riw5p")
+theme_override_font_sizes/font_size = 9
+text = "My Skill"
+vertical_alignment = 1
+autowrap_mode = 3
+
 [node name="SkillSelect" type="PanelContainer" parent="." unique_id=1241665158]
-visible = false
 custom_minimum_size = Vector2(160, 360)
 custom_maximum_size = Vector2(160, 360)
 offset_right = 160.0
@@ -185,11 +196,13 @@ texture = ExtResource("12_0xnnb")
 
 [node name="SkillName" type="Label" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/SkillContainer/SkillNameBG" unique_id=1126227107]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(56, 16)
+custom_maximum_size = Vector2(56, 16)
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
-offset_right = 31.0
-offset_bottom = 9.0
+offset_right = 58.0
+offset_bottom = 18.0
 theme_override_fonts/font = ExtResource("13_kie5x")
 theme_override_font_sizes/font_size = 7
 text = "My Skill"
@@ -468,7 +481,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_override_constants/margin_right = 18
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_bottom = 12
 
 [node name="GoButton" type="TextureButton" parent="SkillSelect/MarginContainer" unique_id=1735347814]
 unique_name_in_owner = true

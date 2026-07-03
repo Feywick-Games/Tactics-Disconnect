@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="11_0hr4q"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="11_tql3s"]
 [ext_resource type="PackedScene" uid="uid://bhfdokg7y4yll" path="res://ui/combat_ui.tscn" id="12_8u7tc"]
+[ext_resource type="PackedScene" uid="uid://bvmot03d4vcap" path="res://entity/character/ally/peggy/peggy.tscn" id="13_qbfaq"]
 [ext_resource type="PackedScene" uid="uid://cqgaf4b8quup7" path="res://entity/character/enemy/enemy.tscn" id="13_wu2vm"]
 
 [sub_resource type="Resource" id="Resource_lxfmk"]
@@ -74,14 +75,19 @@ tile_set = ExtResource("4_b6nyy")
 [node name="Izzy" parent="." unique_id=1102113605 instance=ExtResource("5_c38kb")]
 position = Vector2(415, 135)
 reactions = Array[ExtResource("6_41vbx")]([SubResource("Resource_bvir6")])
+max_health = 24
 
 [node name="Chaz" parent="." unique_id=642596448 instance=ExtResource("10_ymq17")]
-position = Vector2(385, 105)
+position = Vector2(385, 135)
+max_health = 24
 
 [node name="Mei" parent="." unique_id=1357384696 instance=ExtResource("11_0hr4q")]
 position = Vector2(355, 165)
+max_health = 24
 
-[node name="CombatUI" parent="." unique_id=889214481 instance=ExtResource("12_8u7tc")]
+[node name="Peggy" parent="." unique_id=264392964 instance=ExtResource("13_qbfaq")]
+position = Vector2(385, 195)
+max_health = 24
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=44297935]
 
@@ -101,6 +107,9 @@ position = Vector2(565, 135)
 [node name="Enemy5" parent="." unique_id=1334997669 instance=ExtResource("13_wu2vm")]
 position = Vector2(235, 135)
 
+[node name="Enemy6" parent="." unique_id=483672272 instance=ExtResource("13_wu2vm")]
+position = Vector2(265, 165)
+
 [node name="Enemy2" parent="." unique_id=1335484027 instance=ExtResource("13_wu2vm")]
 position = Vector2(475, 105)
 
@@ -109,3 +118,8 @@ position = Vector2(205, 195)
 
 [node name="Enemy4" parent="." unique_id=578864682 instance=ExtResource("13_wu2vm")]
 position = Vector2(475, 285)
+
+[node name="Enemy7" parent="." unique_id=2041806145 instance=ExtResource("13_wu2vm")]
+position = Vector2(565, 225)
+
+[node name="CombatUI" parent="." unique_id=889214481 instance=ExtResource("12_8u7tc")]

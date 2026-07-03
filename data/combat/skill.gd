@@ -24,6 +24,8 @@ var max_range: int = 1
 @export
 var min_range: int
 @export
+var move_position: Vector2i = Vector2i.ZERO
+@export
 var range_shape: Combat.RangeShape = Combat.RangeShape.DIAMOND
 @export
 var state: GDScript

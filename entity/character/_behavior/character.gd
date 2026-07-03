@@ -40,9 +40,9 @@ var reactions: Array[Reaction]
 
 @export_category("Unit Stats")
 @export
-var max_health: int = 20
+var max_health: int = 16
 @export
-var _movement_range: int = 2
+var _movement_range: int = 3
 var _movement_modifier: int
 var movement_range: int:
 	get:
@@ -71,7 +71,7 @@ var attack_state: Combat.AttackState
 var item: Item
 # TODO remove
 var processing_action := false
-var reacting := false
+var processing_reaction := false
 
 var _state_machine: StateMachine
 
@@ -175,25 +175,34 @@ func process_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState)
 	
 	
 	if tile in attack_range.range_tiles:
-		var aoe: Array[Vector2i]
+		var skill: Skill
 		
 		if attack_state == Combat.AttackState.BASIC:
-			aoe = basic_skill.aoe
+			skill = basic_skill
 		elif attack_state == Combat.AttackState.SPECIAL:
-			aoe = special.aoe
+			skill = special
 		elif attack_state == Combat.AttackState.ITEM:
-			aoe = item.aoe
+			skill = item
 		
 		var unit: Character
 		
-		for aoe_tile in aoe:
-			var offset_rotated: = Vector2i(Vector2(aoe_tile).rotated(Vector2(facing).angle()))
+		for aoe_tile in skill.aoe:
+			var offset_rotated: = Vector2i(Vector2(aoe_tile).rotated(Vector2(facing).angle()).round())
 			unit = GameState.current_level.grid.get_unit_from_tile(tile + offset_rotated)
 			if unit:
 				break
 		
+		var can_move : bool = true
+			
+		if skill.move_position != Vector2i.ZERO:
+			can_move = false
+			var move_tile: Vector2i  = current_tile + skill.move_position
+			move_tile = Vector2i(Vector2(move_tile).rotated(Vector2(facing).angle()).round())
+			if (skill.direct and GameState.current_level.grid.is_point_solid_ignore_unit(move_tile)) \
+			or (not skill.direct and GameState.current_level.grid.is_point_solid(move_tile)):
+				can_move = true
 		
-		if unit != null:
+		if unit != null and can_move:
 			facing = Vector2i(Vector2(tile - current_tile).normalized().round())
 			EventBus.timer_stopped.emit()
 			if attack_state == Combat.AttackState.BASIC:
@@ -229,6 +238,7 @@ func create_range_astar(range_struct: RangeStruct, manhattan_range: int) -> ASta
 
 func update_ranges(movement_tiles: RangeStruct, interactable_range: Array[Vector2i]) -> RangeStruct:
 	# color tiles differently when attacks overlap with movement 
+	var skill: Skill
 	var skill_range: RangeStruct
 	var attack_atlas_coords: Vector2i
 	var overlap_atlas_coords: Vector2i
@@ -236,31 +246,30 @@ func update_ranges(movement_tiles: RangeStruct, interactable_range: Array[Vector
 	var range_type: Combat.RangeType
 	
 	if attack_state == Combat.AttackState.BASIC:
-		skill_range = GameState.current_level.grid.request_range(current_tile, basic_skill.min_range, basic_skill.max_range, basic_skill.range_shape, true, basic_skill.direct)
+		skill = basic_skill
 		attack_atlas_coords = Global.RETICLE_ATTACK_ALTAS_COORDS
 		overlap_atlas_coords = Global.RETICLE_SPECIAL_2_ATLAS_COORDS
-		aoe = basic_skill.aoe
-		range_type = basic_skill.range_type
 	elif attack_state == Combat.AttackState.SPECIAL:
-		skill_range = GameState.current_level.grid.request_range(current_tile, special.min_range, special.max_range, special.range_shape, true, special.direct)
+		skill = special
 		attack_atlas_coords = Global.RETICLE_SPECIAL_1_ALTAS_COORDS
 		overlap_atlas_coords = Global.RETICLE_CURE_1_ATLAS_COORDS
-		aoe = special.aoe
-		range_type = special.range_type
 	elif attack_state == Combat.AttackState.ITEM:
-		skill_range = GameState.current_level.grid.request_range(current_tile, item.min_range, item.max_range, item.range_shape, true, item.direct)
+		skill = item
 		attack_atlas_coords = Global.RETICLE_ATTACK_ALTAS_COORDS
 		overlap_atlas_coords = Global.RETICLE_SPECIAL_2_ATLAS_COORDS
-		aoe = item.aoe
-		range_type = item.range_type
 	
 	
+	skill_range = GameState.current_level.grid.request_range(current_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct)
+	aoe = skill.aoe
+	range_type = skill.range_type
+	
+	skill_range.range_tiles.erase(current_tile)
 	var skill_aoe_range := RangeStruct.new()
 	for range_tile: Vector2i in skill_range.range_tiles:
 		for tile_offset in aoe:
 			var direction : Vector2 = VectorF.snap_direction(Vector2(range_tile - current_tile).normalized())
 			var tile: Vector2i
-			var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(direction.angle()))
+			var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(direction.angle()).round())
 			if range_type == Combat.RangeType.MELEE:
 				tile = current_tile + Vector2i(direction) + offset_rotated
 			else:
@@ -270,9 +279,10 @@ func update_ranges(movement_tiles: RangeStruct, interactable_range: Array[Vector
 			
 			if is_valid and not tile in skill_range.range_tiles and not tile in skill_aoe_range.range_tiles:
 				skill_aoe_range.range_tiles.append(tile)
-			
-
-	skill_range.range_tiles.erase(current_tile)
+	
+	
+	var skill_move_range := RangeStruct.new()
+	
 	var overlap_tiles: Array[Vector2i]
 	var attack_only_tiles: Array[Vector2i]
 	
@@ -290,6 +300,14 @@ func update_ranges(movement_tiles: RangeStruct, interactable_range: Array[Vector
 	if not movement_tiles.range_tiles.is_empty():
 		GameState.current_level.reticle.set_cell(current_tile, 0, Global.RETICLE_MOVE_ALTAS_COORDS)
 		GameState.current_level.select_tile(current_tile)
+		
+	if skill.move_position != Vector2i.ZERO:
+		for direction: Vector2i in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+			var move_tile: Vector2i  = current_tile + skill.move_position
+			move_tile = Vector2i(Vector2(move_tile).rotated(Vector2(facing).angle()).round())
+			skill_move_range.range_tiles.append(move_tile)
+			GameState.current_level.draw_range(skill_move_range.range_tiles, overlap_atlas_coords)
+	
 	
 	return skill_range
 
@@ -320,14 +338,14 @@ func take_damage(skill: Skill, direction: Vector2, hit_chance: float, multiplier
 	var hit_connected: bool
 	
 	if self is Enemy:
-		if GameState.battle_timer.value < GameState.battle_timer.max_value * .25:
-			multiplier *= 1.5
-		elif GameState.battle_timer.value > GameState.battle_timer.max_value * .75:
-			multiplier *= .5
+		if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_MULTIPLIER:
+			multiplier *= Global.QUICK_MULTIPLIER
+		elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_MULTIPLIER:
+			multiplier *= Global.SLOW_MULTIPLIER
 	
 	if is_equal_approx(direction.normalized().dot(Vector2(facing).normalized()), -1):
 		hit_connected = true
-		multiplier += .5
+		multiplier += Global.BACK_MULTIPLIER
 	else:
 		hit_connected = is_hit(hit_chance)
 	

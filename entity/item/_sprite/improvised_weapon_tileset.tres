@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" format=3 uid="uid://bg1ldnkshjcy8"]
 
-[ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://entity/item/_data/bash.tres" id="1_2gnn8"]
+[ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="1_2gnn8"]
 [ext_resource type="Texture2D" uid="uid://dwpuomxva06bp" path="res://entity/item/_sprite/dummy_weapon.png" id="5_s4esl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5n63n"]

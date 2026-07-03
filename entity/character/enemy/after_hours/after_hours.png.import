@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dycr2daj7be6l"
-path="res://.godot/imported/peggy_unit_sprite-sheet.png-2b824c466ceffa124a582db234e3e668.ctex"
+uid="uid://dgew18uoinubo"
+path="res://.godot/imported/after_hours.png-c3d867f112a25403cc0faebad3219d82.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entity/character/ally/peggy/_sprite/peggy_unit_sprite-sheet.png"
-dest_files=["res://.godot/imported/peggy_unit_sprite-sheet.png-2b824c466ceffa124a582db234e3e668.ctex"]
+source_file="res://entity/character/enemy/after_hours/after_hours.png"
+dest_files=["res://.godot/imported/after_hours.png-c3d867f112a25403cc0faebad3219d82.ctex"]
 
 [params]
 

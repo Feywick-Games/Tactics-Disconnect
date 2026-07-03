@@ -75,7 +75,8 @@ func enter() -> void:
 		if _target:
 			var target_tile: Vector2i = _pick_tile()
 			_attack_range = _enemy.update_ranges(_movement_range,  _interactable_range)
-			_tile_path = _movement_astar.get_id_path(_enemy.current_tile, target_tile)
+			if _movement_astar:
+				_tile_path = _movement_astar.get_id_path(_enemy.current_tile, target_tile)
 	else:
 		_is_processing_custom = true
 		_take_custom_action()

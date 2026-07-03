@@ -1,0 +1,181 @@
+[gd_scene format=3 uid="uid://bvmot03d4vcap"]
+
+[ext_resource type="PackedScene" uid="uid://cm7s3l5cikm6u" path="res://entity/character/ally/ally.tscn" id="1_ufvd5"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_neqen"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_ri0w7"]
+[ext_resource type="Resource" uid="uid://1olldk31cxwg" path="res://data/skill/flirty_gaze.tres" id="3_65p3h"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="3_d8pu4"]
+[ext_resource type="Texture2D" uid="uid://du5dqjq2h7wkl" path="res://entity/character/ally/peggy/_sprite/peggy_unit_sprite.png" id="3_h77kg"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_pi3iu"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="4_pi3iu"]
+[ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="4_rx68n"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="5_aka27"]
+[ext_resource type="Resource" uid="uid://dc72m6spxgmw0" path="res://data/skill/throw_rock.tres" id="5_wpkbw"]
+[ext_resource type="Resource" uid="uid://d1edna7vnjr4j" path="res://data/skill/spin_kick.tres" id="6_e75kd"]
+
+[sub_resource type="Resource" id="Resource_o0dns"]
+script = ExtResource("3_d8pu4")
+value = 4
+metadata/_custom_type_script = "uid://c5gnxjiq5craw"
+
+[sub_resource type="Resource" id="Resource_ybr77"]
+script = ExtResource("2_neqen")
+name = "Scratch"
+character_animation = "idle"
+state = ExtResource("3_pi3iu")
+status_effects = Array[ExtResource("3_d8pu4")]([SubResource("Resource_o0dns")])
+metadata/_custom_type_script = "uid://de4pxhpt4mw5u"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_65p3h"]
+resource_local_to_scene = true
+shader = ExtResource("2_ri0w7")
+shader_parameter/highlighted = false
+shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
+
+[sub_resource type="Animation" id="Animation_neqen"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_d8pu4"]
+resource_name = "idle_down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pi3iu"]
+resource_name = "idle_left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_aka27"]
+resource_name = "idle_right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_e2v7y"]
+resource_name = "idle_up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_65p3h"]
+_data = {
+&"RESET": SubResource("Animation_neqen"),
+&"idle_down": SubResource("Animation_d8pu4"),
+&"idle_left": SubResource("Animation_pi3iu"),
+&"idle_right": SubResource("Animation_aka27"),
+&"idle_up": SubResource("Animation_e2v7y")
+}
+
+[node name="Peggy" unique_id=264392964 instance=ExtResource("1_ufvd5")]
+skill_deck = Array[ExtResource("2_neqen")]([ExtResource("3_65p3h"), ExtResource("3_65p3h"), ExtResource("4_rx68n"), ExtResource("5_wpkbw"), ExtResource("5_wpkbw"), ExtResource("4_rx68n"), ExtResource("3_65p3h"), ExtResource("6_e75kd"), ExtResource("4_rx68n"), ExtResource("6_e75kd")])
+character_name = "Peggy"
+basic_skill = SubResource("Resource_ybr77")
+
+[node name="CharacterSprite" parent="." index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_65p3h")
+position = Vector2(0, 0)
+texture = ExtResource("3_h77kg")
+offset = Vector2(0, -17)
+vframes = 3
+
+[node name="ActionAnimator" parent="." index="5" unique_id=2058618678]
+libraries/ = SubResource("AnimationLibrary_65p3h")
