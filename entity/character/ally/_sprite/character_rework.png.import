@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvykfdprxavd1"
-path="res://.godot/imported/mei_turn_portrait.png-ca58fd2743fadf1897955233db98a39d.ctex"
+uid="uid://dr023i1kdd3gj"
+path="res://.godot/imported/character_rework.png-4a914a002bbfb164c7c435c82989f156.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entity/character/ally/mei/_sprite/mei_turn_portrait.png"
-dest_files=["res://.godot/imported/mei_turn_portrait.png-ca58fd2743fadf1897955233db98a39d.ctex"]
+source_file="res://entity/character/ally/_sprite/character_rework.png"
+dest_files=["res://.godot/imported/character_rework.png-4a914a002bbfb164c7c435c82989f156.ctex"]
 
 [params]
 

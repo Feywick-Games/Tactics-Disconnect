@@ -76,9 +76,9 @@ func _process(_delta: float) -> void:
 			if _battle_started:
 				_start_turn()
 	if _turn_pending:
-		#if get_viewport().get_camera_2d().in_position:
-		_turn_pending = false
-		EventBus.turn_started.emit(_current_unit)
+		if get_viewport().get_camera_2d().in_position:
+			_turn_pending = false
+			EventBus.turn_started.emit(_current_unit)
 
 
 func _on_first_skills_selected() -> void:

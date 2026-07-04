@@ -40,7 +40,7 @@ var reactions: Array[Reaction]
 
 @export_category("Unit Stats")
 @export
-var max_health: int = 16
+var max_health: int = 24
 @export
 var _movement_range: int = 3
 var _movement_modifier: int

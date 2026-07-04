@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvykfdprxavd1"
-path="res://.godot/imported/mei_turn_portrait.png-ca58fd2743fadf1897955233db98a39d.ctex"
+uid="uid://b8f8ysrw5xkkm"
+path="res://.godot/imported/peggy_turn_portrait.png-9e880a3f284c5334409c01a1348cf71c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entity/character/ally/mei/_sprite/mei_turn_portrait.png"
-dest_files=["res://.godot/imported/mei_turn_portrait.png-ca58fd2743fadf1897955233db98a39d.ctex"]
+source_file="res://entity/character/ally/peggy/_sprite/peggy_turn_portrait.png"
+dest_files=["res://.godot/imported/peggy_turn_portrait.png-9e880a3f284c5334409c01a1348cf71c.ctex"]
 
 [params]
 

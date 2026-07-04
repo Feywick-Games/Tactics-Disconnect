@@ -6,6 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="3_wq1xd"]
 [ext_resource type="Texture2D" uid="uid://ba7bcq1s0wxll" path="res://ui/skill_select/_sprite/skill_select_small_melee.png" id="4_2kwrm"]
 
+[sub_resource type="Resource" id="Resource_riw5p"]
+script = ExtResource("2_g1eyl")
+value = 3
+metadata/_custom_type_script = "uid://c5gnxjiq5craw"
+
 [resource]
 script = ExtResource("1_2kwrm")
 ui_small = ExtResource("4_2kwrm")
@@ -13,5 +18,6 @@ name = "Bat Swing"
 flavor_text = "Swing your bat and send some bozos out of the park."
 character_animation = "idle"
 state = ExtResource("2_wq1xd")
+status_effects = Array[ExtResource("2_g1eyl")]([SubResource("Resource_riw5p")])
 aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)])
 metadata/_custom_type_script = "uid://de4pxhpt4mw5u"

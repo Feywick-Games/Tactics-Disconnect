@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="5_aka27"]
 [ext_resource type="Resource" uid="uid://dc72m6spxgmw0" path="res://data/skill/throw_rock.tres" id="5_wpkbw"]
 [ext_resource type="Resource" uid="uid://d1edna7vnjr4j" path="res://data/skill/spin_kick.tres" id="6_e75kd"]
+[ext_resource type="PackedScene" uid="uid://41q5krao87lt" path="res://entity/character/ally/peggy/_packed_scene/peggy_turn_portrait.tscn" id="7_rx68n"]
 
 [sub_resource type="Resource" id="Resource_o0dns"]
 script = ExtResource("3_d8pu4")
@@ -26,7 +27,7 @@ state = ExtResource("3_pi3iu")
 status_effects = Array[ExtResource("3_d8pu4")]([SubResource("Resource_o0dns")])
 metadata/_custom_type_script = "uid://de4pxhpt4mw5u"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_65p3h"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wpkbw"]
 resource_local_to_scene = true
 shader = ExtResource("2_ri0w7")
 shader_parameter/highlighted = false
@@ -168,10 +169,11 @@ _data = {
 [node name="Peggy" unique_id=264392964 instance=ExtResource("1_ufvd5")]
 skill_deck = Array[ExtResource("2_neqen")]([ExtResource("3_65p3h"), ExtResource("3_65p3h"), ExtResource("4_rx68n"), ExtResource("5_wpkbw"), ExtResource("5_wpkbw"), ExtResource("4_rx68n"), ExtResource("3_65p3h"), ExtResource("6_e75kd"), ExtResource("4_rx68n"), ExtResource("6_e75kd")])
 character_name = "Peggy"
+turn_portrait_scene = ExtResource("7_rx68n")
 basic_skill = SubResource("Resource_ybr77")
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_65p3h")
+material = SubResource("ShaderMaterial_wpkbw")
 position = Vector2(0, 0)
 texture = ExtResource("3_h77kg")
 offset = Vector2(0, -17)

@@ -35,6 +35,6 @@ func _on_turn_started(unit: Character) -> void:
 		if not first_turn:
 			value += step
 		else:
-			first_turn = true
+			first_turn = false
 		if value == max_value:
 			_progress_bar_full()

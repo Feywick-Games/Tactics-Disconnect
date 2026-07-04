@@ -11,7 +11,7 @@ var current_skill_hand: Array[Skill]
 
 func _ready() -> void:
 	super._ready()
-	GameState.allies.append(self)
+	GameState.register_ally(self)
 	current_skill_deck = skill_deck
 	current_skill_deck.shuffle()
 

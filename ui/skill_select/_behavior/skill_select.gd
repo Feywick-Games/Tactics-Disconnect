@@ -38,6 +38,7 @@ func _on_go_button_pressed() -> void:
 	for unit: Ally in unit_skills_selected.keys():
 		unit.special = unit_skills_selected[unit]
 		unit.current_skill_hand.erase(unit.special)
+	unit_skills_selected.clear()
 	EventBus.skills_selected.emit()
 	hide()
 

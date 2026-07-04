@@ -14,6 +14,11 @@ custom_blend: float = -1,custom_speed: float = 1.0, from_end: bool = false) -> v
 	anim_direction_str += alt_ext
 	
 	current_direction = anim_direction_str
+	var directed_animation : String = anim + "_" + anim_direction_str
+	
+	if not has_animation(directed_animation):
+		animation_finished.emit("")
+		return
 	
 	if not queue_anim:
 		play(anim + "_" + anim_direction_str, custom_blend, custom_speed, from_end)
