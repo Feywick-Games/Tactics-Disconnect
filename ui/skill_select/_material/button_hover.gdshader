@@ -2,11 +2,13 @@ shader_type canvas_item;
 
 uniform vec2 texture_scale = vec2(2.0, 1.0);
 uniform vec4 flash_color : source_color;
+uniform vec4 highlight_color: source_color;
 
 void fragment() {
 	bool is_outside = false;
 	vec2 uv_scaled = UV * texture_scale;
 	vec2 pixel_size_scaled = TEXTURE_PIXEL_SIZE * texture_scale;
+
 	
 	if (uv_scaled.x < pixel_size_scaled.x * 2.0)
 	{
@@ -60,7 +62,7 @@ void fragment() {
 
 	if (is_outside == true && (abs(time_rotate - uv_angle) < pixel_size_scaled.x * 2.0 || abs(time_rotate_offset - uv_angle_offset) < pixel_size_scaled.x * 2.0) )
 	{
-		COLOR = vec4(1);
+		COLOR = highlight_color;
 	}
 	else if (!is_outside)
 	{

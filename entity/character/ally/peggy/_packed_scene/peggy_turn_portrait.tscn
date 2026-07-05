@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://41q5krao87lt"]
+
+[ext_resource type="PackedScene" uid="uid://bcnpnplhpud5y" path="res://ui/turn_display/_packed_scene/turn_portrait.tscn" id="1_mwn7c"]
+[ext_resource type="Texture2D" uid="uid://b8f8ysrw5xkkm" path="res://entity/character/ally/peggy/_sprite/peggy_turn_portrait.png" id="2_34pfq"]
+[ext_resource type="Texture2D" uid="uid://dugubdiu3p37y" path="res://entity/character/ally/peggy/_sprite/peggy_turn_portrait_small.png" id="2_bdwe3"]
+
+[node name="TurnPortrait" unique_id=1652300559 instance=ExtResource("1_mwn7c")]
+
+[node name="SmallPortrait" parent="." index="1" unique_id=1066073387]
+texture = ExtResource("2_bdwe3")
+hframes = 1
+
+[node name="FullPortrait" parent="." index="2" unique_id=102064676]
+texture = ExtResource("2_34pfq")
+
+[node name="Label" parent="FullPortrait" index="0" unique_id=674781161]
+text = "Peggy"

@@ -18,7 +18,8 @@ func _hit_targets(aoe: Array[Vector2i], range_type: Combat.RangeType) -> void:
 	_action_to_process = 0
 	for tile_offset in aoe:
 		var tile: Vector2i
-		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(_direction.angle()))
+		print("direction: " + str(rad_to_deg(_direction.angle())))
+		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(_direction.angle()).round())
 		if range_type == Combat.RangeType.MELEE:
 			tile = _character.current_tile + Vector2i(_direction) + offset_rotated
 		else:
@@ -29,6 +30,35 @@ func _hit_targets(aoe: Array[Vector2i], range_type: Combat.RangeType) -> void:
 			_action_to_process += 1
 			var damage_state := DamageState.new(_skill, _direction, _character.accuracy, _character.target_hit)
 			unit.state_requested.emit(damage_state)
+	
 	if not _skill.is_animated:
 		await _character.get_tree().create_timer(1).timeout
 		_character.notify_impact()
+
+
+func can_use(target_tile: Vector2i) -> Global.SkillErrorCode:
+	var target: Character
+	
+	for aoe_tile in _skill.aoe:
+		var offset_rotated: = Vector2i(Vector2(aoe_tile).rotated(Vector2(_character.facing).angle()).round())
+		target = GameState.current_level.grid.get_unit_from_tile(target_tile + offset_rotated)
+		if target:
+			break
+	
+	if not target:
+		return Global.SkillErrorCode.NO_TARGET
+	
+	var can_move : bool = true
+		
+	if _skill.move_position != Vector2i.ZERO:
+		can_move = false
+		var move_tile: Vector2i  = _character.current_tile + _skill.move_position
+		move_tile = Vector2i(Vector2(move_tile).rotated(Vector2(_character.facing).angle()).round())
+		if (_skill.direct and GameState.current_level.grid.is_point_solid_ignore_unit(move_tile)) \
+		or (not _skill.direct and GameState.current_level.grid.is_point_solid(move_tile)):
+			can_move = true
+	
+	if not can_move:
+		return Global.SkillErrorCode.MOVE_BLOCKED
+	
+	return Global.SkillErrorCode.OK

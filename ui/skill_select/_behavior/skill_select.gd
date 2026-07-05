@@ -19,7 +19,7 @@ var skill_damage_label: Label = %DamageLabel
 @onready
 var range_label: Label = %RangeLabel
 @onready
-var aoe_display: AoeDisplay = %AoeDisplay
+var aoe_display: PanelContainer = %AoeDisplay
 @onready
 var flavor_text_label: Label = %FlavorText
 @onready
@@ -38,6 +38,7 @@ func _on_go_button_pressed() -> void:
 	for unit: Ally in unit_skills_selected.keys():
 		unit.special = unit_skills_selected[unit]
 		unit.current_skill_hand.erase(unit.special)
+	unit_skills_selected.clear()
 	EventBus.skills_selected.emit()
 	hide()
 
@@ -61,6 +62,7 @@ func display_unit_skill_lists() -> void:
 		var unit_skill_list: UnitSkillList = unit_skill_list_scene.instantiate()
 		unit_skill_lists.add_child(unit_skill_list)
 		unit_skill_list.deal(unit)
+		unit_skill_list.child_focus_entered.connect(_on_unit_skill_list_focus_entered.bind(unit))
 		for button: SkillSelectButton in unit_skill_list.skill_buttons:
 			if not first_button_grabbed:
 				first_button_grabbed = true
@@ -70,6 +72,10 @@ func display_unit_skill_lists() -> void:
 			button.skill_canceled.connect(_on_skill_canceled)
 		
 	_generate_button_neighbors()
+
+
+func _on_unit_skill_list_focus_entered(unit: Character) -> void:
+	EventBus.cam_follow_requested.emit(unit, Vector2(160,0))
 
 
 func _generate_button_neighbors() -> void:
@@ -87,8 +93,7 @@ func _generate_button_neighbors() -> void:
 		for x in range(button_matrix[y].size()):
 			var button: SkillSelectButton = button_matrix[y][x]
 			if button.selected:
-				# minus one is due to sharing a vbox container with the character sprite
-				x = button.get_index() - 1
+				x = button.get_index()
 			
 			var left_neighbor := Vector2i(x-1,y)
 			var right_neighbor := Vector2i(x+1,y)

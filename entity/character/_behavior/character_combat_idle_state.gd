@@ -40,7 +40,7 @@ func _on_reaction_requested(unit: Character) -> void:
 			
 			if reaction_state.can_use():
 				_reaction_state = reaction_state
-				unit.reacting = true
+				unit.processing_reaction = true
 				break
 
 
@@ -58,7 +58,6 @@ func _on_turn_started(unit: Character) -> void:
 		reaction.processed = false
 
 
-
 func _on_tiles_highlighted(tiles: Array[Vector2i], status_effects: Array[StatusEffect], 
 accuracy: int, direction: Vector2i, is_ally: bool) -> void:
 	_highlighted_tiles = tiles
@@ -68,6 +67,7 @@ accuracy: int, direction: Vector2i, is_ally: bool) -> void:
 	_highlighter_is_ally = is_ally
 	if not _character.current_tile in _highlighted_tiles and _character.health_bar.visible:
 		_character.health_bar.hide()
+
 
 # TODO move to own state
 func _display_health() -> void:
@@ -81,13 +81,13 @@ func _display_health() -> void:
 	if not _damage_taken:
 		var multiplier: float = 1
 		if _highlighter_is_ally:
-			if GameState.battle_timer.value < GameState.battle_timer.max_value * .25:
-				multiplier = 1.5
-			elif GameState.battle_timer.value > GameState.battle_timer.max_value * .75:
-				multiplier = .5
+			if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_TIME_PERCENT:
+				multiplier = Global.QUICK_MULTIPLIER
+			elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_TIME_PERCENT:
+				multiplier = Global.SLOW_MULTIPLIER
 			
 		if is_equal_approx(Vector2(_highlighted_direction).normalized().dot(Vector2(_character.facing).normalized()), -1) and _character.facing != Vector2i.ZERO:
-			multiplier += .5
+			multiplier += Global.BACK_MULTIPLIER
 		for effect: StatusEffect in _highlighted_status_effects:
 			if effect.status == Combat.Status.HIT:
 				_character.health_bar.value = _character.health - (effect.value * multiplier)
@@ -106,7 +106,6 @@ func _display_health() -> void:
 		
 		_character.hit_chance_label.add_theme_color_override("font_color", hit_chance_color)
 
-	
 
 func update(_delta: float) -> State:
 	if _encounter_ended:
@@ -114,17 +113,11 @@ func update(_delta: float) -> State:
 		return _character.init_state.new()
 	elif _turn_started:
 		return _character.turn_state.new()
+	# find a way to get rid of this
 	elif _requested_state:
 		return _requested_state
 	elif _reaction_state:
-		return _reaction_state
-	elif _character.processing_action and not _is_processing:
-		_is_processing = true
-	elif not _character.processing_action and _is_processing:
-		_is_processing = false
-		if not _character.reacting:
-			_character.action_processed.emit() 
-	
+		return _reaction_state	
 	_display_health()
 		
 	return

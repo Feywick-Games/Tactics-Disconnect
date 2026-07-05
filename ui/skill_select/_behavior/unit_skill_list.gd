@@ -1,10 +1,10 @@
 class_name UnitSkillList
 extends VBoxContainer
 
+signal child_focus_entered
+
 @onready
 var _character_name_label: Label = %CharacterNameLabel
-@onready
-var _character_sprite: TextureRect = %CharacterSprite
 @onready
 var skill_buttons: Array[SkillSelectButton] = [%SkillButton, %SkillButton2, %SkillButton3, %SkillButton4, %SkillButton5]
 
@@ -12,11 +12,15 @@ func _ready() -> void:
 	for button: SkillSelectButton in skill_buttons:
 		button.skill_selected.connect(_on_skill_selected)
 		button.skill_canceled.connect(_on_skill_canceled)
+		button.focus_entered.connect(_on_child_focus_entered)
+
+
+func _on_child_focus_entered() -> void:
+	child_focus_entered.emit()
 
 
 func deal(unit: Ally) -> void:
 	_character_name_label.text = unit.character_name
-	_character_sprite.texture = unit.small_portrait
 	unit.deal_skills()
 	
 	var skill_hand : Array[Skill] = unit.current_skill_hand

@@ -34,7 +34,10 @@ func display_statuses() -> void:
 	for i in range(_queued_statuses.size()):
 		_started_animations += 1
 		_play_status_effect(_queued_statuses[i])
-	animator.play()
+	if animator.current_animation != "":
+		animator.play()
+	else:
+		_on_animation_completed("")
 
 
 func _play_status_effect(effect: StatusEffect) -> void:
@@ -44,7 +47,6 @@ func _play_status_effect(effect: StatusEffect) -> void:
 		_damage_value = floor(effect.value * effect.multiplier)
 		animator.queue("hit")
 	
-
 	
 func add_status_effect(effect: StatusEffect) -> void:
 	if not effect or effect.status in [Combat.Status.HIT]:
@@ -53,7 +55,7 @@ func add_status_effect(effect: StatusEffect) -> void:
 	
 func _on_animation_completed(_anim: String) -> void:
 	_completed_animations += 1 
-	if _completed_animations == _started_animations:
+	if _completed_animations == _started_animations or _started_animations == 0:
 		_queued_statuses.clear()
 		_started_animations = 0
 		_completed_animations = 0

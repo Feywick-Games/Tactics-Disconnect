@@ -5,4 +5,5 @@
 [resource]
 shader = ExtResource("1_w3uxk")
 shader_parameter/texture_scale = Vector2(2, 1)
-shader_parameter/flash_color = Color(0.78039217, 0.34509805, 0.6117647, 1)
+shader_parameter/flash_color = Color(1, 0.25490198, 0.7647059, 1)
+shader_parameter/highlight_color = Color(0.92941177, 1, 1, 1)

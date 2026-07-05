@@ -56,12 +56,12 @@ func _on_button_pressed() -> void:
 
 func reset() -> void:
 	disabled = false
-	texture_disabled = _skill_tex_disable if _skill_tex_disable else _empty_tex
+	texture_disabled = _skill_tex_disable if _skill_tex_disable else _empty_tex_disable
 	selected = false
 
 
 func unload() -> void:
-	texture_disabled = _empty_tex
+	texture_disabled = _empty_tex_disable
 	_skill = null
 	_ally = null
 	_skill_tex = null

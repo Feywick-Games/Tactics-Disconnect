@@ -31,11 +31,11 @@ gdscript/warnings/untyped_declaration=1
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
 window/size/initial_position_type=3
-window/stretch/mode="canvas_items"
-window/stretch/scale_mode="integer"
+window/stretch/mode="viewport"
 
 [global_group]
 
@@ -176,6 +176,7 @@ skill_select={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.07450981, 0.0627451, 0.23137255, 1)
 
 [shader_globals]
 

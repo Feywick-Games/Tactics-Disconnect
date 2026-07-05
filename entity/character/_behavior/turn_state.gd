@@ -36,7 +36,8 @@ func calc_default_ranges() -> void:
 	_movement_range = GameState.current_level.grid.request_range(_character.current_tile, 0, _character.movement_range, Combat.RangeShape.DIAMOND)
 	_starting_movement_range = _movement_range
 	_interactable_range = GameState.current_level.get_interactable_tiles(_movement_range.range_tiles)
-	_movement_astar = _character.create_range_astar(_movement_range, _character.movement_range)
+	if _character.movement_range > 0:
+		_movement_astar = _character.create_range_astar(_movement_range, _character.movement_range)
 
 
 func update(_delta: float) -> State:
@@ -99,7 +100,7 @@ func _highlight_targets(target_tile: Vector2i) -> void:
 		
 		for tile_offset in aoe:
 			var tile: Vector2i
-			var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(direction.angle()))
+			var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(direction.angle()).round())
 			if range_type == Combat.RangeType.MELEE:
 				tile = _character.current_tile + Vector2i(direction) + offset_rotated
 			else:

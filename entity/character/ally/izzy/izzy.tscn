@@ -3,8 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://cm7s3l5cikm6u" path="res://entity/character/ally/ally.tscn" id="1_abh6s"]
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_d2041"]
 [ext_resource type="PackedScene" uid="uid://bap3a4oqvrftr" path="res://entity/character/ally/izzy/_packed_scene/izzy_turn_portrait.tscn" id="2_y0p6f"]
+[ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="3_apuu4"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="3_jkw71"]
 [ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_tnq7t"]
+[ext_resource type="Resource" uid="uid://kchvxmj4k1fw" path="res://data/skill/battering_ram.tres" id="4_dvrs6"]
+[ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://data/skill/push_skill.tres" id="5_j3bli"]
+[ext_resource type="Resource" uid="uid://dc72m6spxgmw0" path="res://data/skill/throw_rock.tres" id="6_m8t01"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="6_wepgb"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="7_uk5et"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_07m0v"]
@@ -21,10 +25,9 @@ script = ExtResource("2_d2041")
 name = "Punch"
 character_animation = "idle"
 state = ExtResource("3_tnq7t")
-cool_down = 1
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_xdj1t")])
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v1la8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_apuu4"]
 resource_local_to_scene = true
 shader = ExtResource("8_07m0v")
 shader_parameter/highlighted = false
@@ -175,6 +178,7 @@ _data = {
 }
 
 [node name="Izzy" unique_id=907728875 instance=ExtResource("1_abh6s")]
+skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("3_apuu4"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("3_apuu4"), ExtResource("6_m8t01")])
 character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
 basic_skill = SubResource("Resource_v85yj")
@@ -189,10 +193,10 @@ pivot_offset = Vector2(0, 0)
 pivot_offset = Vector2(0, 0)
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_v1la8")
-position = Vector2(1, -1)
+material = SubResource("ShaderMaterial_apuu4")
+position = Vector2(0, 0)
 texture = ExtResource("11_apuu4")
-offset = Vector2(0, -16)
+offset = Vector2(0, -17)
 vframes = 3
 
 [node name="CollisionShape2D" parent="." index="4" unique_id=974221274]

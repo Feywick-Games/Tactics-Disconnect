@@ -59,6 +59,7 @@ func _start_turn() -> void:
 	_increment_unit_index()
 	var turn_portait := _turn_portraits[_current_unit_idx]
 	turn_portait.display_full_portrait()
+	EventBus.cam_follow_requested.emit(_current_unit, Vector2.ZERO)
 	_turn_pending = true
 
 
@@ -76,9 +77,9 @@ func _process(_delta: float) -> void:
 			if _battle_started:
 				_start_turn()
 	if _turn_pending:
-		#if get_viewport().get_camera_2d().in_position:
-		_turn_pending = false
-		EventBus.turn_started.emit(_current_unit)
+		if get_viewport().get_camera_2d().in_position:
+			_turn_pending = false
+			EventBus.turn_started.emit(_current_unit)
 
 
 func _on_first_skills_selected() -> void:

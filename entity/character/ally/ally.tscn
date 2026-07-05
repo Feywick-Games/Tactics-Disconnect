@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://f4x7mg2o6cwa" path="res://entity/character/ally/_packed_scene/turn_portrait_ally_1.tscn" id="3_ugt4g"]
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="3_yu75v"]
 [ext_resource type="Script" uid="uid://djcfelq0k45il" path="res://entity/character/ally/_behavior/ally_turn_state.gd" id="4_4us3o"]
-[ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://entity/item/_data/bash.tres" id="4_8qh5r"]
+[ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="4_8qh5r"]
 [ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://data/skill/push_skill.tres" id="5_fsllm"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="6_153dm"]
 

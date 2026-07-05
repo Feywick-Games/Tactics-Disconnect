@@ -2,7 +2,6 @@
 
 [ext_resource type="FontFile" uid="uid://cs5prw3u7po3j" path="res://ui/font/aseprite.otf" id="1_jcecc"]
 [ext_resource type="Script" uid="uid://b0p83fwlb2up" path="res://ui/skill_select/_behavior/unit_skill_list.gd" id="1_ybr77"]
-[ext_resource type="Texture2D" uid="uid://vq2moysjnnty" path="res://ui/skill_select/_sprite/skill_select_unit_sprite_dummy.png" id="2_j5fqm"]
 [ext_resource type="Texture2D" uid="uid://mvb4kmg43j54" path="res://ui/skill_select/_sprite/empty_skill_small.tres" id="4_qgbeh"]
 [ext_resource type="Texture2D" uid="uid://b8555r2oqhw18" path="res://ui/skill_select/_sprite/empty_skill_small_inactive.tres" id="5_ybr77"]
 [ext_resource type="Script" uid="uid://jag3vgcedyy7" path="res://ui/skill_select/_behavior/skill_select_button.gd" id="6_o0dns"]
@@ -17,7 +16,7 @@ theme_override_constants/margin_top = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=434200061]
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 4
 
 [node name="CharacterNameLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=549480482]
 unique_name_in_owner = true
@@ -29,11 +28,6 @@ text = "Izzy"
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1838217236]
 layout_mode = 2
 theme_override_constants/separation = 6
-
-[node name="CharacterSprite" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=292354785]
-unique_name_in_owner = true
-layout_mode = 2
-texture = ExtResource("2_j5fqm")
 
 [node name="SkillButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=885280956]
 unique_name_in_owner = true

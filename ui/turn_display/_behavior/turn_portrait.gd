@@ -15,12 +15,8 @@ func _ready() -> void:
 
 
 func update() -> void:
-	if _character.special:
-		$SmallPortrait/SpecialIcon.texture = _character.special.ui_small
-		$FullPortrait/SpecialIcon.texture = _character.special.ui_small
-	else:
-		$SmallPortrait/SpecialIcon.hide()
-		$FullPortrait/SpecialIcon.hide()
+	#maybe add health bars?
+	pass
 
 
 func display_full_portrait() -> void:

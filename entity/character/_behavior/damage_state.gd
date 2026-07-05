@@ -24,7 +24,7 @@ func enter() -> void:
 	super.enter()
 	_character.health_bar.show()
 	_character.processing_action = true
-	_character.reacting = false
+	_character.processing_reaction = false
 	_character.status_label_manager.statuses_displayed.connect(_on_statuses_displayed)
 
 
@@ -43,14 +43,16 @@ func _on_hit() -> void:
 
 
 func update(delta: float) -> State:
-	var parent_state: State = super.update(delta)
-	if parent_state:
-		return parent_state
-	
 	if _hit and not _damage_taken:
 		_character.take_damage(_skill, _direction, _hit_chance, _multiplier)
 		_damage_taken = true
 		_hit = false
-	if _exiting and not _character.reacting:
+	if _exiting and not _character.processing_reaction:
 		return CharacterCombatIdleState.new()
+	
 	return super.update(delta)
+
+
+func exit() -> void:
+	super.exit()
+	_character.action_processed.emit()
