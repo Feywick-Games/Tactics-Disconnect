@@ -8,14 +8,13 @@ var _action_to_process: int = 1
 var _exiting := false
 var _desired_target_count: int
 
-func _init(skill: Skill, target_tile: Vector2i) -> void:
+func _init(character: Character, skill: Skill, target_tile: Vector2i) -> void:
 	_target_tile = target_tile
 	_skill = skill
 	_desired_target_count = round(_skill.aoe.size() * .75)
-
+	_character = character
 
 func enter() -> void:
-	_character = state_machine.state_owner as Character
 	GameState.current_level.combat_ui.display_skill_text(_skill.name)
 
 
@@ -64,3 +63,9 @@ func calc_skill_likelihood(strike_tile : Vector2i) -> float:
 					return 1
 			last_target_tile = target_tile
 	return 0
+
+
+
+@warning_ignore("unused_parameter")
+func can_use(target_tile: Vector2i) -> Global.SkillErrorCode:
+	return Global.SkillErrorCode.OK

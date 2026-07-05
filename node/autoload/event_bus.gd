@@ -29,3 +29,7 @@ signal skill_progress_ready
 signal skills_selected
 @warning_ignore("unused_signal")
 signal skill_select_opened
+@warning_ignore("unused_signal")
+signal cam_follow_requested(unit: Character, offset: Vector2)
+@warning_ignore("unused_signal")
+signal skill_error_encountered(code: Global.SkillErrorCode)

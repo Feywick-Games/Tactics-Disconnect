@@ -59,6 +59,7 @@ func _start_turn() -> void:
 	_increment_unit_index()
 	var turn_portait := _turn_portraits[_current_unit_idx]
 	turn_portait.display_full_portrait()
+	EventBus.cam_follow_requested.emit(_current_unit, Vector2.ZERO)
 	_turn_pending = true
 
 

@@ -40,7 +40,7 @@ var reactions: Array[Reaction]
 
 @export_category("Unit Stats")
 @export
-var max_health: int = 24
+var max_health: int = 20
 @export
 var _movement_range: int = 3
 var _movement_modifier: int
@@ -184,39 +184,24 @@ func process_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState)
 		elif attack_state == Combat.AttackState.ITEM:
 			skill = item
 		
-		var unit: Character
+		var skill_state : SkillState = skill.state.new(self, skill, tile)
+		var can_use: Global.SkillErrorCode = skill_state.can_use(tile)
 		
-		for aoe_tile in skill.aoe:
-			var offset_rotated: = Vector2i(Vector2(aoe_tile).rotated(Vector2(facing).angle()).round())
-			unit = GameState.current_level.grid.get_unit_from_tile(tile + offset_rotated)
-			if unit:
-				break
 		
-		var can_move : bool = true
-			
-		if skill.move_position != Vector2i.ZERO:
-			can_move = false
-			var move_tile: Vector2i  = current_tile + skill.move_position
-			move_tile = Vector2i(Vector2(move_tile).rotated(Vector2(facing).angle()).round())
-			if (skill.direct and GameState.current_level.grid.is_point_solid_ignore_unit(move_tile)) \
-			or (not skill.direct and GameState.current_level.grid.is_point_solid(move_tile)):
-				can_move = true
-		
-		if unit != null and can_move:
+		if can_use == Global.SkillErrorCode.OK:
 			facing = Vector2i(Vector2(tile - current_tile).normalized().round())
 			EventBus.timer_stopped.emit()
-			if attack_state == Combat.AttackState.BASIC:
-				return basic_skill.state.new(basic_skill, tile)
-			elif attack_state == Combat.AttackState.SPECIAL:
-				return special.state.new(special, tile)
-			elif attack_state == Combat.AttackState.ITEM:
-				return item.state.new(item, tile)
+			return skill_state
+			
+		else:
+			EventBus.skill_error_encountered.emit(can_use)
 
 
 	elif GameState.current_level.get_interactable(tile):
 		item = GameState.current_level.take_interactable(tile)
 		attack_state = Combat.AttackState.ITEM
 		state.interacted = true
+	
 	return
 
 
@@ -303,10 +288,12 @@ func update_ranges(movement_tiles: RangeStruct, interactable_range: Array[Vector
 		
 	if skill.move_position != Vector2i.ZERO:
 		for direction: Vector2i in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
-			var move_tile: Vector2i  = current_tile + skill.move_position
-			move_tile = Vector2i(Vector2(move_tile).rotated(Vector2(facing).angle()).round())
-			skill_move_range.range_tiles.append(move_tile)
-			GameState.current_level.draw_range(skill_move_range.range_tiles, overlap_atlas_coords)
+			var move_tile: Vector2i  = Vector2i(Vector2(skill.move_position).rotated(Vector2(direction).angle()).round())
+			move_tile = current_tile + move_tile
+			if (skill.direct and not GameState.current_level.grid.is_point_solid_ignore_unit(move_tile)) \
+			or (not skill.direct and not GameState.current_level.grid.is_point_solid(move_tile)):
+				skill_move_range.range_tiles.append(move_tile)
+		GameState.current_level.draw_range(skill_move_range.range_tiles, overlap_atlas_coords)
 	
 	
 	return skill_range
@@ -319,7 +306,7 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 		if path_position.distance_to(global_position) > SNAP_DISTANCE:
 			var dir: Vector2 = (path_position - global_position).normalized()
 			global_position += dir * Global.PLAYER_SPEED * delta
-			global_position = global_position.snapped(Vector2(2,1))
+			global_position = global_position.round()
 			var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
 			animator.play_directional(animation, anim_dir)
 		if not path_position.distance_to(global_position) > SNAP_DISTANCE:

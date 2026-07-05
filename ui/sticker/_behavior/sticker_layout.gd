@@ -15,7 +15,7 @@ var _sticker_parent: TextureRect =  _sticker_highlight.get_parent()
 
 func _ready() -> void:
 	hide()
-	#EventBus.turn_started.connect(_on_turn_started)
+	EventBus.turn_started.connect(_on_turn_started)
 
 
 func _on_turn_started(unit: Character) -> void:
@@ -27,7 +27,12 @@ func _on_turn_started(unit: Character) -> void:
 	_unit = unit
 	if _unit.special:
 		_special_sticker.show()
-		_special_sticker.texture = _unit.special.ui_small
+		var special_sticker := AtlasTexture.new()
+		special_sticker.atlas = _unit.special.ui_small
+		special_sticker.region =  Rect2(Vector2.ZERO, Skill.UI_SMALL_DIMENSIONS)
+		custom_minimum_size = Skill.UI_SMALL_DIMENSIONS
+		custom_maximum_size = Skill.UI_SMALL_DIMENSIONS
+		_special_sticker.texture = special_sticker
 		$SpecialLabel.show()
 		$SpecialLabel.text = _unit.special.name
 

@@ -62,6 +62,7 @@ func display_unit_skill_lists() -> void:
 		var unit_skill_list: UnitSkillList = unit_skill_list_scene.instantiate()
 		unit_skill_lists.add_child(unit_skill_list)
 		unit_skill_list.deal(unit)
+		unit_skill_list.child_focus_entered.connect(_on_unit_skill_list_focus_entered.bind(unit))
 		for button: SkillSelectButton in unit_skill_list.skill_buttons:
 			if not first_button_grabbed:
 				first_button_grabbed = true
@@ -71,6 +72,10 @@ func display_unit_skill_lists() -> void:
 			button.skill_canceled.connect(_on_skill_canceled)
 		
 	_generate_button_neighbors()
+
+
+func _on_unit_skill_list_focus_entered(unit: Character) -> void:
+	EventBus.cam_follow_requested.emit(unit, Vector2(160,0))
 
 
 func _generate_button_neighbors() -> void:

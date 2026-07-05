@@ -27,7 +27,7 @@ character_animation = "idle"
 state = ExtResource("3_tnq7t")
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_xdj1t")])
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2vuvr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_apuu4"]
 resource_local_to_scene = true
 shader = ExtResource("8_07m0v")
 shader_parameter/highlighted = false
@@ -193,7 +193,7 @@ pivot_offset = Vector2(0, 0)
 pivot_offset = Vector2(0, 0)
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_2vuvr")
+material = SubResource("ShaderMaterial_apuu4")
 position = Vector2(0, 0)
 texture = ExtResource("11_apuu4")
 offset = Vector2(0, -17)

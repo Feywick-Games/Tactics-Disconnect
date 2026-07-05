@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bejvnu8r38u2i"]
+
+[ext_resource type="PackedScene" uid="uid://bcnpnplhpud5y" path="res://ui/turn_display/_packed_scene/turn_portrait.tscn" id="1_l57dw"]
+[ext_resource type="Texture2D" uid="uid://rm5xriq1mnnq" path="res://entity/character/ally/izzy/_sprite/chaz_turn_portrait_small.png" id="2_gmvg2"]
+[ext_resource type="Texture2D" uid="uid://cc4g8expt00d5" path="res://entity/character/ally/chaz/_sprite/chaz_turn_portrait.png" id="3_b6ru6"]
+
+[node name="TurnPortrait" unique_id=1652300559 instance=ExtResource("1_l57dw")]
+
+[node name="SmallPortrait" parent="." index="1" unique_id=1066073387]
+texture = ExtResource("2_gmvg2")
+hframes = 1
+
+[node name="FullPortrait" parent="." index="2" unique_id=102064676]
+texture = ExtResource("3_b6ru6")

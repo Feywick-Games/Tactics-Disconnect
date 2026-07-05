@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://kmie07ujhpn" path="res://ui/_behavior/combat_ui.gd" id="1_d34a4"]
 [ext_resource type="Script" uid="uid://dxun7rvd6nx2" path="res://ui/turn_display/_behavior/turn_display.gd" id="1_xgp2v"]
-[ext_resource type="Texture2D" uid="uid://bcurte3vgqgy4" path="res://ui/_sprite/static_panel.png" id="2_5g8i8"]
 [ext_resource type="Texture2D" uid="uid://dnkx7jyewlkxh" path="res://ui/battle_timer/battle_timer_under.png" id="2_sbk1j"]
 [ext_resource type="Texture2D" uid="uid://caqbtr4v8posy" path="res://ui/battle_timer/battle_timer_over.png" id="3_fndsw"]
 [ext_resource type="Texture2D" uid="uid://cycr83c35trtu" path="res://ui/battle_timer/battle_timer_fill.png" id="4_cy5jr"]
@@ -25,9 +24,6 @@
 [ext_resource type="Texture2D" uid="uid://dgadll1iljejh" path="res://ui/skill_select/_sprite/go_button_hover.tres" id="22_werr3"]
 [ext_resource type="Texture2D" uid="uid://bqe6i14e2ixo5" path="res://ui/skill_select/_sprite/go_button_disabled.tres" id="24_riw5p"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lj3ej"]
-texture = ExtResource("2_5g8i8")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ouag7"]
 bg_color = Color(0.4745098, 0.3882353, 0.7607843, 1)
 
@@ -46,49 +42,31 @@ bg_color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 [node name="CombatUI" type="CanvasLayer" unique_id=788298229]
 script = ExtResource("1_d34a4")
 
-[node name="CombatPanel" type="PanelContainer" parent="." unique_id=1722263771]
-custom_minimum_size = Vector2(160, 360)
-custom_maximum_size = Vector2(160, 360)
+[node name="CombatPanel" type="Control" parent="." unique_id=1907514751]
+custom_minimum_size = Vector2(640, 360)
+custom_maximum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 0
 offset_right = 160.0
 offset_bottom = 360.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxTexture_lj3ej")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CombatPanel" unique_id=1858205998]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="MarginContainer2" type="MarginContainer" parent="CombatPanel/VBoxContainer" unique_id=1629645335]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-
-[node name="BattleTimer" type="TextureProgressBar" parent="CombatPanel/VBoxContainer/MarginContainer2" unique_id=618262420]
-unique_name_in_owner = true
-layout_mode = 2
-max_value = 16.0
-step = 0.001
-fill_mode = 4
-texture_under = ExtResource("2_sbk1j")
-texture_over = ExtResource("3_fndsw")
-texture_progress = ExtResource("4_cy5jr")
-script = ExtResource("5_tvp2d")
-
-[node name="MarginContainer" type="MarginContainer" parent="CombatPanel/VBoxContainer" unique_id=354752036]
-custom_maximum_size = Vector2(160, 220)
+[node name="MarginContainer" type="MarginContainer" parent="CombatPanel" unique_id=354752036]
+custom_minimum_size = Vector2(160, 256)
+custom_maximum_size = Vector2(160, 256)
 clip_contents = true
-layout_mode = 2
+layout_mode = 1
+offset_right = 160.0
+offset_bottom = 220.0
 theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CombatPanel/VBoxContainer/MarginContainer" unique_id=884471705]
+[node name="HBoxContainer" type="HBoxContainer" parent="CombatPanel/MarginContainer" unique_id=884471705]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="SkillProgress" type="ProgressBar" parent="CombatPanel/VBoxContainer/MarginContainer/HBoxContainer" unique_id=213505277]
+[node name="SkillProgress" type="ProgressBar" parent="CombatPanel/MarginContainer/HBoxContainer" unique_id=213505277]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(12, 220)
 layout_mode = 2
@@ -101,15 +79,45 @@ show_percentage = false
 script = ExtResource("7_x5dgg")
 active_material = ExtResource("7_783s8")
 
-[node name="TurnDisplay" type="BoxContainer" parent="CombatPanel/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1113997059]
+[node name="TurnDisplay" type="BoxContainer" parent="CombatPanel/MarginContainer/HBoxContainer" unique_id=1113997059]
 custom_minimum_size = Vector2(160, 0)
 custom_maximum_size = Vector2(160, -1)
 layout_mode = 2
 vertical = true
 script = ExtResource("1_xgp2v")
 
-[node name="MarginContainer3" type="MarginContainer" parent="CombatPanel" unique_id=1189455006]
+[node name="MarginContainer2" type="MarginContainer" parent="CombatPanel" unique_id=1629645335]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_bottom = 72.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+
+[node name="BattleTimer" type="TextureProgressBar" parent="CombatPanel/MarginContainer2" unique_id=618262420]
+unique_name_in_owner = true
 layout_mode = 2
+max_value = 16.0
+step = 0.001
+fill_mode = 4
+texture_under = ExtResource("2_sbk1j")
+texture_over = ExtResource("3_fndsw")
+texture_progress = ExtResource("4_cy5jr")
+script = ExtResource("5_tvp2d")
+
+[node name="MarginContainer3" type="MarginContainer" parent="CombatPanel" unique_id=1189455006]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -42.0
+offset_right = 160.0
+grow_vertical = 0
 size_flags_vertical = 8
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_bottom = 8
@@ -494,10 +502,9 @@ texture_disabled = ExtResource("24_riw5p")
 texture_focused = ExtResource("22_werr3")
 
 [node name="SkillShowcase" type="MarginContainer" parent="." unique_id=1438316497]
-offset_left = 30.0
-offset_top = 633.0
-offset_right = 118.0
-offset_bottom = 720.0
+custom_minimum_size = Vector2(640, 360)
+offset_right = 640.0
+offset_bottom = 360.0
 size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_constants/margin_bottom = 64
@@ -505,8 +512,12 @@ theme_override_constants/margin_bottom = 64
 [node name="SkillLabel" type="Label" parent="SkillShowcase" unique_id=1059656198]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
 theme_override_colors/font_color = Color(0.964706, 0.964706, 0.964706, 1)
 theme_override_colors/font_outline_color = Color(0.121569, 0.105882, 0.172549, 1)
 theme_override_constants/outline_size = 7
 text = "Cheap Shot"
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1628530910]

@@ -7,6 +7,13 @@ enum PhysicsLayers {
 	ALLY = 3
 }
 
+enum SkillErrorCode
+{
+	OK,
+	NO_TARGET,
+	MOVE_BLOCKED
+}
+
 const PLAYER_SPEED: float = 150
 const TILE_SIZE := Vector2i(30, 30)
 
