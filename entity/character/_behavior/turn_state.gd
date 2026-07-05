@@ -43,7 +43,7 @@ func calc_default_ranges() -> void:
 func update(_delta: float) -> State:
 	if _encounter_ended:
 		return _character.init_state.new()
-	elif _exiting:
+	elif _exiting and not _moving:
 		_character.end_turn()
 		if not _encounter_ended:
 			return CharacterCombatIdleState.new()
@@ -51,12 +51,9 @@ func update(_delta: float) -> State:
 
 
 func physics_update(delta: float) -> State:
-	_time_since_move += delta
-	if _time_since_move > Character.TIME_PER_MOVE:
-		_time_since_move = 0
-		_tile_path =  _character.process_movement(delta, _tile_path)
-		if _tile_path.is_empty():
-			_moving = false
+	_tile_path =  _character.process_movement(delta, _tile_path)
+	if _tile_path.is_empty():
+		_moving = false
 	return
 
 

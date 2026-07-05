@@ -17,7 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://r5sdcdlxfmjr" path="res://entity/character/ally/chaz/chaz.tscn" id="10_ymq17"]
 [ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="11_0hr4q"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="11_tql3s"]
-[ext_resource type="PackedScene" uid="uid://bhfdokg7y4yll" path="res://ui/combat_ui.tscn" id="12_8u7tc"]
 [ext_resource type="PackedScene" uid="uid://bvmot03d4vcap" path="res://entity/character/ally/peggy/peggy.tscn" id="13_qbfaq"]
 [ext_resource type="PackedScene" uid="uid://cqgaf4b8quup7" path="res://entity/character/enemy/enemy.tscn" id="13_wu2vm"]
 [ext_resource type="Script" uid="uid://8xawka3fldcr" path="res://node/camera/tracking_camera.gd" id="16_vcdsl"]
@@ -36,6 +35,12 @@ status_effects = Array[ExtResource("8_k82rh")]([SubResource("Resource_lxfmk")])
 [node name="Alley" type="Node2D" unique_id=2146508345]
 y_sort_enabled = true
 script = ExtResource("1_q1hxj")
+
+[node name="TrackingCamera" type="Camera2D" parent="." unique_id=738522487]
+process_priority = 1
+position = Vector2(505, 135)
+script = ExtResource("16_vcdsl")
+metadata/_custom_type_script = "uid://8xawka3fldcr"
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=512045593]
 z_index = -3
@@ -127,9 +132,3 @@ position = Vector2(565, 225)
 
 [node name="Enemy8" parent="." unique_id=620880210 instance=ExtResource("13_wu2vm")]
 position = Vector2(775, 165)
-
-[node name="CombatUI" parent="." unique_id=889214481 instance=ExtResource("12_8u7tc")]
-
-[node name="TrackingCamera" type="Camera2D" parent="." unique_id=738522487]
-script = ExtResource("16_vcdsl")
-metadata/_custom_type_script = "uid://8xawka3fldcr"

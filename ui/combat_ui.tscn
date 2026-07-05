@@ -40,6 +40,7 @@ bg_color = Color(0.32156864, 0.19607843, 0.45882353, 1)
 bg_color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
 [node name="CombatUI" type="CanvasLayer" unique_id=788298229]
+follow_viewport_scale = 3.0
 script = ExtResource("1_d34a4")
 
 [node name="CombatPanel" type="Control" parent="." unique_id=1907514751]
@@ -52,39 +53,45 @@ offset_bottom = 360.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="CombatPanel" unique_id=354752036]
-custom_minimum_size = Vector2(160, 256)
-custom_maximum_size = Vector2(160, 256)
-clip_contents = true
+[node name="MarginContainer4" type="MarginContainer" parent="CombatPanel" unique_id=1884127455]
 layout_mode = 1
-offset_right = 160.0
+offset_right = 40.0
 offset_bottom = 220.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 12
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CombatPanel/MarginContainer" unique_id=884471705]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="SkillProgress" type="ProgressBar" parent="CombatPanel/MarginContainer/HBoxContainer" unique_id=213505277]
+[node name="SkillProgress" type="ProgressBar" parent="CombatPanel/MarginContainer4" unique_id=213505277]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(12, 220)
+custom_minimum_size = Vector2(256, 16)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ouag7")
 theme_override_styles/fill = SubResource("StyleBoxFlat_x5dgg")
 max_value = 9.0
 step = 1.0
-fill_mode = 3
 show_percentage = false
 script = ExtResource("7_x5dgg")
 active_material = ExtResource("7_783s8")
 
-[node name="TurnDisplay" type="BoxContainer" parent="CombatPanel/MarginContainer/HBoxContainer" unique_id=1113997059]
-custom_minimum_size = Vector2(160, 0)
-custom_maximum_size = Vector2(160, -1)
+[node name="MarginContainer" type="MarginContainer" parent="CombatPanel" unique_id=354752036]
+custom_minimum_size = Vector2(160, 268)
+custom_maximum_size = Vector2(160, 268)
+clip_contents = true
+layout_mode = 1
+offset_right = 160.0
+offset_bottom = 256.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+
+[node name="TurnDisplay" type="BoxContainer" parent="CombatPanel/MarginContainer" unique_id=1113997059]
+custom_minimum_size = Vector2(180, 0)
+custom_maximum_size = Vector2(180, -1)
 layout_mode = 2
 vertical = true
 script = ExtResource("1_xgp2v")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CombatPanel/MarginContainer" unique_id=884471705]
+layout_mode = 2
+theme_override_constants/separation = 16
 
 [node name="MarginContainer2" type="MarginContainer" parent="CombatPanel" unique_id=1629645335]
 texture_filter = 1

@@ -15,7 +15,7 @@ func _init(character: Character, skill: Skill, target_tile: Vector2i) -> void:
 	_character = character
 
 func enter() -> void:
-	GameState.current_level.combat_ui.display_skill_text(_skill.name)
+	GameState.combat_ui.display_skill_text(_skill.name)
 
 
 func update(_delta: float) -> State:

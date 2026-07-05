@@ -8,15 +8,15 @@ uniform float pulse_speed : hint_range(0.0, 100.0) = 20;
 
 void fragment() {
  	vec4 col = color;
-  	float offset = (1.0 - float(int(TIME * pulse_speed) % 100) *.01) - .1;
-	float new_uv_y = UV.y * .6;
+  	float offset = (float(int(TIME * pulse_speed) % 100) *.01) - .1;
+	float new_uv_x = UV.x * .6;
 
 	
-	if (abs(offset - new_uv_y) < .1)
+	if (abs(offset - new_uv_x) < .1)
 	{
 		col = glow_color;
 	}
-	else if (abs(offset - new_uv_y) < .15)
+	else if (abs(offset - new_uv_x) < .15)
 	{
 		col = glow_color_2;
 	}

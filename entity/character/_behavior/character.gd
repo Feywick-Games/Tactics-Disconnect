@@ -8,7 +8,7 @@ signal action_processed
 @warning_ignore("unused_signal")
 signal state_requested(state: State)
 
-const SNAP_DISTANCE := 2.4
+const SNAP_DISTANCE : float = 1.0
 const TIME_PER_MOVE := .03
 const HEALTH_BAR_PIXEL_WIDTH := 25
 
@@ -72,7 +72,7 @@ var item: Item
 # TODO remove
 var processing_action := false
 var processing_reaction := false
-
+var sub_pixel_position: Vector2
 var _state_machine: StateMachine
 
 @onready
@@ -93,6 +93,7 @@ var status_label_manager: StatusLabelManager = $StatusLabelManager
 var sfx_player: AudioStreamPlayer2D = $SfxPlayer
 
 func _ready() -> void:
+	sub_pixel_position = global_position
 	health_bar.hide()
 	EventBus.display_requested.connect(_on_display_requested)
 	_state_machine = StateMachine.new(self, init_state.new())
@@ -305,13 +306,15 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 		var map_position := GameState.current_level.tile_to_world(current_tile)
 		if path_position.distance_to(global_position) > SNAP_DISTANCE:
 			var dir: Vector2 = (path_position - global_position).normalized()
-			global_position += dir * Global.PLAYER_SPEED * delta
-			global_position = global_position.round()
+			sub_pixel_position += dir * Global.PLAYER_SPEED * delta
+			print(sub_pixel_position)
+			global_position = sub_pixel_position.round()
 			var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
 			animator.play_directional(animation, anim_dir)
 		if not path_position.distance_to(global_position) > SNAP_DISTANCE:
 			if len(tile_path) == 1:
-				global_position = path_position.round()
+				sub_pixel_position = path_position
+				global_position = sub_pixel_position.round()
 			tile_path.pop_front()
 		if not tile_path.is_empty() and \
 		path_position.distance_to(global_position) < map_position.distance_to(global_position):
