@@ -65,7 +65,29 @@ func calc_skill_likelihood(strike_tile : Vector2i) -> float:
 	return 0
 
 
-
-@warning_ignore("unused_parameter")
 func can_use(target_tile: Vector2i) -> Global.SkillErrorCode:
+	var target: Character
+	
+	for aoe_tile in _skill.aoe:
+		var offset_rotated: = Vector2i(Vector2(aoe_tile).rotated(Vector2(_character.facing).angle()).round())
+		target = GameState.current_level.grid.get_unit_from_tile(target_tile + offset_rotated)
+		if target:
+			break
+	
+	if not target:
+		return Global.SkillErrorCode.NO_TARGET
+	
+	var can_move : bool = true
+		
+	if _skill.move_position != Vector2i.ZERO:
+		can_move = false
+		var move_tile: Vector2i  = Vector2i(Vector2(_skill.move_position).rotated(Vector2(_character.facing).angle()).round())
+		move_tile = _character.current_tile + move_tile
+		if (_skill.direct and GameState.current_level.grid.is_point_solid_ignore_unit(move_tile)) \
+		or (not _skill.direct and GameState.current_level.grid.is_point_solid(move_tile)):
+			can_move = true
+	
+	if not can_move:
+		return Global.SkillErrorCode.MOVE_BLOCKED
+	
 	return Global.SkillErrorCode.OK

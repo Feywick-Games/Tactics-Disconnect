@@ -77,13 +77,13 @@ position = Vector2(-10, 0)
 tile_set = ExtResource("4_b6nyy")
 
 [node name="Izzy" parent="." unique_id=1102113605 instance=ExtResource("5_c38kb")]
-position = Vector2(445, 135)
+position = Vector2(565, 135)
 skill_deck = Array[ExtResource("6_sldol")]([ExtResource("7_ywq4v"), ExtResource("7_ywq4v"), ExtResource("7_ywq4v"), ExtResource("7_ywq4v"), ExtResource("8_dfity"), ExtResource("9_h5pb1"), ExtResource("7_ywq4v"), ExtResource("10_d0qod"), ExtResource("9_h5pb1"), ExtResource("8_dfity")])
 reactions = Array[ExtResource("6_41vbx")]([SubResource("Resource_bvir6")])
 max_health = 40
 
 [node name="Chaz" parent="." unique_id=642596448 instance=ExtResource("10_ymq17")]
-position = Vector2(505, 135)
+position = Vector2(505, 105)
 max_health = 40
 
 [node name="Mei" parent="." unique_id=1357384696 instance=ExtResource("11_0hr4q")]

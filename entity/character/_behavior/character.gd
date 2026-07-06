@@ -222,85 +222,65 @@ func create_range_astar(range_struct: RangeStruct, manhattan_range: int) -> ASta
 	return astar
 
 
-func update_ranges(movement_tiles: RangeStruct, interactable_range: Array[Vector2i]) -> RangeStruct:
+func update_ranges(movement_tiles: RangeStruct, _interactable_range: Array[Vector2i]) -> RangeStruct:
 	# color tiles differently when attacks overlap with movement 
 	var skill: Skill
-	var skill_range: RangeStruct
-	var attack_atlas_coords: Vector2i
-	var overlap_atlas_coords: Vector2i
+	var skill_range: Array[Vector2i]
 	var aoe: Array[Vector2i]
-	var range_type: Combat.RangeType
 	
 	if attack_state == Combat.AttackState.BASIC:
 		skill = basic_skill
-		attack_atlas_coords = Global.RETICLE_ATTACK_ALTAS_COORDS
-		overlap_atlas_coords = Global.RETICLE_SPECIAL_2_ATLAS_COORDS
 	elif attack_state == Combat.AttackState.SPECIAL:
 		skill = special
-		attack_atlas_coords = Global.RETICLE_SPECIAL_1_ALTAS_COORDS
-		overlap_atlas_coords = Global.RETICLE_CURE_1_ATLAS_COORDS
 	elif attack_state == Combat.AttackState.ITEM:
 		skill = item
-		attack_atlas_coords = Global.RETICLE_ATTACK_ALTAS_COORDS
-		overlap_atlas_coords = Global.RETICLE_SPECIAL_2_ATLAS_COORDS
 	
+	skill_range = GameState.current_level.grid.request_range(current_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct).range_tiles
 	
-	skill_range = GameState.current_level.grid.request_range(current_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct)
-	aoe = skill.aoe
-	range_type = skill.range_type
+	skill_range.erase(current_tile)
 	
-	skill_range.range_tiles.erase(current_tile)
-	var skill_aoe_range := RangeStruct.new()
-	for range_tile: Vector2i in skill_range.range_tiles:
+	var skill_aoe_range : Array[Vector2i]
+	for range_tile: Vector2i in skill_range:
 		for tile_offset in aoe:
 			var direction : Vector2 = VectorF.snap_direction(Vector2(range_tile - current_tile).normalized())
 			var tile: Vector2i
 			var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(direction.angle()).round())
-			if range_type == Combat.RangeType.MELEE:
-				tile = current_tile + Vector2i(direction) + offset_rotated
-			else:
-				tile = range_tile + offset_rotated
+			tile = range_tile + offset_rotated
 			var is_valid := GameState.current_level.grid.region.has_point(tile) \
 			and not GameState.current_level.grid.is_point_solid_ignore_unit(tile)
 			
-			if is_valid and not tile in skill_range.range_tiles and not tile in skill_aoe_range.range_tiles:
-				skill_aoe_range.range_tiles.append(tile)
-	
-	
-	var skill_move_range := RangeStruct.new()
+			if is_valid and not tile in skill_range and not tile in skill_aoe_range:
+				skill_aoe_range.append(tile)
 	
 	var overlap_tiles: Array[Vector2i]
 	var attack_only_tiles: Array[Vector2i]
 	
-	for tile in skill_range.range_tiles + skill_aoe_range.range_tiles:
+	for tile in skill_range + skill_aoe_range:
 		if tile in movement_tiles.range_tiles:
 			overlap_tiles.append(tile)
 		else:
 			attack_only_tiles.append(tile)
 	
+	var overlap_atlas_coords: Vector2i
+	if attack_state == Combat.AttackState.BASIC:
+		overlap_atlas_coords = Global.RETICLE_OVERLAP_BASIC_ATLAS_COORDS
+	else:
+		overlap_atlas_coords = Global.RETICLE_OVERLAP_SPECIAL_ATLAS_COORDS
+	
 	GameState.current_level.reset_map()
 	GameState.current_level.draw_range(movement_tiles.range_tiles, Global.RETICLE_MOVE_ALTAS_COORDS)
-	GameState.current_level.draw_range(attack_only_tiles, attack_atlas_coords)
+	skill.draw_range(attack_only_tiles, attack_state == Combat.AttackState.SPECIAL)
 	GameState.current_level.draw_range(overlap_tiles, overlap_atlas_coords)
-	GameState.current_level.draw_range(interactable_range, Global.RETICLE_INTERACTABLE_ATLAS_COORDS)
 	if not movement_tiles.range_tiles.is_empty():
 		GameState.current_level.reticle.set_cell(current_tile, 0, Global.RETICLE_MOVE_ALTAS_COORDS)
 		GameState.current_level.select_tile(current_tile)
-		
-	if skill.move_position != Vector2i.ZERO:
-		for direction: Vector2i in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
-			var move_tile: Vector2i  = Vector2i(Vector2(skill.move_position).rotated(Vector2(direction).angle()).round())
-			move_tile = current_tile + move_tile
-			if (skill.direct and not GameState.current_level.grid.is_point_solid_ignore_unit(move_tile)) \
-			or (not skill.direct and not GameState.current_level.grid.is_point_solid(move_tile)):
-				skill_move_range.range_tiles.append(move_tile)
-		GameState.current_level.draw_range(skill_move_range.range_tiles, overlap_atlas_coords)
 	
-	
-	return skill_range
+	var out := RangeStruct.new()
+	out.range_tiles = skill_range
+	return out
 
 
-func process_movement(delta: float, tile_path: Array[Vector2i], animation := "idle") -> Array[Vector2i]:
+func process_movement(delta: float, tile_path: Array[Vector2i], animation := "idle", skip_animation := false) -> Array[Vector2i]:
 	if not tile_path.is_empty():
 		var path_position :=  GameState.current_level.tile_to_world(tile_path[0])
 		var map_position := GameState.current_level.tile_to_world(current_tile)
@@ -310,7 +290,8 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 			print(sub_pixel_position)
 			global_position = sub_pixel_position.round()
 			var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
-			animator.play_directional(animation, anim_dir)
+			if not skip_animation:
+				animator.play_directional(animation, anim_dir)
 		if not path_position.distance_to(global_position) > SNAP_DISTANCE:
 			if len(tile_path) == 1:
 				sub_pixel_position = path_position

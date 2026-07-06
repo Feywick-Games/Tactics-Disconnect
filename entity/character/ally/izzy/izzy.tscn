@@ -178,7 +178,7 @@ _data = {
 }
 
 [node name="Izzy" unique_id=907728875 instance=ExtResource("1_abh6s")]
-skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("3_apuu4"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("3_apuu4"), ExtResource("6_m8t01")])
+skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("3_apuu4"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("5_j3bli"), ExtResource("6_m8t01")])
 character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
 basic_skill = SubResource("Resource_v85yj")

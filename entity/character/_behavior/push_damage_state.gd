@@ -25,7 +25,7 @@ func update(delta: float) -> State:
 	
 	if _is_pushing:
 		if not _tile_path.is_empty():
-			_tile_path = _character.process_movement(delta, _tile_path)
+			_tile_path = _character.process_movement(delta, _tile_path, "idle", true)
 		else:
 			GameState.current_level.grid.update_unit_registry(_character.current_tile, _character)
 			if _o_target:
