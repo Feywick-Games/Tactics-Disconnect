@@ -91,7 +91,7 @@ position = Vector2(355, 165)
 max_health = 40
 
 [node name="Peggy" parent="." unique_id=264392964 instance=ExtResource("13_qbfaq")]
-position = Vector2(385, 195)
+position = Vector2(475, 135)
 max_health = 40
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=44297935]

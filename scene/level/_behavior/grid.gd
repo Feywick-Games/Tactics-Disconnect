@@ -76,7 +76,7 @@ func erase_prop(tile: Vector2i) -> void:
 
 func is_point_solid_ignore_unit(tile: Vector2i) -> bool:
 	if tile in _unit_registry.keys():
-		return true
+		return false
 	else:
 		return is_point_solid(tile)
 	

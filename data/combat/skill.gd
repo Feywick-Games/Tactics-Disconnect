@@ -88,6 +88,9 @@ func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_ran
 			if not is_valid:
 				continue
 				
+			var atlas_coords: Vector2i = GameState.current_level.reticle.get_cell_atlas_coords(target_tile)
+			GameState.current_level.reticle.set_cell(tile, 0, atlas_coords)
+			
 		GameState.current_level.select_tile(tile)
 	
 	if push_position != Vector2i.ZERO:
