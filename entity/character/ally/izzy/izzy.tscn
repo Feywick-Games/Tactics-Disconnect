@@ -197,7 +197,7 @@ material = SubResource("ShaderMaterial_apuu4")
 position = Vector2(0, 0)
 texture = ExtResource("11_apuu4")
 offset = Vector2(0, -17)
-vframes = 3
+vframes = 4
 
 [node name="CollisionShape2D" parent="." index="4" unique_id=974221274]
 position = Vector2(-1, 0)
