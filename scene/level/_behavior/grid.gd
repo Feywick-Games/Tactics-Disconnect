@@ -75,8 +75,10 @@ func erase_prop(tile: Vector2i) -> void:
 
 
 func is_point_solid_ignore_unit(tile: Vector2i) -> bool:
-	return is_point_solid(tile) and not tile in _unit_registry.keys()
-	
+	if tile in _unit_registry.keys():
+		return false
+	else:
+		return is_point_solid(tile)
 	
 
 func get_unit_from_tile(tile: Vector2i) -> Character:
@@ -191,3 +193,25 @@ is_range := false, direct := false) -> RangeStruct:
 			set_point_solid(tile, true)
 	
 	return range_struct
+
+
+func get_path_ignore_passables(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
+	var _pass_tiles: Array[Vector2i]
+	var _unit_tiles: Array[Vector2i]
+	
+	for tile in _passable_tiles:
+		set_point_solid(tile, false)
+		_pass_tiles.append(tile)
+	for tile: Vector2i in _unit_registry.keys():
+		set_point_solid(tile, false)
+		_unit_tiles.append(tile)
+	
+	var out: Array[Vector2i] = get_id_path(from, to) 
+	
+	for tile in _unit_tiles:
+		set_point_solid(tile, true)
+	
+	for tile in _pass_tiles:
+		set_point_solid(tile, true)
+		
+	return out

@@ -14,6 +14,7 @@ var _is_first_turn := false
 func _ready() -> void:
 	EventBus.turn_ended.connect(_start_turn)
 	EventBus.skills_selected.connect(_on_first_skills_selected)
+	EventBus.cam_position_reached.connect(_on_cam_position_reached)
 	hide()
 
 
@@ -76,10 +77,12 @@ func _process(_delta: float) -> void:
 				
 			if _battle_started:
 				_start_turn()
+				
+				
+func _on_cam_position_reached() -> void:
 	if _turn_pending:
-		if get_viewport().get_camera_2d().in_position:
-			_turn_pending = false
-			EventBus.turn_started.emit(_current_unit)
+		_turn_pending = false
+		EventBus.turn_started.emit(_current_unit)
 
 
 func _on_first_skills_selected() -> void:

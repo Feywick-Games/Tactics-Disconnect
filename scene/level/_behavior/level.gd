@@ -19,8 +19,6 @@ var _prop_layer: TileMapLayer = $Props
 @onready
 var _item_layer: TileMapLayer = $Item
 @onready
-var combat_ui: CombatUI = $CombatUI
-@onready
 var map: TileMapLayer = $Floor/Map
 @onready
 var reticle: TileMapLayer = $Floor/Map/Reticle

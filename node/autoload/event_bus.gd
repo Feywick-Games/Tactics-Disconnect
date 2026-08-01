@@ -33,3 +33,11 @@ signal skill_select_opened
 signal cam_follow_requested(unit: Character, offset: Vector2)
 @warning_ignore("unused_signal")
 signal skill_error_encountered(code: Global.SkillErrorCode)
+@warning_ignore("unused_signal")
+signal cam_position_reached
+
+
+@warning_ignore("unused_signal")
+signal push_progress_requested
+@warning_ignore("unused_signal")
+signal push_progress_completed(value: float)

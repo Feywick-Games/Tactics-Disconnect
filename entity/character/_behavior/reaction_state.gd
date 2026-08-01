@@ -7,7 +7,7 @@ var _target: Character
 var _exiting := false
 
 func enter() -> void:
-	GameState.current_level.combat_ui.display_skill_text(_reaction.name)
+	GameState.combat_ui.display_skill_text(_reaction.name)
 
 
 func _init(reaction: Skill, character: Character, target: Character) -> void:

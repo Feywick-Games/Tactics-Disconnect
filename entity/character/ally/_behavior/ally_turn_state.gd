@@ -2,7 +2,6 @@ class_name AllyTurnState
 extends TurnState
 
 const TIME_TILL_UPDATE_RETICLE : float = .2
-const MOVMENT_BUFFER_TIME: float = .1
 
 var _ally: Ally
 var force_redraw := false
@@ -41,7 +40,7 @@ func update(delta: float) -> State:
 	if not _skill_select_opened:
 		_time_since_update_reticle += delta
 		
-		if Input.is_action_pressed("move") and _time_since_update_reticle > TIME_TILL_UPDATE_RETICLE:
+		if Input.is_action_pressed("move") and _time_since_update_reticle > TIME_TILL_UPDATE_RETICLE * 1.25:
 			_time_since_update_reticle = 0
 			var input_vec := Vector2i(Input.get_vector("move_left", "move_right", "move_up", "move_down"))
 			print(input_vec)
