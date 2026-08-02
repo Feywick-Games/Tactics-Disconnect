@@ -43,7 +43,6 @@ func update(delta: float) -> State:
 		if Input.is_action_pressed("move") and _time_since_update_reticle > TIME_TILL_UPDATE_RETICLE * 1.25:
 			_time_since_update_reticle = 0
 			var input_vec := Vector2i(Input.get_vector("move_left", "move_right", "move_up", "move_down"))
-			print(input_vec)
 			_input_buffered = _on_movememen_input.bind(input_vec)
 		if Input.is_action_just_pressed("guard"):
 			_input_buffered = _on_guard_pressed

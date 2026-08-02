@@ -20,6 +20,10 @@
 [ext_resource type="PackedScene" uid="uid://bvmot03d4vcap" path="res://entity/character/ally/peggy/peggy.tscn" id="13_qbfaq"]
 [ext_resource type="PackedScene" uid="uid://cqgaf4b8quup7" path="res://entity/character/enemy/enemy.tscn" id="13_wu2vm"]
 [ext_resource type="Script" uid="uid://8xawka3fldcr" path="res://node/camera/tracking_camera.gd" id="16_vcdsl"]
+[ext_resource type="Script" uid="uid://cfuxemb15nlab" path="res://node/spawn/spawn_point.gd" id="21_sldol"]
+[ext_resource type="Script" uid="uid://c1muyw0r2jx50" path="res://node/spawn/spawn_manager.gd" id="21_ywq4v"]
+[ext_resource type="Script" uid="uid://ujs5udtg6jxg" path="res://node/spawn/spawn_data.gd" id="23_dfity"]
+[ext_resource type="PackedScene" uid="uid://bhfdokg7y4yll" path="res://ui/combat_ui.tscn" id="24_h5pb1"]
 
 [sub_resource type="Resource" id="Resource_lxfmk"]
 script = ExtResource("8_k82rh")
@@ -32,9 +36,18 @@ character_animation = "idle"
 state = ExtResource("7_atdio")
 status_effects = Array[ExtResource("8_k82rh")]([SubResource("Resource_lxfmk")])
 
+[sub_resource type="Resource" id="Resource_s57jr"]
+script = ExtResource("23_dfity")
+value = 1
+character_scene = ExtResource("13_wu2vm")
+facing = Vector2i(0, -1)
+metadata/_custom_type_script = "uid://ujs5udtg6jxg"
+
 [node name="Alley" type="Node2D" unique_id=2146508345]
 y_sort_enabled = true
 script = ExtResource("1_q1hxj")
+
+[node name="CombatUI" parent="." unique_id=788298229 instance=ExtResource("24_h5pb1")]
 
 [node name="TrackingCamera" type="Camera2D" parent="." unique_id=738522487]
 process_priority = 1
@@ -94,41 +107,11 @@ max_health = 40
 position = Vector2(475, 135)
 max_health = 40
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=44297935]
+[node name="SpawnManager" type="Node" parent="." unique_id=547445778]
+script = ExtResource("21_ywq4v")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=446104743]
-visible = false
-color = Color(0.355314, 0.355314, 0.355314, 1)
-
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=858719871]
-visible = false
-position = Vector2(390, 117)
-rotation = -2.61799
-color = Color(0.306923, 0.306923, 0.306923, 1)
-
-[node name="Enemy" parent="." unique_id=775193411 instance=ExtResource("13_wu2vm")]
-position = Vector2(625, 105)
-
-[node name="Enemy5" parent="." unique_id=1334997669 instance=ExtResource("13_wu2vm")]
-position = Vector2(235, 135)
-
-[node name="Enemy6" parent="." unique_id=483672272 instance=ExtResource("13_wu2vm")]
-position = Vector2(205, 285)
-
-[node name="Enemy2" parent="." unique_id=1335484027 instance=ExtResource("13_wu2vm")]
-position = Vector2(655, 285)
-
-[node name="Enemy9" parent="." unique_id=1311138536 instance=ExtResource("13_wu2vm")]
-position = Vector2(295, 345)
-
-[node name="Enemy3" parent="." unique_id=99175378 instance=ExtResource("13_wu2vm")]
-position = Vector2(205, 195)
-
-[node name="Enemy4" parent="." unique_id=578864682 instance=ExtResource("13_wu2vm")]
-position = Vector2(655, 165)
-
-[node name="Enemy7" parent="." unique_id=2041806145 instance=ExtResource("13_wu2vm")]
-position = Vector2(565, 225)
-
-[node name="Enemy8" parent="." unique_id=620880210 instance=ExtResource("13_wu2vm")]
-position = Vector2(775, 165)
+[node name="SpawnPoint" type="Node2D" parent="SpawnManager" unique_id=1799894307]
+position = Vector2(625, 285)
+script = ExtResource("21_sldol")
+spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_s57jr")])
+metadata/_custom_type_script = "uid://cfuxemb15nlab"

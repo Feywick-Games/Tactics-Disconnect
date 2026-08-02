@@ -101,6 +101,7 @@ func _ready() -> void:
 
 
 func start_encounter() -> void:
+	animator.play_directional("idle", facing)
 	health = max_health
 	health_bar.max_value = max_health
 	health_bar.value = health

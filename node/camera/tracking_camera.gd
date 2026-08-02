@@ -47,7 +47,6 @@ func _physics_process(delta: float) -> void:
 	#global_position.y = max(global_position.y, Global.GAME_SIZE.y / 2.0)
 	#global_position.x = max(global_position.x, Global.GAME_SIZE.x / 2.0)
 	var cam_subpixel_offset: = (actual_cam_pos.round() - actual_cam_pos)
-	print(cam_subpixel_offset)
 	GameState.level_viewport.material.set_shader_parameter("cam_offset", cam_subpixel_offset)
 	global_position = actual_cam_pos.round()
 

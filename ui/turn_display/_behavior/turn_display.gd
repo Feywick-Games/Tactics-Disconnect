@@ -12,10 +12,14 @@ var _turn_pending := false
 var _is_first_turn := false
 
 func _ready() -> void:
-	EventBus.turn_ended.connect(_start_turn)
 	EventBus.skills_selected.connect(_on_first_skills_selected)
 	EventBus.cam_position_reached.connect(_on_cam_position_reached)
+	EventBus.unit_spawned.connect(_add_unit)
 	hide()
+	# load allied units
+	var combatants: Array = get_tree().get_nodes_in_group("ally")
+	for unit: Character in combatants:
+		_add_unit(unit)
 
 
 func _on_encounter_ended() -> void:
@@ -46,22 +50,31 @@ func _start_turn() -> void:
 		return
 	elif not allies_remaining:
 		get_tree().reload_current_scene()
+		return
 	
-	if _is_first_turn:
-		_is_first_turn = false
-		for turn_portrait: TurnPortrait in _turn_portraits:
-			add_child(turn_portrait)
+	_update_turn_portraits()
 	
-	for _turn_portrait: TurnPortrait in _turn_portraits:
-		_turn_portrait.update()
-	
-	_turn_portraits[_current_unit_idx].reset_portrait()
-	move_child(_turn_portraits[_current_unit_idx], -1)
+	if _current_unit_idx != -1:
+		_turn_portraits[_current_unit_idx].reset_portrait()
+		move_child(_turn_portraits[_current_unit_idx], -1)
 	_increment_unit_index()
 	var turn_portait := _turn_portraits[_current_unit_idx]
 	turn_portait.display_full_portrait()
 	EventBus.cam_follow_requested.emit(_current_unit, Vector2.ZERO)
 	_turn_pending = true
+
+
+func _update_turn_portraits() -> void:
+	for child in get_children():
+		remove_child(child)
+	
+	for i in range(max(_current_unit_idx,0), len(_turn_portraits)):
+		add_child(_turn_portraits[i])
+	for i in range(max(_current_unit_idx,0)):
+		add_child(_turn_portraits[i])
+	
+	for _turn_portrait: TurnPortrait in _turn_portraits:
+		_turn_portrait.update()
 
 
 func _process(_delta: float) -> void:
@@ -93,18 +106,17 @@ func _on_first_skills_selected() -> void:
 		show()
 	
 	_current_unit_idx = -1
-	
-	var combatants: Array = get_tree().get_nodes_in_group("ally")
-	combatants.append_array(
-		get_tree().get_nodes_in_group("enemy")
-	)
-	
-	for unit: Character in combatants:
-		_units.append(unit)
-		unit.died.connect(_on_unit_died.bind(unit))
-		var turn_portrait: TurnPortrait = unit.turn_portrait_scene.instantiate()
-		turn_portrait.set_up(unit)
-		_turn_portraits.append(turn_portrait)
+	EventBus.spawns_processed.connect(_start_turn)
+	_start_turn()
+
+
+func _add_unit(unit: Character) -> void:
+	_units.append(unit)
+	unit.died.connect(_on_unit_died.bind(unit))
+	var turn_portrait: TurnPortrait = unit.turn_portrait_scene.instantiate()
+	turn_portrait.set_up(unit)
+	_turn_portraits.append(turn_portrait)
+	_update_turn_portraits()
 
 
 func _increment_unit_index(val: int = 1) -> void:

@@ -15,6 +15,7 @@ var _combat_panel: Control = $CombatPanel
 var _audio_stream_player: AudioStreamPlayer
 
 func _ready() -> void:
+	show()
 	_skill_label.hide()
 	_combat_panel.hide()
 	EventBus.skills_selected.connect(_on_skills_selected)

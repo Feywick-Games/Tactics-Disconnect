@@ -15,7 +15,7 @@ func _init(character: Character, skill: Skill, target_tile: Vector2i) -> void:
 	_character = character
 
 func enter() -> void:
-	GameState.combat_ui.display_skill_text(_skill.name)
+	EventBus.skill_display_requested.emit(_skill.name)
 
 
 func update(_delta: float) -> State:
