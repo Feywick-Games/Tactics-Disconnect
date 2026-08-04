@@ -40,7 +40,6 @@ func change_state(state : State) -> void:
 	for connection in _current_state.get_incoming_connections():
 		connection["signal"].disconnect(connection["callable"])
 	
-	
 	state.state_machine = self
 	state.enter()
 	_current_state = state

@@ -7,11 +7,11 @@ func enter() -> void:
 	super.enter()
 	#TODO make directional animations
 	_direction = VectorF.snap_direction(_target_tile - _character.current_tile)
-	_character.animator.play_directional(_skill.character_animation, _direction)
+	_character.animator.play_directional(skill.character_animation, _direction)
 	
-	if not _skill.skill_animation.is_empty():
-		_character.skill_animator.play_directional(_skill.skill_animation, _direction)
-	_hit_targets(_skill.aoe, _skill.range_type)
+	if not skill.skill_animation.is_empty():
+		_character.skill_animator.play_directional(skill.skill_animation, _direction)
+	_hit_targets(skill.aoe, skill.range_type)
 
 
 func _hit_targets(aoe: Array[Vector2i], range_type: Combat.RangeType) -> void:
@@ -28,9 +28,9 @@ func _hit_targets(aoe: Array[Vector2i], range_type: Combat.RangeType) -> void:
 		if unit:
 			unit.action_processed.connect(end_turn)
 			_action_to_process += 1
-			var damage_state := DamageState.new(_skill, _direction, _character.accuracy, _character.target_hit)
-			unit.state_requested.emit(damage_state)
+			var damage_state := DamageState.new(skill, _direction, _character.target_hit)
+			unit.set_state(damage_state)
 	
-	if not _skill.is_animated:
+	if not skill.is_animated:
 		await _character.get_tree().create_timer(1).timeout
 		_character.notify_impact()

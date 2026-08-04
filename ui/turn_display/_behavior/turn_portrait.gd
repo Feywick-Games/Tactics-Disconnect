@@ -14,11 +14,6 @@ func _ready() -> void:
 	reset_portrait()
 
 
-func update() -> void:
-	#maybe add health bars?
-	pass
-
-
 func display_full_portrait() -> void:
 	_small_portrait.hide()
 	_full_portrait.show()

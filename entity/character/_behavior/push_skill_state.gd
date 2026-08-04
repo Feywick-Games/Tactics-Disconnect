@@ -14,7 +14,6 @@ var _max_is_collision := false
 var _o_target: Character
 var _push_distance: int
 var _push_tile_path: Array[Vector2i]
-var _has_acted := false
 var _astar: AStarGrid2D
 
 
@@ -23,7 +22,12 @@ func enter() -> void:
 	_target_unit = GameState.current_level.grid.get_unit_from_tile(_target_tile)
 	_push_range = [_target_tile]
 	_direction =  Vector2i(Vector2(_target_tile - _character.current_tile).normalized().round())
-	_push_distance = round(_skill.push_position.length())
+	_push_distance = round(skill.push_position.length())
+	# play animation
+
+func on_minigame_completed(val: int) -> void:
+	super.on_minigame_completed(val)
+	_push_distance = round(value * _push_distance)
 	
 	
 	for i in range(1, _push_distance + 1):
@@ -47,21 +51,8 @@ func enter() -> void:
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
 	_push_tile_path = _astar.get_id_path(_target_tile, _target_tile + (_direction * _max_push_distance))
-	
-	EventBus.push_progress_requested.emit()
-	EventBus.push_progress_completed.connect(_on_push_progress_completed)
-
-
-func _on_push_progress_completed(value: float) -> void:
-	var is_hit: bool = _target_unit.is_hit(_character.accuracy)
-	if is_hit:
-		_push_tile_path = _push_tile_path.slice(0, floor(value * _push_tile_path.size()) + 1)
-		var push_damage_state := PushDamageState.new(_push_tile_path, _o_target, _skill, _direction, INF, _character.target_hit)
-		_target_unit.state_requested.emit(push_damage_state)
-	else:
-		var damage_state := DamageState.new(_skill, _direction, 0, _character.target_hit, 0)
-		_target_unit.state_requested.emit(damage_state)
-	if not _skill.is_animated:
+	var push_damage_state := PushDamageState.new(_push_tile_path, _o_target, skill, _direction, _character.target_hit)
+	_target_unit.set_state(push_damage_state)
+	if not skill.is_animated:
 		_character.notify_impact()
 	_target_unit.action_processed.connect(end_turn)
-	

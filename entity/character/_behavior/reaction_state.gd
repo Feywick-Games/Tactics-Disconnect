@@ -7,7 +7,9 @@ var _target: Character
 var _exiting := false
 
 func enter() -> void:
-	EventBus.skill_display_requested.emit(_reaction.name)
+	var tracking_cam: TrackingCamera = (_character.get_viewport().get_camera_2d() as TrackingCamera)
+	tracking_cam.follow(_character)
+	await tracking_cam.position_reached 
 
 
 func _init(reaction: Skill, character: Character, target: Character) -> void:
@@ -18,10 +20,10 @@ func _init(reaction: Skill, character: Character, target: Character) -> void:
 
 func update(_delta: float) -> State:
 	if not is_instance_valid(_target):
-		return CharacterCombatIdleState.new()
+		return CharacterIdleState.new()
 	
 	if _exiting:
-		return CharacterCombatIdleState.new()
+		return CharacterIdleState.new()
 	return
 
 

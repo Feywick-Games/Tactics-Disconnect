@@ -74,7 +74,7 @@ func enter() -> void:
 		_target = _pick_target(target_list, all_allies)
 		if _target:
 			var target_tile: Vector2i = _pick_tile()
-			_attack_range = _enemy.update_ranges(_movement_range,  _interactable_range)
+			_attack_range = _enemy.update_ranges(_movement_range)
 			if _movement_astar:
 				_tile_path = _movement_astar.get_id_path(_enemy.current_tile, target_tile)
 	else:
@@ -108,9 +108,7 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 				continue
 			target_priority.distance = 1 - (target_priority.distance/float(_enemy.movement_range))
 			target_priority.distance *= Enemy.DISTANCE_PRIORITY
-			var damage_likelihood: float =  float(_enemy.accuracy) / float(target.evasion)
 			target_priority.knock_out_likelihood = 1 if target.health - _enemy.basic_skill.get_hit_damage() < 0 else 0
-			target_priority.knock_out_likelihood *= damage_likelihood
 		_is_acting = false
 	else:
 		for target in target_list:
@@ -121,9 +119,8 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 			var enemy_max_skill_range: float = max(_enemy.basic_skill.max_range, _enemy.special.max_range)
 			target_priority.distance = 1 - (target_priority.distance/float(enemy_max_skill_range))
 
-			var damage_likelihood: float =  float(_enemy.accuracy) / float(target.evasion)
 			target_priority.knock_out_likelihood = 1 if target.health - _enemy.basic_skill.get_hit_damage() < 0 else 0
-			target_priority.knock_out_likelihood *= damage_likelihood * _enemy.knock_out_priority
+			target_priority.knock_out_likelihood *= _enemy.knock_out_priority
 			if target.current_tile in _full_attack_range.range_tiles: 
 				var basic_skill_state: SkillState = (_character.basic_skill.state.new(_character, _character.basic_skill, target.current_tile) as SkillState)
 				var skill_likelihoods: Array[float]
@@ -132,7 +129,7 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 					skill_likelihoods.append(basic_skill_state.calc_skill_likelihood(tile))
 				
 				target_priority.basic_skill_likelihood = skill_likelihoods.max()
-				target_priority.basic_skill_likelihood *= damage_likelihood * _enemy.basic_skill_priority
+				target_priority.basic_skill_likelihood *= _enemy.basic_skill_priority
 			if _enemy.special and target.current_tile in _full_special_range.range_tiles and _enemy.special.is_ready():
 				var special_skill_state: SkillState = (_character.special.state.new(_character, _character.special, target.current_tile) as SkillState)
 				var skill_likelihoods: Array[float]
@@ -141,7 +138,7 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 					skill_likelihoods.append(special_skill_state.calc_skill_likelihood(tile))
 				
 				target_priority.special_likelihood = skill_likelihoods.max()
-				target_priority.special_likelihood *=damage_likelihood * _enemy.special_priority
+				target_priority.special_likelihood *= _enemy.special_priority
 		_is_acting = true
 	
 	for target_priority: TargetPriority in target_priorities:
@@ -198,7 +195,8 @@ func update(delta: float) -> State:
 	if not _is_processing_custom:
 		if not _exiting and _tile_path.is_empty() and _is_acting:
 			if _time_highlight >= HIGHLIGHT_TIME:
-				return _enemy.process_action(_target.current_tile, _attack_range, self)
+				_enemy.select_action(_target.current_tile, _attack_range, self)
+				return
 			else:
 				if not _has_highlighted:
 					_movement_range = RangeStruct.new()
@@ -207,7 +205,7 @@ func update(delta: float) -> State:
 				_time_highlight += delta
 		elif _exiting or (_tile_path.is_empty() and not _is_acting):
 			_enemy.end_turn()
-			return CharacterCombatIdleState.new()
+			return CharacterIdleState.new()
 	else:
 		_process_custom_action(delta)
 	
@@ -218,5 +216,5 @@ func physics_update(delta: float) -> State:
 	var current_tile := _enemy.current_tile
 	super.physics_update(delta)
 	if current_tile != _enemy.current_tile:
-		_attack_range = _enemy.update_ranges(_movement_range,  _interactable_range)
+		_attack_range = _enemy.update_ranges(_movement_range)
 	return

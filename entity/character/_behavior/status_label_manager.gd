@@ -41,13 +41,16 @@ func display_statuses() -> void:
 
 
 func _play_status_effect(effect: StatusEffect) -> void:
-	if not effect:
-		animator.queue("miss")
-	elif effect.status == Combat.Status.HIT:
-		_damage_value = floor(effect.value * effect.multiplier)
+	if effect.status == Combat.Status.HIT:
+		_damage_value = effect.value
 		animator.queue("hit")
-	
-	
+
+
+func preview(effect: StatusEffect) -> void:
+	# show preview of effect without animation
+	pass
+
+
 func add_status_effect(effect: StatusEffect) -> void:
 	if not effect or effect.status in [Combat.Status.HIT]:
 		_queued_statuses.append(effect)

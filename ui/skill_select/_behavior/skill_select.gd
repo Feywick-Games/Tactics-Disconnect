@@ -1,6 +1,8 @@
 class_name SkillSelect
 extends PanelContainer
 
+signal skills_selected
+
 @export
 var aoe_empty_color: Color = "#433045"
 @export
@@ -28,8 +30,6 @@ var unit_skill_lists: VBoxContainer = %UnitSkills
 var go_button: TextureButton = %GoButton
 
 func _ready() -> void:
-	EventBus.encounter_started.connect(_on_skill_select_opened)
-	EventBus.skill_select_opened.connect(_on_skill_select_opened)
 	go_button.pressed.connect(_on_go_button_pressed)
 	hide()
 
@@ -39,26 +39,26 @@ func _on_go_button_pressed() -> void:
 		unit.special = unit_skills_selected[unit]
 		unit.current_skill_hand.erase(unit.special)
 	unit_skills_selected.clear()
-	EventBus.skills_selected.emit()
+	skills_selected.emit()
 	hide()
 
 
-func _on_skill_select_opened() -> void:
+func open(allies: Array[Ally]) -> void:
 	show()
 	go_button.disabled = true
-	for ally in GameState.allies:
+	for ally in allies:
 		unit_skills_selected[ally] = null
 	
-	display_unit_skill_lists()
+	display_unit_skill_lists(allies)
 
 
-func display_unit_skill_lists() -> void:
+func display_unit_skill_lists(allies: Array[Ally]) -> void:
 	for child: UnitSkillList in %UnitSkills.get_children():
 		child.free()
 	
 	var first_button_grabbed := false
 	
-	for unit: Ally in GameState.allies:
+	for unit: Ally in allies:
 		var unit_skill_list: UnitSkillList = unit_skill_list_scene.instantiate()
 		unit_skill_lists.add_child(unit_skill_list)
 		unit_skill_list.deal(unit)
@@ -75,7 +75,8 @@ func display_unit_skill_lists() -> void:
 
 
 func _on_unit_skill_list_focus_entered(unit: Character) -> void:
-	EventBus.cam_follow_requested.emit(unit, Vector2(160,0))
+	var tracking_cam := (GameState.level_viewport.get_node("LevelViewport") as SubViewport).get_camera_2d() as TrackingCamera
+	tracking_cam.follow(unit, Vector2(160,0))
 
 
 func _generate_button_neighbors() -> void:

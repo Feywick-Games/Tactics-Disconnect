@@ -1,13 +1,10 @@
 class_name Level
 extends Node2D
 
+const GRID_TILE_MAP_SCENE : PackedScene = preload("res://scene/level/grid_tile_map.tscn")
 const GRID_DRAW_TIME: float = 1
 
-var _encounter_started: bool
-var _time_since_grid_tile: float = 0
-var _current_cell_x: int = 0
-var _time_per_grid_tile: float
-var _reverse_build_grid := false
+var _turn_number : int = -1
 
 var map_complete: bool
 var grid: Grid
@@ -17,36 +14,184 @@ var _floor_layer: TileMapLayer = $Floor
 @onready
 var _prop_layer: TileMapLayer = $Props
 @onready
-var _item_layer: TileMapLayer = $Item
+var _ui: CombatUI = %CombatUI
 @onready
-var map: TileMapLayer = $Floor/Map
+var _tracking_cam: TrackingCamera = $TrackingCamera
 @onready
-var reticle: TileMapLayer = $Floor/Map/Reticle
+
+var map: GridTileMap
+var reticle: ReticleTileMap
+var _active_unit: Character
+var _is_player_phase := true
+var _spawn_processed := false
+var _enemy_spawned := false
 
 
 func _ready() -> void:
+	map = GRID_TILE_MAP_SCENE.instantiate()
+	_floor_layer.add_child(map)
+	reticle = map.reticle
 	GameState.current_level = self
-	EventBus.encounter_ended.connect(_on_encounter_ended)
 	await get_tree().create_timer(2).timeout
-	_on_encounter_started()
-	EventBus.encounter_started.emit()
+	_start_encounter()
 
 
-func _on_encounter_started() -> void:
-	if not _encounter_started:
-		map_complete = false
-	_reverse_build_grid = false
-	_populate_grid()
-	_encounter_started = true
-	_current_cell_x = grid.region.position.x
-	_time_per_grid_tile =  GRID_DRAW_TIME/ grid.size.x
+func _start_encounter() -> void:
+	grid = Grid.new()
+	grid.populate(_floor_layer, _prop_layer)
+	map.intialize(grid)
+	map.set_up(true)
+	_process_spawns()
+	
+#region Spawn Processing
+
+func _process_spawns() -> void:
+	var ordered_units : Array [Character] = _get_unit_list()
+	if _active_unit is Ally and ordered_units[1] is Enemy:
+		_is_player_phase = false
+	if _active_unit is Enemy and ordered_units[1] is Ally:
+		_is_player_phase = true
+		_spawn_processed = false
+	
+	if not _is_player_phase or _spawn_processed:
+		_process_skill_selection()
+		return
+	
+	_turn_number += 1
+	_ui.skill_progress.increment()
+	_spawn_processed = true
+	var spawn_points : Array[SpawnPoint]
+	for child: Node in find_children("*", "SpawnPoint"):
+		spawn_points.append(child as SpawnPoint)
+	await _spawn_from_trigger(spawn_points, SpawnData.Trigger.TURN_NUMBER, _turn_number)
+	var enemies_remaining: int = get_tree().get_nodes_in_group("enemy").size()
+	await _spawn_from_trigger(spawn_points, SpawnData.Trigger.ENEMIES_REMAINING, enemies_remaining)
+	_process_skill_selection()
 
 
-func _on_encounter_ended() -> void:
-	_reverse_build_grid = true
-	_current_cell_x = grid.region.end.x
-	_encounter_started = false
-	map_complete = false
+func _spawn_from_trigger(spawn_points: Array[SpawnPoint], trigger: SpawnData.Trigger, value: Variant) -> void:
+	for spawn_point: SpawnPoint in spawn_points:
+		var spawns : Array[SpawnData] = spawn_point.get_units_from_trigger(trigger, value)
+		if not spawns.is_empty():
+			_tracking_cam.follow(spawn_point)
+			await _tracking_cam.position_reached
+			for spawn: SpawnData in spawns:
+				_spawn_unit(spawn)
+				_enemy_spawned = true
+
+
+func _spawn_unit(spawn_data: SpawnData) -> void:
+	var unit: Character = spawn_data.character_scene.instantiate()
+	unit.global_position = spawn_data.spawn_global_position
+	unit.facing = spawn_data.facing
+	add_child(unit)
+	await unit.spawn_completed
+
+#endregion
+
+#region Skill Selection
+
+func _process_skill_selection() -> void:
+	if not (_ui.skill_progress.is_ready and _is_player_phase):
+		_select_action()
+		return
+	var allies : Array[Ally]
+	for node: Node in get_tree().get_nodes_in_group("ally"):
+		allies.append(node as Ally)
+	_ui.skill_select.open(allies)
+	_ui.combat_panel.hide()
+	_ui.skill_select.skills_selected.connect(_select_action, CONNECT_ONE_SHOT)
+
+#endregion
+
+#region Process Action
+
+func _select_action() -> void:
+	var ordered_units : Array[Character]
+	if _enemy_spawned:
+		ordered_units = _get_unit_list(false)
+		_enemy_spawned = false
+	else:
+		ordered_units = _get_unit_list()
+		var last_unit : Character = ordered_units.pop_front()
+		ordered_units.append(last_unit)
+	
+	_active_unit = ordered_units[0]
+	
+	_ui.start_turn(ordered_units)
+	_tracking_cam.follow(_active_unit)
+	await _tracking_cam.position_reached
+	_active_unit.skill_error_encountered.connect(_ui.display_skill_error_code)
+	_active_unit.start_turn()
+	
+	for unit: Character in ordered_units:
+		if unit != _active_unit:
+			unit.set_state(CharacterWaitState.new(_active_unit.tiles_highlighted))
+	
+	_ui.battle_timer.timed_out.connect(_process_reactions)
+	_active_unit.action_selected.connect(_process_action)
+
+
+func _process_action(skill_state: SkillState) -> void:
+	_active_unit.skill_error_encountered.disconnect(_ui.display_skill_error_code)
+	_ui.battle_timer.timed_out.disconnect(_process_reactions)
+	_active_unit.action_selected.disconnect(_process_action)
+	_ui.battle_timer.stop()
+	var units: Array[Character] = _get_unit_list()
+		
+	for unit: Character in units:
+		if unit != _active_unit:
+			unit.set_state(CharacterWaitState.new(_active_unit.tiles_highlighted))
+	
+	var minigame_completed: Signal
+	
+	if not skill_state:
+		_process_reactions()
+		return
+	elif skill_state is BasicSkillState:
+		_active_unit.set_state(skill_state)
+		_active_unit.action_processed.connect(_process_reactions, CONNECT_ONE_SHOT)
+		return
+	elif skill_state is PushSkillState:
+		minigame_completed = _ui.push_progress.completed
+		_ui.push_progress.start((int(skill_state.skill.push_position.length())))
+	
+	_active_unit.set_state(skill_state)
+	minigame_completed.connect(skill_state.on_minigame_completed)
+	if not minigame_completed.is_connected(_process_reactions.unbind(1)):
+		minigame_completed.connect(_process_reactions.unbind(1))
+	_active_unit.action_processed.connect(_process_reactions)
+	
+	
+#endregion
+
+#region Process Reactions
+
+func _process_reactions() -> void:
+	if _ui.battle_timer.timed_out.is_connected(_process_reactions):
+		_ui.battle_timer.timed_out.disconnect(_process_reactions)
+		_active_unit.set_state(CharacterIdleState.new())
+	if _active_unit.action_selected.is_connected(_process_action):
+		_active_unit.action_selected.disconnect(_process_action)
+	
+	var units: Array[Character] = _get_unit_list()
+	var effected_units: Array[Character]
+	
+	for unit: Character in units:
+		if not unit.status.is_empty():
+			effected_units.append(unit)
+	
+	for effected_unit: Character in effected_units:
+		for reacting_unit in units:
+			if reacting_unit != _active_unit:
+				await reacting_unit.process_reactions(effected_unit)
+	
+	# disconnect turn connections
+	_active_unit.action_processed.disconnect(_process_reactions)
+	_active_unit.skill_error_encountered.disconnect(_ui.display_skill_error_code)
+	_process_spawns()
+
+#endregion
 
 
 func world_to_tile(world_position: Vector2) -> Vector2i:
@@ -57,102 +202,8 @@ func tile_to_world(tile: Vector2i) -> Vector2:
 	return map.to_global(map.map_to_local(tile))
 
 
-func _process(delta: float) -> void:
-	if (_encounter_started or _reverse_build_grid) and not map_complete:
-		_time_since_grid_tile += delta
-		
-		if _time_since_grid_tile > _time_per_grid_tile:
-			_time_since_grid_tile = 0
-			if not _reverse_build_grid:
-				for y in range(grid.region.position.y, grid.region.end.y):
-					if not grid.is_point_solid(Vector2i(_current_cell_x,y)) or  Vector2i(_current_cell_x,y) in grid.enemy_tiles + grid.ally_tiles:
-						if grid.region.has_point(Vector2i(_current_cell_x,y) + Vector2i.UP):
-							map.set_cell(Vector2i(_current_cell_x,y), 0, Vector2.RIGHT)
-						else:
-							map.set_cell(Vector2i(_current_cell_x,y), 0, Vector2i.ZERO)
-				
-				_current_cell_x +=  1
-			
-				if _current_cell_x == grid.region.end.x:
-					map_complete = true
-			else:
-				for y in range(grid.region.position.y, grid.region.end.y):
-					if grid.region.has_point(Vector2i(_current_cell_x,y)):
-						map.set_cell(Vector2i(_current_cell_x,y))
-				
-				_current_cell_x -=  1
-				
-				if _current_cell_x == grid.region.position.x:
-					_reverse_build_grid = false
-					map_complete = true
-
-
 func reset_map() -> void:
 	reticle.clear()
-
-
-func draw_range(tiles: Array[Vector2i], atlas_coords: Vector2i) -> void:
-	for tile in tiles:
-		reticle.set_cell(tile, 0, atlas_coords)
-
-
-func select_tile(tile: Vector2i, select := true) -> void:
-	
-	var atlas_coords: Vector2i = reticle.get_cell_atlas_coords(tile)
-		
-	if select:
-		atlas_coords.x = 1
-		reticle.set_cell(tile, 0, atlas_coords)
-	else:
-		atlas_coords.x = 0
-		reticle.set_cell(tile, 0, atlas_coords)
-
-
-func get_interactable_tiles(tiles: Array[Vector2i]) -> Array[Vector2i]:
-	var interactable_tiles: Array[Vector2i]
-	for tile in tiles:
-		if _item_layer.get_cell_source_id(tile) != -1:
-			interactable_tiles.append(tile)
-	
-	return interactable_tiles
-
-
-func _populate_grid() -> void:
-	grid = Grid.new()
-	var o_rect: Rect2i = _floor_layer.get_used_rect()
-	if grid.region.size.x + grid.region.size.y == 0:
-		grid.update_region(o_rect)
-	else:
-		grid.update_region(grid.region.merge(o_rect))
-	
-	
-	for y:int in range(o_rect.position.y, o_rect.end.y):
-		for x:int in range(o_rect.position.x, o_rect.end.x):
-			var tile := Vector2i(x,y)
-			var source_id : int = _floor_layer.get_cell_source_id(tile)
-			var prop_source_id : int = _prop_layer.get_cell_source_id(tile)
-			if source_id == -1:
-				grid.lock_cell(tile)
-			elif prop_source_id != -1:
-				var tile_data: TileData = _prop_layer.get_cell_tile_data(tile)
-				if tile_data and tile_data.has_custom_data("passable") and not tile_data.get_custom_data("passable"):
-					grid.lock_cell(tile)
-				if tile_data and tile_data.has_custom_data("range_passable") and tile_data.get_custom_data("range_passable"):
-					grid.add_passable(tile)
-
-
-func get_interactable(tile: Vector2i) -> Item:
-	var tile_data: TileData = _item_layer.get_cell_tile_data(tile)
-	if tile_data:
-		return tile_data.get_custom_data("item") as Item
-	return
-
-
-func take_interactable(tile: Vector2i) -> Item:
-	var item: Item = get_interactable(tile)
-	_item_layer.set_cell(tile, -1)
-	grid.erase_prop(tile)
-	return item
 
 
 func get_subtile_position(world_position: Vector2) -> Vector2:
@@ -163,3 +214,17 @@ func get_subtile_position(world_position: Vector2) -> Vector2:
 	out.x = fmod(offset.x, 1)
 	out.y = fmod(offset.y, 1)
 	return out
+
+
+func _get_unit_list(ordered := true) -> Array[Character]:
+	var units : Array[Character]
+	for node: Node in get_tree().get_nodes_in_group("ally") + get_tree().get_nodes_in_group("enemy"):
+		if not node.is_queued_for_deletion():
+			units.append(node as Character)
+	
+	if ordered:
+		var unit_idx : int = units.find(_active_unit)		
+		var ordered_units : Array[Character] = units.slice(unit_idx)
+		ordered_units.append_array(units.slice(0, unit_idx))
+		units = ordered_units
+	return units

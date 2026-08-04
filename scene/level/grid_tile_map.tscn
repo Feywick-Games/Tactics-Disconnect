@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://7n1gxf6fl57"]
+
+[ext_resource type="TileSet" uid="uid://5dfqqlx3fkjg" path="res://ui/battle_grid/_sprite/battle_map_tile_set.tres" id="1_aqmnx"]
+[ext_resource type="Script" uid="uid://cnssgsmb0t14l" path="res://scene/level/_behavior/grid_tile_map.gd" id="2_rgobk"]
+[ext_resource type="Script" uid="uid://b3h0fg0sqx2t4" path="res://scene/level/_behavior/reticle_tile_map.gd" id="3_qiyu5"]
+
+[node name="GridTileMap" type="TileMapLayer" unique_id=842707723]
+z_index = 1
+y_sort_enabled = true
+tile_set = ExtResource("1_aqmnx")
+script = ExtResource("2_rgobk")
+
+[node name="ReticleTileMap" type="TileMapLayer" parent="." unique_id=812740225]
+z_index = 1
+y_sort_enabled = true
+tile_set = ExtResource("1_aqmnx")
+script = ExtResource("3_qiyu5")

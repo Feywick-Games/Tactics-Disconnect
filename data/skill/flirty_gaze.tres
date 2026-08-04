@@ -10,6 +10,7 @@
 script = ExtResource("2_ce0ms")
 status = 3
 value = -8
+duration = 1
 metadata/_custom_type_script = "uid://c5gnxjiq5craw"
 
 [resource]

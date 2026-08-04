@@ -22,11 +22,6 @@ func _init() -> void:
 	update()
 
 
-func update_region(rect: Rect2i) -> void:
-	region = rect
-	update()
-
-
 func _on_unit_died(unit: Character) -> void:
 	for cur_tile: Vector2i in _unit_registry.keys():
 		if _unit_registry[cur_tile] == unit:
@@ -90,7 +85,7 @@ func get_unit_from_tile(tile: Vector2i) -> Character:
 		
 func get_nearest_available_tile(world_position: Vector2) -> Vector2i:
 	var tile := GameState.current_level.world_to_tile(world_position)
-	return get_id_path(tile, tile, true)[-1]
+	return tile
 
 
 func get_tile_distance(start_tile: Vector2i, end_tile: Vector2i, disable_unit_blocks := false) -> int:
@@ -215,3 +210,32 @@ func get_path_ignore_passables(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 		set_point_solid(tile, true)
 		
 	return out
+
+
+func populate(floor_layer: TileMapLayer, prop_layer: TileMapLayer) -> void:
+	region = floor_layer.get_used_rect()
+	update()
+	
+	for y:int in range(region.position.y, region.end.y):
+		for x:int in range(region.position.x, region.end.x):
+			var tile := Vector2i(x,y)
+			var source_id : int = floor_layer.get_cell_source_id(tile)
+			var prop_source_id : int = -1 
+			prop_source_id = prop_layer.get_cell_source_id(tile)
+			if source_id == -1:
+				lock_cell(tile)
+			elif prop_source_id != -1:
+				var tile_data: TileData
+				var passable := true
+				var range_passable := true
+				
+				tile_data = prop_layer.get_cell_tile_data(tile)
+				if tile_data.has_custom_data("passable"):
+					passable = tile_data.get_custom_data("passable")
+				if tile_data.has_custom_data("range_passable"):
+					range_passable = tile_data.get_custom_data("passable")
+					
+				if not passable:
+					lock_cell(tile)
+				if range_passable:
+					add_passable(tile)
