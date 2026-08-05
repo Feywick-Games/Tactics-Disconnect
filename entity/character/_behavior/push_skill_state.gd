@@ -51,6 +51,11 @@ func on_minigame_completed(val: int) -> void:
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
 	_push_tile_path = _astar.get_id_path(_target_tile, _target_tile + (_direction * _max_push_distance))
+	var multiplier: float = 1
+	
+	if _max_is_collision:
+		multiplier = 1.5
+	
 	var push_damage_state := PushDamageState.new(_push_tile_path, _o_target, skill, _direction, _character.target_hit)
 	_target_unit.set_state(push_damage_state)
 	if not skill.is_animated:

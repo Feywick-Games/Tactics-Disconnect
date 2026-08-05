@@ -8,13 +8,15 @@ var _request_reaction: bool
 var _exiting := false
 var _hit := false
 var _damage_taken := false
+var _damage_multiplier: float
 
-func _init(skill: Skill, direction: Vector2, hit_signal: Signal, request_reaction:=true) -> void:
+func _init(skill: Skill, direction: Vector2, hit_signal: Signal, multiplier: float = 1, request_reaction:=true) -> void:
 	_skill = skill
 	_direction = direction
 	_hit_signal = hit_signal
 	_request_reaction = request_reaction
 	_hit_signal.connect(_on_hit)
+	_damage_multiplier = multiplier
 
 
 func enter() -> void:
@@ -36,7 +38,7 @@ func _on_hit() -> void:
 
 func update(delta: float) -> State:
 	if _hit and not _damage_taken:
-		_character.take_damage(_skill, _direction)
+		_character.take_damage(_skill, _direction, _damage_multiplier)
 		_damage_taken = true
 		_hit = false
 	if _exiting:

@@ -1,6 +1,13 @@
 class_name Level
 extends Node2D
 
+@export_file("*.tscn")
+var failure_scene := "res://scene/title_screen/title_screen.tscn"
+@export_file("*.tscn")
+var success_scene := "res://scene/title_screen/title_screen.tscn"
+
+signal scene_change_requested(scene: PackedScene)
+
 const GRID_TILE_MAP_SCENE : PackedScene = preload("res://scene/level/grid_tile_map.tscn")
 const GRID_DRAW_TIME: float = 1
 
@@ -14,10 +21,10 @@ var _floor_layer: TileMapLayer = $Floor
 @onready
 var _prop_layer: TileMapLayer = $Props
 @onready
-var _ui: CombatUI = %CombatUI
-@onready
 var _tracking_cam: TrackingCamera = $TrackingCamera
 @onready
+
+var ui: CombatUI
 
 var map: GridTileMap
 var reticle: ReticleTileMap
@@ -43,9 +50,42 @@ func _start_encounter() -> void:
 	map.set_up(true)
 	_process_spawns()
 	
+
+func _check_unit_count() -> void:
+	var ally_count: int = get_tree().get_node_count_in_group("ally")
+	var enemy_count: int = get_tree().get_node_count_in_group("enemy")
+	
+	if enemy_count == 0:
+		var spawn_points : Array[SpawnPoint]
+		for child: Node in find_children("*", "SpawnPoint"):
+			spawn_points.append(child as SpawnPoint)
+		
+		var spawns_remaining := false
+		for spawn_point: SpawnPoint in spawn_points:
+			if not spawn_point.spawn_data.is_empty():
+				spawns_remaining = true
+				break
+		
+		if not spawns_remaining:
+			win()
+			return
+	
+	if ally_count == 0:
+		lose()
+
+
+func win() -> void:
+	scene_change_requested.emit(success_scene)
+
+
+func lose() -> void:
+	scene_change_requested.emit(failure_scene)
+
+
 #region Spawn Processing
 
 func _process_spawns() -> void:
+	
 	var ordered_units : Array [Character] = _get_unit_list()
 	if _active_unit is Ally and ordered_units[1] is Enemy:
 		_is_player_phase = false
@@ -58,7 +98,7 @@ func _process_spawns() -> void:
 		return
 	
 	_turn_number += 1
-	_ui.skill_progress.increment()
+	ui.skill_progress.increment()
 	_spawn_processed = true
 	var spawn_points : Array[SpawnPoint]
 	for child: Node in find_children("*", "SpawnPoint"):
@@ -84,6 +124,7 @@ func _spawn_unit(spawn_data: SpawnData) -> void:
 	var unit: Character = spawn_data.character_scene.instantiate()
 	unit.global_position = spawn_data.spawn_global_position
 	unit.facing = spawn_data.facing
+	unit.died.connect(_check_unit_count)
 	add_child(unit)
 	await unit.spawn_completed
 
@@ -92,15 +133,15 @@ func _spawn_unit(spawn_data: SpawnData) -> void:
 #region Skill Selection
 
 func _process_skill_selection() -> void:
-	if not (_ui.skill_progress.is_ready and _is_player_phase):
+	if not (ui.skill_progress.is_ready and _is_player_phase):
 		_select_action()
 		return
 	var allies : Array[Ally]
 	for node: Node in get_tree().get_nodes_in_group("ally"):
 		allies.append(node as Ally)
-	_ui.skill_select.open(allies)
-	_ui.combat_panel.hide()
-	_ui.skill_select.skills_selected.connect(_select_action, CONNECT_ONE_SHOT)
+	ui.skill_select.open(allies)
+	ui.combat_panel.hide()
+	ui.skill_select.skills_selected.connect(_select_action, CONNECT_ONE_SHOT)
 
 #endregion
 
@@ -118,25 +159,25 @@ func _select_action() -> void:
 	
 	_active_unit = ordered_units[0]
 	
-	_ui.start_turn(ordered_units)
+	ui.start_turn(ordered_units)
 	_tracking_cam.follow(_active_unit)
 	await _tracking_cam.position_reached
-	_active_unit.skill_error_encountered.connect(_ui.display_skill_error_code)
+	_active_unit.skill_error_encountered.connect(ui.display_skill_error_code)
 	_active_unit.start_turn()
 	
 	for unit: Character in ordered_units:
 		if unit != _active_unit:
 			unit.set_state(CharacterWaitState.new(_active_unit.tiles_highlighted))
 	
-	_ui.battle_timer.timed_out.connect(_process_reactions)
+	ui.battle_timer.timed_out.connect(_process_reactions)
 	_active_unit.action_selected.connect(_process_action)
 
 
 func _process_action(skill_state: SkillState) -> void:
-	_active_unit.skill_error_encountered.disconnect(_ui.display_skill_error_code)
-	_ui.battle_timer.timed_out.disconnect(_process_reactions)
+	_active_unit.skill_error_encountered.disconnect(ui.display_skill_error_code)
+	ui.battle_timer.timed_out.disconnect(_process_reactions)
 	_active_unit.action_selected.disconnect(_process_action)
-	_ui.battle_timer.stop()
+	ui.battle_timer.stop()
 	var units: Array[Character] = _get_unit_list()
 		
 	for unit: Character in units:
@@ -153,8 +194,8 @@ func _process_action(skill_state: SkillState) -> void:
 		_active_unit.action_processed.connect(_process_reactions, CONNECT_ONE_SHOT)
 		return
 	elif skill_state is PushSkillState:
-		minigame_completed = _ui.push_progress.completed
-		_ui.push_progress.start((int(skill_state.skill.push_position.length())))
+		minigame_completed = ui.push_progress.completed
+		ui.push_progress.start((int(skill_state.skill.push_position.length())))
 	
 	_active_unit.set_state(skill_state)
 	minigame_completed.connect(skill_state.on_minigame_completed)
@@ -168,12 +209,6 @@ func _process_action(skill_state: SkillState) -> void:
 #region Process Reactions
 
 func _process_reactions() -> void:
-	if _ui.battle_timer.timed_out.is_connected(_process_reactions):
-		_ui.battle_timer.timed_out.disconnect(_process_reactions)
-		_active_unit.set_state(CharacterIdleState.new())
-	if _active_unit.action_selected.is_connected(_process_action):
-		_active_unit.action_selected.disconnect(_process_action)
-	
 	var units: Array[Character] = _get_unit_list()
 	var effected_units: Array[Character]
 	
@@ -187,11 +222,22 @@ func _process_reactions() -> void:
 				await reacting_unit.process_reactions(effected_unit)
 	
 	# disconnect turn connections
-	_active_unit.action_processed.disconnect(_process_reactions)
-	_active_unit.skill_error_encountered.disconnect(_ui.display_skill_error_code)
+	_purge_turn_connections()
 	_process_spawns()
 
 #endregion
+
+func _purge_turn_connections() -> void:
+	if ui.battle_timer.timed_out.is_connected(_process_reactions):
+		ui.battle_timer.timed_out.disconnect(_process_reactions)
+		_active_unit.set_state(CharacterIdleState.new())
+	if _active_unit.action_selected.is_connected(_process_action):
+		_active_unit.action_selected.disconnect(_process_action)
+	if _active_unit.action_processed.is_connected(_process_reactions):
+		_active_unit.action_processed.disconnect(_process_reactions)
+	if _active_unit.skill_error_encountered.is_connected(ui.display_skill_error_code):
+		_active_unit.skill_error_encountered.disconnect(ui.display_skill_error_code)
+	
 
 
 func world_to_tile(world_position: Vector2) -> Vector2i:

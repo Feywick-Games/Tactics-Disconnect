@@ -264,7 +264,7 @@ func update_ranges(movement_tiles: RangeStruct) -> RangeStruct:
 	return out
 
 
-func process_movement(delta: float, tile_path: Array[Vector2i], animation := "idle", skip_animation := false) -> Array[Vector2i]:
+func process_movement(delta: float, tile_path: Array[Vector2i], animation := "idle") -> Array[Vector2i]:
 	if not tile_path.is_empty():
 		var path_position :=  GameState.current_level.tile_to_world(tile_path[0])
 		var map_position := GameState.current_level.tile_to_world(current_tile)
@@ -274,7 +274,7 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 			print(sub_pixel_position)
 			global_position = sub_pixel_position.round()
 			var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
-			if not skip_animation:
+			if not animation.is_empty():
 				animator.play_directional(animation, anim_dir)
 		if not path_position.distance_to(global_position) > SNAP_DISTANCE:
 			if len(tile_path) == 1:
@@ -289,8 +289,8 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 	return tile_path
 
 
-func take_damage(skill: Skill, direction: Vector2) -> void:
-	var multiplier: float = _calc_damage_multiplier(direction)
+func take_damage(skill: Skill, direction: Vector2, multiplier: float = 1) -> void:
+	multiplier = _calc_damage_multiplier(direction) + multiplier
 
 	for base_effect: StatusEffect in skill.status_effects:
 		var new_effect: StatusEffect = base_effect.duplicate()
