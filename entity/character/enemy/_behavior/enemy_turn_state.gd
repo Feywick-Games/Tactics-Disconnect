@@ -37,7 +37,7 @@ func enter() -> void:
 		var valid_tiles := GameState.current_level.grid.request_range(tile, _enemy.basic_skill.min_range, _enemy.basic_skill.max_range, _enemy.basic_skill.range_shape, true)
 		_full_attack_range.absorb(valid_tiles)
 		
-	if _enemy.special and _enemy.special.is_ready():
+	if _enemy.special:
 		for tile: Vector2i in _movement_range.range_tiles:
 			var skill_range := GameState.current_level.grid.request_range(tile, 
 				_enemy.special.min_range, _enemy.special.max_range, _enemy.special.range_shape, 
@@ -130,7 +130,7 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 				
 				target_priority.basic_skill_likelihood = skill_likelihoods.max()
 				target_priority.basic_skill_likelihood *= _enemy.basic_skill_priority
-			if _enemy.special and target.current_tile in _full_special_range.range_tiles and _enemy.special.is_ready():
+			if _enemy.special and target.current_tile in _full_special_range.range_tiles:
 				var special_skill_state: SkillState = (_character.special.state.new(_character, _character.special, target.current_tile) as SkillState)
 				var skill_likelihoods: Array[float]
 				
@@ -153,14 +153,13 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 			max_rating = target_priority.rating
 			current_target = target_priority.target
 			if _is_acting:
-				_enemy.attack_state = Combat.AttackState.BASIC if target_priority.basic_skill_likelihood > target_priority.special_likelihood else Combat.AttackState.SPECIAL
+				_enemy.active_skill = _enemy.basic_skill if target_priority.basic_skill_likelihood > target_priority.special_likelihood else _enemy.special
 	
 	return current_target
 
 
 func _pick_tile() -> Vector2i:
-	var desired_skill: Skill = _enemy.basic_skill if _enemy.attack_state == Combat.AttackState.BASIC else _enemy.special
-	var skill_state: SkillState = (desired_skill.state.new(_character, desired_skill, _target.current_tile) as SkillState)
+	var skill_state: SkillState = (_enemy.active_skill.state.new(_character, _enemy.active_skill, _target.current_tile) as SkillState)
 	#var ideal_distance: int = desired_skill.max_range
 	var desired_tile: Vector2i = _start_tile
 	
@@ -175,8 +174,8 @@ func _pick_tile() -> Vector2i:
 				desired_tile = tile
 	else:
 		var desired_favoribility: float = 0
-		var skill_range := GameState.current_level.grid.request_range(_target.current_tile, desired_skill.min_range, desired_skill.max_range, desired_skill.range_shape, true, desired_skill.direct)
-		_range_astar = _target.create_range_astar(skill_range, desired_skill.max_range)
+		var skill_range := GameState.current_level.grid.request_range(_target.current_tile, _enemy.active_skill.min_range, _enemy.active_skill.max_range, _enemy.active_skill.range_shape, true, _enemy.active_skill.direct)
+		_range_astar = _target.create_range_astar(skill_range, _enemy.active_skill.max_range)
 		for tile in skill_range.range_tiles:
 			if tile in _movement_range.range_tiles:
 				if _range_astar.region.has_point(tile):

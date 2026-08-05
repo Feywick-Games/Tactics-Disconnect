@@ -52,9 +52,6 @@ func _init() -> void:
 	resource_local_to_scene = true
 
 
-func is_ready() -> bool:
-	return true
-
 func get_hit_damage() -> int:
 	var damage_status : Array[StatusEffect] = status_effects.filter(func(x: StatusEffect) -> bool: return true if x.status == Combat.Status.HIT else false)
 	if not damage_status.is_empty():

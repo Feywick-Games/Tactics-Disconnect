@@ -26,7 +26,6 @@ var turn_portrait_scene: PackedScene
 @export
 var small_portrait: Texture2D
 
-
 @export_category("Gameplay")
 @export
 var facing: Vector2i = Vector2i.DOWN
@@ -51,8 +50,7 @@ var movement_range: int:
 var health: int
 var current_tile: Vector2i
 var status: Array[StatusEffect]
-var attack_state: Combat.AttackState
-var item: Item
+var active_skill: Skill
 # TODO remove
 var sub_pixel_position: Vector2
 var _state_machine: StateMachine
@@ -107,12 +105,6 @@ func _on_display_requested(show_display: bool) -> void:
 		health_bar.hide()
 
 
-func drop_weapon() -> void:
-	attack_state = Combat.AttackState.BASIC
-	item = null
-	#TODO play drop animation on skill animator
-
-
 func process_status_effect(effect: StatusEffect) -> void:
 	if effect.status == Combat.Status.HIT:
 		health -= effect.value
@@ -160,16 +152,7 @@ func select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) 
 	animator.play_directional("idle", dir)
 	
 	if tile in attack_range.range_tiles:
-		var skill: Skill
-		
-		if attack_state == Combat.AttackState.BASIC:
-			skill = basic_skill
-		elif attack_state == Combat.AttackState.SPECIAL:
-			skill = special
-		elif attack_state == Combat.AttackState.ITEM:
-			skill = item
-		
-		var skill_state : SkillState = skill.state.new(self, skill, tile)
+		var skill_state : SkillState = active_skill.state.new(self, active_skill, tile)
 		var can_use: Global.SkillErrorCode = skill_state.can_use(tile)
 		
 		
@@ -180,12 +163,6 @@ func select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) 
 			
 		else:
 			skill_error_encountered.emit(can_use)
-
-
-	elif GameState.current_level.get_interactable(tile):
-		item = GameState.current_level.take_interactable(tile)
-		attack_state = Combat.AttackState.ITEM
-		state.interacted = true
 	
 	return false
 
@@ -208,18 +185,10 @@ func create_range_astar(range_struct: RangeStruct, manhattan_range: int) -> ASta
 
 func update_ranges(movement_tiles: RangeStruct) -> RangeStruct:
 	# color tiles differently when attacks overlap with movement 
-	var skill: Skill
 	var skill_range: Array[Vector2i]
 	var aoe: Array[Vector2i]
 	
-	if attack_state == Combat.AttackState.BASIC:
-		skill = basic_skill
-	elif attack_state == Combat.AttackState.SPECIAL:
-		skill = special
-	elif attack_state == Combat.AttackState.ITEM:
-		skill = item
-	
-	skill_range = GameState.current_level.grid.request_range(current_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct).range_tiles
+	skill_range = GameState.current_level.grid.request_range(current_tile, active_skill.min_range, active_skill.max_range, active_skill.range_shape, true, active_skill.direct).range_tiles
 	
 	skill_range.erase(current_tile)
 	
@@ -246,14 +215,14 @@ func update_ranges(movement_tiles: RangeStruct) -> RangeStruct:
 			attack_only_tiles.append(tile)
 	
 	var overlap_atlas_coords: Vector2i
-	if attack_state == Combat.AttackState.BASIC:
+	if active_skill == basic_skill:
 		overlap_atlas_coords = Global.RETICLE_OVERLAP_BASIC_ATLAS_COORDS
 	else:
 		overlap_atlas_coords = Global.RETICLE_OVERLAP_SPECIAL_ATLAS_COORDS
 	
 	GameState.current_level.reset_map()
 	GameState.current_level.reticle.draw_range(movement_tiles.range_tiles, Global.RETICLE_MOVE_ALTAS_COORDS)
-	skill.draw_range(attack_only_tiles, attack_state == Combat.AttackState.SPECIAL)
+	active_skill.draw_range(attack_only_tiles, active_skill == special)
 	GameState.current_level.reticle.draw_range(overlap_tiles, overlap_atlas_coords)
 	if not movement_tiles.range_tiles.is_empty():
 		GameState.current_level.reticle.set_cell(current_tile, 0, Global.RETICLE_MOVE_ALTAS_COORDS)

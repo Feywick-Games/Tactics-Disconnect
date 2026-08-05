@@ -1,11 +1,5 @@
 class_name Combat
 
-enum AttackState {
-	BASIC,
-	SPECIAL,
-	ITEM
-}
-
 enum Status {
 	HIT,
 	PUSHED,

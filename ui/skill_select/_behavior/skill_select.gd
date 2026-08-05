@@ -75,7 +75,7 @@ func display_unit_skill_lists(allies: Array[Ally]) -> void:
 
 
 func _on_unit_skill_list_focus_entered(unit: Character) -> void:
-	var tracking_cam := (GameState.level_viewport.get_node("LevelViewport") as SubViewport).get_camera_2d() as TrackingCamera
+	var tracking_cam := GameState.current_level.get_viewport().get_camera_2d() as TrackingCamera
 	tracking_cam.follow(unit, Vector2(160,0))
 
 

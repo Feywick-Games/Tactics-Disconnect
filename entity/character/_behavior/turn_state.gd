@@ -23,6 +23,7 @@ func enter() -> void:
 	calc_default_ranges()
 	_character.animator.play_directional("idle")
 	_starting_movement_range = _movement_range
+	_character.active_skill = _character.basic_skill
 
 
 # caculates movement and interactable ranges. Generates astars
@@ -66,15 +67,7 @@ func _highlight_targets(target_tile: Vector2i) -> void:
 	
 	GameState.current_level.reset_map()
 	_character.update_ranges(_movement_range)
-	var skill: Skill
-	
-	if _character.attack_state == Combat.AttackState.BASIC:
-		skill = _character.basic_skill
-	elif _character.attack_state == Combat.AttackState.SPECIAL:
-		skill = _character.special
-	elif _character.attack_state == Combat.AttackState.ITEM:
-		skill = _character.item
 		
-	var highlighted_tiles: Array[Vector2i] = skill.highlight_targets(_character.current_tile, target_tile, _attack_range.range_tiles, direction)
+	var highlighted_tiles: Array[Vector2i] = _character.active_skill.highlight_targets(_character.current_tile, target_tile, _attack_range.range_tiles, direction)
 
-	_character.tiles_highlighted.emit(highlighted_tiles, skill.status_effects, Vector2i(direction), _character is Ally)
+	_character.tiles_highlighted.emit(highlighted_tiles, _character.active_skill.status_effects, Vector2i(direction), _character is Ally)

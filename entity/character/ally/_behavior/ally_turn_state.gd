@@ -17,7 +17,7 @@ func enter() -> void:
 	_ally.health_bar.show()
 	_ally.global_position = GameState.current_level.tile_to_world(_ally.current_tile).round()
 	_start_tile = _ally.current_tile
-	_ally.attack_state = Combat.AttackState.BASIC
+	_ally.active_skill = _ally.basic_skill
 	_movement_astar = _ally.create_range_astar(_movement_range, _ally.movement_range)
 	_attack_range = _ally.update_ranges(_movement_range)
 
@@ -139,13 +139,8 @@ func _on_cancel_pressed() -> State:
 
 
 func _on_special_pressed() -> State:
-	if _ally.special.is_ready() and _ally.attack_state == Combat.AttackState.BASIC:
-		_ally.attack_state = Combat.AttackState.SPECIAL
-	elif _ally.attack_state == Combat.AttackState.SPECIAL:
-		_ally.attack_state = Combat.AttackState.BASIC
-	elif _ally.attack_state == Combat.AttackState.ITEM:
-		_ally.attack_state = Combat.AttackState.ITEM
-		
+	_ally.active_skill == _ally.basic_skill if _ally.active_skill != _ally.basic_skill else _ally.special
+	
 	if acted:
 		_character.tiles_highlighted.emit(
 			[] as Array[Vector2i], [] as Array[StatusEffect], Vector2i.ZERO, true
