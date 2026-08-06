@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://6uyibiwqdi4q"]
+
+[sub_resource type="GDScript" id="GDScript_i2feo"]
+script/source = "extends Node
+
+class Number:
+	var value: int = 0
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func increment_number(number: Number) -> void:
+	number.value += 1
+
+
+func _ready() -> void:
+	var number: Number = Number.new()
+	print(number.value)
+	increment_number(number)
+	print(number.value)
+"
+
+[node name="Node2D" type="Node2D" unique_id=283374364]
+script = SubResource("GDScript_i2feo")

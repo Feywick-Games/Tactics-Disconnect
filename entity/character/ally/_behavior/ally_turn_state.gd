@@ -14,10 +14,7 @@ var waited := false
 func enter() -> void:
 	super.enter()
 	_ally = state_machine.state_owner as Ally
-	_ally.health_bar.show()
-	_ally.global_position = GameState.current_level.tile_to_world(_ally.current_tile).round()
 	_start_tile = _ally.current_tile
-	_ally.active_skill = _ally.basic_skill
 	_movement_astar = _ally.create_range_astar(_movement_range, _ally.movement_range)
 	_attack_range = _ally.update_ranges(_movement_range)
 
@@ -51,6 +48,7 @@ func update(delta: float) -> State:
 		if not _input_buffered.is_null() and not _moving:
 			current_state = _input_buffered.call()
 			_input_buffered = Callable()
+			
 			return current_state
 	
 	return current_state
@@ -139,7 +137,7 @@ func _on_cancel_pressed() -> State:
 
 
 func _on_special_pressed() -> State:
-	_ally.active_skill == _ally.basic_skill if _ally.active_skill != _ally.basic_skill else _ally.special
+	_ally.active_skill = _ally.basic_skill if _ally.active_skill != _ally.basic_skill else _ally.special
 	
 	if acted:
 		_character.tiles_highlighted.emit(
@@ -154,10 +152,8 @@ func _on_accept_pressed() -> State:
 	if waited:
 		end_turn()
 	elif acted:
-		var selected: bool = _ally.select_action(_highlighted_tile, _attack_range, self)
-		if selected:
-			force_redraw = true
-			end_turn()
+		var next_state: State = _ally.select_action(_highlighted_tile, _attack_range, self, _turn_data)
+		return next_state 
 	else:
 		acted = true
 		force_redraw = true
@@ -178,5 +174,5 @@ func physics_update(delta: float) -> State:
 
 
 func exit() -> void:
-	super.exit()
 	_ally.health_bar.hide()
+	super.exit()

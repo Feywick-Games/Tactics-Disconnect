@@ -1,10 +1,9 @@
 class_name BattleTimer
 extends TextureProgressBar
 
-signal timed_out
-
 var running := false
 var paused := false
+var timed_out := false
 
 func _ready() -> void:
 	GameState.battle_timer = self
@@ -26,7 +25,8 @@ func start(unit: Character) -> void:
 		self.modulate = Color.WHITE
 	else:
 		self.modulate = Color.GRAY
-	value = 0	
+	value = 0
+	timed_out = false
 
 
 func _process(delta: float) -> void:
@@ -34,5 +34,5 @@ func _process(delta: float) -> void:
 		value += delta
 		
 	if value == max_value:
-		timed_out.emit()
+		timed_out = true
 		running = false

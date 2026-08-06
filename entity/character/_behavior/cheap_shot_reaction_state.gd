@@ -1,33 +1,30 @@
 class_name CheapShotReactionState
 extends ReactionState
 
-signal processed
-
-var _animation_complete := false
-
+var _reacted := false
+var _tracking_cam: TrackingCamera
 
 func enter() -> void:
-	super.enter()
-	var direction: Vector2i = _target.current_tile - _character.current_tile
-	_character.facing = _target.facing
-	_character.animator.play_directional(_reaction.character_animation, _character.facing)
-	_character.animator.animation_finished.connect(_on_animation_finished)
-	var damage_state := DamageState.new(_reaction, direction, _character.target_hit, false)
-	_target.set_state(damage_state)
-	_character.notify_impact()
+	_tracking_cam = (_character.get_viewport().get_camera_2d() as TrackingCamera)
+	_tracking_cam.follow(_character)
 
 
 func update(delta: float) -> State:
-	
-	if _animation_complete:
-		_exiting = true
-	
-	
+	if _tracking_cam.in_position and not _reacted:
+		_react()
+	elif _reacted and _target.state_machine.current_state is CharacterIdleState:
+		return CharacterIdleState.new()
 	return super.update(delta)
 
 
-func _on_animation_finished(_anim: String) -> void:
-	_animation_complete = true
+func _react() -> void:
+	_reacted = true
+	var direction: Vector2i = _target.current_tile - _character.current_tile
+	_character.facing = _target.facing
+	_character.animator.play_directional(_reaction.character_animation, _character.facing)
+	var damage_state := DamageState.new(_reaction, direction, _character.target_hit, false)
+	_target.set_state(damage_state)
+	_character.notify_impact()
 
 
 func can_use() -> bool:
@@ -42,9 +39,4 @@ func can_use() -> bool:
 			var direction: Vector2i = _character.current_tile - _target.current_tile
 			if is_equal_approx(Vector2(direction).dot(_target.facing), -1):
 				return true
-	
 	return false
-
-
-func exit() -> void:
-	processed.emit()

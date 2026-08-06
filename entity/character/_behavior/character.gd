@@ -1,7 +1,6 @@
 class_name Character
 extends Node2D
 
-signal died
 signal target_hit
 @warning_ignore("unused_signal")
 signal action_processed
@@ -51,9 +50,8 @@ var health: int
 var current_tile: Vector2i
 var status: Array[StatusEffect]
 var active_skill: Skill
-# TODO remove
 var sub_pixel_position: Vector2
-var _state_machine: StateMachine
+var state_machine: StateMachine
 
 @onready
 var sprite: Sprite2D = $CharacterSprite
@@ -73,8 +71,8 @@ var sfx_player: AudioStreamPlayer2D = $SfxPlayer
 func _ready() -> void:
 	sub_pixel_position = global_position
 	health_bar.hide()
-	_state_machine = StateMachine.new(self, CharacterCombatBeginState.new())
-	add_child(_state_machine)
+	state_machine = StateMachine.new(self, CharacterCombatBeginState.new())
+	add_child(state_machine)
 
 
 func start_encounter() -> void:
@@ -95,7 +93,7 @@ func end_encounter() -> void:
 
 
 func notify_impact() -> void:
-	target_hit.emit()
+	target_hit.emit.call_deferred()
 
 
 func _on_display_requested(show_display: bool) -> void:
@@ -112,13 +110,15 @@ func process_status_effect(effect: StatusEffect) -> void:
 		_movement_modifier += effect.value
 
 
-func start_turn() -> void:
+func start_turn(turn_data: TurnData, highlight_range: SkillHighlightRange) -> void:
 	health_bar.value = health
+	active_skill = basic_skill
+	health_bar.show()
 	
 	if self is Ally:
-		set_state(AllyTurnState.new())
+		set_state(AllyTurnState.new(turn_data, highlight_range))
 	else:
-		set_state(EnemyTurnState.new())
+		set_state(EnemyTurnState.new(turn_data, highlight_range))
 	clear_expired_statuses()
 
 
@@ -141,11 +141,8 @@ func end_turn() -> void:
 	for effect: StatusEffect in status:
 		effect.duration -= 1
 
-	
-	tiles_highlighted.emit([] as Array[Vector2i], [] as Array[StatusEffect], Vector2i.ZERO, false)
 
-
-func select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) -> bool:
+func select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState, turn_data: TurnData) -> SkillState:
 	var dir := Vector2(tile - current_tile).normalized()
 	facing = Vector2i(dir)
 	
@@ -153,18 +150,15 @@ func select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) 
 	
 	if tile in attack_range.range_tiles:
 		var skill_state : SkillState = active_skill.state.new(self, active_skill, tile)
-		var can_use: Global.SkillErrorCode = skill_state.can_use(tile)
+		var can_use: Global.SkillErrorCode = skill_state.can_use()
 		
 		
 		if can_use == Global.SkillErrorCode.OK:
 			facing = Vector2i(Vector2(tile - current_tile).normalized().round())
-			action_selected.emit(skill_state)
-			return true
-			
+			return skill_state
 		else:
-			skill_error_encountered.emit(can_use)
-	
-	return false
+			turn_data.skill_error = can_use
+	return
 
 
 func create_range_astar(range_struct: RangeStruct, manhattan_range: int) -> AStarGrid2D:
@@ -240,7 +234,6 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 		if path_position.distance_to(global_position) > SNAP_DISTANCE:
 			var dir: Vector2 = (path_position - global_position).normalized()
 			sub_pixel_position += dir * Global.PLAYER_SPEED * delta
-			print(sub_pixel_position)
 			global_position = sub_pixel_position.round()
 			var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
 			if not animation.is_empty():
@@ -280,23 +273,12 @@ func take_damage(skill: Skill, direction: Vector2, multiplier: float = 1) -> voi
 
 
 func die() -> void:
-	died.emit()
+	GameState.current_level.grid.remove_from_registry(self)
 	queue_free()
 
 
-func process_reactions(effected_unit: Character) -> void:
-	for reaction: Skill in reactions:
-		if not reaction.processed:
-			var reaction_state: ReactionState = reaction.state.new(reaction, self, effected_unit)
-			
-			if reaction_state.can_use():
-				set_state(reaction_state)
-				await effected_unit.action_processed
-				break
-
-
 func set_state(state: State) -> void:
-	_state_machine.change_state.call_deferred(state)
+	state_machine.change_state.call_deferred(state)
 
 
 func highlight(enable := true) -> void:

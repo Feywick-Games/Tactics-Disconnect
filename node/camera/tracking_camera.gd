@@ -1,8 +1,6 @@
 class_name TrackingCamera
 extends Camera2D
 
-signal position_reached
-
 @export
 var leader : Node2D
 @export_range(0,5)
@@ -10,7 +8,7 @@ var lerp_speed: float = 4
 @onready
 var window_scale : Vector2i
 var actual_cam_pos: Vector2
-
+var in_position: bool = true
 
 func _ready() -> void:
 	get_tree().root.get_viewport().size_changed.connect(_set_window_scale)
@@ -26,7 +24,7 @@ func _set_window_scale() -> void:
 func _physics_process(delta: float) -> void:
 	if leader and is_instance_valid(leader):
 		if leader.global_position.distance_to(global_position) < 10:
-			position_reached.emit()
+			in_position = true
 		else:
 			var cam_pos: Vector2 = global_position.lerp(leader.global_position, .2)
 			actual_cam_pos =  actual_cam_pos.lerp(cam_pos, 10 * delta)
@@ -39,3 +37,4 @@ func _physics_process(delta: float) -> void:
 func follow(node: Node2D, follow_offset: Vector2 = Vector2.ZERO) -> void:
 	leader = node
 	offset = -follow_offset/2.0
+	in_position = false

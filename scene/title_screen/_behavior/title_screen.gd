@@ -1,10 +1,8 @@
 class_name TitleScreen
 extends Node2D
 
-@export_file("*tscn.")
-var next_scene: String
-
-signal scene_change_requested(scene: PackedScene)
+@export
+var next_scene: PackedScene
 
 @onready
 var play_button: Button = $PlayButton
@@ -15,4 +13,4 @@ func _ready() -> void:
 	
 	
 func _on_play_button_pressed() -> void:
-	scene_change_requested.emit(load(next_scene))
+	GameState.game.change_scene(next_scene)

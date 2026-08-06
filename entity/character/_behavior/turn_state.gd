@@ -14,7 +14,14 @@ var _start_tile: Vector2i
 var _exiting := false
 var _encounter_ended := false
 var _highlighted_tile: Vector2i
+var _skill_highlight_range: SkillHighlightRange
 var _moving := false
+var _turn_data: TurnData
+
+func _init(turn_data: TurnData, highlight_range: SkillHighlightRange) -> void:
+	_skill_highlight_range = highlight_range
+	_turn_data = turn_data
+
 
 func enter() -> void:
 	_character = state_machine.state_owner as Character
@@ -23,7 +30,6 @@ func enter() -> void:
 	calc_default_ranges()
 	_character.animator.play_directional("idle")
 	_starting_movement_range = _movement_range
-	_character.active_skill = _character.basic_skill
 
 
 # caculates movement and interactable ranges. Generates astars
@@ -56,7 +62,6 @@ func end_turn() -> void:
 	
 
 func exit() -> void:
-	_character.action_selected.emit(null)
 	GameState.current_level.reset_map()
 	
 	

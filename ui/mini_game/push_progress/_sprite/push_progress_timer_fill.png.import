@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpma0bc6somp7"
-path="res://.godot/imported/push_progress_button_indicator.png-b3c74c20e695f92f60d4f63a3a2875c7.ctex"
+uid="uid://chlq8s8hw8wbw"
+path="res://.godot/imported/push_progress_timer_fill.png-86a7f4f0b8003366aa0ab0a243e456b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/push_progress/_sprite/push_progress_button_indicator.png"
-dest_files=["res://.godot/imported/push_progress_button_indicator.png-b3c74c20e695f92f60d4f63a3a2875c7.ctex"]
+source_file="res://ui/mini_game/push_progress/_sprite/push_progress_timer_fill.png"
+dest_files=["res://.godot/imported/push_progress_timer_fill.png-86a7f4f0b8003366aa0ab0a243e456b1.ctex"]
 
 [params]
 

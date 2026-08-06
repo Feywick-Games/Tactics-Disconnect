@@ -194,8 +194,8 @@ func update(delta: float) -> State:
 	if not _is_processing_custom:
 		if not _exiting and _tile_path.is_empty() and _is_acting:
 			if _time_highlight >= HIGHLIGHT_TIME:
-				_enemy.select_action(_target.current_tile, _attack_range, self)
-				return
+				var next_state: State = _enemy.select_action(_target.current_tile, _attack_range, self, _turn_data)
+				return next_state
 			else:
 				if not _has_highlighted:
 					_movement_range = RangeStruct.new()

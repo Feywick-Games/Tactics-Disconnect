@@ -3,17 +3,11 @@ extends State
 
 var _character: Character
 var _target_tile: Vector2i
-var value: float
 var skill: Skill
 var _action_to_process: int = 1
-var _exiting := false
 var _desired_target_count: int
-var _minigame_completed := false
-
-func on_minigame_completed(val: int) -> void:
-	_minigame_completed = true
-	value = val
-
+var mini_game: MiniGame
+var mini_game_type: TurnData.MiniGameType
 
 func _init(character: Character, i_skill: Skill, target_tile: Vector2i) -> void:
 	_target_tile = target_tile
@@ -22,21 +16,9 @@ func _init(character: Character, i_skill: Skill, target_tile: Vector2i) -> void:
 	_character = character
 
 
-func update(_delta: float) -> State:
-	if _exiting:
-		_character.end_turn()
-		return CharacterIdleState.new()
-	return
-
-
-func end_turn() -> void:
-	_action_to_process -=1
-	if _action_to_process == 0:
-		_exiting = true
-	
-
 func exit() -> void:
 	super.exit()
+	_character.end_turn()
 	if _character is Ally:
 		if skill == _character.special:
 			_character.special = null
@@ -70,12 +52,12 @@ func calc_skill_likelihood(strike_tile : Vector2i) -> float:
 	return 0
 
 
-func can_use(target_tile: Vector2i) -> Global.SkillErrorCode:
+func can_use() -> Global.SkillErrorCode:
 	var target: Character
 	
 	for aoe_tile in skill.aoe:
 		var offset_rotated: = Vector2i(Vector2(aoe_tile).rotated(Vector2(_character.facing).angle()).round())
-		target = GameState.current_level.grid.get_unit_from_tile(target_tile + offset_rotated)
+		target = GameState.current_level.grid.get_unit_from_tile(_target_tile + offset_rotated)
 		if target:
 			break
 	

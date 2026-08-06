@@ -1,10 +1,8 @@
 class_name PushProgress
-extends HBoxContainer
+extends MiniGame
 
-const PUSH_TIMER_SCALE: float = 1
+const PUSH_TIMER_SCALE: float = 1.5
 const PUSH_PROGRESS_SCALE: float = 6
-
-signal completed(pct: int)
 
 var _running := false
 var _time_progressing : float = 0
@@ -22,6 +20,7 @@ func start(distance: int) -> void:
 	_running = true
 	_push_timer_bar.value = 0
 	_push_timer_bar.max_value = distance * PUSH_TIMER_SCALE
+	_push_timer_bar.step = .1
 	_push_progress_bar.value = 0
 	_push_progress_bar.max_value = distance * PUSH_PROGRESS_SCALE
 	
@@ -42,5 +41,7 @@ func _process(delta: float) -> void:
 
 func _end() -> void:
 	_running = false
-	completed.emit(_push_progress_bar.value / _push_progress_bar.max_value)
+	await get_tree().create_timer(1).timeout
+	completed = true
+	value = _push_progress_bar.value / _push_progress_bar.max_value
 	hide()

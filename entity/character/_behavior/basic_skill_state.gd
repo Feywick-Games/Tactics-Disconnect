@@ -2,6 +2,7 @@ class_name BasicSkillState
 extends SkillState
 
 var _direction: Vector2
+var _targets: Array[Character]
 
 func enter() -> void:
 	super.enter()
@@ -13,6 +14,19 @@ func enter() -> void:
 		_character.skill_animator.play_directional(skill.skill_animation, _direction)
 	_hit_targets(skill.aoe, skill.range_type)
 
+
+
+func _is_target_processing() -> bool:
+	for target: Character in _targets:
+		if not target.state_machine.current_state is CharacterIdleState:
+			return true
+	return false
+
+
+func update(_delta : float) -> State:
+	if not _is_target_processing():
+		return CharacterIdleState.new()
+	return
 
 func _hit_targets(aoe: Array[Vector2i], range_type: Combat.RangeType) -> void:
 	_action_to_process = 0
@@ -26,8 +40,7 @@ func _hit_targets(aoe: Array[Vector2i], range_type: Combat.RangeType) -> void:
 			tile = _target_tile + offset_rotated
 		var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile)
 		if unit:
-			unit.action_processed.connect(end_turn)
-			_action_to_process += 1
+			_targets.append(unit)
 			var damage_state := DamageState.new(skill, _direction, _character.target_hit)
 			unit.set_state(damage_state)
 	

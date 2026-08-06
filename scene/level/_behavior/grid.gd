@@ -22,7 +22,7 @@ func _init() -> void:
 	update()
 
 
-func _on_unit_died(unit: Character) -> void:
+func remove_from_registry(unit: Character) -> void:
 	for cur_tile: Vector2i in _unit_registry.keys():
 		if _unit_registry[cur_tile] == unit:
 			set_point_solid(cur_tile, false)
@@ -34,9 +34,6 @@ func update_unit_registry(tile: Vector2i, unit: Character) -> void:
 		_ally_tiles.append(tile)
 	else:
 		_enemy_tiles.append(tile)
-	
-	if not unit.died.is_connected(_on_unit_died.bind(unit)):
-		unit.died.connect(_on_unit_died.bind(unit))
 	
 	for cur_tile: Vector2i in _unit_registry.keys():
 		if _unit_registry[cur_tile] == unit:

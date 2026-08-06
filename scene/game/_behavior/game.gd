@@ -12,8 +12,6 @@ func _ready() -> void:
 	GameState.game = self
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_current_scene = level_viewport.get_child(0)
-	_current_scene.scene_change_requested.connect(change_scene)
-	
 	
 	
 func change_scene(scene: PackedScene) -> void:

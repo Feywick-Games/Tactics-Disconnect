@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cx6jiqqgtogfw"
-path="res://.godot/imported/push_progress_fill.png-67df3df8ad70616e74264760f258b7cd.ctex"
+uid="uid://cs5hy8jlgm6y4"
+path="res://.godot/imported/push_progress_bg.png-68b6302078df12fc52156add71deec9e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/push_progress/_sprite/push_progress_fill.png"
-dest_files=["res://.godot/imported/push_progress_fill.png-67df3df8ad70616e74264760f258b7cd.ctex"]
+source_file="res://ui/mini_game/push_progress/_sprite/push_progress_bg.png"
+dest_files=["res://.godot/imported/push_progress_bg.png-68b6302078df12fc52156add71deec9e.ctex"]
 
 [params]
 

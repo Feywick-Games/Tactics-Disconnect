@@ -26,6 +26,7 @@ var push_progress: PushProgress = %PushProgress
 @onready
 var sticker_layout: StickerLayout = %StickerLayout
 
+
 func _ready() -> void:
 	show()
 	_skill_label.hide()
@@ -73,8 +74,13 @@ func display_skill_text(skill_text: String) -> void:
 
 func _on_skills_selected() -> void:
 	combat_panel.show()
-	
-	
+
+
+func open_skill_select(allies: Array[Ally]) -> void:
+	skill_select.open(allies)
+	combat_panel.hide()
+
+
 func start_turn(units: Array[Character]) -> void:
 	turn_display.start_turn(units)
 	battle_timer.start(units[0])

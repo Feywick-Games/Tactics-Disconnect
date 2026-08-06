@@ -22,13 +22,13 @@
 [ext_resource type="Texture2D" uid="uid://c4uuseoxq4cs3" path="res://ui/skill_select/_sprite/go_button.tres" id="17_x2wyr"]
 [ext_resource type="Texture2D" uid="uid://j7vcaum0wxr6" path="res://ui/skill_select/_sprite/go_button_pressed.tres" id="22_ddd4e"]
 [ext_resource type="Texture2D" uid="uid://dgadll1iljejh" path="res://ui/skill_select/_sprite/go_button_hover.tres" id="22_werr3"]
-[ext_resource type="Texture2D" uid="uid://cs5hy8jlgm6y4" path="res://ui/push_progress/_sprite/push_progress_bg.png" id="24_a80hw"]
-[ext_resource type="Texture2D" uid="uid://dxiqaxqpcsjca" path="res://ui/push_progress/_sprite/push_button_atlas.tres" id="24_obvk7"]
+[ext_resource type="Texture2D" uid="uid://cs5hy8jlgm6y4" path="res://ui/mini_game/push_progress/_sprite/push_progress_bg.png" id="24_a80hw"]
+[ext_resource type="Texture2D" uid="uid://dxiqaxqpcsjca" path="res://ui/mini_game/push_progress/_sprite/push_button_atlas.tres" id="24_obvk7"]
 [ext_resource type="Texture2D" uid="uid://bqe6i14e2ixo5" path="res://ui/skill_select/_sprite/go_button_disabled.tres" id="24_riw5p"]
-[ext_resource type="Script" uid="uid://b48bc2twib2y4" path="res://ui/push_progress/_behavior/push_progress.gd" id="24_wygra"]
-[ext_resource type="Texture2D" uid="uid://cx6jiqqgtogfw" path="res://ui/push_progress/_sprite/push_progress_fill.png" id="26_obvk7"]
-[ext_resource type="Texture2D" uid="uid://bnpvcbj70llk2" path="res://ui/push_progress/_sprite/push_progress_timer_bg.png" id="27_wcq08"]
-[ext_resource type="Texture2D" uid="uid://chlq8s8hw8wbw" path="res://ui/push_progress/_sprite/push_progress_timer_fill.png" id="28_wygra"]
+[ext_resource type="Script" uid="uid://b48bc2twib2y4" path="res://ui/mini_game/push_progress/_behavior/push_progress.gd" id="24_wygra"]
+[ext_resource type="Texture2D" uid="uid://cx6jiqqgtogfw" path="res://ui/mini_game/push_progress/_sprite/push_progress_fill.png" id="26_obvk7"]
+[ext_resource type="Texture2D" uid="uid://bnpvcbj70llk2" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_bg.png" id="27_wcq08"]
+[ext_resource type="Texture2D" uid="uid://chlq8s8hw8wbw" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_fill.png" id="28_wygra"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ouag7"]
 bg_color = Color(0.4745098, 0.3882353, 0.7607843, 1)
@@ -604,13 +604,14 @@ libraries/ = SubResource("AnimationLibrary_0hase")
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_constants/separation = -8
+theme_override_constants/separation = 0
 
 [node name="PushProgressBar" type="TextureProgressBar" parent="PushProgressContainer/PushProgress/VBoxContainer" unique_id=392086979]
 custom_maximum_size = Vector2(-1, 16)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+value = 12.0
 texture_under = ExtResource("24_a80hw")
 texture_progress = ExtResource("26_obvk7")
 
