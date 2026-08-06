@@ -6,10 +6,6 @@ var _reaction: Reaction
 var _target: Character
 var _exiting := false
 
-func enter() -> void:
-	GameState.combat_ui.display_skill_text(_reaction.name)
-
-
 func _init(reaction: Skill, character: Character, target: Character) -> void:
 	_reaction = reaction
 	_character = character
@@ -18,10 +14,7 @@ func _init(reaction: Skill, character: Character, target: Character) -> void:
 
 func update(_delta: float) -> State:
 	if not is_instance_valid(_target):
-		return CharacterCombatIdleState.new()
-	
-	if _exiting:
-		return CharacterCombatIdleState.new()
+		return CharacterIdleState.new()
 	return
 
 

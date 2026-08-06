@@ -1,12 +1,14 @@
 class_name Character
 extends Node2D
 
-signal died
 signal target_hit
 @warning_ignore("unused_signal")
 signal action_processed
 @warning_ignore("unused_signal")
-signal state_requested(state: State)
+signal spawn_completed
+signal skill_error_encountered
+signal action_selected(skill_state: SkillState)
+signal tiles_highlighted(tiles: Array[Vector2i], status_effects: Array[StatusEffect])
 
 const SNAP_DISTANCE : float = 1.0
 const TIME_PER_MOVE := .03
@@ -23,14 +25,10 @@ var turn_portrait_scene: PackedScene
 @export
 var small_portrait: Texture2D
 
-
 @export_category("Gameplay")
 @export
 var facing: Vector2i = Vector2i.DOWN
-@export
-var init_state: GDScript
-@export
-var turn_state: GDScript
+var init_state: GDScript = CharacterCombatBeginState
 @export
 var basic_skill: Skill
 @export
@@ -48,32 +46,12 @@ var movement_range: int:
 	get:
 		return _movement_range + _movement_modifier
 
-@export
-var _evasion: int = 4
-var _evasion_modifier: int
-var evasion: int:
-	get:
-		return _evasion + _evasion_modifier
-@export
-var _accuracy: int = 4
-var _accuracy_modifer: int
-var accuracy: int:
-	get:
-		return _accuracy + _accuracy_modifer
-		
-
-
 var health: int
-var ready_for_battle := false
 var current_tile: Vector2i
 var status: Array[StatusEffect]
-var attack_state: Combat.AttackState
-var item: Item
-# TODO remove
-var processing_action := false
-var processing_reaction := false
+var active_skill: Skill
 var sub_pixel_position: Vector2
-var _state_machine: StateMachine
+var state_machine: StateMachine
 
 @onready
 var sprite: Sprite2D = $CharacterSprite
@@ -84,8 +62,6 @@ var skill_animator: DirectionalAnimator = $SkillAnimator
 @onready
 var health_bar: TextureProgressBar = $HealthBar
 @onready
-var hit_chance_label: Label = $HealthBar/HitChanceLabel
-@onready
 var damage_bar: TextureProgressBar = $HealthBar/DamageBar
 @onready
 var status_label_manager: StatusLabelManager = $StatusLabelManager
@@ -95,12 +71,12 @@ var sfx_player: AudioStreamPlayer2D = $SfxPlayer
 func _ready() -> void:
 	sub_pixel_position = global_position
 	health_bar.hide()
-	EventBus.display_requested.connect(_on_display_requested)
-	_state_machine = StateMachine.new(self, init_state.new())
-	add_child(_state_machine)
+	state_machine = StateMachine.new(self, CharacterCombatBeginState.new())
+	add_child(state_machine)
 
 
 func start_encounter() -> void:
+	animator.play_directional("idle", facing)
 	health = max_health
 	health_bar.max_value = max_health
 	health_bar.value = health
@@ -117,7 +93,7 @@ func end_encounter() -> void:
 
 
 func notify_impact() -> void:
-	target_hit.emit()
+	target_hit.emit.call_deferred()
 
 
 func _on_display_requested(show_display: bool) -> void:
@@ -127,82 +103,61 @@ func _on_display_requested(show_display: bool) -> void:
 		health_bar.hide()
 
 
-func is_hit(hit_chance: float) -> bool:
-	return (float(hit_chance) / float(evasion)) > randf()
-
-
-func drop_weapon() -> void:
-	attack_state = Combat.AttackState.BASIC
-	item = null
-	#TODO play drop animation on skill animator
-
-
 func process_status_effect(effect: StatusEffect) -> void:
 	if effect.status == Combat.Status.HIT:
-		health -= round(effect.value * effect.multiplier)
+		health -= effect.value
 	elif effect.status == Combat.Status.SLOWED:
-		_movement_modifier += round(effect.value * effect.multiplier)
-	elif effect.status == Combat.Status.DAZED:
-		_accuracy_modifer += round(effect.value * effect.multiplier)
+		_movement_modifier += effect.value
 
 
-func start_turn() -> void:
+func start_turn(turn_data: TurnData, highlight_range: SkillHighlightRange) -> void:
 	health_bar.value = health
+	active_skill = basic_skill
 	health_bar.show()
+	
+	if self is Ally:
+		set_state(AllyTurnState.new(turn_data, highlight_range))
+	else:
+		set_state(EnemyTurnState.new(turn_data, highlight_range))
+	clear_expired_statuses()
+
+
+func clear_expired_statuses() -> void:
+	var statuses_to_remove: Array[StatusEffect]
+	
+	for status_effect: StatusEffect in status:
+		if status_effect.duration == 0:
+			statuses_to_remove.append(status_effect)
+	
+	for status_effect: StatusEffect in statuses_to_remove:
+		status.remove_at(status.find(status_effect))
+
 
 
 func end_turn() -> void:
-	GameState.current_level.grid.update_unit_registry(current_tile, self)
-	EventBus.turn_ended.emit.call_deferred()
-	
+	GameState.current_level.grid.update_unit_registry(current_tile, self)	
 	health_bar.hide()
 	
 	for effect: StatusEffect in status:
 		effect.duration -= 1
-	
-	status = status.filter(func(x: StatusEffect) -> float: return x.duration > 0)
-	
-	for effect: StatusEffect in status:
-		process_status_effect(effect)
-	
-	EventBus.tiles_highlighted.emit([] as Array[Vector2i], [] as Array[StatusEffect], 0, Vector2i.ZERO, false)
 
 
-func process_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) -> State:
+func select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState, turn_data: TurnData) -> SkillState:
 	var dir := Vector2(tile - current_tile).normalized()
 	facing = Vector2i(dir)
 	
 	animator.play_directional("idle", dir)
 	
-	
 	if tile in attack_range.range_tiles:
-		var skill: Skill
-		
-		if attack_state == Combat.AttackState.BASIC:
-			skill = basic_skill
-		elif attack_state == Combat.AttackState.SPECIAL:
-			skill = special
-		elif attack_state == Combat.AttackState.ITEM:
-			skill = item
-		
-		var skill_state : SkillState = skill.state.new(self, skill, tile)
-		var can_use: Global.SkillErrorCode = skill_state.can_use(tile)
+		var skill_state : SkillState = active_skill.state.new(self, active_skill, tile)
+		var can_use: Global.SkillErrorCode = skill_state.can_use()
 		
 		
 		if can_use == Global.SkillErrorCode.OK:
 			facing = Vector2i(Vector2(tile - current_tile).normalized().round())
-			EventBus.timer_stopped.emit()
 			return skill_state
-			
 		else:
-			EventBus.skill_error_encountered.emit(can_use)
-
-
-	elif GameState.current_level.get_interactable(tile):
-		item = GameState.current_level.take_interactable(tile)
-		attack_state = Combat.AttackState.ITEM
-		state.interacted = true
-	
+			turn_data.skill_error = can_use
 	return
 
 
@@ -222,20 +177,12 @@ func create_range_astar(range_struct: RangeStruct, manhattan_range: int) -> ASta
 	return astar
 
 
-func update_ranges(movement_tiles: RangeStruct, _interactable_range: Array[Vector2i]) -> RangeStruct:
+func update_ranges(movement_tiles: RangeStruct) -> RangeStruct:
 	# color tiles differently when attacks overlap with movement 
-	var skill: Skill
 	var skill_range: Array[Vector2i]
 	var aoe: Array[Vector2i]
 	
-	if attack_state == Combat.AttackState.BASIC:
-		skill = basic_skill
-	elif attack_state == Combat.AttackState.SPECIAL:
-		skill = special
-	elif attack_state == Combat.AttackState.ITEM:
-		skill = item
-	
-	skill_range = GameState.current_level.grid.request_range(current_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct).range_tiles
+	skill_range = GameState.current_level.grid.request_range(current_tile, active_skill.min_range, active_skill.max_range, active_skill.range_shape, true, active_skill.direct).range_tiles
 	
 	skill_range.erase(current_tile)
 	
@@ -262,35 +209,34 @@ func update_ranges(movement_tiles: RangeStruct, _interactable_range: Array[Vecto
 			attack_only_tiles.append(tile)
 	
 	var overlap_atlas_coords: Vector2i
-	if attack_state == Combat.AttackState.BASIC:
+	if active_skill == basic_skill:
 		overlap_atlas_coords = Global.RETICLE_OVERLAP_BASIC_ATLAS_COORDS
 	else:
 		overlap_atlas_coords = Global.RETICLE_OVERLAP_SPECIAL_ATLAS_COORDS
 	
 	GameState.current_level.reset_map()
-	GameState.current_level.draw_range(movement_tiles.range_tiles, Global.RETICLE_MOVE_ALTAS_COORDS)
-	skill.draw_range(attack_only_tiles, attack_state == Combat.AttackState.SPECIAL)
-	GameState.current_level.draw_range(overlap_tiles, overlap_atlas_coords)
+	GameState.current_level.reticle.draw_range(movement_tiles.range_tiles, Global.RETICLE_MOVE_ALTAS_COORDS)
+	active_skill.draw_range(attack_only_tiles, active_skill == special)
+	GameState.current_level.reticle.draw_range(overlap_tiles, overlap_atlas_coords)
 	if not movement_tiles.range_tiles.is_empty():
 		GameState.current_level.reticle.set_cell(current_tile, 0, Global.RETICLE_MOVE_ALTAS_COORDS)
-		GameState.current_level.select_tile(current_tile)
+		GameState.current_level.reticle.select_tile(current_tile)
 	
 	var out := RangeStruct.new()
 	out.range_tiles = skill_range
 	return out
 
 
-func process_movement(delta: float, tile_path: Array[Vector2i], animation := "idle", skip_animation := false) -> Array[Vector2i]:
+func process_movement(delta: float, tile_path: Array[Vector2i], animation := "idle") -> Array[Vector2i]:
 	if not tile_path.is_empty():
 		var path_position :=  GameState.current_level.tile_to_world(tile_path[0])
 		var map_position := GameState.current_level.tile_to_world(current_tile)
 		if path_position.distance_to(global_position) > SNAP_DISTANCE:
 			var dir: Vector2 = (path_position - global_position).normalized()
 			sub_pixel_position += dir * Global.PLAYER_SPEED * delta
-			print(sub_pixel_position)
 			global_position = sub_pixel_position.round()
 			var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
-			if not skip_animation:
+			if not animation.is_empty():
 				animator.play_directional(animation, anim_dir)
 		if not path_position.distance_to(global_position) > SNAP_DISTANCE:
 			if len(tile_path) == 1:
@@ -305,45 +251,67 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 	return tile_path
 
 
-func take_damage(skill: Skill, direction: Vector2, hit_chance: float, multiplier: float) -> void:
-	var hit_connected: bool
-	
-	if self is Enemy:
-		if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_MULTIPLIER:
-			multiplier *= Global.QUICK_MULTIPLIER
-		elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_MULTIPLIER:
-			multiplier *= Global.SLOW_MULTIPLIER
-	
-	if is_equal_approx(direction.normalized().dot(Vector2(facing).normalized()), -1):
-		hit_connected = true
-		multiplier += Global.BACK_MULTIPLIER
-	else:
-		hit_connected = is_hit(hit_chance)
-	
+func take_damage(skill: Skill, direction: Vector2, multiplier: float = 1) -> void:
+	multiplier = _calc_damage_multiplier(direction) + multiplier
 
-	if hit_connected:
-		for effect: StatusEffect in skill.status_effects:
-			effect.multiplier = multiplier
-			status.append(effect)
-			process_status_effect(effect)
-			status_label_manager.add_status_effect(effect)
-	else:
-		status_label_manager.add_status_effect(null)
-	
+	for base_effect: StatusEffect in skill.status_effects:
+		var new_effect: StatusEffect = base_effect.duplicate()
+		new_effect.value = round(new_effect.value * multiplier)
+		var statuses : Array[StatusEffect] = status.filter(func(x:StatusEffect) -> bool: return x.status == new_effect.status)
+		if statuses.is_empty() :
+			status.append(new_effect)
+		else:
+			statuses[0].duration = max(new_effect.duration, statuses[0].duration)
+			status[0].value = max(new_effect.value, statuses[0].value)
+		process_status_effect(new_effect)
+		status_label_manager.add_status_effect(new_effect)
+
 	health_bar.value = health
 	damage_bar.value = health_bar.value
 	
 	status_label_manager.display_statuses()
 
 
-func calculate_hit_chance(hit_direction: Vector2i, hit_accuracy : float) -> int:
-	if not is_equal_approx(Vector2(hit_direction).normalized().dot(Vector2(facing).normalized()), -1):
-		return round((float(hit_accuracy) / float(evasion)) * 100)
-	else: 
-		return 100
-
-
-
 func die() -> void:
-	died.emit()
+	GameState.current_level.grid.remove_from_registry(self)
 	queue_free()
+
+
+func set_state(state: State) -> void:
+	state_machine.change_state.call_deferred(state)
+
+
+func highlight(enable := true) -> void:
+	(sprite.material as ShaderMaterial).set_shader_parameter("highlighted", enable)
+
+
+func _calc_damage_multiplier(direction: Vector2i) -> float:
+	var multiplier: float = 1
+	if self is Enemy:
+		if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_TIME_PERCENT:
+			multiplier = Global.QUICK_MULTIPLIER
+		elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_TIME_PERCENT:
+			multiplier = Global.SLOW_MULTIPLIER
+	if is_equal_approx(Vector2(direction).normalized().dot(Vector2(facing).normalized()), -1):
+		multiplier += Global.BACK_MULTIPLIER
+	return multiplier
+
+
+func display_modified_status(tiles: Array[Vector2i], status_effects: Array[StatusEffect], direction: Vector2i) -> void:
+	if current_tile in tiles:
+		health_bar.show()
+		
+		highlight()
+	else:
+		highlight(false)
+		return
+
+	var multiplier: float = _calc_damage_multiplier(direction)
+
+	for base_effect: StatusEffect in status_effects:
+		var effect: StatusEffect = base_effect.duplicate()
+		effect.value = round(effect.value * multiplier)
+		if effect.status == Combat.Status.HIT:
+			health_bar.value = health - round(effect.value)
+		else:
+			status_label_manager.preview(effect)

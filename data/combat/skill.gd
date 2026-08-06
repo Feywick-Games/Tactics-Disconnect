@@ -52,11 +52,8 @@ func _init() -> void:
 	resource_local_to_scene = true
 
 
-func is_ready() -> bool:
-	return true
-
 func get_hit_damage() -> int:
-	var damage_status := status_effects.filter(func(x: StatusEffect) -> bool: return true if x.status == Combat.Status.HIT else false)
+	var damage_status : Array[StatusEffect] = status_effects.filter(func(x: StatusEffect) -> bool: return true if x.status == Combat.Status.HIT else false)
 	if not damage_status.is_empty():
 		return damage_status[0].value
 	else:
@@ -65,9 +62,9 @@ func get_hit_damage() -> int:
 
 func draw_range(attack_range: Array[Vector2i], is_special: bool) -> void:
 	if is_special:
-		GameState.current_level.draw_range(attack_range, Global.RETICLE_SPECIAL_ALTAS_COORDS)
+		GameState.current_level.reticle.draw_range(attack_range, Global.RETICLE_SPECIAL_ALTAS_COORDS)
 	else:
-		GameState.current_level.draw_range(attack_range, Global.RETICLE_ATTACK_ATLAS_COORDS)
+		GameState.current_level.reticle.draw_range(attack_range, Global.RETICLE_ATTACK_ATLAS_COORDS)
 
 
 func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_range: Array[Vector2i], direction: Vector2) -> Array[Vector2i]:
@@ -91,7 +88,7 @@ func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_ran
 			var atlas_coords: Vector2i = GameState.current_level.reticle.get_cell_atlas_coords(target_tile)
 			GameState.current_level.reticle.set_cell(tile, 0, atlas_coords)
 			
-		GameState.current_level.select_tile(tile)
+		GameState.current_level.reticle.select_tile(tile)
 	
 	if push_position != Vector2i.ZERO:
 		var push_range: Array[Vector2i] = []
@@ -105,8 +102,8 @@ func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_ran
 			else:
 				push_range.append(tile)
 		if not push_range.is_empty():
-			GameState.current_level.draw_range(push_range, Global.RETICLE_SPECIAL_ALTAS_COORDS)
-			GameState.current_level.select_tile(push_range[-1])
+			GameState.current_level.reticle.draw_range(push_range, Global.RETICLE_SPECIAL_ALTAS_COORDS)
+			GameState.current_level.reticle.select_tile(push_range[-1])
 	
 
 	if move_position != Vector2i.ZERO:
@@ -114,7 +111,7 @@ func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_ran
 		move_tile = current_tile + move_tile
 		if (direct and not GameState.current_level.grid.is_point_solid_ignore_unit(move_tile)) \
 		or (not direct and not GameState.current_level.grid.is_point_solid(move_tile)):
-			GameState.current_level.draw_range([move_tile], Global.RETICLE_MOVE_ALTAS_COORDS)
-			GameState.current_level.select_tile(move_tile)
+			GameState.current_level.reticle.draw_range([move_tile], Global.RETICLE_MOVE_ALTAS_COORDS)
+			GameState.current_level.reticle.select_tile(move_tile)
 	
 	return highlighted_tiles

@@ -3,38 +3,32 @@ extends ProgressBar
 
 const FULL_MATERIAL: ShaderMaterial = preload("res://ui/skill_select/_material/skill_select_progress_shader_max.tres")
 
-var turns_per_skill_load := 9
-var first_turn := true
+var is_ready := true
 
 @export
 var active_material: Material
 
 func _ready() -> void:
-	EventBus.turn_started.connect(_on_turn_started)
-	EventBus.encounter_started.connect(_progress_bar_full)
-	EventBus.skills_selected.connect(_on_skills_selected)
-	turns_per_skill_load = GameState.allies.size() * 3
-	max_value = turns_per_skill_load
-	value = 0
+	max_value = 2
+	value = -1
 	step = 1
 
 
-func _on_skills_selected() -> void:
+func reset() -> void:
 	material = null
-	value = 0
-	GameState.is_skill_select_ready = false
+	value = -1
+	is_ready = false
 
 
 func _progress_bar_full() -> void:
-	GameState.is_skill_select_ready = true
+	is_ready = true
 	material = FULL_MATERIAL
 
 
-func _on_turn_started(unit: Character) -> void:
-	if unit is Ally:
-		if not first_turn:
-			value += step
-		else:
-			first_turn = false
-		if value == max_value:
-			_progress_bar_full()
+func increment() -> void:
+	if value == max_value:
+		_progress_bar_full()
+	else:
+		value += step
+
+	

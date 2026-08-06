@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bn875t12gh6w2"]
+[gd_scene format=3 uid="uid://bn875t12gh6w2"]
 
 [ext_resource type="PackedScene" uid="uid://bcnpnplhpud5y" path="res://ui/turn_display/_packed_scene/turn_portrait.tscn" id="1_aea85"]
 [ext_resource type="Texture2D" uid="uid://b2i7qno5fmwjt" path="res://entity/character/ally/_sprite/turn_portrait_full_enemy_1.png" id="2_86qbn"]
 
-[node name="TurnPortrait" instance=ExtResource("1_aea85")]
+[node name="TurnPortrait" unique_id=270048853 instance=ExtResource("1_aea85")]
 
-[node name="SmallPortrait" parent="." index="1"]
+[node name="SmallPortrait" parent="." index="1" unique_id=1066073387]
 frame = 1
 
-[node name="FullPortrait" parent="." index="2"]
+[node name="FullPortrait" parent="." index="2" unique_id=102064676]
 texture = ExtResource("2_86qbn")

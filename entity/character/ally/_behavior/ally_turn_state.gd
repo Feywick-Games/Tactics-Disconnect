@@ -14,17 +14,9 @@ var waited := false
 func enter() -> void:
 	super.enter()
 	_ally = state_machine.state_owner as Ally
-	_ally.global_position = GameState.current_level.tile_to_world(_ally.current_tile).round()
 	_start_tile = _ally.current_tile
-	_ally.attack_state = Combat.AttackState.BASIC
 	_movement_astar = _ally.create_range_astar(_movement_range, _ally.movement_range)
-	_attack_range = _ally.update_ranges(_movement_range,  _interactable_range)
-	EventBus.timed_out.connect(_on_timed_out)
-	EventBus.skills_selected.connect(_on_skills_selected)
-
-
-func _on_skills_selected() -> void:
-	_skill_select_opened = false
+	_attack_range = _ally.update_ranges(_movement_range)
 
 
 func _on_timed_out() -> void:
@@ -43,7 +35,6 @@ func update(delta: float) -> State:
 		if Input.is_action_pressed("move") and _time_since_update_reticle > TIME_TILL_UPDATE_RETICLE * 1.25:
 			_time_since_update_reticle = 0
 			var input_vec := Vector2i(Input.get_vector("move_left", "move_right", "move_up", "move_down"))
-			print(input_vec)
 			_input_buffered = _on_movememen_input.bind(input_vec)
 		if Input.is_action_just_pressed("guard"):
 			_input_buffered = _on_guard_pressed
@@ -53,32 +44,17 @@ func update(delta: float) -> State:
 			_input_buffered = _on_special_pressed
 		elif Input.is_action_just_pressed("accept"):
 			_input_buffered = _on_accept_pressed
-		elif Input.is_action_just_pressed("skill_select"):
-			_input_buffered = _on_skill_select_pressed
 		
 		if not _input_buffered.is_null() and not _moving:
 			current_state = _input_buffered.call()
 			_input_buffered = Callable()
+			
 			return current_state
 	
 	return current_state
-	
-	
-func _on_skill_select_pressed() -> void:
-	if GameState.is_skill_select_ready:
-		_skill_select_opened = true
-		EventBus.skill_select_opened.emit()
-		
-		_ally.attack_state = Combat.AttackState.BASIC
-		
-		if acted:
-			EventBus.tiles_highlighted.emit(
-				[] as Array[Vector2i], [] as Array[StatusEffect], 0, Vector2i.ZERO, true
-			)
-		force_redraw = true
-		
-	
-	
+
+
+
 func _on_movememen_input(input_vec: Vector2i) -> State:
 	var hover_tile: Vector2i = _highlighted_tile
 	
@@ -101,8 +77,8 @@ func _on_movememen_input(input_vec: Vector2i) -> State:
 			if acted:
 				_highlight_targets(hover_tile)
 			elif waited:
-				GameState.current_level.select_tile(_highlighted_tile, false)
-				GameState.current_level.select_tile(hover_tile, true)
+				GameState.current_level.reticle.select_tile(_highlighted_tile, false)
+				GameState.current_level.reticle.select_tile(hover_tile, true)
 			
 			_highlighted_tile = hover_tile
 	else:
@@ -130,16 +106,16 @@ func _on_guard_pressed() -> State:
 	
 	for tile : Vector2i in _wait_range.range_tiles:
 		if tile - _ally.current_tile == Vector2i.RIGHT:
-			GameState.current_level.draw_range([tile], Global.RETICLE_FACING_RIGHT)
+			GameState.current_level.reticle.draw_range([tile], Global.RETICLE_FACING_RIGHT)
 		elif tile - _ally.current_tile == Vector2i.DOWN:
-			GameState.current_level.draw_range([tile], Global.RETICLE_FACING_DOWN)
+			GameState.current_level.reticle.draw_range([tile], Global.RETICLE_FACING_DOWN)
 		elif tile - _ally.current_tile == Vector2i.LEFT:
-			GameState.current_level.draw_range([tile], Global.RETICLE_FACING_LEFT)
+			GameState.current_level.reticle.draw_range([tile], Global.RETICLE_FACING_LEFT)
 		else:
-			GameState.current_level.draw_range([tile], Global.RETICLE_FACING_UP)
+			GameState.current_level.reticle.draw_range([tile], Global.RETICLE_FACING_UP)
 
 	_highlighted_tile = _ally.current_tile + _ally.facing
-	GameState.current_level.select_tile(_highlighted_tile)
+	GameState.current_level.reticle.select_tile(_highlighted_tile)
 	
 	return
 
@@ -148,8 +124,8 @@ func _on_guard_pressed() -> State:
 func _on_cancel_pressed() -> State:
 	if acted and not interacted:
 		acted = false
-		EventBus.tiles_highlighted.emit(
-			[] as Array[Vector2i], [] as Array[StatusEffect], 0, Vector2i.ZERO, true
+		_character.tiles_highlighted.emit(
+			[] as Array[Vector2i], [] as Array[StatusEffect], Vector2i.ZERO, true
 		)
 		_movement_range = _starting_movement_range
 		force_redraw = true
@@ -161,16 +137,11 @@ func _on_cancel_pressed() -> State:
 
 
 func _on_special_pressed() -> State:
-	if _ally.special.is_ready() and _ally.attack_state == Combat.AttackState.BASIC:
-		_ally.attack_state = Combat.AttackState.SPECIAL
-	elif _ally.attack_state == Combat.AttackState.SPECIAL:
-		_ally.attack_state = Combat.AttackState.BASIC
-	elif _ally.attack_state == Combat.AttackState.ITEM:
-		_ally.attack_state = Combat.AttackState.ITEM
-		
+	_ally.active_skill = _ally.basic_skill if _ally.active_skill != _ally.basic_skill else _ally.special
+	
 	if acted:
-		EventBus.tiles_highlighted.emit(
-			[] as Array[Vector2i], [] as Array[StatusEffect], 0, Vector2i.ZERO, true
+		_character.tiles_highlighted.emit(
+			[] as Array[Vector2i], [] as Array[StatusEffect], Vector2i.ZERO, true
 		)
 	force_redraw = true
 	
@@ -178,22 +149,17 @@ func _on_special_pressed() -> State:
 
 
 func _on_accept_pressed() -> State:
-	var current_state: State
 	if waited:
 		end_turn()
 	elif acted:
-		current_state = _ally.process_action(_highlighted_tile, _attack_range, self)
-		if current_state:
-			force_redraw = true
-		if interacted:
-			_movement_range = RangeStruct.new()
-			_interactable_range = GameState.current_level.get_interactable_tiles(_movement_range.range_tiles)	
+		var next_state: State = _ally.select_action(_highlighted_tile, _attack_range, self, _turn_data)
+		return next_state 
 	else:
 		acted = true
 		force_redraw = true
 		_movement_range = RangeStruct.new()
 		_highlighted_tile = _ally.current_tile + _ally.facing
-	return current_state
+	return
 
 
 func physics_update(delta: float) -> State:
@@ -201,7 +167,12 @@ func physics_update(delta: float) -> State:
 	super.physics_update(delta)
 	if current_tile != _ally.current_tile or force_redraw:
 		force_redraw = false
-		_attack_range = _ally.update_ranges(_movement_range,  _interactable_range)
+		_attack_range = _ally.update_ranges(_movement_range)
 		if acted or interacted:
 			_highlight_targets(_highlighted_tile)
 	return
+
+
+func exit() -> void:
+	_ally.health_bar.hide()
+	super.exit()

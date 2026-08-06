@@ -7,7 +7,7 @@ func absorb(o_struct: RangeStruct) -> void:
 	for valid: Vector2i in o_struct.range_tiles:
 		if valid not in range_tiles:
 			range_tiles.append(valid)
-			
+
 
 func get_neighbor(tile: Vector2i, direction: Vector2i) -> Vector2i:
 	if tile + direction in range_tiles:

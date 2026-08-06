@@ -10,18 +10,32 @@ var _error_code_timer: SceneTreeTimer
 @onready
 var _skill_label: Label = %SkillLabel
 @onready
-var _combat_panel: Control = $CombatPanel
+var combat_panel: Control = $CombatPanel
 @onready
 var _audio_stream_player: AudioStreamPlayer
+@onready
+var turn_display : TurnDisplay = %TurnDisplay
+@onready
+var skill_progress : SkillProgress = %SkillProgress
+@onready
+var skill_select : SkillSelect = %SkillSelect
+@onready
+var battle_timer: BattleTimer = %BattleTimer
+@onready
+var push_progress: PushProgress = %PushProgress
+@onready
+var sticker_layout: StickerLayout = %StickerLayout
+
 
 func _ready() -> void:
+	show()
 	_skill_label.hide()
-	_combat_panel.hide()
-	EventBus.skills_selected.connect(_on_skills_selected)
-	EventBus.skill_error_encountered.connect(_display_skill_error_code)
+	combat_panel.hide()
+	skill_select.skills_selected.connect(_on_skills_selected)
+	skill_select.skills_selected.connect(skill_progress.reset)
 
 
-func _display_skill_error_code(code: Global.SkillErrorCode) -> void:
+func display_skill_error_code(code: Global.SkillErrorCode) -> void:
 	_error_queued = true
 	
 	if _error_code_timer:
@@ -59,4 +73,15 @@ func display_skill_text(skill_text: String) -> void:
 
 
 func _on_skills_selected() -> void:
-	_combat_panel.show()
+	combat_panel.show()
+
+
+func open_skill_select(allies: Array[Ally]) -> void:
+	skill_select.open(allies)
+	combat_panel.hide()
+
+
+func start_turn(units: Array[Character]) -> void:
+	turn_display.start_turn(units)
+	battle_timer.start(units[0])
+	sticker_layout.start_turn(units[0])

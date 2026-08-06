@@ -12,8 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="6_wepgb"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="7_uk5et"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_07m0v"]
-[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="8_143ow"]
-[ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="8_igswm"]
 [ext_resource type="Texture2D" uid="uid://u465lrggcsnd" path="res://entity/character/ally/izzy/_sprite/izzy_unit_sprite.png" id="11_apuu4"]
 
 [sub_resource type="Resource" id="Resource_xdj1t"]
@@ -27,7 +25,7 @@ character_animation = "idle"
 state = ExtResource("3_tnq7t")
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_xdj1t")])
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_apuu4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hyqnp"]
 resource_local_to_scene = true
 shader = ExtResource("8_07m0v")
 shader_parameter/highlighted = false
@@ -178,11 +176,10 @@ _data = {
 }
 
 [node name="Izzy" unique_id=907728875 instance=ExtResource("1_abh6s")]
-skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("3_apuu4"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("5_j3bli"), ExtResource("6_m8t01")])
+skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("5_j3bli"), ExtResource("6_m8t01")])
 character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
 basic_skill = SubResource("Resource_v85yj")
-reactions = Array[ExtResource("8_143ow")]([ExtResource("8_igswm")])
 
 [node name="HealthBar" parent="." index="0" unique_id=1956210959]
 offset_top = -48.0
@@ -193,7 +190,7 @@ pivot_offset = Vector2(0, 0)
 pivot_offset = Vector2(0, 0)
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_apuu4")
+material = SubResource("ShaderMaterial_hyqnp")
 position = Vector2(0, 0)
 texture = ExtResource("11_apuu4")
 offset = Vector2(0, -17)

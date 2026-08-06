@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dk85fb2a3ag81" path="res://entity/character/character.tscn" id="1_13rsw"]
 [ext_resource type="Script" uid="uid://byid5qtttkmo2" path="res://entity/character/enemy/_behavior/enemy.gd" id="2_iqt36"]
 [ext_resource type="PackedScene" uid="uid://bn875t12gh6w2" path="res://entity/character/enemy/_packed_scene/turn_portrait_enemy_1.tscn" id="3_fh3m0"]
-[ext_resource type="Script" uid="uid://cq5nca81q2fd3" path="res://entity/character/enemy/_behavior/enemy_roam_state.gd" id="3_yk16s"]
+[ext_resource type="Script" uid="uid://bx3wjlxpll1ep" path="res://entity/character/_behavior/character_combat_begin_state.gd" id="4_7emr5"]
 [ext_resource type="Script" uid="uid://dqg6epws457xo" path="res://entity/character/enemy/_behavior/enemy_turn_state.gd" id="4_w2x43"]
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="6_ju21i"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="7_g3nm3"]
@@ -25,7 +25,7 @@ character_animation = "idle"
 state = ExtResource("7_vjtmd")
 status_effects = Array[ExtResource("7_g3nm3")]([SubResource("Resource_inb1m")])
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7emr5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jj0xt"]
 resource_local_to_scene = true
 shader = ExtResource("11_biaq8")
 shader_parameter/highlighted = false
@@ -177,13 +177,13 @@ special_priority = 0.75
 custom_priority = 0.0
 character_name = "Enemy"
 turn_portrait_scene = ExtResource("3_fh3m0")
-init_state = ExtResource("3_yk16s")
+init_state = ExtResource("4_7emr5")
 turn_state = ExtResource("4_w2x43")
 basic_skill = SubResource("Resource_3dmcj")
 special = ExtResource("10_01dq5")
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_7emr5")
+material = SubResource("ShaderMaterial_jj0xt")
 position = Vector2(0, 1)
 texture = ExtResource("13_7emr5")
 offset = Vector2(0, -18)
