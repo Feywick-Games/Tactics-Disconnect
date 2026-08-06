@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://kmie07ujhpn" path="res://ui/_behavior/combat_ui.gd" id="1_d34a4"]
 [ext_resource type="Script" uid="uid://dxun7rvd6nx2" path="res://ui/turn_display/_behavior/turn_display.gd" id="1_xgp2v"]
+[ext_resource type="Texture2D" uid="uid://svxnit6eboe1" path="res://ui/skill_progress/_sprite/skill_progress.png" id="2_cx76p"]
 [ext_resource type="Texture2D" uid="uid://dnkx7jyewlkxh" path="res://ui/battle_timer/battle_timer_under.png" id="2_sbk1j"]
 [ext_resource type="Texture2D" uid="uid://caqbtr4v8posy" path="res://ui/battle_timer/battle_timer_over.png" id="3_fndsw"]
 [ext_resource type="Texture2D" uid="uid://cycr83c35trtu" path="res://ui/battle_timer/battle_timer_fill.png" id="4_cy5jr"]
@@ -23,18 +24,12 @@
 [ext_resource type="Texture2D" uid="uid://j7vcaum0wxr6" path="res://ui/skill_select/_sprite/go_button_pressed.tres" id="22_ddd4e"]
 [ext_resource type="Texture2D" uid="uid://dgadll1iljejh" path="res://ui/skill_select/_sprite/go_button_hover.tres" id="22_werr3"]
 [ext_resource type="Texture2D" uid="uid://cs5hy8jlgm6y4" path="res://ui/mini_game/push_progress/_sprite/push_progress_bg.png" id="24_a80hw"]
-[ext_resource type="Texture2D" uid="uid://dxiqaxqpcsjca" path="res://ui/mini_game/push_progress/_sprite/push_button_atlas.tres" id="24_obvk7"]
+[ext_resource type="Texture2D" uid="uid://dxiqaxqpcsjca" path="res://ui/_sprite/push_button_a_atlas.tres" id="24_obvk7"]
 [ext_resource type="Texture2D" uid="uid://bqe6i14e2ixo5" path="res://ui/skill_select/_sprite/go_button_disabled.tres" id="24_riw5p"]
 [ext_resource type="Script" uid="uid://b48bc2twib2y4" path="res://ui/mini_game/push_progress/_behavior/push_progress.gd" id="24_wygra"]
 [ext_resource type="Texture2D" uid="uid://cx6jiqqgtogfw" path="res://ui/mini_game/push_progress/_sprite/push_progress_fill.png" id="26_obvk7"]
 [ext_resource type="Texture2D" uid="uid://bnpvcbj70llk2" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_bg.png" id="27_wcq08"]
 [ext_resource type="Texture2D" uid="uid://chlq8s8hw8wbw" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_fill.png" id="28_wygra"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ouag7"]
-bg_color = Color(0.4745098, 0.3882353, 0.7607843, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5dgg"]
-bg_color = Color(0.8784314, 0.62352943, 0.36862746, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tn4br"]
 texture = ExtResource("11_vmh3g")
@@ -105,17 +100,15 @@ offset_bottom = 220.0
 theme_override_constants/margin_left = 128
 theme_override_constants/margin_top = 16
 
-[node name="SkillProgress" type="ProgressBar" parent="CombatPanel/MarginContainer4" unique_id=213505277]
+[node name="SkillProgress" type="TextureProgressBar" parent="CombatPanel/MarginContainer4" unique_id=641225814]
 unique_name_in_owner = true
+material = ExtResource("7_783s8")
 custom_minimum_size = Vector2(256, 16)
 layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_ouag7")
-theme_override_styles/fill = SubResource("StyleBoxFlat_x5dgg")
-max_value = 9.0
-step = 1.0
-show_percentage = false
+max_value = 3.0
+value = 3.0
+texture_under = ExtResource("2_cx76p")
 script = ExtResource("7_x5dgg")
-active_material = ExtResource("7_783s8")
 
 [node name="MarginContainer" type="MarginContainer" parent="CombatPanel" unique_id=354752036]
 custom_minimum_size = Vector2(160, 268)
@@ -616,6 +609,50 @@ texture_under = ExtResource("24_a80hw")
 texture_progress = ExtResource("26_obvk7")
 
 [node name="PushProgressTimer" type="TextureProgressBar" parent="PushProgressContainer/PushProgress/VBoxContainer" unique_id=1873798391]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_under = ExtResource("27_wcq08")
+texture_progress = ExtResource("28_wygra")
+
+[node name="MeleeComboContainer" type="MarginContainer" parent="." unique_id=808517902]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 64
+
+[node name="PushProgress" type="HBoxContainer" parent="MeleeComboContainer" unique_id=1148119552]
+layout_mode = 2
+script = ExtResource("24_wygra")
+
+[node name="TextureRect" type="TextureRect" parent="MeleeComboContainer/PushProgress" unique_id=1150591195]
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("24_obvk7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MeleeComboContainer/PushProgress/TextureRect" unique_id=624217259]
+libraries/ = SubResource("AnimationLibrary_0hase")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MeleeComboContainer/PushProgress" unique_id=266806383]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="PushProgressBar" type="TextureProgressBar" parent="MeleeComboContainer/PushProgress/VBoxContainer" unique_id=1950560489]
+custom_maximum_size = Vector2(-1, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+value = 12.0
+texture_under = ExtResource("24_a80hw")
+texture_progress = ExtResource("26_obvk7")
+
+[node name="PushProgressTimer" type="TextureProgressBar" parent="MeleeComboContainer/PushProgress/VBoxContainer" unique_id=912350897]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0

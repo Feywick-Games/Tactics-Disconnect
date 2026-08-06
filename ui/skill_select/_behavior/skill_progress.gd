@@ -1,28 +1,23 @@
 class_name SkillProgress
-extends ProgressBar
-
-const FULL_MATERIAL: ShaderMaterial = preload("res://ui/skill_select/_material/skill_select_progress_shader_max.tres")
+extends TextureProgressBar
 
 var is_ready := true
 
-@export
-var active_material: Material
+var shader_material: ShaderMaterial = material as ShaderMaterial
 
 func _ready() -> void:
-	max_value = 2
-	value = -1
+	max_value = 3
+	value = 0
 	step = 1
 
 
 func reset() -> void:
-	material = null
-	value = -1
+	value = 0
 	is_ready = false
 
 
 func _progress_bar_full() -> void:
 	is_ready = true
-	material = FULL_MATERIAL
 
 
 func increment() -> void:
@@ -30,5 +25,6 @@ func increment() -> void:
 		_progress_bar_full()
 	else:
 		value += step
+		shader_material.set_shader_parameter("value", value)
 
 	

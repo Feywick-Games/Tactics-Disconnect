@@ -1,10 +1,13 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://dmkcumu1r2084"]
 
 [ext_resource type="Shader" uid="uid://bfg5rjax4awmh" path="res://ui/skill_select/_material/skill_select.gdshader" id="1_ksbql"]
+[ext_resource type="Texture2D" uid="uid://c4r6p8kcork7j" path="res://ui/skill_progress/_sprite/skill_progress_fill.png" id="2_apyyx"]
 
 [resource]
 shader = ExtResource("1_ksbql")
 shader_parameter/color = Color(0.8784314, 0.62352943, 0.36862746, 1)
 shader_parameter/glow_color = Color(0.9647059, 0.9647059, 0.9647059, 1)
 shader_parameter/glow_color_2 = Color(0.9411765, 0.7607843, 0.5254902, 1)
-shader_parameter/pulse_speed = 84.846004030185
+shader_parameter/pulse_speed = 73.0810034713475
+shader_parameter/glow_area = ExtResource("2_apyyx")
+shader_parameter/value = 2
