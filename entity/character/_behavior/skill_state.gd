@@ -1,19 +1,39 @@
+@abstract
 class_name SkillState
 extends State
+
+const DEFAULT_DESIRED_TARGET_PCT: float = .5
 
 var _character: Character
 var _target_tile: Vector2i
 var skill: Skill
-var _action_to_process: int = 1
+var _turn_data: PhaseData
 var _desired_target_count: int
 var mini_game: MiniGame
-var mini_game_type: TurnData.MiniGameType
+var impact_time: float = 1.0
+var _direction: Vector2i
+var _time_in_state: float
 
-func _init(character: Character, i_skill: Skill, target_tile: Vector2i) -> void:
+func _init(character: Character, i_skill: Skill, target_tile: Vector2i, turn_data: PhaseData) -> void:
 	_target_tile = target_tile
 	skill = i_skill
-	_desired_target_count = round(skill.aoe.size() * .75)
+	_desired_target_count = round(skill.aoe.size() * DEFAULT_DESIRED_TARGET_PCT)
 	_character = character
+	_turn_data = turn_data
+
+
+func update(delta: float) -> State:
+	_time_in_state = _time_in_state + delta
+	if _time_in_state > impact_time and PhaseData.Event.IMPACT not in _turn_data.events:
+		_turn_data.events.append(PhaseData.Event.IMPACT)
+	return
+
+
+func enter() -> void:
+	super.enter()
+	_direction = VectorF.snap_direction(_target_tile - _character.current_tile)
+	_character.animator.play_directional(skill.character_animation, _direction)
+	impact_time = _character.get_impact_time(_character.animator.current_animation)
 
 
 func exit() -> void:
@@ -22,7 +42,6 @@ func exit() -> void:
 	if _character is Ally:
 		if skill == _character.special:
 			_character.special = null
-	_character.action_processed.emit()
 
 
 func calc_skill_likelihood(strike_tile : Vector2i) -> float:

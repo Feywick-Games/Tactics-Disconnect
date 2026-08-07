@@ -3,5 +3,5 @@ extends LevelState
 
 func enter() -> void:
 	super.enter()
-	_level.lose()
+	print("you lose!!")
 	GameState.game.change_scene(_level.failure_scene)

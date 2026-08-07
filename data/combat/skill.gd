@@ -16,7 +16,7 @@ var name: String
 @export_multiline
 var flavor_text: String
 @export
-var character_animation: String
+var character_animation: String = "idle"
 @export
 var skill_animation: String
 @export
@@ -40,8 +40,6 @@ var range_type: Combat.RangeType = Combat.RangeType.MELEE
 # to pierce
 @export
 var direct := true
-@export
-var is_animated := false
 @export
 var cast_sfx: AudioStream
 @export

@@ -1,8 +1,6 @@
 class_name Level
 extends Node2D
 
-signal scene_change_requested(scene: PackedScene)
-
 const GRID_TILE_MAP_SCENE : PackedScene = preload("res://scene/level/grid_tile_map.tscn")
 const GRID_DRAW_TIME: float = 1
 

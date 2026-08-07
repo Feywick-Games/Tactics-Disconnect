@@ -16,9 +16,9 @@ var _encounter_ended := false
 var _highlighted_tile: Vector2i
 var _skill_highlight_range: SkillHighlightRange
 var _moving := false
-var _turn_data: TurnData
+var _turn_data: PhaseData
 
-func _init(turn_data: TurnData, highlight_range: SkillHighlightRange) -> void:
+func _init(turn_data: PhaseData, highlight_range: SkillHighlightRange) -> void:
 	_skill_highlight_range = highlight_range
 	_turn_data = turn_data
 
@@ -75,4 +75,8 @@ func _highlight_targets(target_tile: Vector2i) -> void:
 		
 	var highlighted_tiles: Array[Vector2i] = _character.active_skill.highlight_targets(_character.current_tile, target_tile, _attack_range.range_tiles, direction)
 
-	_character.tiles_highlighted.emit(highlighted_tiles, _character.active_skill.status_effects, Vector2i(direction), _character is Ally)
+	_skill_highlight_range = SkillHighlightRange.new()
+	_skill_highlight_range.tiles = highlighted_tiles
+	_skill_highlight_range.status_effects = _character.active_skill.status_effects
+	_skill_highlight_range.direction = direction
+	_skill_highlight_range.is_ally = _character is Ally

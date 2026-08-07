@@ -24,6 +24,8 @@ var _queued_statuses: Array[StatusEffect]
 var _completed_animations: int
 var _damage_value: int
 
+var playing := false
+
 
 func _ready() -> void:
 	hide()
@@ -39,14 +41,14 @@ func display_statuses() -> void:
 	else:
 		_on_animation_completed("")
 
-
 func _play_status_effect(effect: StatusEffect) -> void:
 	if effect.status == Combat.Status.HIT:
 		_damage_value = effect.value
 		animator.queue("hit")
+	playing = true
 
 
-func preview(effect: StatusEffect) -> void:
+func preview(_effect: StatusEffect) -> void:
 	# show preview of effect without animation
 	pass
 
@@ -63,7 +65,7 @@ func _on_animation_completed(_anim: String) -> void:
 		_started_animations = 0
 		_completed_animations = 0
 		_damage_value = 0
-		statuses_displayed.emit()
+		playing = false
 		hide()
 
 

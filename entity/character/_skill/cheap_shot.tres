@@ -6,12 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="4_dl62m"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="5_tvf6i"]
 
-[sub_resource type="Resource" id="Resource_dl62m"]
+[sub_resource type="Resource" id="Resource_rx68n"]
 script = ExtResource("3_fqle7")
-value = 3
+value = 2
+metadata/_custom_type_script = "uid://c5gnxjiq5craw"
 
 [resource]
 script = ExtResource("1_bh517")
-character_animation = "idle"
+name = "Cheap Shot"
 state = ExtResource("2_3hmip")
-status_effects = Array[ExtResource("3_fqle7")]([SubResource("Resource_dl62m")])
+status_effects = Array[ExtResource("3_fqle7")]([SubResource("Resource_rx68n")])

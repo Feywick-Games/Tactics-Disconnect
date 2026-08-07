@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://cx6jiqqgtogfw" path="res://ui/mini_game/push_progress/_sprite/push_progress_fill.png" id="26_obvk7"]
 [ext_resource type="Texture2D" uid="uid://bnpvcbj70llk2" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_bg.png" id="27_wcq08"]
 [ext_resource type="Texture2D" uid="uid://chlq8s8hw8wbw" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_fill.png" id="28_wygra"]
+[ext_resource type="Texture2D" uid="uid://b8wbxrwo1rwa2" path="res://ui/reaction_qte/reaction_qte.png" id="31_cx76p"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tn4br"]
 texture = ExtResource("11_vmh3g")
@@ -571,6 +572,7 @@ horizontal_alignment = 1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1628530910]
 
 [node name="PushProgressContainer" type="MarginContainer" parent="." unique_id=1437321348]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -615,7 +617,8 @@ size_flags_vertical = 0
 texture_under = ExtResource("27_wcq08")
 texture_progress = ExtResource("28_wygra")
 
-[node name="MeleeComboContainer" type="MarginContainer" parent="." unique_id=808517902]
+[node name="ReactionQuickTimeContainer" type="MarginContainer" parent="." unique_id=2056286782]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -625,36 +628,19 @@ offset_bottom = 40.0
 grow_horizontal = 2
 theme_override_constants/margin_top = 64
 
-[node name="PushProgress" type="HBoxContainer" parent="MeleeComboContainer" unique_id=1148119552]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="ReactionQuickTimeContainer" unique_id=875698596]
 layout_mode = 2
-script = ExtResource("24_wygra")
+value = 36.0
+fill_mode = 4
+texture_progress = ExtResource("31_cx76p")
 
-[node name="TextureRect" type="TextureRect" parent="MeleeComboContainer/PushProgress" unique_id=1150591195]
-layout_mode = 2
-size_flags_vertical = 0
-texture = ExtResource("24_obvk7")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MeleeComboContainer/PushProgress/TextureRect" unique_id=624217259]
-libraries/ = SubResource("AnimationLibrary_0hase")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MeleeComboContainer/PushProgress" unique_id=266806383]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_constants/separation = 0
-
-[node name="PushProgressBar" type="TextureProgressBar" parent="MeleeComboContainer/PushProgress/VBoxContainer" unique_id=1950560489]
-custom_maximum_size = Vector2(-1, 16)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-value = 12.0
-texture_under = ExtResource("24_a80hw")
-texture_progress = ExtResource("26_obvk7")
-
-[node name="PushProgressTimer" type="TextureProgressBar" parent="MeleeComboContainer/PushProgress/VBoxContainer" unique_id=912350897]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture_under = ExtResource("27_wcq08")
-texture_progress = ExtResource("28_wygra")
+[node name="MeleeComboContainer" type="MarginContainer" parent="." unique_id=808517902]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 64

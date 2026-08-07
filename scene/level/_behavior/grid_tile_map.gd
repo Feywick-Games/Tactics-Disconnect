@@ -18,9 +18,9 @@ var reticle: TileMapLayer = $ReticleTileMap
 func intialize(grid: Grid) -> void:
 	_grid = grid
 
-func set_up(set_up: bool = true) -> void:
-	_reverse_build_grid = !set_up
-	_current_cell_x = _grid.region.position.x if set_up else _grid.region.end.x
+func set_up(set_up_: bool = true) -> void:
+	_reverse_build_grid = !set_up_
+	_current_cell_x = _grid.region.position.x if set_up_ else _grid.region.end.x
 	_time_per_grid_tile =  GRID_DRAW_TIME/ _grid.size.x
 	_map_complete = false
 

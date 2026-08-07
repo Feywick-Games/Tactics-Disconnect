@@ -124,9 +124,7 @@ func _on_guard_pressed() -> State:
 func _on_cancel_pressed() -> State:
 	if acted and not interacted:
 		acted = false
-		_character.tiles_highlighted.emit(
-			[] as Array[Vector2i], [] as Array[StatusEffect], Vector2i.ZERO, true
-		)
+		_skill_highlight_range = SkillHighlightRange.new()
 		_movement_range = _starting_movement_range
 		force_redraw = true
 	elif waited:
@@ -140,9 +138,7 @@ func _on_special_pressed() -> State:
 	_ally.active_skill = _ally.basic_skill if _ally.active_skill != _ally.basic_skill else _ally.special
 	
 	if acted:
-		_character.tiles_highlighted.emit(
-			[] as Array[Vector2i], [] as Array[StatusEffect], Vector2i.ZERO, true
-		)
+		_skill_highlight_range = SkillHighlightRange.new()
 	force_redraw = true
 	
 	return

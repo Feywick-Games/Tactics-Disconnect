@@ -21,7 +21,6 @@ value = 4
 [sub_resource type="Resource" id="Resource_v85yj"]
 script = ExtResource("2_d2041")
 name = "Punch"
-character_animation = "idle"
 state = ExtResource("3_tnq7t")
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_xdj1t")])
 
@@ -60,6 +59,12 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_0tlu4"]
 resource_name = "idle_down"
+length = 1.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -87,6 +92,13 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_a75ug"]
 resource_name = "idle_left"
+length = 1.5
+step = 0.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -114,6 +126,13 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_hv0d0"]
 resource_name = "idle_right"
+length = 1.5
+step = 0.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -141,6 +160,13 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_6us76"]
 resource_name = "idle_up"
+length = 1.5
+step = 0.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

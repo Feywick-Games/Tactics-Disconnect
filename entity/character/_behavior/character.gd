@@ -2,21 +2,12 @@ class_name Character
 extends Node2D
 
 signal target_hit
-@warning_ignore("unused_signal")
-signal action_processed
-@warning_ignore("unused_signal")
-signal spawn_completed
-signal skill_error_encountered
-signal action_selected(skill_state: SkillState)
-signal tiles_highlighted(tiles: Array[Vector2i], status_effects: Array[StatusEffect])
 
 const SNAP_DISTANCE : float = 1.0
 const TIME_PER_MOVE := .03
 const HEALTH_BAR_PIXEL_WIDTH := 25
 
 @export_category("Debug")
-@export
-var is_animated := false
 @export_category("UI")
 @export
 var character_name: String
@@ -92,8 +83,15 @@ func end_encounter() -> void:
 	pass
 
 
-func notify_impact() -> void:
-	target_hit.emit.call_deferred()
+func get_impact_time(anim_string: String) -> float:
+	var impact_time: float = 1
+	var anim: Animation = animator.get_animation(anim_string)
+	if anim.has_marker("notify_impact"):
+		impact_time = anim.get_marker_time("notify_impact")
+	else:
+		printerr("no marker on: ",character_name , " ", anim_string)
+	return impact_time
+
 
 
 func _on_display_requested(show_display: bool) -> void:
@@ -110,7 +108,7 @@ func process_status_effect(effect: StatusEffect) -> void:
 		_movement_modifier += effect.value
 
 
-func start_turn(turn_data: TurnData, highlight_range: SkillHighlightRange) -> void:
+func start_turn(turn_data: PhaseData, highlight_range: SkillHighlightRange) -> void:
 	health_bar.value = health
 	active_skill = basic_skill
 	health_bar.show()
@@ -142,14 +140,14 @@ func end_turn() -> void:
 		effect.duration -= 1
 
 
-func select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState, turn_data: TurnData) -> SkillState:
+func select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState, turn_data: PhaseData) -> SkillState:
 	var dir := Vector2(tile - current_tile).normalized()
 	facing = Vector2i(dir)
 	
 	animator.play_directional("idle", dir)
 	
 	if tile in attack_range.range_tiles:
-		var skill_state : SkillState = active_skill.state.new(self, active_skill, tile)
+		var skill_state : SkillState = active_skill.state.new(self, active_skill, tile, turn_data)
 		var can_use: Global.SkillErrorCode = skill_state.can_use()
 		
 		
@@ -252,7 +250,7 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 
 
 func take_damage(skill: Skill, direction: Vector2, multiplier: float = 1) -> void:
-	multiplier = _calc_damage_multiplier(direction) + multiplier
+	multiplier = _calc_damage_multiplier(direction) * multiplier
 
 	for base_effect: StatusEffect in skill.status_effects:
 		var new_effect: StatusEffect = base_effect.duplicate()
