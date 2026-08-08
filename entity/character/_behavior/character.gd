@@ -108,15 +108,19 @@ func process_status_effect(effect: StatusEffect) -> void:
 		_movement_modifier += effect.value
 
 
-func start_turn(turn_data: PhaseData, highlight_range: SkillHighlightRange) -> void:
+func start_turn(highlight_range: SkillHighlightRange, skill_error_callback: Callable) -> void:
 	health_bar.value = health
 	active_skill = basic_skill
 	health_bar.show()
 	
+	var turn_state: TurnState = AllyTurnState.new(highlight_range) if self is Ally else EnemyTurnState.new(highlight_range)
+	turn_state.skill_error_encountered.connect(skill_error_callback)
+	
 	if self is Ally:
-		set_state(AllyTurnState.new(turn_data, highlight_range))
+		set_state(turn_state)
 	else:
-		set_state(EnemyTurnState.new(turn_data, highlight_range))
+		set_state(turn_state)
+	
 	clear_expired_statuses()
 
 
@@ -138,25 +142,6 @@ func end_turn() -> void:
 	
 	for effect: StatusEffect in status:
 		effect.duration -= 1
-
-
-func select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState, turn_data: PhaseData) -> SkillState:
-	var dir := Vector2(tile - current_tile).normalized()
-	facing = Vector2i(dir)
-	
-	animator.play_directional("idle", dir)
-	
-	if tile in attack_range.range_tiles:
-		var skill_state : SkillState = active_skill.state.new(self, active_skill, tile, turn_data)
-		var can_use: Global.SkillErrorCode = skill_state.can_use()
-		
-		
-		if can_use == Global.SkillErrorCode.OK:
-			facing = Vector2i(Vector2(tile - current_tile).normalized().round())
-			return skill_state
-		else:
-			turn_data.skill_error = can_use
-	return
 
 
 func create_range_astar(range_struct: RangeStruct, manhattan_range: int) -> AStarGrid2D:

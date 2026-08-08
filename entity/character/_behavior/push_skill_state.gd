@@ -59,19 +59,12 @@ func _on_minigame_completed() -> void:
 		_max_push_distance, Combat.RangeShape.CROSS, true, true
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
-	_push_tile_path = _astar.get_id_path(_target_tile, _target_tile + (_direction * _max_push_distance))
-	var multiplier: float = 1
-	
-	var push_damage_state := PushDamageState.new(_push_tile_path, skill, _direction, _turn_data,multiplier)
-	_turn_data.targets.append(_target_unit)
-	_turn_data.damage_states.append(push_damage_state)
-	
+	_push_tile_path = _astar.get_id_path(_target_tile, _target_tile + (_direction * _max_push_distance))	
+	var push_damage_state := PushDamageState.new(_push_tile_path, skill, _direction, impact, _multiplier)
+	_target_unit.set_state(push_damage_state)
 	if _o_target:
-		var damage_state := DamageState.new(skill, _direction, _turn_data, multiplier)
-		_turn_data.targets.append(_o_target)
-		_turn_data.damage_states.append(damage_state)
-		_turn_data.targets.append(_target_unit)
-		damage_state = DamageState.new(skill, _direction, _turn_data, multiplier)
-		_turn_data.damage_states.append(damage_state)
+		var damage_state := DamageState.new(skill, _direction, push_damage_state.collided, _multiplier)
+		_o_target.set_state(damage_state)
+
 	
 	push_time = float(_push_distance * Global.TILE_SIZE.x) / float(Global.PLAYER_SPEED)

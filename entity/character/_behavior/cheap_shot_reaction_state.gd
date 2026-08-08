@@ -1,19 +1,27 @@
 class_name CheapShotReactionState
 extends ReactionState
 
-var _tracking_cam: TrackingCamera
+#var _tracking_cam: TrackingCamera
+var _target_damage_state: DamageState
+var _hit_delivered: bool
 
-func enter() -> void:
-	super.enter()
-	_tracking_cam = (_character.get_viewport().get_camera_2d() as TrackingCamera)
-	_tracking_cam.follow(_character)
+#func enter() -> void:
+	#super.enter()
+	#_tracking_cam = (_character.get_viewport().get_camera_2d() as TrackingCamera)
+	#_tracking_cam.follow(_character)
 
 
 func update(delta: float) -> State:
-	if _tracking_cam.in_position and not _reacted:
-		_react()
-	elif _reacted and PhaseData.Event.IMPACT in _reaction_data.events and not _character.animator.is_playing():
+	if is_instance_valid(_target):
+		if _target.state_machine.current_state is CharacterIdleState and not _hit_delivered and _reacted:
+			_target.set_state(_target_damage_state)
+			_hit_delivered = true
+		elif _impact_emitted and not _target.state_machine.current_state is CharacterIdleState:
+			return CharacterIdleState.new()
+	else:
 		return CharacterIdleState.new()
+	if not _hit_delivered:
+		_time_in_state = 0
 	return super.update(delta)
 
 
@@ -23,9 +31,7 @@ func _react() -> void:
 	_character.facing = _target.facing
 	_character.animator.play_directional(_reaction.character_animation, _character.facing)
 	_impact_time = _character.get_impact_time(_character.animator.current_animation)
-	var damage_state := DamageState.new(_reaction, direction, _reaction_data)
-	_reaction_data.damage_states.append(damage_state)
-	_reaction_data.targets.append(_target)
+	_target_damage_state = DamageState.new(_reaction, direction, impact)
 
 
 func can_use(skill: Skill, _actor: Character) -> bool:

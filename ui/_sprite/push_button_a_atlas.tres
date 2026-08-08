@@ -1,7 +1,0 @@
-[gd_resource type="AtlasTexture" format=3 uid="uid://dxiqaxqpcsjca"]
-
-[ext_resource type="Texture2D" uid="uid://bpma0bc6somp7" path="res://ui/_sprite/push_progress_button_a_indicator.png" id="1_j32hp"]
-
-[resource]
-atlas = ExtResource("1_j32hp")
-region = Rect2(0, 0, 32, 32)

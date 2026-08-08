@@ -35,7 +35,7 @@ func update(delta: float) -> State:
 		if Input.is_action_pressed("move") and _time_since_update_reticle > TIME_TILL_UPDATE_RETICLE * 1.25:
 			_time_since_update_reticle = 0
 			var input_vec := Vector2i(Input.get_vector("move_left", "move_right", "move_up", "move_down"))
-			_input_buffered = _on_movememen_input.bind(input_vec)
+			_input_buffered = _on_movement_input.bind(input_vec)
 		if Input.is_action_just_pressed("guard"):
 			_input_buffered = _on_guard_pressed
 		elif Input.is_action_just_pressed("cancel"):
@@ -55,7 +55,7 @@ func update(delta: float) -> State:
 
 
 
-func _on_movememen_input(input_vec: Vector2i) -> State:
+func _on_movement_input(input_vec: Vector2i) -> State:
 	var hover_tile: Vector2i = _highlighted_tile
 	
 	if acted or waited:
@@ -148,7 +148,7 @@ func _on_accept_pressed() -> State:
 	if waited:
 		end_turn()
 	elif acted:
-		var next_state: State = _ally.select_action(_highlighted_tile, _attack_range, self, _turn_data)
+		var next_state: State = _select_action(_highlighted_tile, _attack_range, self)
 		return next_state 
 	else:
 		acted = true

@@ -24,13 +24,13 @@
 [ext_resource type="Texture2D" uid="uid://j7vcaum0wxr6" path="res://ui/skill_select/_sprite/go_button_pressed.tres" id="22_ddd4e"]
 [ext_resource type="Texture2D" uid="uid://dgadll1iljejh" path="res://ui/skill_select/_sprite/go_button_hover.tres" id="22_werr3"]
 [ext_resource type="Texture2D" uid="uid://cs5hy8jlgm6y4" path="res://ui/mini_game/push_progress/_sprite/push_progress_bg.png" id="24_a80hw"]
-[ext_resource type="Texture2D" uid="uid://dxiqaxqpcsjca" path="res://ui/_sprite/push_button_a_atlas.tres" id="24_obvk7"]
 [ext_resource type="Texture2D" uid="uid://bqe6i14e2ixo5" path="res://ui/skill_select/_sprite/go_button_disabled.tres" id="24_riw5p"]
 [ext_resource type="Script" uid="uid://b48bc2twib2y4" path="res://ui/mini_game/push_progress/_behavior/push_progress.gd" id="24_wygra"]
 [ext_resource type="Texture2D" uid="uid://cx6jiqqgtogfw" path="res://ui/mini_game/push_progress/_sprite/push_progress_fill.png" id="26_obvk7"]
+[ext_resource type="Texture2D" uid="uid://072l0ycuos4c" path="res://ui/mini_game/push_progress/_sprite/push_button_a_push_progress.atlastex" id="26_pxq7u"]
 [ext_resource type="Texture2D" uid="uid://bnpvcbj70llk2" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_bg.png" id="27_wcq08"]
 [ext_resource type="Texture2D" uid="uid://chlq8s8hw8wbw" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_fill.png" id="28_wygra"]
-[ext_resource type="Texture2D" uid="uid://b8wbxrwo1rwa2" path="res://ui/reaction_qte/reaction_qte.png" id="31_cx76p"]
+[ext_resource type="Script" uid="uid://8mjdxtckddf1" path="res://ui/reaction_qte/_behavior/reaction_qte_manager.gd" id="31_pxq7u"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tn4br"]
 texture = ExtResource("11_vmh3g")
@@ -58,7 +58,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_obvk7"]
 resource_name = "press"
-length = 0.2
+length = 0.39999999999999997
 loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
@@ -68,10 +68,10 @@ tracks/0/path = NodePath(".:texture:region")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Rect2(0, 0, 32, 32), Rect2(32, 0, 32, 32)]
+"values": [Rect2(16, 16, 32, 32), Rect2(80, 16, 32, 32)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0hase"]
@@ -572,7 +572,6 @@ horizontal_alignment = 1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1628530910]
 
 [node name="PushProgressContainer" type="MarginContainer" parent="." unique_id=1437321348]
-visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -590,10 +589,11 @@ script = ExtResource("24_wygra")
 [node name="TextureRect" type="TextureRect" parent="PushProgressContainer/PushProgress" unique_id=511236119]
 layout_mode = 2
 size_flags_vertical = 0
-texture = ExtResource("24_obvk7")
+texture = ExtResource("26_pxq7u")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PushProgressContainer/PushProgress/TextureRect" unique_id=1025377513]
 libraries/ = SubResource("AnimationLibrary_0hase")
+autoplay = &"press"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PushProgressContainer/PushProgress" unique_id=833938503]
 layout_mode = 2
@@ -617,22 +617,21 @@ size_flags_vertical = 0
 texture_under = ExtResource("27_wcq08")
 texture_progress = ExtResource("28_wygra")
 
-[node name="ReactionQuickTimeContainer" type="MarginContainer" parent="." unique_id=2056286782]
-visible = false
-anchors_preset = 5
+[node name="ReactionQteManager" type="MarginContainer" parent="." unique_id=2056286782]
+unique_name_in_owner = true
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -96.0
+offset_right = 32.0
 grow_horizontal = 2
-theme_override_constants/margin_top = 64
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="ReactionQuickTimeContainer" unique_id=875698596]
-layout_mode = 2
-value = 36.0
-fill_mode = 4
-texture_progress = ExtResource("31_cx76p")
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_constants/margin_bottom = 32
+script = ExtResource("31_pxq7u")
 
 [node name="MeleeComboContainer" type="MarginContainer" parent="." unique_id=808517902]
 visible = false

@@ -1,13 +1,14 @@
 class_name PushDamageState
 extends DamageState
 
+signal collided
+
 var _tile_path: Array[Vector2i]
 var _is_pushing := false
 
-
 func _init(tile_path: Array[Vector2i],
-skill: Skill, direction: Vector2, turn_data: PhaseData, multiplier: float = 1) -> void:
-	super._init(skill, direction, turn_data, multiplier)
+skill: Skill, direction: Vector2, impact_signal: Signal, multiplier: float = 1) -> void:
+	super._init(skill, direction, impact_signal, multiplier)
 	_tile_path = tile_path
 
 
@@ -29,6 +30,7 @@ func update(delta: float) -> State:
 			_tile_path = _character.process_movement(delta, _tile_path, "")
 		else:
 			GameState.current_level.grid.update_unit_registry(_character.current_tile, _character)
-			_damage_data.events.append(PhaseData.Event.COLLIDED)
+			collided.emit()
 			_is_pushing = false
+			_hit = true
 	return
