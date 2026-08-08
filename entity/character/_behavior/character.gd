@@ -1,8 +1,6 @@
 class_name Character
 extends Node2D
 
-signal target_hit
-
 const SNAP_DISTANCE : float = 1.0
 const TIME_PER_MOVE := .03
 const HEALTH_BAR_PIXEL_WIDTH := 25
@@ -275,7 +273,7 @@ func _calc_damage_multiplier(direction: Vector2i) -> float:
 			multiplier = Global.QUICK_MULTIPLIER
 		elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_TIME_PERCENT:
 			multiplier = Global.SLOW_MULTIPLIER
-	if is_equal_approx(Vector2(direction).normalized().dot(Vector2(facing).normalized()), -1):
+	if is_equal_approx(Vector2(direction).normalized().dot(Vector2(facing).normalized()), 1):
 		multiplier += Global.BACK_MULTIPLIER
 	return multiplier
 

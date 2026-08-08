@@ -3,7 +3,7 @@ extends State
 
 signal impact
 
-const DEFAULT_DESIRED_TARGET_PCT: float = .5
+const DEFAULT_DESIRED_TARGET_PCT: float = .75
 
 var _character: Character
 var _target_tile: Vector2i
@@ -15,6 +15,7 @@ var _direction: Vector2i
 var _time_in_state: float
 var _multiplier: float = 1.0
 var _impact_emitted := false
+
 
 func _init(character: Character, i_skill: Skill, target_tile: Vector2i) -> void:
 	_target_tile = target_tile
@@ -61,7 +62,7 @@ func exit() -> void:
 
 func calc_skill_likelihood(strike_tile : Vector2i) -> float:
 	
-	if not can_use():
+	if not can_use() == Global.SkillErrorCode.OK:
 		return 0
 	
 	var attack_range : RangeStruct = GameState.current_level.grid.request_range(
@@ -72,12 +73,8 @@ func calc_skill_likelihood(strike_tile : Vector2i) -> float:
 		var target_count: int = 0
 		var has_unit := false
 		var direction := VectorF.snap_direction(Vector2(tile - strike_tile))
-		var last_target_tile: Vector2i = Vector2i.UP
 		for target_tile in skill.aoe:
 			target_tile = Vector2i(Vector2(target_tile).rotated(direction.angle()))
-			if target_tile == last_target_tile:
-				printerr("counted tile twice")
-			
 			var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile + target_tile)
 			if unit != self and (unit is Ally) != (_character is Ally):
 				target_count +=1
@@ -85,7 +82,6 @@ func calc_skill_likelihood(strike_tile : Vector2i) -> float:
 					has_unit = true
 				if target_count >= _desired_target_count and has_unit:
 					return 1
-			last_target_tile = target_tile
 	return 0
 
 

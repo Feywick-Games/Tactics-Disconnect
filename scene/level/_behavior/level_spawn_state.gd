@@ -9,24 +9,16 @@ var _next_state: State
 func enter() -> void:
 	super.enter()
 	var ordered_units : Array [Character] = _level.get_unit_list()
-	if _level.active_unit is Ally and ordered_units[1] is Enemy:
-		_level.is_player_phase = false
-	if _level.active_unit is Enemy and ordered_units[1] is Ally:
-		_level.is_player_phase = true
-		_level.spawn_processed = false
-	
-	if _level.ui.skill_progress.is_ready and _level.is_player_phase:
-		_next_state = LevelSkillSelectState.new()
-	else:
-		_next_state = LevelTurnState.new()
-	
-	if _level.is_player_phase and not _level.spawn_processed:	
+	if _level.active_unit is Enemy and ordered_units[1] is Ally or _level.turn_number == -1:
 		_level.turn_number += 1
 		_level.ui.skill_progress.increment()
-		_level.spawn_processed = true
 		for child: Node in _level.find_children("*", "SpawnPoint"):
 			_spawn_points.append(child as SpawnPoint)
 		_get_spawns_from_spawn_point()
+		if _level.ui.skill_progress.is_ready:
+			_next_state = LevelSkillSelectState.new()
+	if not _next_state:
+		_next_state = LevelTurnState.new()
 
 
 func update(_delta : float) -> State:

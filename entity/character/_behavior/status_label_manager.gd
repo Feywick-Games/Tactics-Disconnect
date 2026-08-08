@@ -40,12 +40,13 @@ func display_statuses() -> void:
 		animator.play()
 	else:
 		_on_animation_completed("")
+	playing = true
+
 
 func _play_status_effect(effect: StatusEffect) -> void:
 	if effect.status == Combat.Status.HIT:
 		_damage_value = effect.value
 		animator.queue("hit")
-	playing = true
 
 
 func preview(_effect: StatusEffect) -> void:

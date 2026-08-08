@@ -12,8 +12,9 @@ func _ready() -> void:
 
 
 func reset() -> void:
-	value = 0
+	value = 1
 	is_ready = false
+	shader_material.set_shader_parameter("value", value)
 
 
 func _progress_bar_full() -> void:

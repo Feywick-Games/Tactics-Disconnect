@@ -26,8 +26,6 @@ var reticle: ReticleTileMap
 
 var turn_number : int = -1
 var active_unit: Character
-var is_player_phase := true
-var spawn_processed := false
 var enemy_spawned := false
 
 
