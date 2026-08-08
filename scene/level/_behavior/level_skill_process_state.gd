@@ -44,7 +44,21 @@ func update(_delta : float) -> State:
 
 
 func _is_skill_processing() -> bool:
-	for unit: Character in [_level.active_unit] + _reacting_units:
+	var units_to_remove: Array[int]
+	
+	for i: int in range(len(_targets)):
+		if not is_instance_valid(_targets[i]):
+			units_to_remove.append(i)
+	
+	
+	if not units_to_remove.is_empty():
+		var new_target_list: Array[Character]
+		for i:int in range(len(_targets)):
+			if not i in units_to_remove:
+				new_target_list.append(i)
+		_targets = new_target_list
+		
+	for unit: Character in [_level.active_unit] + _reacting_units + _targets:
 		if not unit.state_machine.current_state is CharacterIdleState:
 			return true
 	

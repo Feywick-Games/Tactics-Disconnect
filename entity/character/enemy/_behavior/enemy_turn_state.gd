@@ -30,9 +30,7 @@ class TargetPriority:
 func enter() -> void:
 	super.enter()
 	_enemy = state_machine.state_owner as Enemy
-	var units_on_field: Array[Node] = _enemy.get_tree().get_nodes_in_group("ally")
-	units_on_field.shuffle()
-	var target_list: Array[Ally]
+
 	for tile: Vector2i in _movement_range.range_tiles:
 		var valid_tiles := GameState.current_level.grid.request_range(tile, _enemy.basic_skill.min_range, _enemy.basic_skill.max_range, _enemy.basic_skill.range_shape, true)
 		_full_attack_range.absorb(valid_tiles)
@@ -52,10 +50,14 @@ func enter() -> void:
 			
 			for unit: Character in units:
 				var skill_state: SkillState = _enemy.special.state.new(_enemy, _enemy.special, unit.current_tile)
-				if skill_state.calc_skill_likelihood(tile) > 0:
+				if skill_state.can_use():
 					_full_special_range.range_tiles.append(unit.current_tile)
 
+	var units_on_field: Array[Node] = _enemy.get_tree().get_nodes_in_group("ally")
+	units_on_field.shuffle()
+	var target_list: Array[Ally]
 	var all_allies: Array[Ally]
+	
 	for unit: Ally in units_on_field:
 		if unit.current_tile in _full_attack_range.range_tiles or unit.current_tile in _full_special_range.range_tiles:
 			target_list.append(unit)
@@ -124,7 +126,6 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 			if target.current_tile in _full_attack_range.range_tiles: 
 				var basic_skill_state: SkillState = (_character.basic_skill.state.new(_character, _character.basic_skill, target.current_tile) as SkillState)
 				var skill_likelihoods: Array[float]
-				
 				for tile: Vector2i in _movement_range.range_tiles:
 					skill_likelihoods.append(basic_skill_state.calc_skill_likelihood(tile))
 				
@@ -140,7 +141,7 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 				target_priority.special_likelihood = skill_likelihoods.max()
 				target_priority.special_likelihood *= _enemy.special_priority
 		_is_acting = true
-	
+ 	
 	for target_priority: TargetPriority in target_priorities:
 		target_priority.rating += target_priority.distance
 		target_priority.rating += target_priority.knock_out_likelihood
@@ -179,10 +180,8 @@ func _pick_tile() -> Vector2i:
 		for tile in skill_range.range_tiles:
 			if tile in _movement_range.range_tiles:
 				if _range_astar.region.has_point(tile):
-					#var dist: int = _range_astar.get_id_path(tile, _target.current_tile, true).size() - 1
 					var likelihood: float = skill_state.calc_skill_likelihood(tile)
-					#var distance_favoribility : float = 1 - (ideal_distance - dist / float(ideal_distance))
-					var favoribility: float = likelihood #(distance_favoribility * likelihood)
+					var favoribility: float = likelihood 
 					if favoribility > desired_favoribility:
 							desired_tile = tile
 							desired_favoribility = favoribility

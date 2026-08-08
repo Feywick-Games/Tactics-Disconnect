@@ -1,7 +1,6 @@
 class_name BasicSkillState
 extends SkillState
 
-
 func enter() -> void:
 	super.enter()
 	_hit_targets()
@@ -25,3 +24,5 @@ func _hit_targets() -> void:
 		if unit:
 			var damage_state := DamageState.new(skill, _direction, impact, _multiplier)
 			unit.set_state(damage_state)
+			
+			

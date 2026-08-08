@@ -31,6 +31,7 @@ func update(_delta : float) -> State:
 			if unit != _level.active_unit:
 				unit.set_state(CharacterWaitState.new(_skill_highlight_range))
 	elif _turn_started:
+		# TODO: move to be inside the player state to prevent the turn ending between tiles
 		if _level.ui.battle_timer.timed_out:
 			_level.active_unit.set_state(CharacterIdleState.new())
 			return LevelSpawnState.new()

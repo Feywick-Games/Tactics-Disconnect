@@ -53,7 +53,7 @@ func _on_minigame_completed() -> void:
 		
 		var unit := GameState.current_level.grid.get_unit_from_tile(collision_point)
 		
-		if unit:
+		if unit and unit is Ally != _character is Ally:
 			_o_target = unit
 	var skill_range: RangeStruct = GameState.current_level.grid.request_range(_target_tile, 0, 
 		_max_push_distance, Combat.RangeShape.CROSS, true, true

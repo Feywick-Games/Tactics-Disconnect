@@ -26,7 +26,7 @@ func update(delta: float) -> State:
 	if _hit and not _damage_taken:
 		_character.take_damage(_skill, _direction, _damage_multiplier)
 		_damage_taken = true
-	if not _character.status_label_manager.playing and _hit:
+	elif not _character.status_label_manager.playing and _damage_taken:
 		return CharacterIdleState.new()
 	
 	return super.update(delta)
