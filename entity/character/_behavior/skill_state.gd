@@ -1,19 +1,54 @@
 class_name SkillState
 extends State
 
+signal impact
+
+const DEFAULT_DESIRED_TARGET_PCT: float = .5
+
 var _character: Character
 var _target_tile: Vector2i
 var skill: Skill
-var _action_to_process: int = 1
 var _desired_target_count: int
 var mini_game: MiniGame
-var mini_game_type: TurnData.MiniGameType
+var impact_time: float = 1.0
+var _direction: Vector2i
+var _time_in_state: float
+var _multiplier: float = 1.0
+var _impact_emitted := false
 
 func _init(character: Character, i_skill: Skill, target_tile: Vector2i) -> void:
 	_target_tile = target_tile
 	skill = i_skill
-	_desired_target_count = round(skill.aoe.size() * .75)
+	_desired_target_count = round(skill.aoe.size() * DEFAULT_DESIRED_TARGET_PCT)
 	_character = character
+
+
+func enter() -> void:
+	super.enter()
+	_direction = VectorF.snap_direction(_target_tile - _character.current_tile)
+	_character.animator.play_directional(skill.character_animation, _direction)
+	impact_time = _character.get_impact_time(_character.animator.current_animation)
+
+
+func _hit_targets() -> void:
+	pass
+
+
+func update(delta: float) -> State:
+	_time_in_state = _time_in_state + delta
+	if _time_in_state > impact_time and not _impact_emitted:
+		impact.emit()
+		_impact_emitted = true
+	return
+
+
+func on_cheer(success: bool) -> void:
+	if success:
+		_multiplier += .25
+
+
+func on_get_behind_me(pause: bool) -> void:
+	play(pause)
 
 
 func exit() -> void:
@@ -22,15 +57,17 @@ func exit() -> void:
 	if _character is Ally:
 		if skill == _character.special:
 			_character.special = null
-	_character.action_processed.emit()
 
 
 func calc_skill_likelihood(strike_tile : Vector2i) -> float:
+	
+	if not can_use():
+		return 0
+	
 	var attack_range : RangeStruct = GameState.current_level.grid.request_range(
 		strike_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct
 	)
 	
-
 	for tile in attack_range.range_tiles:
 		var target_count: int = 0
 		var has_unit := false
@@ -78,3 +115,12 @@ func can_use() -> Global.SkillErrorCode:
 		return Global.SkillErrorCode.MOVE_BLOCKED
 	
 	return Global.SkillErrorCode.OK
+
+
+func play(pause:=false) -> void:
+	state_machine.set_process(!pause)
+	state_machine.set_physics_process(!pause)
+	if pause:
+		_character.animator.pause()
+	else:
+		_character.animator.play()

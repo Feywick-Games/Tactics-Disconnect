@@ -1,49 +1,27 @@
 class_name BasicSkillState
 extends SkillState
 
-var _direction: Vector2
-var _targets: Array[Character]
 
 func enter() -> void:
 	super.enter()
-	#TODO make directional animations
-	_direction = VectorF.snap_direction(_target_tile - _character.current_tile)
-	_character.animator.play_directional(skill.character_animation, _direction)
-	
-	if not skill.skill_animation.is_empty():
-		_character.skill_animator.play_directional(skill.skill_animation, _direction)
-	_hit_targets(skill.aoe, skill.range_type)
+	_hit_targets()
 
 
-
-func _is_target_processing() -> bool:
-	for target: Character in _targets:
-		if not target.state_machine.current_state is CharacterIdleState:
-			return true
-	return false
-
-
-func update(_delta : float) -> State:
-	if not _is_target_processing():
+func update(delta : float) -> State:
+	if not _character.animator.is_playing() and _impact_emitted:
 		return CharacterIdleState.new()
-	return
+	return super.update(delta)
 
-func _hit_targets(aoe: Array[Vector2i], range_type: Combat.RangeType) -> void:
-	_action_to_process = 0
-	for tile_offset in aoe:
+
+func _hit_targets() -> void:
+	for tile_offset in skill.aoe:
 		var tile: Vector2i
-		print("direction: " + str(rad_to_deg(_direction.angle())))
-		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(_direction.angle()).round())
-		if range_type == Combat.RangeType.MELEE:
+		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(Vector2(_direction).angle()).round())
+		if skill.range_type == Combat.RangeType.MELEE:
 			tile = _character.current_tile + Vector2i(_direction) + offset_rotated
 		else:
 			tile = _target_tile + offset_rotated
 		var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile)
 		if unit:
-			_targets.append(unit)
-			var damage_state := DamageState.new(skill, _direction, _character.target_hit)
+			var damage_state := DamageState.new(skill, _direction, impact, _multiplier)
 			unit.set_state(damage_state)
-	
-	if not skill.is_animated:
-		await _character.get_tree().create_timer(1).timeout
-		_character.notify_impact()

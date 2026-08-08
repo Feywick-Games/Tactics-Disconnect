@@ -15,10 +15,6 @@ func _ready() -> void:
 	current_skill_deck.shuffle()
 
 
-func start_encounter() -> void:
-	super.start_encounter()
-
-
 func deal_skills() -> void:
 	if skills_dealt - current_skill_hand.size() > current_skill_deck.size():
 		var new_deck : Array[Skill] = skill_deck

@@ -22,12 +22,11 @@ metadata/_custom_type_script = "uid://c5gnxjiq5craw"
 [sub_resource type="Resource" id="Resource_ybr77"]
 script = ExtResource("2_neqen")
 name = "Scratch"
-character_animation = "idle"
 state = ExtResource("3_pi3iu")
 status_effects = Array[ExtResource("3_d8pu4")]([SubResource("Resource_o0dns")])
 metadata/_custom_type_script = "uid://de4pxhpt4mw5u"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wpkbw"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rx68n"]
 resource_local_to_scene = true
 shader = ExtResource("2_ri0w7")
 shader_parameter/highlighted = false
@@ -51,6 +50,12 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_d8pu4"]
 resource_name = "idle_down"
+length = 1.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -78,6 +83,12 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_pi3iu"]
 resource_name = "idle_left"
+length = 1.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -105,6 +116,12 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_aka27"]
 resource_name = "idle_right"
+length = 1.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -132,6 +149,12 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_e2v7y"]
 resource_name = "idle_up"
+length = 1.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -173,7 +196,7 @@ turn_portrait_scene = ExtResource("7_rx68n")
 basic_skill = SubResource("Resource_ybr77")
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_wpkbw")
+material = SubResource("ShaderMaterial_rx68n")
 position = Vector2(0, 0)
 texture = ExtResource("3_h77kg")
 offset = Vector2(0, -17)

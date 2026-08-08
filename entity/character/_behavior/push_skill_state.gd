@@ -6,7 +6,6 @@ const TIME_TO_EXIT: float = 1.0
 const TIME_TO_PUSH: float = 3.0
 
 var _push_range: Array[Vector2i]
-var _direction: Vector2i
 var increment: int = 0
 var _max_push_distance: int = 0
 var _target_unit: Character
@@ -15,29 +14,26 @@ var _o_target: Character
 var _push_distance: int
 var _push_tile_path: Array[Vector2i]
 var _astar: AStarGrid2D
-var _pushing: bool = false
+var pushing: bool = false
+var push_time: float
 
 
 func enter() -> void:
 	super.enter()
-	mini_game_type = TurnData.MiniGameType.PUSH
 	_target_unit = GameState.current_level.grid.get_unit_from_tile(_target_tile)
 	_push_range = [_target_tile]
 	_direction =  Vector2i(Vector2(_target_tile - _character.current_tile).normalized().round())
 	_push_distance = round(skill.push_position.length())
-	# play animation
 
 
 func update(delta: float) -> State:
-	super.update(delta)
 	if mini_game:
-		if mini_game.completed and not _pushing:
-			_pushing = true
+		if mini_game.completed and not pushing:
+			pushing = true
 			_on_minigame_completed()
-		elif _pushing and _target_unit.state_machine.current_state is CharacterIdleState:
-			if not _o_target or _o_target.state_machine.current_state is CharacterIdleState:
-				return CharacterIdleState.new() 
-	return
+		elif pushing and not _character.animator.is_playing():
+			return CharacterIdleState.new() 
+	return super.update(delta)
 
 
 func _on_minigame_completed() -> void:
@@ -63,14 +59,12 @@ func _on_minigame_completed() -> void:
 		_max_push_distance, Combat.RangeShape.CROSS, true, true
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
-	_push_tile_path = _astar.get_id_path(_target_tile, _target_tile + (_direction * _max_push_distance))
-	var multiplier: float = 1
-	
-	if _max_is_collision:
-		multiplier = 1.5
-	
-	var push_damage_state := PushDamageState.new(_push_tile_path, _o_target, skill, _direction, _character.target_hit, multiplier)
+	_push_tile_path = _astar.get_id_path(_target_tile, _target_tile + (_direction * _max_push_distance))	
+	var push_damage_state := PushDamageState.new(_push_tile_path, skill, _direction, impact, _multiplier)
 	_target_unit.set_state(push_damage_state)
-	if not skill.is_animated:
-		await _character.get_tree().create_timer(.5).timeout
-		_character.notify_impact()
+	if _o_target:
+		var damage_state := DamageState.new(skill, _direction, push_damage_state.collided, _multiplier)
+		_o_target.set_state(damage_state)
+
+	
+	push_time = float(_push_distance * Global.TILE_SIZE.x) / float(Global.PLAYER_SPEED)

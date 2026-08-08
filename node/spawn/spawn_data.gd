@@ -9,7 +9,7 @@ enum Trigger
 }
 
 @export
-var trigger: Trigger
+var trigger: SpawnData.Trigger
 @export
 var value: int
 @export

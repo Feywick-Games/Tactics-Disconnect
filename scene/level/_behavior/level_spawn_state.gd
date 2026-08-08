@@ -33,7 +33,7 @@ func update(_delta : float) -> State:
 	if _level.tracking_cam.in_position:
 		var spawned: bool = false
 		if _spawned_unit:
-			spawned = _spawned_unit.state_machine.current_state != CharacterCombatBeginState
+			spawned = not _spawned_unit.state_machine.current_state is CharacterCombatBeginState
 			if spawned:
 				if not _spawns.is_empty():
 					_spawn_unit()

@@ -1,6 +1,8 @@
 class_name TurnState
 extends State
 
+signal skill_error_encountered
+
 var interacted := false
 var acted := false
 
@@ -16,24 +18,25 @@ var _encounter_ended := false
 var _highlighted_tile: Vector2i
 var _skill_highlight_range: SkillHighlightRange
 var _moving := false
-var _turn_data: TurnData
 
-func _init(turn_data: TurnData, highlight_range: SkillHighlightRange) -> void:
+func _init(highlight_range: SkillHighlightRange) -> void:
 	_skill_highlight_range = highlight_range
-	_turn_data = turn_data
 
 
 func enter() -> void:
 	_character = state_machine.state_owner as Character
+	_character.health_bar.value = _character.health
+	_character.active_skill = _character.basic_skill
+	_character.health_bar.show()
 	_start_tile = _character.current_tile
 	_highlighted_tile = _start_tile
-	calc_default_ranges()
+	_calc_default_ranges()
 	_character.animator.play_directional("idle")
 	_starting_movement_range = _movement_range
 
 
 # caculates movement and interactable ranges. Generates astars
-func calc_default_ranges() -> void:
+func _calc_default_ranges() -> void:
 	_movement_range = GameState.current_level.grid.request_range(_character.current_tile, 0, _character.movement_range, Combat.RangeShape.DIAMOND)
 	_starting_movement_range = _movement_range
 	if _character.movement_range > 0:
@@ -63,8 +66,20 @@ func end_turn() -> void:
 
 func exit() -> void:
 	GameState.current_level.reset_map()
-	
-	
+
+
+func _select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) -> State:
+	if tile in attack_range.range_tiles:
+		var skill_state : SkillState = _character.active_skill.state.new(_character, _character.active_skill, tile)
+		var can_use: Global.SkillErrorCode = skill_state.can_use()
+		
+		
+		if can_use == Global.SkillErrorCode.OK:
+			_character.facing = Vector2i(Vector2(tile - _character.current_tile).normalized().round())
+			return skill_state
+		else:
+			skill_error_encountered.emit(can_use)
+	return
 
 
 func _highlight_targets(target_tile: Vector2i) -> void:
@@ -75,4 +90,8 @@ func _highlight_targets(target_tile: Vector2i) -> void:
 		
 	var highlighted_tiles: Array[Vector2i] = _character.active_skill.highlight_targets(_character.current_tile, target_tile, _attack_range.range_tiles, direction)
 
-	_character.tiles_highlighted.emit(highlighted_tiles, _character.active_skill.status_effects, Vector2i(direction), _character is Ally)
+	_skill_highlight_range = SkillHighlightRange.new()
+	_skill_highlight_range.tiles = highlighted_tiles
+	_skill_highlight_range.status_effects = _character.active_skill.status_effects
+	_skill_highlight_range.direction = direction
+	_skill_highlight_range.is_ally = _character is Ally

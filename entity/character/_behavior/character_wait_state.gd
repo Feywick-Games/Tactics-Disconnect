@@ -11,11 +11,8 @@ func _init(highlight_range: SkillHighlightRange) -> void:
 func enter() -> void:
 	_character = state_machine.state_owner as Character
 	# TODO: Replace with combat idle
-	if _character.is_animated:
-		_character.animator.play_directional("idle", Vector2.ZERO)
+	_character.animator.play_directional("idle", Vector2.ZERO)
 	_character.health_bar.hide()
-	for reaction: Reaction in _character.reactions:
-		reaction.processed = false
 	_character.clear_expired_statuses()
 
 

@@ -11,9 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://b30sxiykj4mbk" path="res://data/sfx/combat/blunt_impact.ogg" id="4_ugnqj"]
 [ext_resource type="Resource" uid="uid://dc72m6spxgmw0" path="res://data/skill/throw_rock.tres" id="5_ojfus"]
 [ext_resource type="Resource" uid="uid://d1edna7vnjr4j" path="res://data/skill/spin_kick.tres" id="6_ewmoi"]
-[ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="8_5ecx1"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="8_donae"]
-[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="8_foua0"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_txnat"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="9_6mqmc"]
 [ext_resource type="Texture2D" uid="uid://dewnewtudvcvl" path="res://entity/character/ally/mei/_sprite/mei_unit_sprite.png" id="13_f7r05"]
@@ -26,14 +24,13 @@ value = 4
 [sub_resource type="Resource" id="Resource_1kfok"]
 script = ExtResource("3_y0fl4")
 name = "Kick"
-character_animation = "idle"
 range_shape = 1
 state = ExtResource("4_1eaca")
 status_effects = Array[ExtResource("4_u3oph")]([SubResource("Resource_n0ksn")])
 cast_sfx = ExtResource("3_xs5to")
 hit_sfx = ExtResource("4_ugnqj")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_54020"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2qvxt"]
 resource_local_to_scene = true
 shader = ExtResource("8_txnat")
 shader_parameter/highlighted = false
@@ -44,14 +41,13 @@ skill_deck = Array[ExtResource("3_y0fl4")]([ExtResource("3_efk4d"), ExtResource(
 character_name = "Mei"
 turn_portrait_scene = ExtResource("2_6fea8")
 basic_skill = SubResource("Resource_1kfok")
-reactions = Array[ExtResource("8_foua0")]([ExtResource("8_5ecx1")])
 
 [node name="HealthBar" parent="." index="0" unique_id=1956210959]
 offset_left = -17.0
 offset_right = 23.0
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_54020")
+material = SubResource("ShaderMaterial_2qvxt")
 position = Vector2(0, 0)
 texture = ExtResource("13_f7r05")
 offset = Vector2(0, -14)

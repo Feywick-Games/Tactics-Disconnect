@@ -25,6 +25,8 @@ var battle_timer: BattleTimer = %BattleTimer
 var push_progress: PushProgress = %PushProgress
 @onready
 var sticker_layout: StickerLayout = %StickerLayout
+@onready
+var reaction_qte_manager: ReactionQteManager = %ReactionQteManager
 
 
 func _ready() -> void:
