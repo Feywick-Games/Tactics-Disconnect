@@ -1,7 +1,9 @@
 class_name Game
 extends Node
 
+var _combat_ui_packed_scene: PackedScene = load("res://ui/combat_ui.tscn")
 var _current_scene: Node
+var _combat_ui: CombatUI
 
 @onready
 var level_viewport: SubViewport = $LevelViewportContainer/LevelViewport
@@ -21,9 +23,18 @@ func change_scene(scene: PackedScene) -> void:
 	await tween.finished
 	tween.stop()
 	_current_scene.queue_free()
+	
+	if _combat_ui:
+		_combat_ui.queue_free()
+		_combat_ui = null
+	
 	_current_scene = scene.instantiate()
+	
 	if _current_scene is Level:
+		_combat_ui = _combat_ui_packed_scene.instantiate()
+		add_child(_combat_ui)
 		_prep_level(_current_scene)
+	
 	level_viewport.add_child(_current_scene)
 	_current_scene.set_process(false)
 	tween.tween_property(viewport_container, "modulate:a", 1, 1)
@@ -32,5 +43,6 @@ func change_scene(scene: PackedScene) -> void:
 	_current_scene.set_process(true)
 	
 
+
 func _prep_level(level: Level) -> void:
-	level.ui = $CombatUI
+	level.ui = _combat_ui

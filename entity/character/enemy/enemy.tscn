@@ -8,9 +8,10 @@
 [ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="7_vjtmd"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="9_7emr5"]
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="10_01dq5"]
+[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="10_ejq46"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="10_jj0xt"]
+[ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="11_7emr5"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="11_biaq8"]
-[ext_resource type="Texture2D" uid="uid://dgew18uoinubo" path="res://entity/character/enemy/after_hours/after_hours.png" id="13_7emr5"]
 
 [sub_resource type="Resource" id="Resource_inb1m"]
 script = ExtResource("7_g3nm3")
@@ -22,7 +23,7 @@ name = "Punch"
 state = ExtResource("7_vjtmd")
 status_effects = Array[ExtResource("7_g3nm3")]([SubResource("Resource_inb1m")])
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mkclv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wpib0"]
 resource_local_to_scene = true
 shader = ExtResource("11_biaq8")
 shader_parameter/highlighted = false
@@ -200,11 +201,11 @@ character_name = "Enemy"
 turn_portrait_scene = ExtResource("3_fh3m0")
 basic_skill = SubResource("Resource_3dmcj")
 special = ExtResource("10_01dq5")
+reactions = Array[ExtResource("10_ejq46")]([ExtResource("11_7emr5")])
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_mkclv")
+material = SubResource("ShaderMaterial_wpib0")
 position = Vector2(0, 1)
-texture = ExtResource("13_7emr5")
 offset = Vector2(0, -18)
 vframes = 3
 

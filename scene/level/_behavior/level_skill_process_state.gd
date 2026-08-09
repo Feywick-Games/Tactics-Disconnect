@@ -22,17 +22,20 @@ func enter() -> void:
 						if reaction_state.can_use(_level.active_unit.active_skill, _level.active_unit):
 							_reacting_units.append(reacting_unit)
 							reacting_unit.set_state(reaction_state)
-							if reaction_state is CheerReactionState:
-								_level.ui.reaction_qte_manager.dispatch_qtes(1,skill_state.impact_time)
-								_level.ui.reaction_qte_manager.reacted.connect(skill_state.on_cheer)
-							elif reaction_state is CollisionReactionState:
-								_level.ui.reaction_qte_manager.dispatch_qtes(1, (skill_state as PushSkillState).push_time)
-							elif reaction_state is GetBehindMeReactionState:
-								_level.ui.reaction_qte_manager.dispatch_qtes(1, skill_state.impact_time)
-								_level.ui.reaction_qte_manager.reacted.connect(skill_state.get_behind_me)
-							elif reaction_state is CheapShotReactionState:
-								_level.ui.reaction_qte_manager.dispatch_qtes(1, skill_state._character.animator.get_section_end_time())
-							_level.ui.reaction_qte_manager.reacted.connect(reaction_state.qte_succeeded)
+							if reacting_unit is Ally:
+								if reaction_state is CheerReactionState:
+									_level.ui.reaction_qte_manager.dispatch_qtes(1,skill_state.impact_time)
+									_level.ui.reaction_qte_manager.reacted.connect(skill_state.on_cheer)
+								elif reaction_state is CollisionReactionState:
+									_level.ui.reaction_qte_manager.dispatch_qtes(1, (skill_state as PushSkillState).push_time)
+								elif reaction_state is GetBehindMeReactionState:
+									_level.ui.reaction_qte_manager.dispatch_qtes(1, skill_state.impact_time)
+									_level.ui.reaction_qte_manager.reacted.connect(skill_state.get_behind_me)
+								elif reaction_state is CheapShotReactionState:
+										_level.ui.reaction_qte_manager.dispatch_qtes(1, skill_state._character.animator.get_section_end_time())
+								_level.ui.reaction_qte_manager.reacted.connect(reaction_state.qte_succeeded)
+							else:
+								reaction_state.qte_succeeded(true)
 							break
 						
 
