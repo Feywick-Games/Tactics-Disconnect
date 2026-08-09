@@ -1,6 +1,8 @@
 class_name Character
 extends Node2D
 
+signal skill_text_requested(skill_name: String)
+
 const SNAP_DISTANCE : float = 1.0
 const TIME_PER_MOVE := .03
 const HEALTH_BAR_PIXEL_WIDTH := 25
@@ -60,6 +62,7 @@ var sfx_player: AudioStreamPlayer2D = $SfxPlayer
 func _ready() -> void:
 	sub_pixel_position = global_position
 	health_bar.hide()
+	basic_skill.name = ""
 	state_machine = StateMachine.new(self, CharacterCombatBeginState.new())
 	add_child(state_machine)
 
@@ -296,3 +299,7 @@ func display_modified_status(tiles: Array[Vector2i], status_effects: Array[Statu
 			health_bar.value = health - round(effect.value)
 		else:
 			status_label_manager.preview(effect)
+
+
+func request_skill_text(skill_name: String) -> void:
+	skill_text_requested.emit(skill_name)

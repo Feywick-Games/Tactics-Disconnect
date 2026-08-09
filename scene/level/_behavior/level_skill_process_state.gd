@@ -11,7 +11,7 @@ func enter() -> void:
 	if skill_state is PushSkillState:
 		_level.ui.push_progress.start((int(_level.active_unit.active_skill.push_position.length())))
 		skill_state.mini_game = _level.ui.push_progress
-			
+	
 	for effected_unit: Character in _level.get_unit_list():
 		if effected_unit.state_machine.current_state is DamageState:
 			_targets.append(effected_unit)

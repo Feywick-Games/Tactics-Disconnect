@@ -16,6 +16,7 @@ func update(delta: float) -> State:
 		if _target.state_machine.current_state is CharacterIdleState and not _hit_delivered and _reacted:
 			_target.set_state(_target_damage_state)
 			_hit_delivered = true
+			_character.request_skill_text(_reaction.name)
 		elif _impact_emitted and not _target.state_machine.current_state is CharacterIdleState:
 			return CharacterIdleState.new()
 	else:
@@ -44,7 +45,7 @@ func can_use(skill: Skill, _actor: Character) -> bool:
 				valid_tiles.append(_character.current_tile + direction)
 			
 			if _target.current_tile in valid_tiles and (_target is Ally) != (_character is Ally):
-				var direction: Vector2i = _character.current_tile - _target.current_tile
-				if is_equal_approx(Vector2(direction).dot(_target.facing), -1):
+				var direction: Vector2i = _target.current_tile - _character.current_tile
+				if is_equal_approx(Vector2(direction).dot(_target.facing), 1):
 					return true
 	return false

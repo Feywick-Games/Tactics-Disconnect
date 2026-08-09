@@ -10,6 +10,7 @@ var _target_tile: Vector2i
 var skill: Skill
 var _desired_target_count: int
 var mini_game: MiniGame
+var ui: CombatUI
 var impact_time: float = 1.0
 var _direction: Vector2i
 var _time_in_state: float
@@ -29,7 +30,8 @@ func enter() -> void:
 	_direction = VectorF.snap_direction(_target_tile - _character.current_tile)
 	_character.animator.play_directional(skill.character_animation, _direction)
 	impact_time = _character.get_impact_time(_character.animator.current_animation)
-
+	if skill.name != "":
+		_character.request_skill_text(skill.name)
 
 func _hit_targets() -> void:
 	pass

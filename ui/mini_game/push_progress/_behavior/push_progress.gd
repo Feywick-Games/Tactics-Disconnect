@@ -23,6 +23,8 @@ func start(distance: int) -> void:
 	_push_timer_bar.step = .1
 	_push_progress_bar.value = 0
 	_push_progress_bar.max_value = distance * PUSH_PROGRESS_SCALE
+	_time_progressing = 0
+	completed = false
 	
 
 func _process(delta: float) -> void:

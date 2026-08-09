@@ -26,11 +26,14 @@
 [ext_resource type="Texture2D" uid="uid://cs5hy8jlgm6y4" path="res://ui/mini_game/push_progress/_sprite/push_progress_bg.png" id="24_a80hw"]
 [ext_resource type="Texture2D" uid="uid://bqe6i14e2ixo5" path="res://ui/skill_select/_sprite/go_button_disabled.tres" id="24_riw5p"]
 [ext_resource type="Script" uid="uid://b48bc2twib2y4" path="res://ui/mini_game/push_progress/_behavior/push_progress.gd" id="24_wygra"]
+[ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="25_q4psh"]
 [ext_resource type="Texture2D" uid="uid://cx6jiqqgtogfw" path="res://ui/mini_game/push_progress/_sprite/push_progress_fill.png" id="26_obvk7"]
 [ext_resource type="Texture2D" uid="uid://072l0ycuos4c" path="res://ui/mini_game/push_progress/_sprite/push_button_a_push_progress.atlastex" id="26_pxq7u"]
 [ext_resource type="Texture2D" uid="uid://bnpvcbj70llk2" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_bg.png" id="27_wcq08"]
 [ext_resource type="Texture2D" uid="uid://chlq8s8hw8wbw" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_fill.png" id="28_wygra"]
+[ext_resource type="PackedScene" uid="uid://bmfr2ki2h3omf" path="res://ui/reaction_qte/_packed_scene/reaction_qte.tscn" id="31_cx76p"]
 [ext_resource type="Script" uid="uid://8mjdxtckddf1" path="res://ui/reaction_qte/_behavior/reaction_qte_manager.gd" id="31_pxq7u"]
+[ext_resource type="Shader" uid="uid://df6avjvg2nbf6" path="res://ui/reaction_qte/_material/reaction_qte.gdshader" id="33_b6k0c"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tn4br"]
 texture = ExtResource("11_vmh3g")
@@ -53,12 +56,12 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(0, 0, 32, 32)]
+"values": [Rect2(16, 16, 32, 32)]
 }
 
 [sub_resource type="Animation" id="Animation_obvk7"]
 resource_name = "press"
-length = 0.39999999999999997
+length = 0.4
 loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
@@ -79,6 +82,36 @@ _data = {
 &"RESET": SubResource("Animation_a80hw"),
 &"press": SubResource("Animation_obvk7")
 }
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8jamv"]
+frequency = 0.1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rxtpa"]
+width = 64
+height = 64
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_8jamv")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rxtpa"]
+seed = 2
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8jamv"]
+width = 64
+height = 64
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_rxtpa")
+as_normal_map = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b6k0c"]
+resource_local_to_scene = true
+shader = ExtResource("33_b6k0c")
+shader_parameter/noise_tex_normal = SubResource("NoiseTexture2D_8jamv")
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_rxtpa")
+shader_parameter/progress = 0.0
+shader_parameter/strength = 3.02
+shader_parameter/failure_color = Color(0, 0, 0, 1)
+shader_parameter/failure_color_influence = 0.0
 
 [node name="CombatUI" type="CanvasLayer" unique_id=788298229]
 follow_viewport_scale = 3.0
@@ -566,20 +599,24 @@ size_flags_vertical = 8
 theme_override_colors/font_color = Color(0.964706, 0.964706, 0.964706, 1)
 theme_override_colors/font_outline_color = Color(0.121569, 0.105882, 0.172549, 1)
 theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("25_q4psh")
 text = "Cheap Shot"
 horizontal_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1628530910]
 
 [node name="PushProgressContainer" type="MarginContainer" parent="." unique_id=1437321348]
-anchors_preset = 5
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
+anchor_bottom = 1.0
+offset_left = -114.0
+offset_top = -40.0
+offset_right = 114.0
 grow_horizontal = 2
-theme_override_constants/margin_top = 64
+grow_vertical = 0
+theme_override_constants/margin_bottom = 16
 
 [node name="PushProgress" type="HBoxContainer" parent="PushProgressContainer" unique_id=204331439]
 unique_name_in_owner = true
@@ -625,21 +662,27 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -32.0
-offset_top = -96.0
+offset_top = -64.0
 offset_right = 32.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
-theme_override_constants/margin_bottom = 32
 script = ExtResource("31_pxq7u")
+
+[node name="TextureProgressBar" parent="ReactionQteManager" unique_id=869123022 instance=ExtResource("31_cx76p")]
+material = SubResource("ShaderMaterial_b6k0c")
+layout_mode = 2
 
 [node name="MeleeComboContainer" type="MarginContainer" parent="." unique_id=808517902]
 visible = false
-anchors_preset = 5
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
+anchor_bottom = 1.0
 offset_left = -20.0
+offset_top = -64.0
 offset_right = 20.0
-offset_bottom = 40.0
 grow_horizontal = 2
+grow_vertical = 0
 theme_override_constants/margin_top = 64

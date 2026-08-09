@@ -26,7 +26,7 @@ var reticle: ReticleTileMap
 
 var turn_number : int = -1
 var active_unit: Character
-var enemy_spawned := false
+var unit_spawned := false
 
 
 func _ready() -> void:

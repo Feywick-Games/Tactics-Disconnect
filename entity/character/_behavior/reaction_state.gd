@@ -21,7 +21,7 @@ func _init(reaction: Reaction, character: Character, target: Character) -> void:
 
 func _react() -> void:
 	_reacted = true
-	
+
 
 func qte_succeeded(success: bool) -> void:
 	_success = success

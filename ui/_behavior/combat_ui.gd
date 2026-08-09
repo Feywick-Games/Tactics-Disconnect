@@ -5,7 +5,7 @@ extends CanvasLayer
 var error_audio_stream: AudioStream
 
 var _error_queued: bool = false
-var _error_code_timer: SceneTreeTimer
+var _text_timer: SceneTreeTimer
 
 @onready
 var _skill_label: Label = %SkillLabel
@@ -40,8 +40,8 @@ func _ready() -> void:
 func display_skill_error_code(code: Global.SkillErrorCode) -> void:
 	_error_queued = true
 	
-	if _error_code_timer:
-		_error_code_timer.timeout.disconnect(_on_error_code_timer_expired)
+	if _text_timer:
+		_text_timer.timeout.disconnect(_on_text_timer_expired)
 	
 	match code:
 		Global.SkillErrorCode.NO_TARGET:
@@ -55,23 +55,24 @@ func display_skill_error_code(code: Global.SkillErrorCode) -> void:
 		_audio_stream_player.stream = error_audio_stream
 		_audio_stream_player.play()
 	
-	_error_code_timer = get_tree().create_timer(1)
-	_error_code_timer.timeout.connect(_on_error_code_timer_expired)
+	_text_timer = get_tree().create_timer(1)
+	_text_timer.timeout.connect(_on_text_timer_expired)
 
 
-func _on_error_code_timer_expired() -> void:
+func _on_text_timer_expired() -> void:
+	_skill_label.text = ""
 	_skill_label.hide()
 
 
 
 func display_skill_text(skill_text: String) -> void:
-	if _error_code_timer:
-		_error_code_timer.timeout.disconnect(_on_error_code_timer_expired)
+	if _text_timer:
+		_text_timer.timeout.disconnect(_on_text_timer_expired)
 	
 	_skill_label.show()
 	_skill_label.text = skill_text
-	await get_tree().create_timer(2).timeout
-	_skill_label.hide()
+	_text_timer = get_tree().create_timer(1)
+	_text_timer.timeout.connect(_on_text_timer_expired)
 
 
 func _on_skills_selected() -> void:
