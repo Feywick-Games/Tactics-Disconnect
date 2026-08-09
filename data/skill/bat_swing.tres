@@ -16,7 +16,6 @@ script = ExtResource("1_2kwrm")
 ui_small = ExtResource("4_2kwrm")
 name = "Bat Swing"
 flavor_text = "Swing your bat and send some bozos out of the park."
-character_animation = "idle"
 state = ExtResource("2_wq1xd")
 status_effects = Array[ExtResource("2_g1eyl")]([SubResource("Resource_riw5p")])
 aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)])

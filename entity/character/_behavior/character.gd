@@ -1,6 +1,8 @@
 class_name Character
 extends Node2D
 
+signal skill_text_requested(skill_name: String)
+
 const SNAP_DISTANCE : float = 1.0
 const TIME_PER_MOVE := .03
 const HEALTH_BAR_PIXEL_WIDTH := 25
@@ -60,6 +62,7 @@ var sfx_player: AudioStreamPlayer2D = $SfxPlayer
 func _ready() -> void:
 	sub_pixel_position = global_position
 	health_bar.hide()
+	basic_skill.name = ""
 	state_machine = StateMachine.new(self, CharacterCombatBeginState.new())
 	add_child(state_machine)
 
@@ -233,8 +236,9 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 
 
 func take_damage(skill: Skill, direction: Vector2, multiplier: float = 1) -> void:
+	
 	multiplier = _calc_damage_multiplier(direction) * multiplier
-
+	
 	for base_effect: StatusEffect in skill.status_effects:
 		var new_effect: StatusEffect = base_effect.duplicate()
 		new_effect.value = round(new_effect.value * multiplier)
@@ -259,7 +263,7 @@ func die() -> void:
 
 
 func set_state(state: State) -> void:
-	state_machine.change_state.call_deferred(state)
+	state_machine.change_state(state)
 
 
 func highlight(enable := true) -> void:
@@ -296,3 +300,7 @@ func display_modified_status(tiles: Array[Vector2i], status_effects: Array[Statu
 			health_bar.value = health - round(effect.value)
 		else:
 			status_label_manager.preview(effect)
+
+
+func request_skill_text(skill_name: String) -> void:
+	skill_text_requested.emit(skill_name)

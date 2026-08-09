@@ -20,9 +20,9 @@ var push_time: float
 
 func enter() -> void:
 	super.enter()
-	_target_unit = GameState.current_level.grid.get_unit_from_tile(_target_tile)
-	_push_range = [_target_tile]
-	_direction =  Vector2i(Vector2(_target_tile - _character.current_tile).normalized().round())
+	_target_unit = GameState.current_level.grid.get_unit_from_tile(target_tile)
+	_push_range = [target_tile]
+	_direction =  Vector2i(Vector2(target_tile - _character.current_tile).normalized().round())
 	_push_distance = round(skill.push_position.length())
 
 
@@ -30,23 +30,25 @@ func update(delta: float) -> State:
 	if mini_game:
 		if mini_game.completed and not pushing:
 			pushing = true
-			_on_minigame_completed()
+			_hit_targets()
 		elif pushing and not _character.animator.is_playing():
 			return CharacterIdleState.new() 
 	return super.update(delta)
 
 
-func _on_minigame_completed() -> void:
+func _hit_targets() -> void:
+	_character.animator.play_directional(skill.character_animation, _direction)
+	_started = true
 	_push_distance = round(mini_game.value * _push_distance)
 	
 	for i in range(1, _push_distance + 1):
-		if GameState.current_level.grid.region.has_point(_target_tile + (_direction * i)) \
-		and not GameState.current_level.grid.is_point_solid(_target_tile + (_direction * i)):
+		if GameState.current_level.grid.region.has_point(target_tile + (_direction * i)) \
+		and not GameState.current_level.grid.is_point_solid(target_tile + (_direction * i)):
 			_max_push_distance += 1
 		else:
 			break
 	
-	var collision_point := _target_tile + (_direction * (_max_push_distance + 1))
+	var collision_point := target_tile + (_direction * (_max_push_distance + 1))
 	if GameState.current_level.grid.region.has_point(collision_point) and \
 	GameState.current_level.grid.is_point_solid(collision_point):
 		_max_is_collision = true
@@ -55,11 +57,11 @@ func _on_minigame_completed() -> void:
 		
 		if unit and unit is Ally != _character is Ally:
 			_o_target = unit
-	var skill_range: RangeStruct = GameState.current_level.grid.request_range(_target_tile, 0, 
+	var skill_range: RangeStruct = GameState.current_level.grid.request_range(target_tile, 0, 
 		_max_push_distance, Combat.RangeShape.CROSS, true, true
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
-	_push_tile_path = _astar.get_id_path(_target_tile, _target_tile + (_direction * _max_push_distance))	
+	_push_tile_path = _astar.get_id_path(target_tile, target_tile + (_direction * _max_push_distance))	
 	var push_damage_state := PushDamageState.new(_push_tile_path, skill, _direction, impact, _multiplier)
 	_target_unit.set_state(push_damage_state)
 	if _o_target:

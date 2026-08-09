@@ -9,9 +9,9 @@ var _turn_started := false
 func enter() -> void:
 	super.enter()
 	
-	if _level.enemy_spawned:
+	if _level.unit_spawned:
 		_ordered_units = _level.get_unit_list(false)
-		_level.enemy_spawned = false
+		_level.unit_spawned = false
 	else:
 		_ordered_units = _level.get_unit_list()
 		var last_unit : Character = _ordered_units.pop_front()

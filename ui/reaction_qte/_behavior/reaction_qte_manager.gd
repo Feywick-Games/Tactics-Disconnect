@@ -17,6 +17,9 @@ var _exploding := false
 
 func _ready() -> void:
 	hide()
+	
+	for child: Node in get_children():
+		child.free()
 
 
 func dispatch_qtes(count: int, buffer_time: float) -> void:

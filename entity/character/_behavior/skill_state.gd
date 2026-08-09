@@ -6,19 +6,22 @@ signal impact
 const DEFAULT_DESIRED_TARGET_PCT: float = .75
 
 var _character: Character
-var _target_tile: Vector2i
+var target_tile: Vector2i
+var targets: Array[Character]
 var skill: Skill
 var _desired_target_count: int
 var mini_game: MiniGame
+var ui: CombatUI
 var impact_time: float = 1.0
 var _direction: Vector2i
 var _time_in_state: float
 var _multiplier: float = 1.0
 var _impact_emitted := false
+var _started := false
 
 
-func _init(character: Character, i_skill: Skill, target_tile: Vector2i) -> void:
-	_target_tile = target_tile
+func _init(character: Character, i_skill: Skill, target_tile_: Vector2i) -> void:
+	target_tile = target_tile_
 	skill = i_skill
 	_desired_target_count = round(skill.aoe.size() * DEFAULT_DESIRED_TARGET_PCT)
 	_character = character
@@ -26,21 +29,39 @@ func _init(character: Character, i_skill: Skill, target_tile: Vector2i) -> void:
 
 func enter() -> void:
 	super.enter()
-	_direction = VectorF.snap_direction(_target_tile - _character.current_tile)
-	_character.animator.play_directional(skill.character_animation, _direction)
-	impact_time = _character.get_impact_time(_character.animator.current_animation)
-
-
-func _hit_targets() -> void:
-	pass
+	_direction = VectorF.snap_direction(target_tile - _character.current_tile)
+	impact_time = _character.get_impact_time(_character.animator.get_directional_animation_name(skill.character_animation, _direction))
+	if skill.name != "":
+		_character.request_skill_text(skill.name)
+	_set_targets()
 
 
 func update(delta: float) -> State:
-	_time_in_state = _time_in_state + delta
+	if _started:
+		_time_in_state = _time_in_state + delta
 	if _time_in_state > impact_time and not _impact_emitted:
 		impact.emit()
 		_impact_emitted = true
 	return
+
+
+func _hit_targets() -> void:
+	for target in targets:
+		var damage_state := DamageState.new(skill, _direction, impact, _multiplier)
+		target.set_state(damage_state)
+
+
+func _set_targets() -> void:
+	for tile_offset in skill.aoe:
+		var tile: Vector2i
+		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(Vector2(_direction).angle()).round())
+		if skill.range_type == Combat.RangeType.MELEE:
+			tile = _character.current_tile + Vector2i(_direction) + offset_rotated
+		else:
+			tile = target_tile + offset_rotated
+		var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile)
+		if unit:
+			targets.append(unit)
 
 
 func on_cheer(success: bool) -> void:
@@ -71,16 +92,14 @@ func calc_skill_likelihood(strike_tile : Vector2i) -> float:
 	
 	for tile in attack_range.range_tiles:
 		var target_count: int = 0
-		var has_unit := false
 		var direction := VectorF.snap_direction(Vector2(tile - strike_tile))
-		for target_tile in skill.aoe:
-			target_tile = Vector2i(Vector2(target_tile).rotated(direction.angle()))
-			var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile + target_tile)
+		for aoe_tile in skill.aoe:
+			aoe_tile = Vector2i(Vector2(aoe_tile).rotated(direction.angle()))
+			var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile + aoe_tile)
 			if unit != self and (unit is Ally) != (_character is Ally):
 				target_count +=1
-				if tile + target_tile == _target_tile:
-					has_unit = true
-				if target_count >= _desired_target_count and has_unit:
+				# NOTICE: removed the requirement to have a target in the target tile
+				if target_count >= _desired_target_count:
 					return 1
 	return 0
 
@@ -90,7 +109,7 @@ func can_use() -> Global.SkillErrorCode:
 	
 	for aoe_tile in skill.aoe:
 		var offset_rotated: = Vector2i(Vector2(aoe_tile).rotated(Vector2(_character.facing).angle()).round())
-		target = GameState.current_level.grid.get_unit_from_tile(_target_tile + offset_rotated)
+		target = GameState.current_level.grid.get_unit_from_tile(target_tile + offset_rotated)
 		if target:
 			break
 	

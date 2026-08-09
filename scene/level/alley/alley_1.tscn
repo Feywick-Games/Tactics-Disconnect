@@ -4,9 +4,9 @@
 [ext_resource type="TileSet" uid="uid://ds2bj4u4yhws6" path="res://scene/level/alley/alley_tile_set.tres" id="2_ndno1"]
 [ext_resource type="PackedScene" uid="uid://c3ow1ifjec62m" path="res://entity/character/ally/izzy/izzy.tscn" id="5_c38kb"]
 [ext_resource type="PackedScene" uid="uid://r5sdcdlxfmjr" path="res://entity/character/ally/chaz/chaz.tscn" id="10_ymq17"]
+[ext_resource type="PackedScene" uid="uid://bxmucc7oqfyuj" path="res://entity/character/enemy/after_hours/after_hours.tscn" id="10_yprxc"]
 [ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="11_0hr4q"]
 [ext_resource type="PackedScene" uid="uid://bvmot03d4vcap" path="res://entity/character/ally/peggy/peggy.tscn" id="13_qbfaq"]
-[ext_resource type="PackedScene" uid="uid://cqgaf4b8quup7" path="res://entity/character/enemy/enemy.tscn" id="13_wu2vm"]
 [ext_resource type="Script" uid="uid://8xawka3fldcr" path="res://node/camera/tracking_camera.gd" id="16_vcdsl"]
 [ext_resource type="Script" uid="uid://cfuxemb15nlab" path="res://node/spawn/spawn_point.gd" id="21_sldol"]
 [ext_resource type="Script" uid="uid://ujs5udtg6jxg" path="res://node/spawn/spawn_data.gd" id="23_dfity"]
@@ -33,46 +33,46 @@ metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_vcdsl"]
 script = ExtResource("23_dfity")
-character_scene = ExtResource("13_wu2vm")
+character_scene = ExtResource("10_yprxc")
 facing = Vector2i(-1, 0)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_s57jr"]
 script = ExtResource("23_dfity")
-character_scene = ExtResource("13_wu2vm")
+character_scene = ExtResource("10_yprxc")
 facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_6imhl"]
 script = ExtResource("23_dfity")
 value = 4
-character_scene = ExtResource("13_wu2vm")
+character_scene = ExtResource("10_yprxc")
 facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_7q5it"]
 script = ExtResource("23_dfity")
-character_scene = ExtResource("13_wu2vm")
+character_scene = ExtResource("10_yprxc")
 facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_ccadi"]
 script = ExtResource("23_dfity")
 value = 4
-character_scene = ExtResource("13_wu2vm")
+character_scene = ExtResource("10_yprxc")
 facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_l4cyh"]
 script = ExtResource("23_dfity")
-character_scene = ExtResource("13_wu2vm")
+character_scene = ExtResource("10_yprxc")
 facing = Vector2i(1, 0)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_qbfaq"]
 script = ExtResource("23_dfity")
 value = 1
-character_scene = ExtResource("13_wu2vm")
+character_scene = ExtResource("10_yprxc")
 facing = Vector2i(1, 0)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
@@ -128,7 +128,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_yuh5r")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="PeggySpawnPoint" type="Node2D" parent="." unique_id=174732216]
-position = Vector2(475, 165)
+position = Vector2(565, 165)
 script = ExtResource("21_sldol")
 is_ally = true
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_yprxc")])
@@ -141,7 +141,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_vcdsl")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="SpawnPoint" type="Node2D" parent="." unique_id=1799894307]
-position = Vector2(655, 225)
+position = Vector2(565, 135)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_s57jr"), SubResource("Resource_6imhl")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"

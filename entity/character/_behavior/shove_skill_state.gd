@@ -11,8 +11,8 @@ func enter() -> void:
 	_tile_path = GameState.current_level.grid.get_path_ignore_passables(_character.current_tile, destination)
 
 
-func _on_minigame_completed() -> void:
-	super._on_minigame_completed()
+func _hit_targets() -> void:
+	super._hit_targets()
 	_push_tile_path = _push_tile_path.slice(0, round(mini_game.value * _push_tile_path.size()) + 1)
 	if not _push_tile_path.is_empty() and _tile_path[-1] != _push_tile_path[-1]:
 		_moving = true

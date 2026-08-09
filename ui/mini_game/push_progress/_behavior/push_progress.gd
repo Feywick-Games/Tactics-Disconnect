@@ -8,9 +8,9 @@ var _running := false
 var _time_progressing : float = 0
 
 @onready
-var _push_progress_bar: TextureProgressBar = $VBoxContainer/PushProgressBar
+var _push_progress_bar: TextureProgressBar = $HBoxContainer/VBoxContainer/PushProgressBar
 @onready
-var _push_timer_bar: TextureProgressBar = $VBoxContainer/PushProgressTimer
+var _push_timer_bar: TextureProgressBar = $HBoxContainer/VBoxContainer/PushProgressTimer
 
 func _ready() -> void:
 	hide()
@@ -23,6 +23,8 @@ func start(distance: int) -> void:
 	_push_timer_bar.step = .1
 	_push_progress_bar.value = 0
 	_push_progress_bar.max_value = distance * PUSH_PROGRESS_SCALE
+	_time_progressing = 0
+	completed = false
 	
 
 func _process(delta: float) -> void:

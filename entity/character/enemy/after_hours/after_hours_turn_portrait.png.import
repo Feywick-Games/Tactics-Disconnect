@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmeon4vrjlpln"
-path="res://.godot/imported/after_hours.png-c3d867f112a25403cc0faebad3219d82.ctex"
+uid="uid://db6eht1vkpw8"
+path="res://.godot/imported/after_hours_turn_portrait.png-bb6d068144272de3b772384f560e69fc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entity/character/enemy/after_hours/after_hours.png"
-dest_files=["res://.godot/imported/after_hours.png-c3d867f112a25403cc0faebad3219d82.ctex"]
+source_file="res://entity/character/enemy/after_hours/after_hours_turn_portrait.png"
+dest_files=["res://.godot/imported/after_hours_turn_portrait.png-bb6d068144272de3b772384f560e69fc.ctex"]
 
 [params]
 

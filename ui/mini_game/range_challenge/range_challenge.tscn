@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://tupbjmhn5tyk"]
+
+[ext_resource type="Script" uid="uid://hjrrnjdy8y07" path="res://ui/mini_game/range_challenge/_behavior/range_challenge.gd" id="1_ddprw"]
+[ext_resource type="Texture2D" uid="uid://072l0ycuos4c" path="res://ui/mini_game/push_progress/_sprite/push_button_a_push_progress.atlastex" id="2_s61wj"]
+[ext_resource type="Texture2D" uid="uid://cs5hy8jlgm6y4" path="res://ui/mini_game/push_progress/_sprite/push_progress_bg.png" id="3_1xr5h"]
+[ext_resource type="Texture2D" uid="uid://cx6jiqqgtogfw" path="res://ui/mini_game/push_progress/_sprite/push_progress_fill.png" id="4_02kut"]
+[ext_resource type="Texture2D" uid="uid://bnpvcbj70llk2" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_bg.png" id="5_5x4xy"]
+[ext_resource type="Texture2D" uid="uid://chlq8s8hw8wbw" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_fill.png" id="6_ur5om"]
+
+[sub_resource type="Animation" id="Animation_a80hw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(16, 16, 32, 32)]
+}
+
+[sub_resource type="Animation" id="Animation_obvk7"]
+resource_name = "press"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(16, 16, 32, 32), Rect2(80, 16, 32, 32)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0hase"]
+_data = {
+&"RESET": SubResource("Animation_a80hw"),
+&"press": SubResource("Animation_obvk7")
+}
+
+[sub_resource type="Gradient" id="Gradient_w6xo5"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_byjs7"]
+gradient = SubResource("Gradient_w6xo5")
+width = 8
+height = 12
+fill_from = Vector2(1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q4uxn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7xfvu"]
+
+[node name="RangeChallenge" type="MarginContainer" unique_id=2018250628]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -114.0
+offset_top = -40.0
+offset_right = 114.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 16
+script = ExtResource("1_ddprw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1633895112]
+layout_mode = 2
+
+[node name="InputTexture" type="TextureRect" parent="HBoxContainer" unique_id=1174978952]
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("2_s61wj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/InputTexture" unique_id=617634666]
+libraries/ = SubResource("AnimationLibrary_0hase")
+autoplay = &"press"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1619870882]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="RangeGoal" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=65535797]
+custom_maximum_size = Vector2(-1, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+value = 50.0
+fill_mode = 6
+texture_under = ExtResource("3_1xr5h")
+texture_progress = ExtResource("4_02kut")
+
+[node name="Reticle" type="HSlider" parent="HBoxContainer/VBoxContainer/RangeGoal" unique_id=1507790661]
+custom_minimum_size = Vector2(192, 0)
+custom_maximum_size = Vector2(-1, 16)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_right = 96.0
+offset_bottom = 16.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_icons/grabber = SubResource("GradientTexture2D_byjs7")
+theme_override_styles/slider = SubResource("StyleBoxEmpty_q4uxn")
+theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_7xfvu")
+value = 50.0
+
+[node name="TimerBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=1898669440]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_under = ExtResource("5_5x4xy")
+texture_progress = ExtResource("6_ur5om")

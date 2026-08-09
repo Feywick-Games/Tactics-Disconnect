@@ -58,5 +58,6 @@ func _spawn_unit() -> void:
 	_spawned_unit = spawn_data.character_scene.instantiate()
 	_spawned_unit.global_position = spawn_data.spawn_global_position
 	_spawned_unit.facing = spawn_data.facing
-	_level.enemy_spawned = true
+	_level.unit_spawned = true
 	_level.add_child(_spawned_unit)
+	_spawned_unit.skill_text_requested.connect(_level.ui.display_skill_text)
