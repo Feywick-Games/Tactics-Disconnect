@@ -27,6 +27,8 @@ var push_progress: PushProgress = %PushProgress
 var sticker_layout: StickerLayout = %StickerLayout
 @onready
 var reaction_qte_manager: ReactionQteManager = %ReactionQteManager
+@onready
+var range_challege: RangeChallenge = %RangeChallenge
 
 
 func _ready() -> void:

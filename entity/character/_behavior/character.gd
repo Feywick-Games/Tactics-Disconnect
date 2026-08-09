@@ -236,8 +236,9 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "id
 
 
 func take_damage(skill: Skill, direction: Vector2, multiplier: float = 1) -> void:
+	
 	multiplier = _calc_damage_multiplier(direction) * multiplier
-
+	
 	for base_effect: StatusEffect in skill.status_effects:
 		var new_effect: StatusEffect = base_effect.duplicate()
 		new_effect.value = round(new_effect.value * multiplier)
@@ -262,7 +263,7 @@ func die() -> void:
 
 
 func set_state(state: State) -> void:
-	state_machine.change_state.call_deferred(state)
+	state_machine.change_state(state)
 
 
 func highlight(enable := true) -> void:

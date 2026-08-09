@@ -16,7 +16,6 @@ script = ExtResource("1_i8fxd")
 ui_small = ExtResource("5_271pr")
 name = "Bash"
 flavor_text = "A straight line smackdown for two."
-character_animation = "idle"
 range_shape = 1
 state = ExtResource("2_r0y3w")
 status_effects = Array[ExtResource("2_fhvpu")]([SubResource("Resource_bnpdc")])

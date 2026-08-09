@@ -2,8 +2,6 @@ class_name CheapShotReactionState
 extends ReactionState
 
 #var _tracking_cam: TrackingCamera
-var _target_damage_state: DamageState
-var _hit_delivered: bool
 
 #func enter() -> void:
 	#super.enter()
@@ -13,26 +11,22 @@ var _hit_delivered: bool
 
 func update(delta: float) -> State:
 	if is_instance_valid(_target):
-		if _target.state_machine.current_state is CharacterIdleState and not _hit_delivered and _reacted:
-			_target.set_state(_target_damage_state)
-			_hit_delivered = true
-			_character.request_skill_text(_reaction.name)
-		elif _impact_emitted and not _target.state_machine.current_state is CharacterIdleState:
+		if _impact_emitted and not _character.animator.is_playing():
 			return CharacterIdleState.new()
 	else:
 		return CharacterIdleState.new()
-	if not _hit_delivered:
-		_time_in_state = 0
 	return super.update(delta)
 
 
 func _react() -> void:
 	super._react()
+	_character.request_skill_text(_reaction.name)
 	var direction: Vector2i = _target.current_tile - _character.current_tile
 	_character.facing = _target.facing
 	_character.animator.play_directional(_reaction.character_animation, _character.facing)
 	_impact_time = _character.get_impact_time(_character.animator.current_animation)
-	_target_damage_state = DamageState.new(_reaction, direction, impact)
+	var damage_state := DamageState.new(_reaction, direction, impact)
+	_target.set_state(damage_state)
 
 
 func can_use(skill: Skill, _actor: Character) -> bool:

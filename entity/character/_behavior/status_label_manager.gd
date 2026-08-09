@@ -32,6 +32,7 @@ func _ready() -> void:
 	animator.animation_finished.connect(_on_animation_completed)
 
 
+
 func display_statuses() -> void:
 	for i in range(_queued_statuses.size()):
 		_started_animations += 1

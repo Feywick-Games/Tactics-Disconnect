@@ -16,7 +16,6 @@ script = ExtResource("1_kx7y0")
 ui_small = ExtResource("4_kx7y0")
 name = "Spin Kick"
 flavor_text = "Spin like top and spread some damage."
-character_animation = "idle"
 state = ExtResource("2_otfxc")
 status_effects = Array[ExtResource("2_h1q31")]([SubResource("Resource_tutbt")])
 aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(-2, 0), Vector2i(-1, -1), Vector2i(-1, 1)])

@@ -21,7 +21,6 @@ script = ExtResource("1_2sh2k")
 ui_small = ExtResource("5_n6u88")
 name = "Batttering Ram"
 flavor_text = "Knock down the door on a bozo and send them back and tile to take their place."
-character_animation = "idle"
 move_position = Vector2i(1, 0)
 push_position = Vector2i(1, 0)
 state = ExtResource("2_rji6q")

@@ -8,9 +8,9 @@ var _running := false
 var _time_progressing : float = 0
 
 @onready
-var _push_progress_bar: TextureProgressBar = $VBoxContainer/PushProgressBar
+var _push_progress_bar: TextureProgressBar = $HBoxContainer/VBoxContainer/PushProgressBar
 @onready
-var _push_timer_bar: TextureProgressBar = $VBoxContainer/PushProgressTimer
+var _push_timer_bar: TextureProgressBar = $HBoxContainer/VBoxContainer/PushProgressTimer
 
 func _ready() -> void:
 	hide()

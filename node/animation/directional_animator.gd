@@ -26,6 +26,10 @@ custom_blend: float = -1,custom_speed: float = 1.0, from_end: bool = false) -> v
 		queue(anim + "_" + anim_direction_str)
 
 
+func get_directional_animation_name(anim: String, direction: Vector2, alt_ext := "") -> String:
+	return anim + "_" + get_current_direction(direction) + alt_ext
+
+
 func get_current_direction(direction: Vector2) -> String:
 	var theta : float = direction.angle()
 	var eight_direction_str := ""

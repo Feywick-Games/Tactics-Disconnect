@@ -128,7 +128,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_yuh5r")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="PeggySpawnPoint" type="Node2D" parent="." unique_id=174732216]
-position = Vector2(475, 165)
+position = Vector2(565, 165)
 script = ExtResource("21_sldol")
 is_ally = true
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_yprxc")])
@@ -141,7 +141,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_vcdsl")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="SpawnPoint" type="Node2D" parent="." unique_id=1799894307]
-position = Vector2(655, 225)
+position = Vector2(565, 135)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_s57jr"), SubResource("Resource_6imhl")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
