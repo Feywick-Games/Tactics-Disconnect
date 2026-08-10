@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://jvcs0gdkyf1l"]
+
+[ext_resource type="Shader" uid="uid://df6avjvg2nbf6" path="res://ui/reaction_qte/_material/reaction_qte.gdshader" id="1_daa41"]
+[ext_resource type="Script" uid="uid://b56uhkudk5noa" path="res://ui/mini_game/melee_combo/_behavior/melee_combo.gd" id="1_ixq6e"]
+[ext_resource type="PackedScene" uid="uid://bumdkx4kpinkd" path="res://ui/mini_game/melee_combo/_packed_scene/game_pad_indicator.tscn" id="2_scgyj"]
+[ext_resource type="Texture2D" uid="uid://bl3l3nadl68xl" path="res://ui/mini_game/melee_combo/_sprite/melee_combo_timer_bg.png" id="4_scgyj"]
+[ext_resource type="Texture2D" uid="uid://chlq8s8hw8wbw" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_fill.png" id="5_akhno"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_s33et"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lb3n5"]
+width = 1
+noise = SubResource("FastNoiseLite_s33et")
+as_normal_map = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_daa41"]
+resource_local_to_scene = true
+shader = ExtResource("1_daa41")
+shader_parameter/noise_tex_normal = SubResource("NoiseTexture2D_lb3n5")
+shader_parameter/progress = 0.0
+shader_parameter/strength = 1.0
+shader_parameter/failure_color = Color(1, 1, 1, 1)
+shader_parameter/failure_color_influence = 0.0
+shader_parameter/sprite_uv_center = Vector2(0.5, 0.5)
+
+[node name="MeleeCombo" type="MarginContainer" unique_id=1649245568]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -48.0
+offset_right = 70.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 16
+script = ExtResource("1_ixq6e")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1689068965]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=993377588]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="GamePadIndicator" parent="VBoxContainer/HBoxContainer" unique_id=779848215 instance=ExtResource("2_scgyj")]
+material = SubResource("ShaderMaterial_daa41")
+layout_mode = 2
+
+[node name="TimerBar" type="TextureProgressBar" parent="VBoxContainer" unique_id=1099409177]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+texture_under = ExtResource("4_scgyj")
+texture_progress = ExtResource("5_akhno")

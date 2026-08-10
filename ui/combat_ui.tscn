@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://bqe6i14e2ixo5" path="res://ui/skill_select/_sprite/go_button_disabled.tres" id="24_riw5p"]
 [ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="25_q4psh"]
 [ext_resource type="PackedScene" uid="uid://cxvt0qwavsjab" path="res://ui/mini_game/push_progress/push_progress.tscn" id="26_008rl"]
+[ext_resource type="PackedScene" uid="uid://jvcs0gdkyf1l" path="res://ui/mini_game/melee_combo/melee_combo.tscn" id="28_cx76p"]
 [ext_resource type="PackedScene" uid="uid://bmfr2ki2h3omf" path="res://ui/reaction_qte/_packed_scene/reaction_qte.tscn" id="31_cx76p"]
 [ext_resource type="Script" uid="uid://8mjdxtckddf1" path="res://ui/reaction_qte/_behavior/reaction_qte_manager.gd" id="31_pxq7u"]
 [ext_resource type="PackedScene" uid="uid://tupbjmhn5tyk" path="res://ui/mini_game/range_challenge/range_challenge.tscn" id="32_egcjb"]
@@ -69,6 +70,7 @@ shader_parameter/progress = 0.0
 shader_parameter/strength = 3.02
 shader_parameter/failure_color = Color(0, 0, 0, 1)
 shader_parameter/failure_color_influence = 0.0
+shader_parameter/sprite_uv_center = Vector2(0.5, 0.5)
 
 [node name="CombatUI" type="CanvasLayer" unique_id=788298229]
 follow_viewport_scale = 3.0
@@ -564,9 +566,15 @@ horizontal_alignment = 1
 
 [node name="PushProgress" parent="." unique_id=213570333 instance=ExtResource("26_008rl")]
 unique_name_in_owner = true
+visible = false
 
 [node name="RangeChallenge" parent="." unique_id=2018250628 instance=ExtResource("32_egcjb")]
 unique_name_in_owner = true
+visible = false
+
+[node name="MeleeCombo" parent="." unique_id=1649245568 instance=ExtResource("28_cx76p")]
+unique_name_in_owner = true
+visible = false
 
 [node name="ReactionQteManager" type="MarginContainer" parent="." unique_id=2056286782]
 unique_name_in_owner = true

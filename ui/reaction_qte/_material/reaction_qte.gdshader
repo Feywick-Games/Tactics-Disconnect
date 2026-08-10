@@ -6,6 +6,7 @@ uniform float progress : hint_range(0.0, 1.0);
 uniform float strength = 1.0;
 uniform vec4 failure_color : source_color = vec4(1);
 uniform float failure_color_influence: hint_range(0.0,1.0);
+uniform vec2 sprite_uv_center = vec2(.5,.5);
 
 // If your sprite doesn't have enough space and the explosion gets clipped, 
 // you can uncomment this and adjust the scale
@@ -23,8 +24,8 @@ void fragment() {
 	jitter *= 2.0; // ...so we're going to make it range from -1.0 to 1.0.
 	jitter *= .5;
 	vec2 texture_size = vec2(textureSize(TEXTURE,1));
-	vec2 direction = vec2(texture_size.y/texture_size.x, 1.0) - UV;
-	direction -= .5;
+	vec2 direction = sprite_uv_center - UV;
+	//direction -= .5;
 	//direction *= 2.0;
 	direction += jitter;
 	direction = direction * strength * progress;

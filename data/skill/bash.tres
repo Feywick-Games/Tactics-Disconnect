@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Skill" format=3 uid="uid://bk1spqs5rmrm8"]
 
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="1_i8fxd"]
+[ext_resource type="Script" uid="uid://cguolmcxouel" path="res://entity/character/_behavior/melee_skill_state.gd" id="2_bnpdc"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="2_fhvpu"]
-[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="2_r0y3w"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="4_271pr"]
 [ext_resource type="Texture2D" uid="uid://ba7bcq1s0wxll" path="res://ui/skill_select/_sprite/skill_select_small_melee.png" id="5_271pr"]
 
@@ -17,7 +17,7 @@ ui_small = ExtResource("5_271pr")
 name = "Bash"
 flavor_text = "A straight line smackdown for two."
 range_shape = 1
-state = ExtResource("2_r0y3w")
+state = ExtResource("2_bnpdc")
 status_effects = Array[ExtResource("2_fhvpu")]([SubResource("Resource_bnpdc")])
 aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
 direct = false

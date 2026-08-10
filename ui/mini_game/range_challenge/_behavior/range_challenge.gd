@@ -50,8 +50,9 @@ func start(from: Vector2i, to: Vector2i) -> void:
 
 
 func _end() -> void:
-	completed = true
 	_running = false
+	await get_tree().create_timer(1).timeout
+	completed = true
 	if _tapped and _reticle.value <= _max_success_value and _reticle.value >= _min_success_value:
 		success = true
 	else:

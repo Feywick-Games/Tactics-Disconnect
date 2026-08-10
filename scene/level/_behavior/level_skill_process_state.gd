@@ -29,6 +29,9 @@ func _prep_skill_state() -> void:
 	elif skill_state is RangeSkillState:
 		_mini_game = _level.ui.range_challege
 		_level.ui.range_challege.start(_level.active_unit.current_tile, skill_state.target_tile)
+	elif skill_state is MeleeSkillState:
+		_mini_game = _level.ui.melee_combo
+		_level.ui.melee_combo.start(skill_state.skill.aoe.size())
 	if _mini_game:
 		skill_state.mini_game = _mini_game
 

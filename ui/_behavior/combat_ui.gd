@@ -29,6 +29,8 @@ var sticker_layout: StickerLayout = %StickerLayout
 var reaction_qte_manager: ReactionQteManager = %ReactionQteManager
 @onready
 var range_challege: RangeChallenge = %RangeChallenge
+@onready
+var melee_combo: MeleeCombo = %MeleeCombo
 
 
 func _ready() -> void:

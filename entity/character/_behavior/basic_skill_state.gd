@@ -5,6 +5,7 @@ func enter() -> void:
 	super.enter()
 	_started = true
 	_hit_targets()
+	_character.animator.play_directional(skill.character_animation)
 
 
 func update(delta : float) -> State:
