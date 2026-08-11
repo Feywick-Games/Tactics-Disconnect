@@ -202,5 +202,5 @@ texture = ExtResource("3_h77kg")
 offset = Vector2(0, -17)
 vframes = 3
 
-[node name="ActionAnimator" parent="." index="5" unique_id=2058618678]
+[node name="ActionAnimator" parent="." index="4" unique_id=2058618678]
 libraries/ = SubResource("AnimationLibrary_65p3h")
