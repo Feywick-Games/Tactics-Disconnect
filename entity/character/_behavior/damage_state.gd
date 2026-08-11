@@ -41,3 +41,7 @@ func exit() -> void:
 	super.exit()
 	if _character.health <= 0:
 		_character.die()
+		
+		
+func on_cheer() -> void:
+	_damage_multiplier += .25

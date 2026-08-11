@@ -2,6 +2,7 @@ class_name SkillState
 extends State
 
 signal impact
+signal cheered
 
 const DEFAULT_DESIRED_TARGET_PCT: float = .75
 
@@ -72,7 +73,10 @@ func _set_targets() -> void:
 
 func on_cheer(success: bool) -> void:
 	if success:
-		_multiplier += .25
+		for target: Character in targets:
+			var damage_state := target.state_machine.current_state as DamageState
+			if damage_state:
+				damage_state.on_cheer()
 
 
 func on_get_behind_me(pause: bool) -> void:
