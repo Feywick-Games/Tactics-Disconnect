@@ -37,6 +37,8 @@ func update(delta: float) -> State:
 
 
 func _hit_targets() -> void:
+	if _character is Ally:
+		_character.play_actor_status(true, mini_game.success)
 	_character.animator.play_directional(skill.character_animation, _direction)
 	_started = true
 	_push_distance = round(mini_game.value * _push_distance)

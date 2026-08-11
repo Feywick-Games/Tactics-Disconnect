@@ -114,6 +114,7 @@ func start_turn(highlight_range: SkillHighlightRange, skill_error_callback: Call
 	active_skill = basic_skill
 	health_bar.show()
 	
+	@warning_ignore("incompatible_ternary")
 	var turn_state: TurnState = AllyTurnState.new(highlight_range) if self is Ally else EnemyTurnState.new(highlight_range)
 	turn_state.skill_error_encountered.connect(skill_error_callback)
 	
@@ -304,3 +305,15 @@ func display_modified_status(tiles: Array[Vector2i], status_effects: Array[Statu
 
 func request_skill_text(skill_name: String) -> void:
 	skill_text_requested.emit(skill_name)
+
+
+func play_actor_status(mini_game := false, perfect := false) -> void:
+		if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_TIME_PERCENT:
+			status_label_manager.play_actor_status("quick")
+		elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_TIME_PERCENT:
+			status_label_manager.play_actor_status("slow")
+		if mini_game:
+			if perfect:
+				status_label_manager.play_actor_status("perfect")
+			else:
+				status_label_manager.play_actor_status("miss")

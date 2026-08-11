@@ -73,3 +73,7 @@ func _on_animation_completed(_anim: String) -> void:
 
 func set_damage_value() -> void:
 	status_label.text = str(_damage_value)
+	
+	
+func play_actor_status(anim: String) -> void:
+	animator.queue(anim)

@@ -46,6 +46,12 @@ func update(delta: float) -> State:
 
 
 func _hit_targets() -> void:
+	if _character is Ally:
+		if mini_game:
+			_character.play_actor_status(true, mini_game.success)
+		else:
+			_character.play_actor_status()
+	
 	for target in targets:
 		var damage_state := DamageState.new(skill, _direction, impact, _multiplier)
 		target.set_state(damage_state)

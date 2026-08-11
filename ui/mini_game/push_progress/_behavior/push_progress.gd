@@ -46,4 +46,6 @@ func _end() -> void:
 	await get_tree().create_timer(1).timeout
 	completed = true
 	value = _push_progress_bar.value / _push_progress_bar.max_value
+	if _push_progress_bar.value == _push_progress_bar.max_value:
+		success = true
 	hide()

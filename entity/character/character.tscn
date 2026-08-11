@@ -9,6 +9,7 @@
 [ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="4_eqor8"]
 [ext_resource type="Script" uid="uid://cuotsodjscwta" path="res://entity/character/_behavior/status_label_manager.gd" id="6_1nyw1"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="9_uenv8"]
+[ext_resource type="Texture2D" uid="uid://db5y7q2eu58n0" path="res://entity/character/_sprite/dialogue.png" id="10_4wfim"]
 
 [sub_resource type="Animation" id="Animation_2gelk"]
 length = 0.001
@@ -86,7 +87,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-19, -64), Vector2(-19, -79)]
+"values": [Vector2(-27, -64), Vector2(-27, -79)]
 }
 tracks/3/type = "method"
 tracks/3/imported = false
@@ -179,11 +180,206 @@ tracks/4/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_4wfim"]
+resource_name = "perfect"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.709804, 0.960784, 0.901961, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.0941176, 0.305882, 0.419608, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../StatusLabelManager/StatusLabel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-27, -64), Vector2(-27, -79)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../StatusLabelManager/StatusLabel:text")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["PERFECT"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../StatusLabelManager:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_gjpiq"]
+resource_name = "quick"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.82007766, 0.94828886, 0.73008895, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.13679975, 0.3304245, 0.20315802, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../StatusLabelManager/StatusLabel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-27, -64), Vector2(-27, -79)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../StatusLabelManager/StatusLabel:text")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["QUICK"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../StatusLabelManager:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_7xsq3"]
+resource_name = "slow"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.9821208, 0.87196314, 0.85167795, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.463623, 0.17936143, 0.1554302, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../StatusLabelManager/StatusLabel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-27, -64), Vector2(-27, -79)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../StatusLabelManager/StatusLabel:text")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["SLOW"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../StatusLabelManager:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2no37"]
 _data = {
 &"RESET": SubResource("Animation_2gelk"),
 &"hit": SubResource("Animation_leh64"),
-&"miss": SubResource("Animation_clwql")
+&"miss": SubResource("Animation_clwql"),
+&"perfect": SubResource("Animation_4wfim"),
+&"quick": SubResource("Animation_gjpiq"),
+&"slow": SubResource("Animation_7xsq3")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_laiw5"]
@@ -196,7 +392,6 @@ shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 y_sort_enabled = true
 collision_layer = 0
 script = ExtResource("1_84jh7")
-_evasion = 5
 
 [node name="HealthBar" type="TextureProgressBar" parent="." unique_id=1956210959]
 z_index = 1
@@ -235,10 +430,12 @@ theme_override_font_sizes/font_size = 8
 horizontal_alignment = 1
 
 [node name="StatusLabelManager" type="Control" parent="." unique_id=1517281646]
+z_index = 1
 layout_mode = 3
 anchors_preset = 0
+offset_top = 20.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 60.0
 pivot_offset = Vector2(10, -19)
 script = ExtResource("6_1nyw1")
 
@@ -250,14 +447,14 @@ libraries/ = SubResource("AnimationLibrary_2no37")
 layout_mode = 0
 offset_left = -19.0
 offset_top = -64.0
-offset_right = 21.0
+offset_right = 37.0
 offset_bottom = -41.0
 theme_override_colors/font_color = Color(0.968627, 0.968627, 0.960784, 1)
 theme_override_colors/font_outline_color = Color(0.0470588, 0.0352941, 0.0509804, 1)
 theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("4_eqor8")
 theme_override_font_sizes/font_size = 8
-text = "MISS"
+text = "PERFECT"
 horizontal_alignment = 1
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
@@ -273,3 +470,10 @@ script = ExtResource("2_vs4rm")
 
 [node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=846521504]
 script = ExtResource("9_uenv8")
+
+[node name="DialolgueSprite" type="Sprite2D" parent="." unique_id=536689254]
+visible = false
+position = Vector2(-10, -36)
+texture = ExtResource("10_4wfim")
+hframes = 5
+vframes = 7
