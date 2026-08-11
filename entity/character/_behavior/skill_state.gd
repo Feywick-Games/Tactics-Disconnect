@@ -13,7 +13,7 @@ var _desired_target_count: int
 var mini_game: MiniGame
 var ui: CombatUI
 var impact_time: float = 1.0
-var _direction: Vector2i
+var direction: Vector2i
 var _time_in_state: float
 var _multiplier: float = 1.0
 var _impact_emitted := false
@@ -25,15 +25,15 @@ func _init(character: Character, i_skill: Skill, target_tile_: Vector2i) -> void
 	skill = i_skill
 	_desired_target_count = round(skill.aoe.size() * DEFAULT_DESIRED_TARGET_PCT)
 	_character = character
+	direction = VectorF.snap_direction(target_tile - _character.current_tile)
+	_set_targets()
 
 
 func enter() -> void:
 	super.enter()
-	_direction = VectorF.snap_direction(target_tile - _character.current_tile)
-	impact_time = _character.get_impact_time(_character.animator.get_directional_animation_name(skill.character_animation, _direction))
+	impact_time = _character.get_impact_time(_character.animator.get_directional_animation_name(skill.character_animation, direction))
 	if skill.name != "":
 		_character.request_skill_text(skill.name)
-	_set_targets()
 
 
 func update(delta: float) -> State:
@@ -53,16 +53,16 @@ func _hit_targets() -> void:
 			_character.play_actor_status()
 	
 	for target in targets:
-		var damage_state := DamageState.new(skill, _direction, impact, _multiplier)
+		var damage_state := DamageState.new(skill, direction, impact, _multiplier)
 		target.set_state(damage_state)
 
 
 func _set_targets() -> void:
 	for tile_offset in skill.aoe:
 		var tile: Vector2i
-		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(Vector2(_direction).angle()).round())
+		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(Vector2(direction).angle()).round())
 		if skill.range_type == Combat.RangeType.MELEE:
-			tile = _character.current_tile + Vector2i(_direction) + offset_rotated
+			tile = _character.current_tile + Vector2i(direction) + offset_rotated
 		else:
 			tile = target_tile + offset_rotated
 		var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile)

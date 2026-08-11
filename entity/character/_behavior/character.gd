@@ -69,6 +69,7 @@ func _ready() -> void:
 
 func start_encounter() -> void:
 	animator.play_directional("idle", facing)
+	animator.advance(0)
 	health = max_health
 	health_bar.max_value = max_health
 	health_bar.value = health
@@ -109,13 +110,13 @@ func process_status_effect(effect: StatusEffect) -> void:
 		_movement_modifier += effect.value
 
 
-func start_turn(highlight_range: SkillHighlightRange, skill_error_callback: Callable) -> void:
+func start_turn(turn_data: TurnData, skill_error_callback: Callable) -> void:
 	health_bar.value = health
 	active_skill = basic_skill
 	health_bar.show()
 	
 	@warning_ignore("incompatible_ternary")
-	var turn_state: TurnState = AllyTurnState.new(highlight_range) if self is Ally else EnemyTurnState.new(highlight_range)
+	var turn_state: TurnState = AllyTurnState.new(turn_data) if self is Ally else EnemyTurnState.new(turn_data)
 	turn_state.skill_error_encountered.connect(skill_error_callback)
 	
 	if self is Ally:
@@ -283,24 +284,36 @@ func _calc_damage_multiplier(direction: Vector2i) -> float:
 	return multiplier
 
 
-func display_modified_status(tiles: Array[Vector2i], status_effects: Array[StatusEffect], direction: Vector2i) -> void:
-	if current_tile in tiles:
+func display_modified_status(skill_state: SkillState) -> void:
+	if self in skill_state.targets:
 		health_bar.show()
-		
 		highlight()
 	else:
 		highlight(false)
 		return
 
-	var multiplier: float = _calc_damage_multiplier(direction)
+	var multiplier: float = _calc_damage_multiplier(skill_state.direction)
 
-	for base_effect: StatusEffect in status_effects:
+	for base_effect: StatusEffect in skill_state.skill.status_effects:
 		var effect: StatusEffect = base_effect.duplicate()
 		effect.value = round(effect.value * multiplier)
 		if effect.status == Combat.Status.HIT:
 			health_bar.value = health - round(effect.value)
 		else:
 			status_label_manager.preview(effect)
+
+
+func can_react(turn_data: TurnData) -> bool:
+	if turn_data.active_skill_state:
+		var skill_state: SkillState = turn_data.active_skill_state
+		
+		for effected_unit: Character in skill_state.targets:
+			for reaction: Reaction in reactions:
+				var reaction_state: ReactionState = reaction.state.new(reaction, self, effected_unit)
+				if reaction_state.can_use(skill_state.skill, turn_data.active_unit):
+					return true
+	return false
+	
 
 
 func request_skill_text(skill_name: String) -> void:
@@ -317,3 +330,20 @@ func play_actor_status(mini_game := false, perfect := false) -> void:
 				status_label_manager.play_actor_status("perfect")
 			else:
 				status_label_manager.play_actor_status("miss")
+	
+	
+func play_dialogue(anim: String = "") -> void:
+	var dialogue_sprite: Sprite2D = $DialolgueSprite
+	var dialogue_animation_player: AnimationPlayer = $DialolgueSprite/AnimationPlayer
+	if anim != "":
+		if facing == Vector2i.RIGHT:
+			dialogue_sprite.position.x = -abs(dialogue_sprite.position.x)
+			dialogue_sprite.flip_h = false
+		elif facing == Vector2i.LEFT:
+			dialogue_sprite.flip_h = true
+			dialogue_sprite.position.y = abs(dialogue_sprite.position.x)
+		dialogue_animation_player.play("speak")
+		dialogue_animation_player.queue(anim)
+	else:
+		dialogue_sprite.hide()
+		dialogue_animation_player.stop()

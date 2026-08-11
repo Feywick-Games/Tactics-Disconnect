@@ -1,20 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://0vhq1ufxesi7"]
+[gd_scene format=3 uid="uid://0vhq1ufxesi7"]
 
 [ext_resource type="PackedScene" uid="uid://bcnpnplhpud5y" path="res://ui/turn_display/_packed_scene/turn_portrait.tscn" id="1_53y1h"]
 [ext_resource type="Texture2D" uid="uid://ccjmy2rvtwx3p" path="res://entity/character/ally/mei/_sprite/mei_turn_portrait_small.png" id="2_nqiec"]
 [ext_resource type="Texture2D" uid="uid://cvykfdprxavd1" path="res://entity/character/ally/mei/_sprite/mei_turn_portrait.png" id="2_o5jgp"]
 [ext_resource type="FontFile" uid="uid://c5u4kdxxyrrmr" path="res://ui/font/dogicabold.ttf" id="4_qjxri"]
 
-[node name="MeiTurnPortrait" instance=ExtResource("1_53y1h")]
+[node name="MeiTurnPortrait" unique_id=1593513480 instance=ExtResource("1_53y1h")]
 
-[node name="SmallPortrait" parent="." index="1"]
+[node name="SmallPortrait" parent="." index="1" unique_id=1066073387]
 texture = ExtResource("2_nqiec")
 hframes = 1
 
-[node name="FullPortrait" parent="." index="2"]
+[node name="FullPortrait" parent="." index="2" unique_id=102064676]
 texture = ExtResource("2_o5jgp")
 
-[node name="Label2" type="Label" parent="FullPortrait" index="0"]
+[node name="Label2" type="Label" parent="FullPortrait" index="0" unique_id=1360785075]
 offset_left = 2.0
 offset_top = 53.0
 offset_right = 61.0

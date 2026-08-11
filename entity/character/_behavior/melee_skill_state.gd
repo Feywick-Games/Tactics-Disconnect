@@ -11,6 +11,6 @@ func update(delta:float) -> State:
 
 func _hit_targets() -> void:
 	_started = true
-	_character.animator.play_directional(skill.character_animation, _direction)
+	_character.animator.play_directional(skill.character_animation, direction)
 	_multiplier = mini_game.value
 	super._hit_targets()

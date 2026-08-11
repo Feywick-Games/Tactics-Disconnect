@@ -16,11 +16,11 @@ var _start_tile: Vector2i
 var _exiting := false
 var _encounter_ended := false
 var _highlighted_tile: Vector2i
-var _skill_highlight_range: SkillHighlightRange
 var _moving := false
+var _turn_data: TurnData
 
-func _init(highlight_range: SkillHighlightRange) -> void:
-	_skill_highlight_range = highlight_range
+func _init(turn_data: TurnData) -> void:
+	_turn_data = turn_data
 
 
 func enter() -> void:
@@ -66,6 +66,7 @@ func end_turn() -> void:
 
 func exit() -> void:
 	GameState.current_level.reset_map()
+	_turn_data.active_skill_state = null
 
 
 func _select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) -> State:
@@ -88,10 +89,6 @@ func _highlight_targets(target_tile: Vector2i) -> void:
 	GameState.current_level.reset_map()
 	_character.update_ranges(_movement_range)
 		
-	var highlighted_tiles: Array[Vector2i] = _character.active_skill.highlight_targets(_character.current_tile, target_tile, _attack_range.range_tiles, direction)
+	_character.active_skill.highlight_targets(_character.current_tile, target_tile, _attack_range.range_tiles, direction)
 
-	_skill_highlight_range = SkillHighlightRange.new()
-	_skill_highlight_range.tiles = highlighted_tiles
-	_skill_highlight_range.status_effects = _character.active_skill.status_effects
-	_skill_highlight_range.direction = direction
-	_skill_highlight_range.is_ally = _character is Ally
+	_turn_data.active_skill_state = _character.active_skill.state.new(_character, _character.active_skill, target_tile)

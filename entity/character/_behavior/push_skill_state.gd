@@ -22,7 +22,7 @@ func enter() -> void:
 	super.enter()
 	_target_unit = GameState.current_level.grid.get_unit_from_tile(target_tile)
 	_push_range = [target_tile]
-	_direction =  Vector2i(Vector2(target_tile - _character.current_tile).normalized().round())
+	direction =  Vector2i(Vector2(target_tile - _character.current_tile).normalized().round())
 	_push_distance = round(skill.push_position.length())
 
 
@@ -39,18 +39,18 @@ func update(delta: float) -> State:
 func _hit_targets() -> void:
 	if _character is Ally:
 		_character.play_actor_status(true, mini_game.success)
-	_character.animator.play_directional(skill.character_animation, _direction)
+	_character.animator.play_directional(skill.character_animation, direction)
 	_started = true
 	_push_distance = round(mini_game.value * _push_distance)
 	
 	for i in range(1, _push_distance + 1):
-		if GameState.current_level.grid.region.has_point(target_tile + (_direction * i)) \
-		and not GameState.current_level.grid.is_point_solid(target_tile + (_direction * i)):
+		if GameState.current_level.grid.region.has_point(target_tile + (direction * i)) \
+		and not GameState.current_level.grid.is_point_solid(target_tile + (direction * i)):
 			_max_push_distance += 1
 		else:
 			break
 	
-	var collision_point := target_tile + (_direction * (_max_push_distance + 1))
+	var collision_point := target_tile + (direction * (_max_push_distance + 1))
 	if GameState.current_level.grid.region.has_point(collision_point) and \
 	GameState.current_level.grid.is_point_solid(collision_point):
 		_max_is_collision = true
@@ -63,12 +63,11 @@ func _hit_targets() -> void:
 		_max_push_distance, Combat.RangeShape.CROSS, true, true
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
-	_push_tile_path = _astar.get_id_path(target_tile, target_tile + (_direction * _max_push_distance))	
-	var push_damage_state := PushDamageState.new(_push_tile_path, skill, _direction, impact, _multiplier)
+	_push_tile_path = _astar.get_id_path(target_tile, target_tile + (direction * _max_push_distance))	
+	var push_damage_state := PushDamageState.new(_push_tile_path, skill, direction, impact, _multiplier)
 	_target_unit.set_state(push_damage_state)
 	if _o_target:
-		var damage_state := DamageState.new(skill, _direction, push_damage_state.collided, _multiplier)
+		var damage_state := DamageState.new(skill, direction, push_damage_state.collided, _multiplier)
 		_o_target.set_state(damage_state)
-
 	
 	push_time = float(_push_distance * Global.TILE_SIZE.x) / float(Global.PLAYER_SPEED)
