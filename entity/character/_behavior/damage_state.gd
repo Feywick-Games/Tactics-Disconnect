@@ -8,13 +8,14 @@ var _character: Character
 var _damage_taken: bool
 var _hit := false
 
-
-func _init(skill: Skill, direction: Vector2, hit_signal: Signal, multiplier: float = 1) -> void:
+func _init(skill: Skill, direction: Vector2, hit_signal: Signal, multiplier: float = 1, ignore_signal := false) -> void:
 	_skill = skill
 	_direction = direction
 	_damage_multiplier = multiplier
-	hit_signal.connect(_on_hit)
-
+	if not ignore_signal:
+		hit_signal.connect(_on_hit)
+	else:
+		_hit = true
 
 func enter() -> void:
 	super.enter()

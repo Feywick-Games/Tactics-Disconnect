@@ -310,7 +310,7 @@ func can_react(turn_data: TurnData) -> bool:
 		for effected_unit: Character in skill_state.targets:
 			for reaction: Reaction in reactions:
 				var reaction_state: ReactionState = reaction.state.new(reaction, self, effected_unit)
-				if reaction_state.can_use(skill_state.skill, turn_data.active_unit):
+				if reaction_state.can_use(skill_state, turn_data.active_unit):
 					return true
 	return false
 	

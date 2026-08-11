@@ -656,6 +656,7 @@ script = ExtResource("9_uenv8")
 
 [node name="DialolgueSprite" type="Sprite2D" parent="." unique_id=536689254]
 visible = false
+z_index = 1
 position = Vector2(-9, 0)
 texture = ExtResource("10_4wfim")
 offset = Vector2(-1, -36)

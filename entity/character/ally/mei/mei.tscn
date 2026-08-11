@@ -48,14 +48,16 @@ offset_right = 23.0
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
 material = SubResource("ShaderMaterial_2qvxt")
-position = Vector2(0, 0)
+position = Vector2(0, -2)
 texture = ExtResource("13_f7r05")
 offset = Vector2(0, -14)
 vframes = 3
 
-[node name="CollisionShape2D" parent="." index="4" unique_id=974221274]
-position = Vector2(-1, -1)
-
-[node name="ActionAnimator" parent="." index="5" unique_id=2058618678]
+[node name="ActionAnimator" parent="." index="4" unique_id=2058618678]
 libraries/ = ExtResource("14_donae")
 speed_scale = 0.526
+
+[node name="DialolgueSprite" parent="." index="7" unique_id=536689254]
+z_index = 0
+position = Vector2(-10, -36)
+offset = Vector2(0, 0)

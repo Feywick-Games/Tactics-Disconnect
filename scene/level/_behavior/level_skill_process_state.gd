@@ -52,7 +52,7 @@ func _set_reaction_states() -> void:
 			if reacting_unit != _level.active_unit and reacting_unit != effected_unit:
 				for reaction: Reaction in reacting_unit.reactions:
 					var reaction_state: ReactionState = reaction.state.new(reaction, reacting_unit, effected_unit)
-					if reaction_state.can_use(_level.active_unit.active_skill, _level.active_unit):
+					if reaction_state.can_use(skill_state, _level.active_unit):
 						if skill_state is PushSkillState and reaction_state is CheapShotReactionState:
 							continue
 						_reacting_units.append(reacting_unit)
@@ -62,7 +62,7 @@ func _set_reaction_states() -> void:
 								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1,skill_state.impact_time))
 								_level.ui.reaction_qte_manager.reacted.connect(skill_state.on_cheer)
 							elif reaction_state is CollisionReactionState:
-								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1, (skill_state as PushSkillState).push_time))
+								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1, skill_state.impact_time + (skill_state as PushSkillState).push_time))
 							elif reaction_state is GetBehindMeReactionState:
 								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1, skill_state.impact_time))
 								_level.ui.reaction_qte_manager.reacted.connect(skill_state.get_behind_me)

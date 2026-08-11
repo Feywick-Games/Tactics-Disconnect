@@ -114,7 +114,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_phexs")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="MeiSpawnPoint" type="Node2D" parent="." unique_id=1680334307]
-position = Vector2(595, 105)
+position = Vector2(625, 135)
 script = ExtResource("21_sldol")
 is_ally = true
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_34pil")])

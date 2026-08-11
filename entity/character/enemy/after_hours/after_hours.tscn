@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dgew18uoinubo" path="res://entity/character/enemy/after_hours/_sprite/after_hours.png" id="3_g8ufo"]
 [ext_resource type="Texture2D" uid="uid://p4sh1s8cvllw" path="res://entity/character/enemy/after_hours/_sprite/after_hours_turn_portrait_small.png" id="3_yossf"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d0if8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yossf"]
 resource_local_to_scene = true
 shader = ExtResource("2_g8ufo")
 shader_parameter/highlighted = false
@@ -18,5 +18,6 @@ turn_portrait_scene = ExtResource("2_d0if8")
 small_portrait = ExtResource("3_yossf")
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_d0if8")
+material = SubResource("ShaderMaterial_yossf")
+position = Vector2(0, 4)
 texture = ExtResource("3_g8ufo")

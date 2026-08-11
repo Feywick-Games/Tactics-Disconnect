@@ -5,7 +5,6 @@ const TIME_PER_INCREMENT: float = .3
 const TIME_TO_EXIT: float = 1.0
 const TIME_TO_PUSH: float = 3.0
 
-var _push_range: Array[Vector2i]
 var increment: int = 0
 var _max_push_distance: int = 0
 var _target_unit: Character
@@ -17,13 +16,17 @@ var _astar: AStarGrid2D
 var pushing: bool = false
 var push_time: float
 
+var push_distance: int:
+	get:
+		return _push_distance
+var max_push_distance: int:
+	get:
+		return _max_push_distance
 
-func enter() -> void:
-	super.enter()
-	_target_unit = GameState.current_level.grid.get_unit_from_tile(target_tile)
-	_push_range = [target_tile]
-	direction =  Vector2i(Vector2(target_tile - _character.current_tile).normalized().round())
-	_push_distance = round(skill.push_position.length())
+func _init(character: Character, i_skill: Skill, target_tile_: Vector2i) -> void:
+	_push_distance = round(i_skill.push_position.length())
+	super._init(character, i_skill, target_tile_)
+	push_time = float(_max_push_distance * Global.TILE_SIZE.x) / float(Global.PLAYER_SPEED)
 
 
 func update(delta: float) -> State:
@@ -36,13 +39,10 @@ func update(delta: float) -> State:
 	return super.update(delta)
 
 
-func _hit_targets() -> void:
-	if _character is Ally:
-		_character.play_actor_status(true, mini_game.success)
-	_character.animator.play_directional(skill.character_animation, direction)
-	_started = true
-	_push_distance = round(mini_game.value * _push_distance)
-	
+
+func _set_targets() -> void:
+	super._set_targets()
+	_target_unit = GameState.current_level.grid.get_unit_from_tile(target_tile)
 	for i in range(1, _push_distance + 1):
 		if GameState.current_level.grid.region.has_point(target_tile + (direction * i)) \
 		and not GameState.current_level.grid.is_point_solid(target_tile + (direction * i)):
@@ -56,9 +56,18 @@ func _hit_targets() -> void:
 		_max_is_collision = true
 		
 		var unit := GameState.current_level.grid.get_unit_from_tile(collision_point)
-		
+		targets.append(unit)
 		if unit and unit is Ally != _character is Ally:
 			_o_target = unit
+
+
+func _hit_targets() -> void:
+	_multiplier = .5 if not mini_game.success else 1.0
+	if _character is Ally:
+		_character.play_actor_status(true, mini_game.success)
+	_character.animator.play_directional(skill.character_animation, direction)
+	_started = true
+	
 	var skill_range: RangeStruct = GameState.current_level.grid.request_range(target_tile, 0, 
 		_max_push_distance, Combat.RangeShape.CROSS, true, true
 	)
@@ -69,5 +78,3 @@ func _hit_targets() -> void:
 	if _o_target:
 		var damage_state := DamageState.new(skill, direction, push_damage_state.collided, _multiplier)
 		_o_target.set_state(damage_state)
-	
-	push_time = float(_push_distance * Global.TILE_SIZE.x) / float(Global.PLAYER_SPEED)

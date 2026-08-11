@@ -4,7 +4,6 @@ extends DamageState
 signal collided
 
 var _tile_path: Array[Vector2i]
-var _is_pushing := false
 
 func _init(tile_path: Array[Vector2i],
 skill: Skill, direction: Vector2, impact_signal: Signal, multiplier: float = 1) -> void:
@@ -17,20 +16,17 @@ func enter() -> void:
 	_character.health_bar.show()
 	_character.animator.play_directional("idle", _direction * -1)
 	_character.facing = _direction * -1
-	_is_pushing = true
-
 
 func update(delta: float) -> State:
 	var parent_state: State = super.update(delta)
 	if parent_state:
-		return parent_state
+		if _tile_path.is_empty():
+			return parent_state
 	
-	if _is_pushing:
+	if _damage_taken:
 		if not _tile_path.is_empty():
 			_tile_path = _character.process_movement(delta, _tile_path, "")
 		else:
 			GameState.current_level.grid.update_unit_registry(_character.current_tile, _character)
 			collided.emit()
-			_is_pushing = false
-			_hit = true
 	return

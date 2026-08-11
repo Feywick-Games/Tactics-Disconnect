@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://data/skill/push_skill.tres" id="5_fsllm"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="6_153dm"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="8_8qh5r"]
+[ext_resource type="Resource" uid="uid://cwkld7s34m6sk" path="res://entity/character/_skill/collision_reaction.tres" id="9_8qh5r"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="9_fsllm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yu75v"]
@@ -17,18 +18,13 @@ shader = ExtResource("6_153dm")
 shader_parameter/highlighted = false
 shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p01wl"]
-size = Vector2(12, 6)
-
 [node name="Ally" unique_id=264392964 groups=["ally"] instance=ExtResource("1_sdb2p")]
-collision_layer = 4
-collision_mask = 3
 script = ExtResource("2_dd86s")
 skill_deck = Array[ExtResource("3_yu75v")]([ExtResource("4_8qh5r"), ExtResource("5_fsllm"), ExtResource("4_8qh5r"), ExtResource("5_fsllm"), ExtResource("5_fsllm"), ExtResource("4_8qh5r"), ExtResource("4_8qh5r"), ExtResource("5_fsllm"), ExtResource("4_8qh5r"), ExtResource("5_fsllm")])
 skills_dealt = 5
 character_name = "Ally"
 turn_portrait_scene = ExtResource("3_ugt4g")
-reactions = Array[ExtResource("8_8qh5r")]([ExtResource("9_fsllm")])
+reactions = Array[ExtResource("8_8qh5r")]([ExtResource("9_fsllm"), ExtResource("9_8qh5r")])
 
 [node name="CharacterSprite" parent="." index="2" unique_id=129952542]
 material = SubResource("ShaderMaterial_yu75v")
@@ -40,7 +36,3 @@ offset = Vector2(0, -20)
 target_desired_distance = 32.0
 avoidance_enabled = true
 radius = 20.0
-
-[node name="CollisionShape2D" parent="." index="4" unique_id=974221274]
-position = Vector2(-0.5, -2)
-shape = SubResource("RectangleShape2D_p01wl")

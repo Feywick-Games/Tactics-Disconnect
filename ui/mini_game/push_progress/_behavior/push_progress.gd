@@ -1,8 +1,7 @@
 class_name PushProgress
 extends MiniGame
 
-const PUSH_TIMER_SCALE: float = 1.5
-const PUSH_PROGRESS_SCALE: float = 6
+const PUSH_PROGRESS_SCALE: float = 4
 
 var _running := false
 var _time_progressing : float = 0
@@ -19,7 +18,7 @@ func start(distance: int) -> void:
 	show()
 	_running = true
 	_push_timer_bar.value = 0
-	_push_timer_bar.max_value = distance * PUSH_TIMER_SCALE
+	_push_timer_bar.max_value = 3
 	_push_timer_bar.step = .1
 	_push_progress_bar.value = 0
 	_push_progress_bar.max_value = distance * PUSH_PROGRESS_SCALE
