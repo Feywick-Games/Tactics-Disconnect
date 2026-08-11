@@ -48,6 +48,7 @@ func _set_reaction_states() -> void:
 	_targets = skill_state.targets
 	
 	for effected_unit: Character in _targets:
+		var cheer_reacting_id: int = 0
 		for reacting_unit in _level.get_unit_list():
 			if reacting_unit != _level.active_unit and reacting_unit != effected_unit:
 				for reaction: Reaction in reacting_unit.reactions:
@@ -59,8 +60,13 @@ func _set_reaction_states() -> void:
 						reacting_unit.set_state(reaction_state)
 						if reacting_unit is Ally:
 							if reaction_state is CheerReactionState:
+								reaction_state.id = cheer_reacting_id
+								cheer_reacting_id += 1
+								var cheer_reaction_state := reaction_state as CheerReactionState
 								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1,skill_state.impact_time))
-								_level.ui.reaction_qte_manager.reacted.connect(skill_state.on_cheer)
+								if not _level.ui.reaction_qte_manager.reacted.is_connected(skill_state.on_cheer):
+									_level.ui.reaction_qte_manager.reacted.connect(skill_state.on_cheer)
+								_level.ui.reaction_qte_manager.reacted.connect(cheer_reaction_state.qte_succeeded)
 							elif reaction_state is CollisionReactionState:
 								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1, skill_state.impact_time + (skill_state as PushSkillState).push_time))
 							elif reaction_state is GetBehindMeReactionState:
@@ -68,7 +74,8 @@ func _set_reaction_states() -> void:
 								_level.ui.reaction_qte_manager.reacted.connect(skill_state.get_behind_me)
 							elif reaction_state is CheapShotReactionState:
 								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1, skill_state._character.animator.get_section_end_time()))
-							_level.ui.reaction_qte_manager.reacted.connect(reaction_state.qte_succeeded)
+							if not _level.ui.reaction_qte_manager.reacted.is_connected(reaction_state.qte_succeeded):
+								_level.ui.reaction_qte_manager.reacted.connect(reaction_state.qte_succeeded)
 						else:
 							reaction_state.qte_succeeded(true)
 						break
