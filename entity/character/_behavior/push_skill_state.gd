@@ -62,7 +62,7 @@ func _set_targets() -> void:
 
 
 func _hit_targets() -> void:
-	_multiplier = .5 if not mini_game.success else 1.0
+	_multiplier *= .5 if not mini_game.success else 1.0
 	if _character is Ally:
 		_character.play_actor_status(true, mini_game.success)
 	_character.animator.play_directional(skill.character_animation, direction)
