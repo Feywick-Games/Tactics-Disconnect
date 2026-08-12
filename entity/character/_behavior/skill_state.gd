@@ -2,7 +2,6 @@ class_name SkillState
 extends State
 
 signal impact
-signal cheered
 
 const DEFAULT_DESIRED_TARGET_PCT: float = .75
 
@@ -19,14 +18,16 @@ var _time_in_state: float
 var _multiplier: float = 1.0
 var _impact_emitted := false
 var _started := false
+var _current_tile : Vector2i
 
 
-func _init(character: Character, i_skill: Skill, target_tile_: Vector2i) -> void:
+func _init(character: Character, i_skill: Skill, target_tile_: Vector2i, current_tile_override := Vector2i.MAX) -> void:
+	_current_tile = character.current_tile if current_tile_override == Vector2i.MAX else current_tile_override
 	target_tile = target_tile_
 	skill = i_skill
 	_desired_target_count = round(skill.aoe.size() * DEFAULT_DESIRED_TARGET_PCT)
 	_character = character
-	direction = VectorF.snap_direction(target_tile - _character.current_tile)
+	direction = VectorF.snap_direction(target_tile - _current_tile)
 	_set_targets()
 
 
@@ -63,7 +64,7 @@ func _set_targets() -> void:
 		var tile: Vector2i
 		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(Vector2(direction).angle()).round())
 		if skill.range_type == Combat.RangeType.MELEE:
-			tile = _character.current_tile + Vector2i(direction) + offset_rotated
+			tile = _current_tile + Vector2i(direction) + offset_rotated
 		else:
 			tile = target_tile + offset_rotated
 		var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile)
@@ -91,22 +92,22 @@ func exit() -> void:
 			_character.special = null
 
 
-func calc_skill_likelihood(strike_tile : Vector2i) -> float:
+func calc_skill_likelihood() -> float:
 	
 	if not can_use() == Global.SkillErrorCode.OK:
 		return 0
 	
 	var attack_range : RangeStruct = GameState.current_level.grid.request_range(
-		strike_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct
+		_current_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct
 	)
 	
 	for tile in attack_range.range_tiles:
 		var target_count: int = 0
-		var direction := VectorF.snap_direction(Vector2(tile - strike_tile))
+		var tile_direction := VectorF.snap_direction(Vector2(tile - _current_tile))
 		for aoe_tile in skill.aoe:
-			aoe_tile = Vector2i(Vector2(aoe_tile).rotated(direction.angle()))
+			aoe_tile = Vector2i(Vector2(aoe_tile).rotated(tile_direction.angle()))
 			var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile + aoe_tile)
-			if unit != self and (unit is Ally) != (_character is Ally):
+			if unit != _character and (unit is Ally) != (_character is Ally):
 				target_count +=1
 				# NOTICE: removed the requirement to have a target in the target tile
 				if target_count >= _desired_target_count:
@@ -131,7 +132,7 @@ func can_use() -> Global.SkillErrorCode:
 	if skill.move_position != Vector2i.ZERO:
 		can_move = false
 		var move_tile: Vector2i  = Vector2i(Vector2(skill.move_position).rotated(Vector2(_character.facing).angle()).round())
-		move_tile = _character.current_tile + move_tile
+		move_tile = _current_tile + move_tile
 		if (skill.direct and not GameState.current_level.grid.is_point_solid_ignore_unit(move_tile)) \
 		or (not skill.direct and GameState.current_level.grid.is_point_solid(move_tile)):
 			can_move = true

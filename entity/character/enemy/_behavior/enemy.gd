@@ -1,7 +1,7 @@
 class_name Enemy
 extends Character
 
-const DISTANCE_PRIORITY: float = .5
+const DISTANCE_PRIORITY: float = .1
 
 @export_category("AI Prioritization")
 @export_range(0,1)

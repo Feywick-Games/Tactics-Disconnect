@@ -341,7 +341,7 @@ func play_dialogue(anim: String = "") -> void:
 			dialogue_sprite.flip_h = false
 		elif facing == Vector2i.LEFT:
 			dialogue_sprite.flip_h = true
-			dialogue_sprite.position.y = abs(dialogue_sprite.position.x)
+			dialogue_sprite.position.x = abs(dialogue_sprite.position.x)
 		dialogue_animation_player.play("speak")
 		dialogue_animation_player.queue(anim)
 	else:

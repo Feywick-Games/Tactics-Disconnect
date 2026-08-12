@@ -23,17 +23,24 @@ func update(_delta : float) -> State:
 
 func _prep_skill_state() -> void:
 	var skill_state: SkillState = _level.active_unit.state_machine.current_state
-	if skill_state is PushSkillState:
-		_mini_game = _level.ui.push_progress
-		_level.ui.push_progress.start((int(_level.active_unit.active_skill.push_position.length())))
-	elif skill_state is RangeSkillState:
-		_mini_game = _level.ui.range_challege
-		_level.ui.range_challege.start(_level.active_unit.current_tile, skill_state.target_tile)
-	elif skill_state is MeleeSkillState:
-		_mini_game = _level.ui.melee_combo
-		_level.ui.melee_combo.start(skill_state.skill.aoe.size())
-	if _mini_game:
-		skill_state.mini_game = _mini_game
+	if _level.active_unit is Ally:
+		if skill_state is PushSkillState:
+			_mini_game = _level.ui.push_progress
+			_level.ui.push_progress.start((int(_level.active_unit.active_skill.push_position.length())))
+		elif skill_state is RangeSkillState:
+			_mini_game = _level.ui.range_challege
+			_level.ui.range_challege.start(_level.active_unit.current_tile, skill_state.target_tile)
+		elif skill_state is MeleeSkillState:
+			_mini_game = _level.ui.melee_combo
+			_level.ui.melee_combo.start(skill_state.skill.aoe.size())
+		if _mini_game:
+			skill_state.mini_game = _mini_game
+	else:
+		var dummy_mini_game := MiniGame.new()
+		dummy_mini_game.completed = true
+		dummy_mini_game.value = 1
+		dummy_mini_game.success = true
+		skill_state.mini_game = dummy_mini_game
 
 
 func _dispatch_qtes() -> void:
