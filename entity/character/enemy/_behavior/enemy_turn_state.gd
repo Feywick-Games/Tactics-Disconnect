@@ -24,13 +24,12 @@ class TargetPriority:
 	
 	func  _init(target_to_calc: Character) -> void:
 		target = target_to_calc
-	
-	
+
 
 func enter() -> void:
 	super.enter()
 	_enemy = state_machine.state_owner as Enemy
-	_populate_ranges()
+	_populate_attack_ranges()
 	
 	var units_on_field: Array[Node] = _enemy.get_tree().get_nodes_in_group("ally")
 	units_on_field.shuffle()
@@ -45,13 +44,36 @@ func enter() -> void:
 	_target = _pick_target(target_list, all_allies)
 	if _target:
 		var target_tile: Vector2i = _pick_tile()
+		if target_tile == _enemy.current_tile:
+			# don't draw a movement if it's just going to flicker on
+			_movement_range = RangeStruct.new()
 		_attack_range = _enemy.update_ranges(_movement_range)
 		if _movement_astar:
 			_tile_path = _movement_astar.get_id_path(_enemy.current_tile, target_tile)
 
 
+func update(delta: float) -> State:
+	if not _exiting and _tile_path.is_empty() and _is_acting:
+		if _time_highlight >= HIGHLIGHT_TIME:
+			var next_state: State = _select_action(_target.current_tile, _attack_range, self)
+			return next_state
+		else:
+			_wait(delta)
+	elif _exiting or (_tile_path.is_empty() and not _is_acting):
+		_enemy.end_turn()
+		return CharacterIdleState.new()
+	return
 
-func _populate_ranges() -> void:
+
+func physics_update(delta: float) -> State:
+	var current_tile := _enemy.current_tile
+	super.physics_update(delta)
+	if current_tile != _enemy.current_tile:
+		_attack_range = _enemy.update_ranges(_movement_range)
+	return
+
+
+func _populate_attack_ranges() -> void:
 	for tile: Vector2i in _movement_range.range_tiles:
 		var valid_tiles := GameState.current_level.grid.request_range(tile, _enemy.basic_skill.min_range, _enemy.basic_skill.max_range, _enemy.basic_skill.range_shape, true)
 		_full_attack_range.absorb(valid_tiles)
@@ -71,22 +93,9 @@ func _populate_ranges() -> void:
 			
 			for unit: Character in units:
 				var skill_state: SkillState = _enemy.special.state.new(_enemy, _enemy.special, unit.current_tile)
-				if skill_state.can_use() == Global.SkillErrorCode.OK:
+				if skill_state.can_use(skill_range) == Global.SkillErrorCode.OK:
 					_full_special_range.range_tiles.append(unit.current_tile)
 
-
-
-func _calculate_custom_likelihood() -> float:
-	return 0.0
-
-
-func _take_custom_action() -> void:
-	pass
-	
-	
-	
-func _process_custom_action(_delta: float) -> void:
-	pass
 
 func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 	var current_target: Ally
@@ -119,16 +128,14 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 				var skill_likelihoods: Array[float] = []
 				for tile in _movement_range.range_tiles:
 					var basic_skill_state: SkillState = (_character.basic_skill.state.new(_character, _character.basic_skill, target.current_tile, tile) as SkillState)	
-					if target in basic_skill_state.targets:
-						skill_likelihoods.append(basic_skill_state.calc_skill_likelihood())
+					skill_likelihoods.append(basic_skill_state.calc_skill_likelihood())
 				target_priority.basic_skill_likelihood = skill_likelihoods.max()
 				target_priority.basic_skill_likelihood *= _enemy.basic_skill_priority
 			if _enemy.special and target.current_tile in _full_special_range.range_tiles:
 				var skill_likelihoods: Array[float] = []
 				for tile in _movement_range.range_tiles:
 					var special_skill_state: SkillState = (_character.special.state.new(_character, _character.special, target.current_tile, tile) as SkillState)	
-					if target in special_skill_state.targets:
-						skill_likelihoods.append(special_skill_state.calc_skill_likelihood())
+					skill_likelihoods.append(special_skill_state.calc_skill_likelihood())
 				target_priority.special_likelihood = skill_likelihoods.max()
 				target_priority.special_likelihood *= _enemy.special_priority
 		_is_acting = true
@@ -166,16 +173,23 @@ func _pick_tile() -> Vector2i:
 		var desired_favoribility: float = 0
 		var skill_range := GameState.current_level.grid.request_range(_target.current_tile, _enemy.active_skill.min_range, _enemy.active_skill.max_range, _enemy.active_skill.range_shape, true, _enemy.active_skill.direct)
 		_range_astar = _target.create_range_astar(skill_range, _enemy.active_skill.max_range)
+		var move_tiles: Array[Vector2i] = _movement_range.range_tiles.duplicate()
+		move_tiles.shuffle()
 		for tile in skill_range.range_tiles:
-			if tile in _movement_range.range_tiles:
+			if tile in move_tiles:
 				if _range_astar.region.has_point(tile):
 					var skill_state: SkillState = _enemy.active_skill.state.new(_enemy, _enemy.active_skill, _target.current_tile, tile)
 					if not _target in skill_state.targets:
 						continue
 					var likelihood: float = skill_state.calc_skill_likelihood()
 					# multiply by .1 to normalize at a value less than skill likelihood
-					var distance: float = float(_range_astar.get_id_path(_enemy.current_tile, tile).size()) / float(_enemy.movement_range) * .1
-					likelihood += .1 - distance
+					var tile_distance: float = float(_range_astar.get_id_path(_enemy.current_tile, tile).size())
+					var distance_preference: float = tile_distance / float(_enemy.movement_range) * Enemy.DISTANCE_PRIORITY
+					likelihood += Enemy.DISTANCE_PRIORITY - distance_preference
+					# prioritize using max skill range for ranged attacks
+					var target_distance: float = float(_range_astar.get_id_path(_target.current_tile, tile).size())
+					var range_preference: float = (target_distance / _enemy.active_skill.max_range) * _enemy.safety_priority
+					likelihood += range_preference
 					if likelihood > desired_favoribility:
 							desired_tile = tile
 							desired_favoribility = likelihood
@@ -183,30 +197,12 @@ func _pick_tile() -> Vector2i:
 	return desired_tile
 
 
-func update(delta: float) -> State:
-	if not _is_processing_custom:
-		if not _exiting and _tile_path.is_empty() and _is_acting:
-			if _time_highlight >= HIGHLIGHT_TIME:
-				var next_state: State = _select_action(_target.current_tile, _attack_range, self)
-				return next_state
-			else:
-				if not _has_highlighted:
-					_movement_range = RangeStruct.new()
-					_has_highlighted = true
-					_highlight_targets(_target.current_tile)
-				_time_highlight += delta
-		elif _exiting or (_tile_path.is_empty() and not _is_acting):
-			_enemy.end_turn()
-			return CharacterIdleState.new()
-	else:
-		_process_custom_action(delta)
-	
-	return
-
-
-func physics_update(delta: float) -> State:
-	var current_tile := _enemy.current_tile
-	super.physics_update(delta)
-	if current_tile != _enemy.current_tile:
-		_attack_range = _enemy.update_ranges(_movement_range)
-	return
+func _wait(delta: float) -> void:
+	if not _has_highlighted:
+		_movement_range = RangeStruct.new()
+		_has_highlighted = true
+		_highlight_targets(_target.current_tile)
+	_time_highlight += delta
+	if _character.facing != Vector2i(VectorF.snap_direction(_target.current_tile - _enemy.current_tile)):
+		_character.facing = Vector2i(VectorF.snap_direction(_target.current_tile - _enemy.current_tile))
+		_character.animator.play_directional("idle", _character.facing)

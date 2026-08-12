@@ -61,12 +61,7 @@ func _hit_targets() -> void:
 
 func _set_targets() -> void:
 	for tile_offset in skill.aoe:
-		var tile: Vector2i
-		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(Vector2(direction).angle()).round())
-		if skill.range_type == Combat.RangeType.MELEE:
-			tile = _current_tile + Vector2i(direction) + offset_rotated
-		else:
-			tile = target_tile + offset_rotated
+		var tile: Vector2i = _get_aoe_tile(target_tile, tile_offset)
 		var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile)
 		if unit:
 			targets.append(unit)
@@ -87,26 +82,24 @@ func on_get_behind_me(pause: bool) -> void:
 func exit() -> void:
 	super.exit()
 	_character.end_turn()
-	if _character is Ally:
-		if skill == _character.special:
-			_character.special = null
+	if skill == _character.special:
+		_character.special = null
 
 
 func calc_skill_likelihood() -> float:
-	
-	if not can_use() == Global.SkillErrorCode.OK:
-		return 0
 	
 	var attack_range : RangeStruct = GameState.current_level.grid.request_range(
 		_current_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct
 	)
 	
+	if not can_use(attack_range) == Global.SkillErrorCode.OK:
+		return 0
+	
 	for tile in attack_range.range_tiles:
 		var target_count: int = 0
-		var tile_direction := VectorF.snap_direction(Vector2(tile - _current_tile))
 		for aoe_tile in skill.aoe:
-			aoe_tile = Vector2i(Vector2(aoe_tile).rotated(tile_direction.angle()))
-			var unit: Character = GameState.current_level.grid.get_unit_from_tile(tile + aoe_tile)
+			aoe_tile = _get_aoe_tile(tile, aoe_tile)
+			var unit: Character = GameState.current_level.grid.get_unit_from_tile(aoe_tile)
 			if unit != _character and (unit is Ally) != (_character is Ally):
 				target_count +=1
 				# NOTICE: removed the requirement to have a target in the target tile
@@ -115,12 +108,19 @@ func calc_skill_likelihood() -> float:
 	return 0
 
 
-func can_use() -> Global.SkillErrorCode:
+func _get_aoe_tile(tile:Vector2i, offset: Vector2i) -> Vector2i:
+	return Vector2i(Vector2(offset).rotated(Vector2(direction).angle()).round()) + tile
+
+
+func can_use(attack_range: RangeStruct) -> Global.SkillErrorCode:
 	var target: Character
 	
+	if target_tile not in attack_range.range_tiles:
+		return Global.SkillErrorCode.UNREACHABLE
+	
 	for aoe_tile in skill.aoe:
-		var offset_rotated: = Vector2i(Vector2(aoe_tile).rotated(Vector2(_character.facing).angle()).round())
-		target = GameState.current_level.grid.get_unit_from_tile(target_tile + offset_rotated)
+		var tile: = _get_aoe_tile(target_tile, aoe_tile)
+		target = GameState.current_level.grid.get_unit_from_tile(tile)
 		if target:
 			break
 	

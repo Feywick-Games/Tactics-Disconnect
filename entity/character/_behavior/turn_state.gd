@@ -72,7 +72,7 @@ func exit() -> void:
 func _select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) -> State:
 	if tile in attack_range.range_tiles:
 		var skill_state : SkillState = _character.active_skill.state.new(_character, _character.active_skill, tile)
-		var can_use: Global.SkillErrorCode = skill_state.can_use()
+		var can_use: Global.SkillErrorCode = skill_state.can_use(attack_range)
 		
 		
 		if can_use == Global.SkillErrorCode.OK:

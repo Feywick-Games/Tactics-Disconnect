@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://7pypr8grgl4t" path="res://scene/level/_behavior/level.gd" id="1_q1hxj"]
 [ext_resource type="TileSet" uid="uid://ds2bj4u4yhws6" path="res://scene/level/alley/alley_tile_set.tres" id="2_ndno1"]
 [ext_resource type="PackedScene" uid="uid://c3ow1ifjec62m" path="res://entity/character/ally/izzy/izzy.tscn" id="5_c38kb"]
+[ext_resource type="PackedScene" uid="uid://d1amvh6rlfexe" path="res://entity/character/enemy/after_hours/after_hours_ranged.tscn" id="10_7q5it"]
 [ext_resource type="PackedScene" uid="uid://r5sdcdlxfmjr" path="res://entity/character/ally/chaz/chaz.tscn" id="10_ymq17"]
 [ext_resource type="PackedScene" uid="uid://bxmucc7oqfyuj" path="res://entity/character/enemy/after_hours/after_hours.tscn" id="10_yprxc"]
 [ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="11_0hr4q"]
@@ -35,7 +36,7 @@ metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_vcdsl"]
 script = ExtResource("23_dfity")
-character_scene = ExtResource("10_yprxc")
+character_scene = ExtResource("10_7q5it")
 facing = Vector2i(-1, 0)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
