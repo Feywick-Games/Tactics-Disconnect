@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bldhlyqoqot1v"]
+
+[ext_resource type="PackedScene" uid="uid://cqgaf4b8quup7" path="res://entity/character/enemy/enemy.tscn" id="1_e8262"]
+[ext_resource type="PackedScene" uid="uid://ctcij6x118q6" path="res://entity/character/enemy/final_exams/_packed_scene/final_exams_turn_portrait.tscn" id="2_s4sbl"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_spjto"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="3_0k1lt"]
+[ext_resource type="Texture2D" uid="uid://drd51si7lp1pn" path="res://entity/character/enemy/final_exams/_sprite/final_exams.png" id="3_e8262"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="4_wihwb"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="5_lval0"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="6_b1sgy"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="7_n3fsy"]
+
+[sub_resource type="Resource" id="Resource_inb1m"]
+script = ExtResource("5_lval0")
+value = 2
+
+[sub_resource type="Resource" id="Resource_x3gxp"]
+script = ExtResource("3_0k1lt")
+name = "Throw Book"
+max_range = 3
+state = ExtResource("4_wihwb")
+status_effects = Array[ExtResource("5_lval0")]([SubResource("Resource_inb1m")])
+direct = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y6u84"]
+resource_local_to_scene = true
+shader = ExtResource("2_spjto")
+shader_parameter/highlighted = false
+shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
+
+[node name="Enemy" unique_id=1334997669 instance=ExtResource("1_e8262")]
+character_name = "Final Exams"
+turn_portrait_scene = ExtResource("2_s4sbl")
+basic_skill = SubResource("Resource_x3gxp")
+
+[node name="CharacterSprite" parent="." index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_y6u84")
+position = Vector2(1, -13)
+texture = ExtResource("3_e8262")
+offset = Vector2(-1, -4)

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ctcij6x118q6"]
+
+[ext_resource type="PackedScene" uid="uid://bcnpnplhpud5y" path="res://ui/turn_display/_packed_scene/turn_portrait.tscn" id="1_knn65"]
+[ext_resource type="Texture2D" uid="uid://fqeup7pt8lq4" path="res://entity/character/enemy/final_exams/_sprite/final_exams_turn_portrait_small.png" id="2_8tldl"]
+[ext_resource type="Texture2D" uid="uid://dxkse854icti5" path="res://entity/character/enemy/final_exams/_sprite/final_exams_turn_portrait.png" id="3_8txsw"]
+
+[node name="TurnPortrait" unique_id=1652300559 instance=ExtResource("1_knn65")]
+
+[node name="SmallPortrait" parent="." index="1" unique_id=1066073387]
+texture = ExtResource("2_8tldl")
+hframes = 1
+
+[node name="FullPortrait" parent="." index="2" unique_id=102064676]
+texture = ExtResource("3_8txsw")

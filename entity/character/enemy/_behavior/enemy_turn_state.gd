@@ -119,7 +119,10 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 			var target_priority := TargetPriority.new(target)
 			target_priorities.append(target_priority)
 			target_priority.distance = GameState.current_level.grid.get_tile_distance(_enemy.current_tile, target.current_tile)
-			var enemy_max_skill_range: float = max(_enemy.basic_skill.max_range, _enemy.special.max_range) + _enemy.movement_range
+			var enemy_max_skill_range: float = _enemy.basic_skill.max_range
+			if _enemy.special:
+				enemy_max_skill_range = max(enemy_max_skill_range, _enemy.special.max_range)
+			enemy_max_skill_range += _enemy.movement_range 
 			target_priority.distance = 1 - (target_priority.distance/float(enemy_max_skill_range))
 			target_priority.distance *= Enemy.DISTANCE_PRIORITY
 			target_priority.knock_out_likelihood = 1 if target.health - _enemy.basic_skill.get_hit_damage() < 0 else 0

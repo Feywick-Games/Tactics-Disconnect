@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmeon4vrjlpln"
-path="res://.godot/imported/after_hours.png-c3d867f112a25403cc0faebad3219d82.ctex"
+uid="uid://dxkse854icti5"
+path="res://.godot/imported/final_exams_turn_portrait.png-869455c342f5d8b15cc5b7b9337f3acc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entity/character/enemy/after_hours/after_hours.png"
-dest_files=["res://.godot/imported/after_hours.png-c3d867f112a25403cc0faebad3219d82.ctex"]
+source_file="res://entity/character/enemy/final_exams/_sprite/final_exams_turn_portrait.png"
+dest_files=["res://.godot/imported/final_exams_turn_portrait.png-869455c342f5d8b15cc5b7b9337f3acc.ctex"]
 
 [params]
 

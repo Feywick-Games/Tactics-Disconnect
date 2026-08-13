@@ -2,22 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yexq1ge2r3he"
-path="res://.godot/imported/shadow_hand_idle_up.png-fee40343f424fb7cd0b7de1e05d6e9a7.ctex"
+uid="uid://fqeup7pt8lq4"
+path="res://.godot/imported/final_exams_turn_portrait_small.png-0a6894f5a10d7178ce5c9eccbed6a90a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entity/character/enemy/shadow_hand/shadow_hand_idle_up.png"
-dest_files=["res://.godot/imported/shadow_hand_idle_up.png-fee40343f424fb7cd0b7de1e05d6e9a7.ctex"]
+source_file="res://entity/character/enemy/final_exams/_sprite/final_exams_turn_portrait_small.png"
+dest_files=["res://.godot/imported/final_exams_turn_portrait_small.png-0a6894f5a10d7178ce5c9eccbed6a90a.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
@@ -25,6 +27,10 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
