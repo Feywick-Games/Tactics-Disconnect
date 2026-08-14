@@ -18,5 +18,5 @@ var special_priority: float = 0.75
 var custom_priority: float = 0
 
 
-func _ready() -> void:
-	super._ready()
+func deal_skill() -> void:
+	special = skill_deck.pick_random()

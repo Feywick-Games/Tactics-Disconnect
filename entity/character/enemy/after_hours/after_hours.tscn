@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://hmskwfoop0hf" path="res://entity/character/enemy/after_hours/_packed_scene/turn_portrait_after_hours.tscn" id="2_d0if8"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_g8ufo"]
 [ext_resource type="Texture2D" uid="uid://dgew18uoinubo" path="res://entity/character/enemy/after_hours/_sprite/after_hours.png" id="3_g8ufo"]
-[ext_resource type="Texture2D" uid="uid://p4sh1s8cvllw" path="res://entity/character/enemy/after_hours/_sprite/after_hours_turn_portrait_small.png" id="3_yossf"]
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="4_mm3wl"]
 [ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="5_ojsj3"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="6_x74rx"]
@@ -211,9 +210,8 @@ y_sort_enabled = true
 script = ExtResource("1_42tr7")
 character_name = "After Hours"
 turn_portrait_scene = ExtResource("2_d0if8")
-small_portrait = ExtResource("3_yossf")
+skill_deck = Array[ExtResource("4_mm3wl")]([ExtResource("9_5ygt6")])
 basic_skill = SubResource("Resource_3dmcj")
-special = ExtResource("9_5ygt6")
 reactions = Array[ExtResource("10_w2mjb")]([ExtResource("11_3scgl")])
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=588471571]

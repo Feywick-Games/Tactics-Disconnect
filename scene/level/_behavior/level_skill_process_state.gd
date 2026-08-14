@@ -7,6 +7,7 @@ var _mini_game: MiniGame
 var _qtes_dispatched := false
 var _qte_callbacks: Array[Callable]
 
+
 func enter() -> void:
 	super.enter()
 	_prep_skill_state()
@@ -102,7 +103,7 @@ func _is_skill_processing() -> bool:
 		var new_target_list: Array[Character]
 		for i:int in range(len(_targets)):
 			if not i in units_to_remove:
-				new_target_list.append(i)
+				new_target_list.append(_targets[i])
 		_targets = new_target_list
 		
 	for unit: Character in [_level.active_unit] + _reacting_units + _targets:
@@ -133,3 +134,5 @@ func _check_unit_count() -> State:
 	if ally_count == 0:
 		return LevelLoseState.new()
 	return LevelSpawnState.new()
+	
+	

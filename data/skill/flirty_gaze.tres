@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="1_e6vaf"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="2_ce0ms"]
-[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="2_j8fil"]
+[ext_resource type="Script" uid="uid://duot4oqxb7rxx" path="res://entity/character/_behavior/range_skill_state.gd" id="2_j8fil"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="3_j8fil"]
 [ext_resource type="Texture2D" uid="uid://y2pxumicolem" path="res://ui/skill_select/_sprite/skill_select_small_range.png" id="5_ce0ms"]
 
@@ -27,5 +27,4 @@ max_range = 3
 state = ExtResource("2_j8fil")
 status_effects = Array[ExtResource("2_ce0ms")]([SubResource("Resource_e6vaf"), SubResource("Resource_4wfim")])
 range_type = 1
-direct = false
 metadata/_custom_type_script = "uid://de4pxhpt4mw5u"

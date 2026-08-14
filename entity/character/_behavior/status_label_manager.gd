@@ -62,10 +62,11 @@ func preview(_effect: StatusEffect) -> void:
 
 
 func add_status_effect(effect: StatusEffect) -> void:
-	if not effect.status == Combat.Status.HIT:
-		_queued_statuses.append(effect)
-	else:
-		_queued_statuses.insert(0, effect)
+	if effect.status in [Combat.Status.HIT, Combat.Status.MOVEMENT, Combat.Status.DAMAGE]:
+		if not effect.status == Combat.Status.HIT:
+			_queued_statuses.append(effect)
+		else:
+			_queued_statuses.insert(0, effect)
 	
 	
 func _on_animation_completed(_anim: String) -> void:

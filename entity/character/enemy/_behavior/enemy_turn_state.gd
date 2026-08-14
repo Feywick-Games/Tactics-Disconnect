@@ -128,14 +128,14 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 				var skill_likelihoods: Array[float] = []
 				for tile in _movement_range.range_tiles:
 					var basic_skill_state: SkillState = (_character.basic_skill.state.new(_character, _character.basic_skill, target.current_tile, tile) as SkillState)	
-					skill_likelihoods.append(basic_skill_state.calc_skill_likelihood())
+					skill_likelihoods.append(basic_skill_state.calc_skill_likelihood(_turn_history))
 				target_priority.basic_skill_likelihood = skill_likelihoods.max()
 				target_priority.basic_skill_likelihood *= _enemy.basic_skill_priority
 			if _enemy.special and target.current_tile in _full_special_range.range_tiles:
 				var skill_likelihoods: Array[float] = []
 				for tile in _movement_range.range_tiles:
 					var special_skill_state: SkillState = (_character.special.state.new(_character, _character.special, target.current_tile, tile) as SkillState)	
-					skill_likelihoods.append(special_skill_state.calc_skill_likelihood())
+					skill_likelihoods.append(special_skill_state.calc_skill_likelihood(_turn_history))
 				target_priority.special_likelihood = skill_likelihoods.max()
 				target_priority.special_likelihood *= _enemy.special_priority
 		_is_acting = true
@@ -182,7 +182,7 @@ func _pick_tile() -> Vector2i:
 				var skill_state: SkillState = _enemy.active_skill.state.new(_enemy, _enemy.active_skill, _target.current_tile, tile)
 				if not _target in skill_state.targets:
 					continue
-				var likelihood: float = skill_state.calc_skill_likelihood()
+				var likelihood: float = skill_state.calc_skill_likelihood(_turn_history)
 				# multiply by .1 to normalize at a value less than skill likelihood
 				var tile_distance: float = GameState.current_level.grid.get_tile_distance(_enemy.current_tile, tile)
 				var distance_preference: float = tile_distance / float(_enemy.movement_range) * Enemy.DISTANCE_PRIORITY

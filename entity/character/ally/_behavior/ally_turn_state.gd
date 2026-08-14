@@ -135,11 +135,7 @@ func _on_cancel_pressed() -> State:
 
 func _on_special_pressed() -> State:
 	_ally.active_skill = _ally.basic_skill if _ally.active_skill != _ally.basic_skill else _ally.special
-	
-	if acted:
-		_turn_data.active_skill_state = null
 	force_redraw = true
-	
 	return
 
 

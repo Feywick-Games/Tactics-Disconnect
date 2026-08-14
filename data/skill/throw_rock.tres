@@ -20,5 +20,4 @@ max_range = 4
 state = ExtResource("2_54460")
 status_effects = Array[ExtResource("2_yrs21")]([SubResource("Resource_sa3u4")])
 range_type = 1
-direct = false
 metadata/_custom_type_script = "uid://de4pxhpt4mw5u"

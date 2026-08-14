@@ -20,4 +20,3 @@ range_shape = 1
 state = ExtResource("2_bnpdc")
 status_effects = Array[ExtResource("2_fhvpu")]([SubResource("Resource_bnpdc")])
 aoe = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
-direct = false

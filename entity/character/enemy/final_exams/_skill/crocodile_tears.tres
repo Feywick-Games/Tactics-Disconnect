@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cwkw7cyw4d3gy"]
+
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="1_3julk"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="2_fspno"]
+[ext_resource type="Script" uid="uid://dfi7i6nk7ye1u" path="res://entity/character/_behavior/punish_skill_state.gd" id="2_geof3"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="3_geof3"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="4_3bajt"]
+
+[sub_resource type="Resource" id="Resource_3bajt"]
+script = ExtResource("2_fspno")
+value = 2
+metadata/_custom_type_script = "uid://c5gnxjiq5craw"
+
+[sub_resource type="Resource" id="Resource_dw0xx"]
+script = ExtResource("2_fspno")
+status = 2
+value = -2
+metadata/_custom_type_script = "uid://c5gnxjiq5craw"
+
+[resource]
+script = ExtResource("1_3julk")
+name = "Crocodile Tears"
+state = ExtResource("2_geof3")
+status_effects = Array[ExtResource("2_fspno")]([SubResource("Resource_3bajt"), SubResource("Resource_dw0xx")])
+metadata/_custom_type_script = "uid://de4pxhpt4mw5u"

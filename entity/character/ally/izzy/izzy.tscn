@@ -213,10 +213,10 @@ _data = {
 [node name="Izzy" type="Node2D" unique_id=907728875 groups=["ally"]]
 y_sort_enabled = true
 script = ExtResource("1_5r8g6")
-skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("5_j3bli"), ExtResource("6_m8t01")])
 skills_dealt = 5
 character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
+skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("5_j3bli"), ExtResource("6_m8t01")])
 basic_skill = SubResource("Resource_v85yj")
 reactions = Array[ExtResource("12_ldv45")]([ExtResource("13_xmewg"), ExtResource("14_pwuw8"), ExtResource("15_fladx")])
 

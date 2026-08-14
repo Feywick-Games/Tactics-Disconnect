@@ -22,8 +22,7 @@ func enter() -> void:
 func update(_delta : float) -> State:
 	if _turn_data.active_skill_state and not _character in _turn_data.active_skill_state.targets and _character.health_bar.visible:
 		_character.health_bar.hide()
-	if _turn_data.active_skill_state:
-		_character.display_modified_status(_turn_data.active_skill_state)
+	_character.display_modified_status(_turn_data.active_skill_state)
 	if _character.can_react(_turn_data):
 		if not _react_ready:
 			_react_ready = true

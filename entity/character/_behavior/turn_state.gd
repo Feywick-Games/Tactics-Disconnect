@@ -18,9 +18,11 @@ var _encounter_ended := false
 var _highlighted_tile: Vector2i
 var _moving := false
 var _turn_data: TurnData
+var _turn_history: Array[TurnData.Serialization]
 
-func _init(turn_data: TurnData) -> void:
+func _init(turn_data: TurnData, turn_history: Array[TurnData.Serialization]) -> void:
 	_turn_data = turn_data
+	_turn_history = turn_history
 
 
 func enter() -> void:
@@ -66,7 +68,6 @@ func end_turn() -> void:
 
 func exit() -> void:
 	GameState.current_level.reset_map()
-	_turn_data.active_skill_state = null
 
 
 func _select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) -> State:

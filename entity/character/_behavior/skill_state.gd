@@ -83,11 +83,11 @@ func on_get_behind_me(pause: bool) -> void:
 func exit() -> void:
 	super.exit()
 	_character.end_turn()
-	if skill == _character.special:
+	if _character.special and skill.name == _character.special.name:
 		_character.special = null
 
 
-func calc_skill_likelihood() -> float:
+func calc_skill_likelihood(_turn_history: Array[TurnData.Serialization]) -> float:
 	
 	var attack_range : RangeStruct = GameState.current_level.grid.request_range(
 		_current_tile, skill.min_range, skill.max_range, skill.range_shape, true, skill.direct
@@ -105,7 +105,7 @@ func calc_skill_likelihood() -> float:
 				target_count +=1
 				# NOTICE: removed the requirement to have a target in the target tile
 				if target_count >= _desired_target_count:
-					return 1
+					return .5 + ((float(target_count)/_desired_target_count) * .5)
 	return 0
 
 

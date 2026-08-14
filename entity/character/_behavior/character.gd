@@ -13,21 +13,16 @@ const HEALTH_BAR_PIXEL_WIDTH := 25
 var character_name: String
 @export
 var turn_portrait_scene: PackedScene
-@export
-var small_portrait: Texture2D
 
-@export_category("Gameplay")
+@export_category("Skills")
 @export
-var facing: Vector2i = Vector2i.DOWN
-var init_state: GDScript = CharacterCombatBeginState
+var skill_deck: Array[Skill]
 @export
 var basic_skill: Skill
 @export
-var special: Skill
-@export
 var reactions: Array[Reaction]
 
-@export_category("Unit Stats")
+@export_category("Stats")
 @export
 var max_health: int = 20
 @export
@@ -42,6 +37,9 @@ var status: Array[StatusEffect]
 var active_skill: Skill
 var sub_pixel_position: Vector2
 var state_machine: StateMachine
+var facing: Vector2i = Vector2i.DOWN
+var init_state: GDScript = CharacterCombatBeginState
+var special: Skill
 
 @onready
 var sprite: Sprite2D = $CharacterSprite
@@ -125,13 +123,11 @@ func process_status_effect(effect: StatusEffect, multiplier: float) -> void:
 		health -= effect.value
 
 
-func start_turn(turn_data: TurnData, skill_error_callback: Callable) -> void:
+func start_turn(turn_data: TurnData, turn_history: Array[TurnData.Serialization], skill_error_callback: Callable) -> void:
 	health_bar.value = health
 	active_skill = basic_skill
-	health_bar.show()
-	
 	@warning_ignore("incompatible_ternary")
-	var turn_state: TurnState = AllyTurnState.new(turn_data) if self is Ally else EnemyTurnState.new(turn_data)
+	var turn_state: TurnState = AllyTurnState.new(turn_data, turn_history) if self is Ally else EnemyTurnState.new(turn_data, turn_history)
 	turn_state.skill_error_encountered.connect(skill_error_callback)
 	
 	if self is Ally:
@@ -291,10 +287,11 @@ func _calc_damage_multiplier(direction: Vector2i) -> float:
 
 
 func display_modified_status(skill_state: SkillState) -> void:
-	if self in skill_state.targets:
-		health_bar.show()
+	if skill_state and self in skill_state.targets:
+		show_health_bar(true)
 		highlight()
 	else:
+		show_health_bar(false)
 		highlight(false)
 		return
 
@@ -314,10 +311,11 @@ func can_react(turn_data: TurnData) -> bool:
 		var skill_state: SkillState = turn_data.active_skill_state
 		
 		for effected_unit: Character in skill_state.targets:
-			for reaction: Reaction in reactions:
-				var reaction_state: ReactionState = reaction.state.new(reaction, self, effected_unit)
-				if reaction_state.can_use(skill_state, turn_data.active_unit):
-					return true
+			if is_instance_valid(effected_unit):
+				for reaction: Reaction in reactions:
+					var reaction_state: ReactionState = reaction.state.new(reaction, self, effected_unit)
+					if reaction_state.can_use(skill_state, turn_data.active_unit):
+						return true
 	return false
 
 
