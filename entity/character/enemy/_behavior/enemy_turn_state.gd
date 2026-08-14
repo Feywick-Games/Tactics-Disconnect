@@ -8,11 +8,8 @@ var _target: Character
 var _full_attack_range := RangeStruct.new()
 var _full_special_range := RangeStruct.new()
 var _is_acting := false
-var _is_processing_custom := false
 var _time_highlight: float = 0
 var _has_highlighted := false
-var _range_astar: AStarGrid2D
-
 
 class TargetPriority:
 	var target:  Character
@@ -165,38 +162,39 @@ func _pick_tile() -> Vector2i:
 	
 	if not _is_acting:
 		# dont worry about desired distance if you are literally out of range
-		var start_distance: int = GameState.current_level.grid.get_tile_distance(_start_tile, _target.current_tile, true)
+		var start_distance: int = GameState.current_level.grid.get_tile_distance(_start_tile, _target.current_tile)
 		var min_distance: int = start_distance
 		for tile: Vector2i in _movement_range.range_tiles:
-			var dist: int = GameState.current_level.grid.get_tile_distance(tile, _target.current_tile, true)
+			var dist: int = GameState.current_level.grid.get_tile_distance(tile, _target.current_tile)
 			if dist < min_distance:
 				min_distance = dist
 				desired_tile = tile
 	else:
 		var desired_favoribility: float = 0
 		var skill_range := GameState.current_level.grid.request_range(_target.current_tile, _enemy.active_skill.min_range, _enemy.active_skill.max_range, _enemy.active_skill.range_shape, true, _enemy.active_skill.direct)
-		_range_astar = _target.create_range_astar(skill_range, _enemy.active_skill.max_range)
+		var total_range := RangeStruct.new()
+		total_range.range_tiles = skill_range.range_tiles.duplicate()
+		total_range.absorb(_movement_range)
 		var move_tiles: Array[Vector2i] = _movement_range.range_tiles.duplicate()
 		move_tiles.shuffle()
 		for tile in skill_range.range_tiles:
 			if tile in move_tiles:
-				if _range_astar.region.has_point(tile):
-					var skill_state: SkillState = _enemy.active_skill.state.new(_enemy, _enemy.active_skill, _target.current_tile, tile)
-					if not _target in skill_state.targets:
-						continue
-					var likelihood: float = skill_state.calc_skill_likelihood()
-					# multiply by .1 to normalize at a value less than skill likelihood
-					var tile_distance: float = float(_range_astar.get_id_path(_enemy.current_tile, tile).size())
-					var distance_preference: float = tile_distance / float(_enemy.movement_range) * Enemy.DISTANCE_PRIORITY
-					likelihood += Enemy.DISTANCE_PRIORITY - distance_preference
-					# prioritize using max skill range for ranged attacks
-					var target_distance: float = float(_range_astar.get_id_path(_target.current_tile, tile).size())
-					var range_preference: float = (target_distance / _enemy.active_skill.max_range) * _enemy.safety_priority
-					likelihood += range_preference
-					if likelihood > desired_favoribility:
-							desired_tile = tile
-							desired_favoribility = likelihood
-
+				var skill_state: SkillState = _enemy.active_skill.state.new(_enemy, _enemy.active_skill, _target.current_tile, tile)
+				if not _target in skill_state.targets:
+					continue
+				var likelihood: float = skill_state.calc_skill_likelihood()
+				# multiply by .1 to normalize at a value less than skill likelihood
+				var tile_distance: float = GameState.current_level.grid.get_tile_distance(_enemy.current_tile, tile)
+				var distance_preference: float = tile_distance / float(_enemy.movement_range) * Enemy.DISTANCE_PRIORITY
+				likelihood += Enemy.DISTANCE_PRIORITY - distance_preference
+				# prioritize using max skill range for ranged attacks
+				var target_distance: float = GameState.current_level.grid.get_tile_distance(_target.current_tile, tile, _enemy.active_skill.direct)
+				var range_preference: float = (target_distance / _enemy.active_skill.max_range) * _enemy.safety_priority
+				likelihood += range_preference
+				if likelihood > desired_favoribility:
+						desired_tile = tile
+						desired_favoribility = likelihood
+	
 	return desired_tile
 
 

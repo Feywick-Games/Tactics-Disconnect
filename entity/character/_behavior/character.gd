@@ -32,10 +32,9 @@ var reactions: Array[Reaction]
 var max_health: int = 20
 @export
 var _movement_range: int = 3
-var _movement_modifier: int
 var movement_range: int:
 	get:
-		return _movement_range + _movement_modifier
+		return _movement_range + get_modifier(Combat.Status.MOVEMENT)
 
 var health: int
 var current_tile: Vector2i
@@ -48,8 +47,6 @@ var state_machine: StateMachine
 var sprite: Sprite2D = $CharacterSprite
 @onready
 var animator: DirectionalAnimator = $ActionAnimator
-@onready
-var skill_animator: DirectionalAnimator = $SkillAnimator
 @onready
 var health_bar: TextureProgressBar = $HealthBar
 @onready
@@ -79,6 +76,13 @@ func start_encounter() -> void:
 	damage_bar.step = float(health_bar.max_value) / HEALTH_BAR_PIXEL_WIDTH
 
 
+func get_modifier(status_type: Combat.Status) -> int:
+	var out: int = 0
+	for effect: StatusEffect in status:
+		if effect.status == status_type:
+			out += effect.value
+	return out
+
 
 func end_encounter() -> void:
 	#TODO: A fun animation!
@@ -96,18 +100,29 @@ func get_impact_time(anim_string: String) -> float:
 
 
 
-func _on_display_requested(show_display: bool) -> void:
+func show_health_bar(show_display: bool) -> void:
 	if show_display:
 		health_bar.show()
+		if not special:
+			health_bar.get_node("SpecialIcon").hide()
+		else:
+			health_bar.get_node("SpecialIcon").show()
 	else:
 		health_bar.hide()
 
 
-func process_status_effect(effect: StatusEffect) -> void:
+func process_status_effect(effect: StatusEffect, multiplier: float) -> void:
+	var new_effect: StatusEffect = effect.duplicate()
+	new_effect.value = round(new_effect.value * multiplier)
+	var statuses : Array[StatusEffect] = status.filter(func(x:StatusEffect) -> bool: return x.status == new_effect.status)
+	if statuses.is_empty() :
+		status.append(new_effect)
+	else:
+		statuses[0].duration = max(new_effect.duration, statuses[0].duration)
+		status[0].value = max(new_effect.value, statuses[0].value)
+
 	if effect.status == Combat.Status.HIT:
 		health -= effect.value
-	elif effect.status == Combat.Status.SLOWED:
-		_movement_modifier += effect.value
 
 
 func start_turn(turn_data: TurnData, skill_error_callback: Callable) -> void:
@@ -136,7 +151,6 @@ func clear_expired_statuses() -> void:
 	
 	for status_effect: StatusEffect in statuses_to_remove:
 		status.remove_at(status.find(status_effect))
-
 
 
 func end_turn() -> void:
@@ -242,17 +256,9 @@ func take_damage(skill: Skill, direction: Vector2, multiplier: float = 1) -> voi
 	multiplier = _calc_damage_multiplier(direction) * multiplier
 	
 	for base_effect: StatusEffect in skill.status_effects:
-		var new_effect: StatusEffect = base_effect.duplicate()
-		new_effect.value = round(new_effect.value * multiplier)
-		var statuses : Array[StatusEffect] = status.filter(func(x:StatusEffect) -> bool: return x.status == new_effect.status)
-		if statuses.is_empty() :
-			status.append(new_effect)
-		else:
-			statuses[0].duration = max(new_effect.duration, statuses[0].duration)
-			status[0].value = max(new_effect.value, statuses[0].value)
-		process_status_effect(new_effect)
-		status_label_manager.add_status_effect(new_effect)
-
+		process_status_effect(base_effect, multiplier)
+		status_label_manager.add_status_effect(base_effect)
+	
 	health_bar.value = health
 	damage_bar.value = health_bar.value
 	
@@ -313,7 +319,6 @@ func can_react(turn_data: TurnData) -> bool:
 				if reaction_state.can_use(skill_state, turn_data.active_unit):
 					return true
 	return false
-	
 
 
 func request_skill_text(skill_name: String) -> void:
@@ -327,11 +332,15 @@ func play_actor_status(mini_game := false, perfect := false) -> void:
 			status_label_manager.play_actor_status("slow")
 		if mini_game:
 			if perfect:
-				status_label_manager.play_actor_status("perfect")
+				status_label_manager.play_actor_status("nice")
 			else:
-				status_label_manager.play_actor_status("miss")
-	
-	
+				status_label_manager.play_actor_status("oof")
+		if get_modifier(Combat.Status.HIT) > 0:
+			status_label_manager.play_actor_status("strong")
+		elif get_modifier(Combat.Status.HIT) < 0:
+			status_label_manager.play_actor_status("weak")
+
+
 func play_dialogue(anim: String = "") -> void:
 	var dialogue_sprite: Sprite2D = $DialolgueSprite
 	var dialogue_animation_player: AnimationPlayer = $DialolgueSprite/AnimationPlayer

@@ -24,6 +24,7 @@ func _react() -> void:
 	var direction: Vector2i = _target.current_tile - _character.current_tile
 	_character.facing = _target.facing
 	_character.animator.play_directional(_reaction.character_animation, _character.facing)
+	_character.play_dialogue("taunt")
 	_impact_time = _character.get_impact_time(_character.animator.current_animation)
 	var damage_state := DamageState.new(_reaction, direction, impact)
 	_target.set_state(damage_state)

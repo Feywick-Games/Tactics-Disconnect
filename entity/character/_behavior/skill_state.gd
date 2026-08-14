@@ -24,7 +24,8 @@ var _current_tile : Vector2i
 func _init(character: Character, i_skill: Skill, target_tile_: Vector2i, current_tile_override := Vector2i.MAX) -> void:
 	_current_tile = character.current_tile if current_tile_override == Vector2i.MAX else current_tile_override
 	target_tile = target_tile_
-	skill = i_skill
+	skill = i_skill.duplicate(true)
+	skill.apply_status_effects(character.status)
 	_desired_target_count = round(skill.aoe.size() * DEFAULT_DESIRED_TARGET_PCT)
 	_character = character
 	direction = VectorF.snap_direction(target_tile - _current_tile)

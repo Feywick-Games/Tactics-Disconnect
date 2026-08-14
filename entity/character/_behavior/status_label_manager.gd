@@ -1,8 +1,6 @@
 class_name StatusLabelManager
 extends Control
 
-signal statuses_displayed
-
 @export
 var miss_color: Color = "#70e0d5"
 @export
@@ -37,9 +35,7 @@ func display_statuses() -> void:
 	for i in range(_queued_statuses.size()):
 		_started_animations += 1
 		_play_status_effect(_queued_statuses[i])
-	if animator.current_animation != "":
-		animator.play()
-	else:
+	if animator.current_animation == "":
 		_on_animation_completed("")
 	playing = true
 
@@ -48,6 +44,16 @@ func _play_status_effect(effect: StatusEffect) -> void:
 	if effect.status == Combat.Status.HIT:
 		_damage_value = effect.value
 		animator.queue("hit")
+	elif effect.status == Combat.Status.MOVEMENT:
+		if effect.value < 0:
+			animator.queue("move_down")
+		else:
+			animator.queue("move_up")
+	elif effect.status == Combat.Status.DAMAGE:
+		if effect.value < 0:
+			animator.queue("dmg_down")
+		else:
+			animator.queue("dmg_up")
 
 
 func preview(_effect: StatusEffect) -> void:
@@ -56,8 +62,10 @@ func preview(_effect: StatusEffect) -> void:
 
 
 func add_status_effect(effect: StatusEffect) -> void:
-	if not effect or effect.status in [Combat.Status.HIT]:
+	if not effect.status == Combat.Status.HIT:
 		_queued_statuses.append(effect)
+	else:
+		_queued_statuses.insert(0, effect)
 	
 	
 func _on_animation_completed(_anim: String) -> void:

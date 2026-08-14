@@ -12,3 +12,7 @@ hframes = 1
 
 [node name="FullPortrait" parent="." index="2" unique_id=102064676]
 texture = ExtResource("3_8txsw")
+
+[node name="Label" parent="FullPortrait" index="0" unique_id=674781161]
+theme_override_font_sizes/font_size = 4
+text = "After Hours"

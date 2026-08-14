@@ -15,7 +15,6 @@ func enter() -> void:
 	super.enter()
 	_ally = state_machine.state_owner as Ally
 	_start_tile = _ally.current_tile
-	_movement_astar = _ally.create_range_astar(_movement_range, _ally.movement_range)
 	_attack_range = _ally.update_ranges(_movement_range)
 
 

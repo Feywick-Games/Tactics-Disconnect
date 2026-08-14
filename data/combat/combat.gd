@@ -3,9 +3,9 @@ class_name Combat
 enum Status {
 	HIT,
 	PUSHED,
-	DAZED,
-	SLOWED,
-	INJURED
+	DAMAGE,
+	MOVEMENT,
+	STUNNED
 }
 
 enum RangeShape {

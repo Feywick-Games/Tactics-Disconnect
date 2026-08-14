@@ -39,7 +39,7 @@ var aoe: Array[Vector2i] = [Vector2i.ZERO]
 var range_type: Combat.RangeType = Combat.RangeType.MELEE
 # to pierce
 @export
-var direct := true
+var direct := false
 @export
 var cast_sfx: AudioStream
 @export
@@ -63,6 +63,13 @@ func draw_range(attack_range: Array[Vector2i], is_special: bool) -> void:
 		GameState.current_level.reticle.draw_range(attack_range, Global.RETICLE_SPECIAL_ALTAS_COORDS)
 	else:
 		GameState.current_level.reticle.draw_range(attack_range, Global.RETICLE_ATTACK_ATLAS_COORDS)
+
+
+func apply_status_effects(actor_status: Array[StatusEffect]) -> void:
+	for actor_effect: StatusEffect in actor_status:
+		for skill_effect: StatusEffect in status_effects:
+			if skill_effect.status == Combat.Status.HIT and actor_effect.status == Combat.Status.DAMAGE:
+				skill_effect.value = max(skill_effect.value - actor_effect.status, 0)
 
 
 func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_range: Array[Vector2i], direction: Vector2) -> void:	

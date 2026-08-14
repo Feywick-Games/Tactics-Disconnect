@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c3ow1ifjec62m"]
 
-[ext_resource type="PackedScene" uid="uid://cm7s3l5cikm6u" path="res://entity/character/ally/ally.tscn" id="1_abh6s"]
+[ext_resource type="Script" uid="uid://chq8hk2b7dwdl" path="res://entity/character/ally/_behavior/ally.gd" id="1_5r8g6"]
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_d2041"]
 [ext_resource type="PackedScene" uid="uid://bap3a4oqvrftr" path="res://entity/character/ally/izzy/_packed_scene/izzy_turn_portrait.tscn" id="2_y0p6f"]
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="3_apuu4"]
@@ -13,6 +13,15 @@
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="7_uk5et"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_07m0v"]
 [ext_resource type="Texture2D" uid="uid://u465lrggcsnd" path="res://entity/character/ally/izzy/_sprite/izzy_unit_sprite.png" id="11_apuu4"]
+[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="12_ldv45"]
+[ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="13_xmewg"]
+[ext_resource type="Resource" uid="uid://cwkld7s34m6sk" path="res://entity/character/_skill/collision_reaction.tres" id="14_pwuw8"]
+[ext_resource type="Resource" uid="uid://c0hqpa4cff4gb" path="res://entity/character/_skill/cheer_reaction.tres" id="15_fladx"]
+[ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="18_cf37p"]
+[ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="23_5r8g6"]
+[ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="24_3ab3v"]
+[ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="25_uhu1q"]
+[ext_resource type="PackedScene" uid="uid://438qt7ha3hj6" path="res://entity/character/_packed_scene/dialolgue_sprite.tscn" id="26_ldv45"]
 
 [sub_resource type="Resource" id="Resource_xdj1t"]
 script = ExtResource("3_jkw71")
@@ -24,7 +33,7 @@ name = "Punch"
 state = ExtResource("3_tnq7t")
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_xdj1t")])
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hyqnp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcp3d"]
 resource_local_to_scene = true
 shader = ExtResource("8_07m0v")
 shader_parameter/highlighted = false
@@ -201,29 +210,38 @@ _data = {
 &"idle_up": SubResource("Animation_6us76")
 }
 
-[node name="Izzy" unique_id=907728875 instance=ExtResource("1_abh6s")]
+[node name="Izzy" type="Node2D" unique_id=907728875 groups=["ally"]]
+y_sort_enabled = true
+script = ExtResource("1_5r8g6")
 skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("5_j3bli"), ExtResource("6_m8t01")])
+skills_dealt = 5
 character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
 basic_skill = SubResource("Resource_v85yj")
+reactions = Array[ExtResource("12_ldv45")]([ExtResource("13_xmewg"), ExtResource("14_pwuw8"), ExtResource("15_fladx")])
 
-[node name="HealthBar" parent="." index="0" unique_id=1956210959]
-offset_top = -48.0
-offset_bottom = -8.0
-pivot_offset = Vector2(0, 0)
-
-[node name="StatusLabelManager" parent="." index="1" unique_id=1517281646]
-pivot_offset = Vector2(0, 0)
-
-[node name="CharacterSprite" parent="." index="2" unique_id=129952542]
-material = SubResource("ShaderMaterial_hyqnp")
-position = Vector2(0, 0)
+[node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
+material = SubResource("ShaderMaterial_hcp3d")
 texture = ExtResource("11_apuu4")
 offset = Vector2(0, -17)
 vframes = 4
 
-[node name="CollisionShape2D" parent="." index="4" unique_id=974221274]
-position = Vector2(-1, 0)
+[node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("18_cf37p")]
 
-[node name="ActionAnimator" parent="." index="5" unique_id=2058618678]
+[node name="StatusLabelManager" parent="." unique_id=145769700 instance=ExtResource("23_5r8g6")]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=245401563]
+target_desired_distance = 32.0
+avoidance_enabled = true
+radius = 20.0
+
+[node name="ActionAnimator" type="AnimationPlayer" parent="." unique_id=2058618678]
 libraries/ = SubResource("AnimationLibrary_hs5m1")
+script = ExtResource("24_3ab3v")
+
+[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=846521504]
+script = ExtResource("25_uhu1q")
+
+[node name="DialolgueSprite" parent="." unique_id=2130912011 instance=ExtResource("26_ldv45")]
+visible = false
+position = Vector2(-9, 0)

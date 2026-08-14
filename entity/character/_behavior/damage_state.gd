@@ -20,7 +20,7 @@ func _init(skill: Skill, direction: Vector2, hit_signal: Signal, multiplier: flo
 func enter() -> void:
 	super.enter()
 	_character = state_machine.state_owner as Character
-	_character.health_bar.show()
+	_character.show_health_bar(true)
 
 
 func update(delta: float) -> State:

@@ -37,4 +37,5 @@ func update(_delta : float) -> State:
 
 func exit() -> void:
 	_character.health_bar.hide()
+	_character.play_dialogue()
 	_character.highlight(false)
