@@ -26,7 +26,6 @@ metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 [sub_resource type="Resource" id="Resource_yuh5r"]
 script = ExtResource("23_dfity")
 character_scene = ExtResource("10_ymq17")
-facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_yprxc"]

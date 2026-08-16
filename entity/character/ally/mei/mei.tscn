@@ -21,6 +21,7 @@
 [ext_resource type="Resource" uid="uid://c0hqpa4cff4gb" path="res://entity/character/_skill/cheer_reaction.tres" id="17_tc08q"]
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="20_565k6"]
 [ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="21_6wu5m"]
+[ext_resource type="AnimationLibrary" uid="uid://ewg20gm6aiio" path="res://entity/character/_data/basic_animations.tres" id="22_wwsvf"]
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="22_x46yc"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="23_5na0l"]
 [ext_resource type="PackedScene" uid="uid://438qt7ha3hj6" path="res://entity/character/_packed_scene/dialolgue_sprite.tscn" id="24_otur2"]
@@ -44,184 +45,13 @@ shader = ExtResource("8_txnat")
 shader_parameter/highlighted = false
 shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 
-[sub_resource type="Animation" id="Animation_tjtew"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_0tlu4"]
-resource_name = "idle_down"
-length = 1.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_a75ug"]
-resource_name = "idle_left"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_hv0d0"]
-resource_name = "idle_right"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_6us76"]
-resource_name = "idle_up"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 2)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_eb7yy"]
-_data = {
-&"RESET": SubResource("Animation_tjtew"),
-&"idle_down": SubResource("Animation_0tlu4"),
-&"idle_left": SubResource("Animation_a75ug"),
-&"idle_right": SubResource("Animation_hv0d0"),
-&"idle_up": SubResource("Animation_6us76")
-}
-
 [node name="Mei" type="Node2D" unique_id=912296346 groups=["ally"]]
 y_sort_enabled = true
 script = ExtResource("1_e1jjq")
-skill_deck = Array[ExtResource("3_y0fl4")]([ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("5_ojfus"), ExtResource("4_ik6s2"), ExtResource("6_ewmoi"), ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("6_ewmoi")])
 skills_dealt = 5
 character_name = "Mei"
 turn_portrait_scene = ExtResource("2_6fea8")
+skill_deck = Array[ExtResource("3_y0fl4")]([ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("5_ojfus"), ExtResource("4_ik6s2"), ExtResource("6_ewmoi"), ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("6_ewmoi")])
 basic_skill = SubResource("Resource_1kfok")
 reactions = Array[ExtResource("14_wwsvf")]([ExtResource("15_pwl3y"), ExtResource("16_bxu0d"), ExtResource("17_tc08q")])
 
@@ -230,7 +60,7 @@ material = SubResource("ShaderMaterial_2exov")
 position = Vector2(0, -2)
 texture = ExtResource("13_f7r05")
 offset = Vector2(0, -14)
-vframes = 3
+vframes = 6
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("20_565k6")]
 
@@ -242,7 +72,7 @@ avoidance_enabled = true
 radius = 20.0
 
 [node name="ActionAnimator" type="AnimationPlayer" parent="." unique_id=65810190]
-libraries/ = SubResource("AnimationLibrary_eb7yy")
+libraries/ = ExtResource("22_wwsvf")
 script = ExtResource("22_x46yc")
 
 [node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=919304283]
