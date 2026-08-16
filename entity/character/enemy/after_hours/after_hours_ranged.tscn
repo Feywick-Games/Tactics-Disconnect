@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://d1amvh6rlfexe"]
+
+[ext_resource type="PackedScene" uid="uid://bxmucc7oqfyuj" path="res://entity/character/enemy/after_hours/after_hours.tscn" id="1_ecori"]
+[ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_176mq"]
+[ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_ube1s"]
+[ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_tksqr"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="4_g14t5"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="5_ylwfq"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="6_drrw7"]
+
+[sub_resource type="Resource" id="Resource_inb1m"]
+script = ExtResource("4_g14t5")
+value = 3
+
+[sub_resource type="Resource" id="Resource_5o6de"]
+script = ExtResource("2_176mq")
+name = "Punch"
+max_range = 3
+state = ExtResource("3_tksqr")
+status_effects = Array[ExtResource("4_g14t5")]([SubResource("Resource_inb1m")])
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qjncy"]
+resource_local_to_scene = true
+shader = ExtResource("2_ube1s")
+shader_parameter/highlighted = false
+shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
+
+[node name="AfterHours" unique_id=1334997669 instance=ExtResource("1_ecori")]
+basic_skill = SubResource("Resource_5o6de")
+
+[node name="CharacterSprite" parent="." index="2" unique_id=129952542]
+material = SubResource("ShaderMaterial_qjncy")

@@ -16,18 +16,20 @@ var _start_tile: Vector2i
 var _exiting := false
 var _encounter_ended := false
 var _highlighted_tile: Vector2i
-var _skill_highlight_range: SkillHighlightRange
 var _moving := false
+var _turn_data: TurnData
+var _turn_history: Array[TurnData.Serialization]
 
-func _init(highlight_range: SkillHighlightRange) -> void:
-	_skill_highlight_range = highlight_range
+func _init(turn_data: TurnData, turn_history: Array[TurnData.Serialization]) -> void:
+	_turn_data = turn_data
+	_turn_history = turn_history
 
 
 func enter() -> void:
 	_character = state_machine.state_owner as Character
 	_character.health_bar.value = _character.health
 	_character.active_skill = _character.basic_skill
-	_character.health_bar.show()
+	_character.show_health_bar(true)
 	_start_tile = _character.current_tile
 	_highlighted_tile = _start_tile
 	_calc_default_ranges()
@@ -71,7 +73,7 @@ func exit() -> void:
 func _select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState) -> State:
 	if tile in attack_range.range_tiles:
 		var skill_state : SkillState = _character.active_skill.state.new(_character, _character.active_skill, tile)
-		var can_use: Global.SkillErrorCode = skill_state.can_use()
+		var can_use: Global.SkillErrorCode = skill_state.can_use(attack_range)
 		
 		
 		if can_use == Global.SkillErrorCode.OK:
@@ -88,10 +90,6 @@ func _highlight_targets(target_tile: Vector2i) -> void:
 	GameState.current_level.reset_map()
 	_character.update_ranges(_movement_range)
 		
-	var highlighted_tiles: Array[Vector2i] = _character.active_skill.highlight_targets(_character.current_tile, target_tile, _attack_range.range_tiles, direction)
+	_character.active_skill.highlight_targets(_character.current_tile, target_tile, _attack_range.range_tiles, direction)
 
-	_skill_highlight_range = SkillHighlightRange.new()
-	_skill_highlight_range.tiles = highlighted_tiles
-	_skill_highlight_range.status_effects = _character.active_skill.status_effects
-	_skill_highlight_range.direction = direction
-	_skill_highlight_range.is_ally = _character is Ally
+	_turn_data.active_skill_state = _character.active_skill.state.new(_character, _character.active_skill, target_tile)

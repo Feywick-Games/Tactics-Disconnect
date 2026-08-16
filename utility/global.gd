@@ -11,7 +11,8 @@ enum SkillErrorCode
 {
 	OK,
 	NO_TARGET,
-	MOVE_BLOCKED
+	MOVE_BLOCKED,
+	UNREACHABLE
 }
 
 const PLAYER_SPEED: float = 70

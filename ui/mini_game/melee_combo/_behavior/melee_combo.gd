@@ -32,6 +32,9 @@ func _end() -> void:
 	await get_tree().create_timer(1).timeout
 	completed = true
 	value = 1 - (float(_buttons.size()) / float(_combo_length) * .5)
+	if _buttons.is_empty():
+		success = true
+	
 	for child: Node in _button_container.get_children():
 		child.free()
 	hide()

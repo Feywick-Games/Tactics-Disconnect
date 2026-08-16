@@ -7,6 +7,9 @@ func enter() -> void:
 	for node: Node in _level.get_tree().get_nodes_in_group("ally"):
 		allies.append(node as Ally)
 	_level.ui.open_skill_select(allies)
+	for node: Node in _level.get_tree().get_nodes_in_group("enemy"):
+		var enemy: Enemy = node as Enemy
+		enemy.deal_skill()
 
 
 func update(_delta : float) -> State:

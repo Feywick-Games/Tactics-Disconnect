@@ -39,7 +39,7 @@ var aoe: Array[Vector2i] = [Vector2i.ZERO]
 var range_type: Combat.RangeType = Combat.RangeType.MELEE
 # to pierce
 @export
-var direct := true
+var direct := false
 @export
 var cast_sfx: AudioStream
 @export
@@ -65,15 +65,18 @@ func draw_range(attack_range: Array[Vector2i], is_special: bool) -> void:
 		GameState.current_level.reticle.draw_range(attack_range, Global.RETICLE_ATTACK_ATLAS_COORDS)
 
 
-func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_range: Array[Vector2i], direction: Vector2) -> Array[Vector2i]:
-	var highlighted_tiles: Array[Vector2i] = []
-	
+func apply_status_effects(actor_status: Array[StatusEffect]) -> void:
+	for actor_effect: StatusEffect in actor_status:
+		for skill_effect: StatusEffect in status_effects:
+			if skill_effect.status == Combat.Status.HIT and actor_effect.status == Combat.Status.DAMAGE:
+				skill_effect.value = max(skill_effect.value - actor_effect.status, 0)
+
+
+func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_range: Array[Vector2i], direction: Vector2) -> void:	
 	for tile_offset in aoe:
 		var tile: Vector2i
 		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(direction.angle()).round())
 		tile = target_tile + offset_rotated
-		
-		highlighted_tiles.append(tile)
 			
 		if not tile in attack_range:
 			# for aoe "direct/pierce" shouldn't matter
@@ -111,5 +114,3 @@ func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_ran
 		or (not direct and not GameState.current_level.grid.is_point_solid(move_tile)):
 			GameState.current_level.reticle.draw_range([move_tile], Global.RETICLE_MOVE_ALTAS_COORDS)
 			GameState.current_level.reticle.select_tile(move_tile)
-	
-	return highlighted_tiles

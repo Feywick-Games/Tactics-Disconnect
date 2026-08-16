@@ -7,9 +7,6 @@ const MAX_RANGE_WIDTH: float = .5
 const SLIDER_SPEED_SCALE: float = .75
 const MAX_TIME: float = 3.0
 
-@export
-var success := false
-
 var _slider_speed: float
 var _increasing := true
 var _tapped := false
@@ -68,6 +65,7 @@ func _process(delta: float) -> void:
 		if _timer_bar.value >= _timer_bar.max_value:
 			_end()
 	if Input.is_action_just_pressed("accept") and _running:
+		_tapped = true
 		_end()
 
 

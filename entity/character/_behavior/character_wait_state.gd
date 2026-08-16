@@ -2,10 +2,11 @@ class_name CharacterWaitState
 extends State
 
 var _character: Character
-var _skill_highlight_range: SkillHighlightRange
+var _turn_data: TurnData
+var _react_ready := false
 
-func _init(highlight_range: SkillHighlightRange) -> void:
-	_skill_highlight_range = highlight_range
+func _init(turn_data: TurnData) -> void:
+	_turn_data = turn_data
 
 
 func enter() -> void:
@@ -19,12 +20,21 @@ func enter() -> void:
 
 
 func update(_delta : float) -> State:
-	if not _character.current_tile in _skill_highlight_range.tiles and _character.health_bar.visible:
+	if _turn_data.active_skill_state and not _character in _turn_data.active_skill_state.targets and _character.health_bar.visible:
 		_character.health_bar.hide()
-	_character.display_modified_status(_skill_highlight_range.tiles, _skill_highlight_range.status_effects, _skill_highlight_range.direction)
+	_character.display_modified_status(_turn_data.active_skill_state)
+	if _character.can_react(_turn_data):
+		if not _react_ready:
+			_react_ready = true
+			_character.play_dialogue("exclamation")
+	else:
+		_react_ready = false
+		_character.play_dialogue()
+	
 	return
 
 
 func exit() -> void:
 	_character.health_bar.hide()
+	_character.play_dialogue()
 	_character.highlight(false)

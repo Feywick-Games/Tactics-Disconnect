@@ -15,7 +15,6 @@ func enter() -> void:
 	super.enter()
 	_ally = state_machine.state_owner as Ally
 	_start_tile = _ally.current_tile
-	_movement_astar = _ally.create_range_astar(_movement_range, _ally.movement_range)
 	_attack_range = _ally.update_ranges(_movement_range)
 
 
@@ -122,9 +121,9 @@ func _on_guard_pressed() -> State:
 
 
 func _on_cancel_pressed() -> State:
-	if acted and not interacted:
+	if acted:
 		acted = false
-		_skill_highlight_range = SkillHighlightRange.new()
+		_turn_data.active_skill_state = null
 		_movement_range = _starting_movement_range
 		force_redraw = true
 	elif waited:
@@ -136,11 +135,7 @@ func _on_cancel_pressed() -> State:
 
 func _on_special_pressed() -> State:
 	_ally.active_skill = _ally.basic_skill if _ally.active_skill != _ally.basic_skill else _ally.special
-	
-	if acted:
-		_skill_highlight_range = SkillHighlightRange.new()
 	force_redraw = true
-	
 	return
 
 
@@ -164,7 +159,7 @@ func physics_update(delta: float) -> State:
 	if current_tile != _ally.current_tile or force_redraw:
 		force_redraw = false
 		_attack_range = _ally.update_ranges(_movement_range)
-		if acted or interacted:
+		if acted:
 			_highlight_targets(_highlighted_tile)
 	return
 

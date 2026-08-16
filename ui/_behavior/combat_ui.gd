@@ -54,6 +54,8 @@ func display_skill_error_code(code: Global.SkillErrorCode) -> void:
 		Global.SkillErrorCode.MOVE_BLOCKED:
 			_skill_label.show()
 			_skill_label.text = "Can't Move To Tile!"
+		_:
+			printerr("unhandled skill error")
 			
 	if error_audio_stream:
 		_audio_stream_player.stream = error_audio_stream

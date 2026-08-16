@@ -13,29 +13,23 @@ const HEALTH_BAR_PIXEL_WIDTH := 25
 var character_name: String
 @export
 var turn_portrait_scene: PackedScene
-@export
-var small_portrait: Texture2D
 
-@export_category("Gameplay")
+@export_category("Skills")
 @export
-var facing: Vector2i = Vector2i.DOWN
-var init_state: GDScript = CharacterCombatBeginState
+var skill_deck: Array[Skill]
 @export
 var basic_skill: Skill
 @export
-var special: Skill
-@export
 var reactions: Array[Reaction]
 
-@export_category("Unit Stats")
+@export_category("Stats")
 @export
 var max_health: int = 20
 @export
 var _movement_range: int = 3
-var _movement_modifier: int
 var movement_range: int:
 	get:
-		return _movement_range + _movement_modifier
+		return _movement_range + get_modifier(Combat.Status.MOVEMENT)
 
 var health: int
 var current_tile: Vector2i
@@ -43,13 +37,14 @@ var status: Array[StatusEffect]
 var active_skill: Skill
 var sub_pixel_position: Vector2
 var state_machine: StateMachine
+var facing: Vector2i = Vector2i.DOWN
+var init_state: GDScript = CharacterCombatBeginState
+var special: Skill
 
 @onready
 var sprite: Sprite2D = $CharacterSprite
 @onready
 var animator: DirectionalAnimator = $ActionAnimator
-@onready
-var skill_animator: DirectionalAnimator = $SkillAnimator
 @onready
 var health_bar: TextureProgressBar = $HealthBar
 @onready
@@ -69,6 +64,7 @@ func _ready() -> void:
 
 func start_encounter() -> void:
 	animator.play_directional("idle", facing)
+	animator.advance(0)
 	health = max_health
 	health_bar.max_value = max_health
 	health_bar.value = health
@@ -77,6 +73,13 @@ func start_encounter() -> void:
 	damage_bar.max_value = max_health
 	damage_bar.step = float(health_bar.max_value) / HEALTH_BAR_PIXEL_WIDTH
 
+
+func get_modifier(status_type: Combat.Status) -> int:
+	var out: int = 0
+	for effect: StatusEffect in status:
+		if effect.status == status_type:
+			out += effect.value
+	return out
 
 
 func end_encounter() -> void:
@@ -95,26 +98,36 @@ func get_impact_time(anim_string: String) -> float:
 
 
 
-func _on_display_requested(show_display: bool) -> void:
+func show_health_bar(show_display: bool) -> void:
 	if show_display:
 		health_bar.show()
+		if not special:
+			health_bar.get_node("SpecialIcon").hide()
+		else:
+			health_bar.get_node("SpecialIcon").show()
 	else:
 		health_bar.hide()
 
 
-func process_status_effect(effect: StatusEffect) -> void:
+func process_status_effect(effect: StatusEffect, multiplier: float) -> void:
+	var new_effect: StatusEffect = effect.duplicate()
+	new_effect.value = round(new_effect.value * multiplier)
+	var statuses : Array[StatusEffect] = status.filter(func(x:StatusEffect) -> bool: return x.status == new_effect.status)
+	if statuses.is_empty() :
+		status.append(new_effect)
+	else:
+		statuses[0].duration = max(new_effect.duration, statuses[0].duration)
+		status[0].value = max(new_effect.value, statuses[0].value)
+
 	if effect.status == Combat.Status.HIT:
 		health -= effect.value
-	elif effect.status == Combat.Status.SLOWED:
-		_movement_modifier += effect.value
 
 
-func start_turn(highlight_range: SkillHighlightRange, skill_error_callback: Callable) -> void:
+func start_turn(turn_data: TurnData, turn_history: Array[TurnData.Serialization], skill_error_callback: Callable) -> void:
 	health_bar.value = health
 	active_skill = basic_skill
-	health_bar.show()
-	
-	var turn_state: TurnState = AllyTurnState.new(highlight_range) if self is Ally else EnemyTurnState.new(highlight_range)
+	@warning_ignore("incompatible_ternary")
+	var turn_state: TurnState = AllyTurnState.new(turn_data, turn_history) if self is Ally else EnemyTurnState.new(turn_data, turn_history)
 	turn_state.skill_error_encountered.connect(skill_error_callback)
 	
 	if self is Ally:
@@ -134,7 +147,6 @@ func clear_expired_statuses() -> void:
 	
 	for status_effect: StatusEffect in statuses_to_remove:
 		status.remove_at(status.find(status_effect))
-
 
 
 func end_turn() -> void:
@@ -240,17 +252,9 @@ func take_damage(skill: Skill, direction: Vector2, multiplier: float = 1) -> voi
 	multiplier = _calc_damage_multiplier(direction) * multiplier
 	
 	for base_effect: StatusEffect in skill.status_effects:
-		var new_effect: StatusEffect = base_effect.duplicate()
-		new_effect.value = round(new_effect.value * multiplier)
-		var statuses : Array[StatusEffect] = status.filter(func(x:StatusEffect) -> bool: return x.status == new_effect.status)
-		if statuses.is_empty() :
-			status.append(new_effect)
-		else:
-			statuses[0].duration = max(new_effect.duration, statuses[0].duration)
-			status[0].value = max(new_effect.value, statuses[0].value)
-		process_status_effect(new_effect)
-		status_label_manager.add_status_effect(new_effect)
-
+		process_status_effect(base_effect, multiplier)
+		status_label_manager.add_status_effect(base_effect)
+	
 	health_bar.value = health
 	damage_bar.value = health_bar.value
 	
@@ -282,18 +286,18 @@ func _calc_damage_multiplier(direction: Vector2i) -> float:
 	return multiplier
 
 
-func display_modified_status(tiles: Array[Vector2i], status_effects: Array[StatusEffect], direction: Vector2i) -> void:
-	if current_tile in tiles:
-		health_bar.show()
-		
+func display_modified_status(skill_state: SkillState) -> void:
+	if skill_state and self in skill_state.targets:
+		show_health_bar(true)
 		highlight()
 	else:
+		show_health_bar(false)
 		highlight(false)
 		return
 
-	var multiplier: float = _calc_damage_multiplier(direction)
+	var multiplier: float = _calc_damage_multiplier(skill_state.direction)
 
-	for base_effect: StatusEffect in status_effects:
+	for base_effect: StatusEffect in skill_state.skill.status_effects:
 		var effect: StatusEffect = base_effect.duplicate()
 		effect.value = round(effect.value * multiplier)
 		if effect.status == Combat.Status.HIT:
@@ -302,5 +306,51 @@ func display_modified_status(tiles: Array[Vector2i], status_effects: Array[Statu
 			status_label_manager.preview(effect)
 
 
+func can_react(turn_data: TurnData) -> bool:
+	if turn_data.active_skill_state:
+		var skill_state: SkillState = turn_data.active_skill_state
+		
+		for effected_unit: Character in skill_state.targets:
+			if is_instance_valid(effected_unit):
+				for reaction: Reaction in reactions:
+					var reaction_state: ReactionState = reaction.state.new(reaction, self, effected_unit)
+					if reaction_state.can_use(skill_state, turn_data.active_unit):
+						return true
+	return false
+
+
 func request_skill_text(skill_name: String) -> void:
 	skill_text_requested.emit(skill_name)
+
+
+func play_actor_status(mini_game := false, perfect := false) -> void:
+		if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_TIME_PERCENT:
+			status_label_manager.play_actor_status("quick")
+		elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_TIME_PERCENT:
+			status_label_manager.play_actor_status("slow")
+		if mini_game:
+			if perfect:
+				status_label_manager.play_actor_status("nice")
+			else:
+				status_label_manager.play_actor_status("oof")
+		if get_modifier(Combat.Status.HIT) > 0:
+			status_label_manager.play_actor_status("strong")
+		elif get_modifier(Combat.Status.HIT) < 0:
+			status_label_manager.play_actor_status("weak")
+
+
+func play_dialogue(anim: String = "") -> void:
+	var dialogue_sprite: Sprite2D = $DialolgueSprite
+	var dialogue_animation_player: AnimationPlayer = $DialolgueSprite/AnimationPlayer
+	if anim != "":
+		if facing == Vector2i.RIGHT:
+			dialogue_sprite.position.x = -abs(dialogue_sprite.position.x)
+			dialogue_sprite.flip_h = false
+		elif facing == Vector2i.LEFT:
+			dialogue_sprite.flip_h = true
+			dialogue_sprite.position.x = abs(dialogue_sprite.position.x)
+		dialogue_animation_player.play("speak")
+		dialogue_animation_player.queue(anim)
+	else:
+		dialogue_sprite.hide()
+		dialogue_animation_player.stop()

@@ -14,6 +14,7 @@ var _max_time: float
 var _current_qte_anim_player: AnimationPlayer
 var _tapped := false
 var _exploding := false
+var _time_passed: float
 
 func _ready() -> void:
 	hide()
@@ -26,6 +27,7 @@ func dispatch_qtes(count: int, buffer_time: float) -> void:
 	success_count = 0
 	_max_time = buffer_time
 	_tapped = false
+	_time_passed = 0
 	show()
 	for i: int in range(count):
 		_qtes.append(_reaction_qte_scene.instantiate())
@@ -45,7 +47,7 @@ func _process(delta: float) -> void:
 func _spawn_qte() -> void:
 	_current_qte = _qtes.pop_back()
 	add_child(_current_qte)
-	_current_qte.max_value = _max_time
+	_current_qte.max_value = _max_time - _time_passed
 	_current_qte.value = 0
 	_current_qte.step = TIME_STEP
 	_current_qte_anim_player = _current_qte.get_node("AnimationPlayer")
@@ -55,7 +57,8 @@ func _spawn_qte() -> void:
 
 func _process_current_qte(delta: float) -> void:
 	if _current_qte.value < _max_time and not _tapped:
-		_current_qte.value += delta
+		_time_passed += delta
+		_current_qte.value = _time_passed
 	elif _current_qte.value >= _max_time and not _tapped and not _exploding:
 		_current_qte_anim_player.play("failure")
 		_exploding = true

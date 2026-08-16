@@ -3,273 +3,213 @@
 [ext_resource type="Script" uid="uid://bxmx6f2p5oxn3" path="res://entity/character/_behavior/character.gd" id="1_84jh7"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_2g4r5"]
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="2_vs4rm"]
-[ext_resource type="Texture2D" uid="uid://b8k687sb6a6rk" path="res://ui/health_bar/_sprite/health_bar_background.png" id="3_ccsml"]
-[ext_resource type="Texture2D" uid="uid://b34r5h2blmmla" path="res://ui/health_bar/_sprite/health_bar_progress.png" id="4_5lxke"]
-[ext_resource type="Texture2D" uid="uid://dka74tswf81nh" path="res://ui/health_bar/_sprite/damage_bar_progress.png" id="4_8mprc"]
-[ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="4_eqor8"]
-[ext_resource type="Script" uid="uid://cuotsodjscwta" path="res://entity/character/_behavior/status_label_manager.gd" id="6_1nyw1"]
+[ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="3_a4ask"]
+[ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="4_wwhbt"]
+[ext_resource type="PackedScene" uid="uid://438qt7ha3hj6" path="res://entity/character/_packed_scene/dialolgue_sprite.tscn" id="7_p5ivt"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="9_uenv8"]
 
-[sub_resource type="Animation" id="Animation_2gelk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.968627, 0.968627, 0.960784, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_outline_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.0470588, 0.0352941, 0.0509804, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../StatusLabelManager/StatusLabel:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-19, -64)]
-}
-
-[sub_resource type="Animation" id="Animation_leh64"]
-resource_name = "hit"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.968627, 0.968627, 0.960784, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_outline_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.0470588, 0.0352941, 0.0509804, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../StatusLabelManager/StatusLabel:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-19, -64), Vector2(-19, -79)]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../StatusLabelManager")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"set_damage_value"
-}]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("../StatusLabelManager:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_clwql"]
-resource_name = "miss"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.709804, 0.960784, 0.901961, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../StatusLabelManager/StatusLabel:theme_override_colors/font_outline_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.0941176, 0.305882, 0.419608, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../StatusLabelManager/StatusLabel:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-19, -64), Vector2(-19, -79)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../StatusLabelManager/StatusLabel:text")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["MISS"]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("../StatusLabelManager:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_2no37"]
-_data = {
-&"RESET": SubResource("Animation_2gelk"),
-&"hit": SubResource("Animation_leh64"),
-&"miss": SubResource("Animation_clwql")
-}
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_laiw5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4wfim"]
 resource_local_to_scene = true
 shader = ExtResource("2_2g4r5")
 shader_parameter/highlighted = false
 shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 
-[node name="Character" type="CharacterBody2D" unique_id=2026809601]
+[sub_resource type="Animation" id="Animation_tjtew"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0tlu4"]
+resource_name = "idle_down"
+length = 1.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_a75ug"]
+resource_name = "idle_left"
+length = 1.5
+step = 0.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hv0d0"]
+resource_name = "idle_right"
+length = 1.5
+step = 0.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6us76"]
+resource_name = "idle_up"
+length = 1.5
+step = 0.5
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"notify_impact",
+"time": 1.5
+}]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gjpiq"]
+_data = {
+&"RESET": SubResource("Animation_tjtew"),
+&"idle_down": SubResource("Animation_0tlu4"),
+&"idle_left": SubResource("Animation_a75ug"),
+&"idle_right": SubResource("Animation_hv0d0"),
+&"idle_up": SubResource("Animation_6us76")
+}
+
+[node name="Character" type="Node2D" unique_id=1787944670]
 y_sort_enabled = true
-collision_layer = 0
 script = ExtResource("1_84jh7")
-_evasion = 5
 
-[node name="HealthBar" type="TextureProgressBar" parent="." unique_id=1956210959]
-z_index = 1
-z_as_relative = false
-offset_left = -16.0
-offset_top = -47.0
-offset_right = 24.0
-offset_bottom = -7.0
-pivot_offset = Vector2(26, 29)
-value = 67.0
-rounded = true
-texture_progress = ExtResource("4_5lxke")
+[node name="CharacterSprite" type="Sprite2D" parent="." unique_id=588471571]
+material = SubResource("ShaderMaterial_4wfim")
+offset = Vector2(0, -17)
+vframes = 4
 
-[node name="DamageBar" type="TextureProgressBar" parent="HealthBar" unique_id=1283647699]
-show_behind_parent = true
-z_index = 1
-z_as_relative = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-value = 79.0
-rounded = true
-texture_under = ExtResource("3_ccsml")
-texture_progress = ExtResource("4_8mprc")
+[node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("3_a4ask")]
 
-[node name="HitChanceLabel" type="Label" parent="HealthBar" unique_id=1810161448]
-layout_mode = 0
-offset_left = -3.0
-offset_top = -7.0
-offset_right = 37.0
-offset_bottom = 16.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("4_eqor8")
-theme_override_font_sizes/font_size = 8
-horizontal_alignment = 1
+[node name="StatusLabelManager" parent="." unique_id=145769700 instance=ExtResource("4_wwhbt")]
 
-[node name="StatusLabelManager" type="Control" parent="." unique_id=1517281646]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-pivot_offset = Vector2(10, -19)
-script = ExtResource("6_1nyw1")
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=941634874]
+target_desired_distance = 32.0
+avoidance_enabled = true
+radius = 20.0
 
-[node name="LabelAnimator" type="AnimationPlayer" parent="StatusLabelManager" unique_id=1170129262]
-root_node = NodePath("../../CharacterSprite")
-libraries/ = SubResource("AnimationLibrary_2no37")
-
-[node name="StatusLabel" type="Label" parent="StatusLabelManager" unique_id=843845372]
-layout_mode = 0
-offset_left = -19.0
-offset_top = -64.0
-offset_right = 21.0
-offset_bottom = -41.0
-theme_override_colors/font_color = Color(0.968627, 0.968627, 0.960784, 1)
-theme_override_colors/font_outline_color = Color(0.0470588, 0.0352941, 0.0509804, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("4_eqor8")
-theme_override_font_sizes/font_size = 8
-text = "MISS"
-horizontal_alignment = 1
-
-[node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
-material = SubResource("ShaderMaterial_laiw5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=974221274]
-
-[node name="ActionAnimator" type="AnimationPlayer" parent="." unique_id=2058618678]
+[node name="ActionAnimator" type="AnimationPlayer" parent="." unique_id=1129748792]
+libraries/ = SubResource("AnimationLibrary_gjpiq")
 script = ExtResource("2_vs4rm")
 
-[node name="SkillAnimator" type="AnimationPlayer" parent="." unique_id=1671960451]
-script = ExtResource("2_vs4rm")
-
-[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=846521504]
+[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=2136148937]
 script = ExtResource("9_uenv8")
+
+[node name="DialolgueSprite" parent="." unique_id=2130912011 instance=ExtResource("7_p5ivt")]
+visible = false
+position = Vector2(-9, 0)

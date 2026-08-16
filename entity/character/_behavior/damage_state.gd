@@ -8,18 +8,19 @@ var _character: Character
 var _damage_taken: bool
 var _hit := false
 
-
-func _init(skill: Skill, direction: Vector2, hit_signal: Signal, multiplier: float = 1) -> void:
+func _init(skill: Skill, direction: Vector2, hit_signal: Signal, multiplier: float = 1, ignore_signal := false) -> void:
 	_skill = skill
 	_direction = direction
 	_damage_multiplier = multiplier
-	hit_signal.connect(_on_hit)
-
+	if not ignore_signal:
+		hit_signal.connect(_on_hit)
+	else:
+		_hit = true
 
 func enter() -> void:
 	super.enter()
 	_character = state_machine.state_owner as Character
-	_character.health_bar.show()
+	_character.show_health_bar(true)
 
 
 func update(delta: float) -> State:
@@ -40,3 +41,7 @@ func exit() -> void:
 	super.exit()
 	if _character.health <= 0:
 		_character.die()
+		
+		
+func on_cheer() -> void:
+	_damage_multiplier += .25

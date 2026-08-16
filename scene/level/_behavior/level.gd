@@ -27,6 +27,7 @@ var reticle: ReticleTileMap
 var turn_number : int = -1
 var active_unit: Character
 var unit_spawned := false
+var turn_history : Array[TurnData.Serialization]
 
 
 func _ready() -> void:

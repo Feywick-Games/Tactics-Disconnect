@@ -3,3 +3,4 @@ extends Control
 
 var value: float
 var completed: bool = false
+var success: bool = false

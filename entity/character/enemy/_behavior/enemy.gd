@@ -1,7 +1,7 @@
 class_name Enemy
 extends Character
 
-const DISTANCE_PRIORITY: float = .5
+const DISTANCE_PRIORITY: float = .1
 
 @export_category("AI Prioritization")
 @export_range(0,1)
@@ -18,5 +18,5 @@ var special_priority: float = 0.75
 var custom_priority: float = 0
 
 
-func _ready() -> void:
-	super._ready()
+func deal_skill() -> void:
+	special = skill_deck.pick_random()

@@ -1,8 +1,6 @@
 class_name Ally
 extends Character
 
-@export
-var skill_deck: Array[Skill]
 @export_range(1,5)
 var skills_dealt: int = 3
 

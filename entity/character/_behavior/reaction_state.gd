@@ -48,5 +48,5 @@ func update(delta: float) -> State:
 	return
 
 
-func can_use(_skill: Skill, _actor: Character) -> bool:
+func can_use(_skill_state: SkillState, _actor: Character) -> bool:
 	return false

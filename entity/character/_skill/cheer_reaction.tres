@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Reaction" format=3 uid="uid://c0hqpa4cff4gb"]
+
+[ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="1_cdu7i"]
+[ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="2_5fdn5"]
+[ext_resource type="Script" uid="uid://dp6ap6bcgyl1h" path="res://entity/character/_behavior/cheer_reaction_state.gd" id="2_akwd0"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="3_akwd0"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="4_1xvk7"]
+
+[resource]
+script = ExtResource("1_cdu7i")
+name = "Cheer"
+state = ExtResource("2_akwd0")
+metadata/_custom_type_script = "uid://dbao6o0pxlhr4"
