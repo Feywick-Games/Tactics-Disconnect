@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c3ow1ifjec62m"]
 
 [ext_resource type="Script" uid="uid://chq8hk2b7dwdl" path="res://entity/character/ally/_behavior/ally.gd" id="1_5r8g6"]
+[ext_resource type="Texture2D" uid="uid://bpiqvpjl2wlf6" path="res://entity/character/ally/izzy/_sprite/izzy_turn_portrait_small.png" id="2_beaqm"]
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_d2041"]
 [ext_resource type="PackedScene" uid="uid://bap3a4oqvrftr" path="res://entity/character/ally/izzy/_packed_scene/izzy_turn_portrait.tscn" id="2_y0p6f"]
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="3_apuu4"]
@@ -30,6 +31,7 @@ value = 4
 [sub_resource type="Resource" id="Resource_v85yj"]
 script = ExtResource("2_d2041")
 name = "Punch"
+character_animation = "basic"
 state = ExtResource("3_tnq7t")
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_xdj1t")])
 
@@ -213,7 +215,7 @@ _data = {
 [node name="Izzy" type="Node2D" unique_id=907728875 groups=["ally"]]
 y_sort_enabled = true
 script = ExtResource("1_5r8g6")
-skills_dealt = 5
+small_portrait = ExtResource("2_beaqm")
 character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
 skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("5_j3bli"), ExtResource("6_m8t01")])

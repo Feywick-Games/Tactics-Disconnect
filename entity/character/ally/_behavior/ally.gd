@@ -1,8 +1,10 @@
 class_name Ally
 extends Character
 
-@export_range(1,5)
-var skills_dealt: int = 3
+@export
+var small_portrait: Texture2D
+
+var skills_dealt: int = 4
 
 var current_skill_deck: Array[Skill]
 var current_skill_hand: Array[Skill]

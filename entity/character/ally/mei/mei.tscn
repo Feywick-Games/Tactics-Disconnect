@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://chq8hk2b7dwdl" path="res://entity/character/ally/_behavior/ally.gd" id="1_e1jjq"]
 [ext_resource type="PackedScene" uid="uid://0vhq1ufxesi7" path="res://entity/character/ally/mei/_packed_scene/mei_turn_portrait.tscn" id="2_6fea8"]
+[ext_resource type="Texture2D" uid="uid://ccjmy2rvtwx3p" path="res://entity/character/ally/mei/_sprite/mei_turn_portrait_small.png" id="2_wwsvf"]
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="3_efk4d"]
 [ext_resource type="AudioStream" uid="uid://7yyjci604ojm" path="res://data/sfx/combat/swing.ogg" id="3_xs5to"]
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="3_y0fl4"]
@@ -32,6 +33,7 @@ value = 4
 [sub_resource type="Resource" id="Resource_1kfok"]
 script = ExtResource("3_y0fl4")
 name = "Kick"
+character_animation = "basic"
 range_shape = 1
 state = ExtResource("4_1eaca")
 status_effects = Array[ExtResource("4_u3oph")]([SubResource("Resource_n0ksn")])
@@ -218,10 +220,10 @@ _data = {
 [node name="Mei" type="Node2D" unique_id=912296346 groups=["ally"]]
 y_sort_enabled = true
 script = ExtResource("1_e1jjq")
-skill_deck = Array[ExtResource("3_y0fl4")]([ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("5_ojfus"), ExtResource("4_ik6s2"), ExtResource("6_ewmoi"), ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("6_ewmoi")])
-skills_dealt = 5
+small_portrait = ExtResource("2_wwsvf")
 character_name = "Mei"
 turn_portrait_scene = ExtResource("2_6fea8")
+skill_deck = Array[ExtResource("3_y0fl4")]([ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("5_ojfus"), ExtResource("4_ik6s2"), ExtResource("6_ewmoi"), ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("6_ewmoi")])
 basic_skill = SubResource("Resource_1kfok")
 reactions = Array[ExtResource("14_wwsvf")]([ExtResource("15_pwl3y"), ExtResource("16_bxu0d"), ExtResource("17_tc08q")])
 

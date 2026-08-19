@@ -33,7 +33,6 @@ max_range = 4
 state = ExtResource("3_jfry1")
 status_effects = Array[ExtResource("4_a4nkn")]([SubResource("Resource_n0ksn")])
 range_type = 1
-direct = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_20l6v"]
 resource_local_to_scene = true
@@ -215,11 +214,10 @@ _data = {
 [node name="Chaz" type="Node2D" unique_id=1270059331 groups=["ally"]]
 y_sort_enabled = true
 script = ExtResource("1_x7qae")
-skill_deck = Array[ExtResource("2_qq2rq")]([ExtResource("3_a4nkn"), ExtResource("4_uuy70"), ExtResource("3_a4nkn"), ExtResource("4_uuy70"), ExtResource("4_uuy70"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("4_uuy70")])
-skills_dealt = 5
+small_portrait = ExtResource("7_f6ndk")
 character_name = "Chaz"
 turn_portrait_scene = ExtResource("6_uuy70")
-small_portrait = ExtResource("7_f6ndk")
+skill_deck = Array[ExtResource("2_qq2rq")]([ExtResource("3_a4nkn"), ExtResource("4_uuy70"), ExtResource("3_a4nkn"), ExtResource("4_uuy70"), ExtResource("4_uuy70"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("4_uuy70")])
 basic_skill = SubResource("Resource_sfhtk")
 reactions = Array[ExtResource("11_l67kw")]([ExtResource("12_smrb7"), ExtResource("13_evk5q"), ExtResource("14_vorty")])
 

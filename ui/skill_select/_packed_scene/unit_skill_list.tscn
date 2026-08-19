@@ -2,7 +2,9 @@
 
 [ext_resource type="FontFile" uid="uid://cs5prw3u7po3j" path="res://ui/font/aseprite.otf" id="1_jcecc"]
 [ext_resource type="Script" uid="uid://b0p83fwlb2up" path="res://ui/skill_select/_behavior/unit_skill_list.gd" id="1_ybr77"]
+[ext_resource type="Texture2D" uid="uid://bpiqvpjl2wlf6" path="res://entity/character/ally/izzy/_sprite/izzy_turn_portrait_small.png" id="3_6ecvr"]
 [ext_resource type="Texture2D" uid="uid://mvb4kmg43j54" path="res://ui/skill_select/_sprite/empty_skill_small.tres" id="4_qgbeh"]
+[ext_resource type="Script" uid="uid://bs4fn0xli6buv" path="res://ui/skill_select/_behavior/unit_select_button.gd" id="5_o0dns"]
 [ext_resource type="Texture2D" uid="uid://b8555r2oqhw18" path="res://ui/skill_select/_sprite/empty_skill_small_inactive.tres" id="5_ybr77"]
 [ext_resource type="Script" uid="uid://jag3vgcedyy7" path="res://ui/skill_select/_behavior/skill_select_button.gd" id="6_o0dns"]
 
@@ -29,35 +31,35 @@ text = "Izzy"
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="SkillButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=885280956]
+[node name="UnitButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=885280956]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = ExtResource("3_6ecvr")
+texture_disabled = ExtResource("5_ybr77")
+script = ExtResource("5_o0dns")
+
+[node name="SkillButton1" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1439890386]
 unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("4_qgbeh")
 texture_disabled = ExtResource("5_ybr77")
 script = ExtResource("6_o0dns")
 
-[node name="SkillButton2" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1439890386]
+[node name="SkillButton2" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=565895662]
 unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("4_qgbeh")
 texture_disabled = ExtResource("5_ybr77")
 script = ExtResource("6_o0dns")
 
-[node name="SkillButton3" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=565895662]
+[node name="SkillButton3" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1407663020]
 unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("4_qgbeh")
 texture_disabled = ExtResource("5_ybr77")
 script = ExtResource("6_o0dns")
 
-[node name="SkillButton4" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1407663020]
-unique_name_in_owner = true
-layout_mode = 2
-texture_normal = ExtResource("4_qgbeh")
-texture_disabled = ExtResource("5_ybr77")
-script = ExtResource("6_o0dns")
-
-[node name="SkillButton5" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=929673256]
+[node name="SkillButton4" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=929673256]
 unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("4_qgbeh")

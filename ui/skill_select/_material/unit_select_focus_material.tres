@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cg8d34althg8f"]
+
+[ext_resource type="Shader" uid="uid://cpew0lq6xcgsu" path="res://ui/skill_select/_material/button_hover.gdshader" id="1_66kcn"]
+
+[resource]
+shader = ExtResource("1_66kcn")
+shader_parameter/texture_scale = Vector2(1, 1)
+shader_parameter/flash_color = Color(1, 0.25490198, 0.7647059, 1)
+shader_parameter/highlight_color = Color(0.92941177, 1, 1, 1)

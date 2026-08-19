@@ -86,24 +86,28 @@ func _generate_button_neighbors() -> void:
 	var button_matrix: Array[Array] = []
 	for button_list: UnitSkillList in %UnitSkills.get_children():
 		button_matrix.append([])
-		for button: SkillSelectButton in button_list.skill_buttons:
-			if button.has_skill and (not button.disabled or button.selected):
+		var all_buttons: Array[TextureButton] = [button_list.unit_button as TextureButton]
+		all_buttons.append_array(button_list.skill_buttons as Array[TextureButton])
+		for button: TextureButton in  all_buttons:
+			if button is UnitSelectButton or (button.has_skill and (not button.disabled or button.selected)):
 				button_matrix[-1].append(button)
 		
 	for y in range(button_matrix.size()):
 		for x in range(button_matrix[y].size()):
-			var button: SkillSelectButton = button_matrix[y][x]
-			if button.selected:
+			var button: TextureButton = button_matrix[y][x]
+			if button is UnitSelectButton or button.selected:
 				x = button.get_index()
 			
 			var left_neighbor := Vector2i(x-1,y)
 			var right_neighbor := Vector2i(x+1,y)
 			var up_neighbor := Vector2i(x,y-1)
 			var down_neighbor := Vector2i(x,y+1)
-			if x == 0 or button.selected:
+			if x == 0 or button is UnitSelectButton:
 				left_neighbor.x = button_matrix[y].size() - 1
 			if x >= button_matrix[y].size() - 1:
 				right_neighbor.x = 0
+			if (button is SkillSelectButton and button.selected):
+				left_neighbor.x = 0
 			
 			if y == 0:
 				up_neighbor.y = button_matrix.size() - 1
