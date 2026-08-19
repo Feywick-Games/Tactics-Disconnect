@@ -9,6 +9,10 @@ var aoe_empty_color: Color = "#433045"
 var aoe_origin_color: Color = "#d6d0c1"
 @export
 var aoe_fill_color: Color = "#a83649"
+@export_category("Debug")
+@export
+var ally_scenes: Array[PackedScene]
+
 
 const unit_skill_list_scene: PackedScene = preload("res://ui/skill_select/_packed_scene/unit_skill_list.tscn")
 
@@ -31,7 +35,14 @@ var go_button: TextureButton = %GoButton
 
 func _ready() -> void:
 	go_button.pressed.connect(_on_go_button_pressed)
-	hide()
+	if not get_tree().root == get_parent():
+		hide()
+	else:
+		var allies: Array[Ally]
+		for scene: PackedScene in ally_scenes: 
+			var ally: Ally = scene.instantiate() as Ally
+			allies.append(ally)
+		open(allies)
 
 
 func _on_go_button_pressed() -> void:
@@ -75,8 +86,9 @@ func display_unit_skill_lists(allies: Array[Ally]) -> void:
 
 
 func _on_unit_skill_list_focus_entered(unit: Character) -> void:
-	var tracking_cam := GameState.current_level.get_viewport().get_camera_2d() as TrackingCamera
-	tracking_cam.follow(unit, Vector2(160,0))
+	if not get_tree().root == get_parent():
+		var tracking_cam := GameState.current_level.get_viewport().get_camera_2d() as TrackingCamera
+		tracking_cam.follow(unit, Vector2(160,0))
 
 
 func _generate_button_neighbors() -> void:
