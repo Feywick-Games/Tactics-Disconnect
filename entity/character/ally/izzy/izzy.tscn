@@ -95,6 +95,7 @@ reactions = Array[ExtResource("12_ldv45")]([ExtResource("13_xmewg"), ExtResource
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
 material = SubResource("ShaderMaterial_hcp3d")
+position = Vector2(0, 1)
 texture = ExtResource("11_apuu4")
 offset = Vector2(0, -17)
 hframes = 12
