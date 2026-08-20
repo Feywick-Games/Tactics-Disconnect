@@ -70,8 +70,10 @@ func _on_movement_input(input_vec: Vector2i) -> State:
 			if not is_equal_approx(abs(face_vec.x), abs(face_vec.y)):
 				face_vec = Vector2i(VectorF.snap_direction(face_vec.normalized()))
 				_ally.facing = face_vec
-				_ally.animator.play_directional("idle", _ally.facing)
-			
+				if acted:
+					_ally.animator.play_directional("idle", _ally.facing)
+				elif waited:
+					_ally.animator.play_directional("move_idle", _ally.facing)
 		if _highlighted_tile != hover_tile:
 			if acted:
 				_highlight_targets(hover_tile)
@@ -85,7 +87,7 @@ func _on_movement_input(input_vec: Vector2i) -> State:
 			_tile_path = [_ally.current_tile + Vector2i(input_vec)]
 			_moving = true
 		_ally.facing = input_vec
-		_ally.animator.play_directional("idle", _ally.facing)
+		_ally.animator.play_directional("move_idle", _ally.facing)
 	
 	return
 
@@ -93,7 +95,6 @@ func _on_movement_input(input_vec: Vector2i) -> State:
 func _on_guard_pressed() -> State:
 	_ally.get_viewport().set_input_as_handled()
 	waited = true
-	#TODO add exit animation where they align themselves on the tile 
 	_ally.global_position = GameState.current_level.tile_to_world(_ally.current_tile)
 	_wait_range = RangeStruct.new()
 	_wait_range.range_tiles = [
@@ -147,6 +148,7 @@ func _on_accept_pressed() -> State:
 		return next_state 
 	else:
 		acted = true
+		_character.animator.play_directional("idle")
 		force_redraw = true
 		_movement_range = RangeStruct.new()
 		_highlighted_tile = _ally.current_tile + _ally.facing
@@ -165,5 +167,7 @@ func physics_update(delta: float) -> State:
 
 
 func exit() -> void:
+	if waited:
+		_character.animator.play_directional("idle")
 	_ally.health_bar.hide()
 	super.exit()

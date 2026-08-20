@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="18_eqa8o"]
 [ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="19_8fyth"]
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="20_21nt3"]
+[ext_resource type="AnimationLibrary" uid="uid://ewg20gm6aiio" path="res://entity/character/_data/basic_animations.tres" id="20_t6stc"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="21_banqh"]
 [ext_resource type="PackedScene" uid="uid://438qt7ha3hj6" path="res://entity/character/_packed_scene/dialolgue_sprite.tscn" id="22_u0rnj"]
 
@@ -235,7 +236,7 @@ material = SubResource("ShaderMaterial_2e4av")
 position = Vector2(0, 1)
 texture = ExtResource("3_h77kg")
 offset = Vector2(0, -17)
-vframes = 3
+vframes = 6
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("18_eqa8o")]
 
@@ -247,7 +248,7 @@ avoidance_enabled = true
 radius = 20.0
 
 [node name="ActionAnimator" type="AnimationPlayer" parent="." unique_id=1430006279]
-libraries/ = SubResource("AnimationLibrary_m48ys")
+libraries/ = ExtResource("20_t6stc")
 script = ExtResource("20_21nt3")
 
 [node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=300698826]

@@ -11,15 +11,19 @@
 [ext_resource type="Resource" uid="uid://kchvxmj4k1fw" path="res://data/skill/battering_ram.tres" id="4_dvrs6"]
 [ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://data/skill/push_skill.tres" id="5_j3bli"]
 [ext_resource type="Resource" uid="uid://dc72m6spxgmw0" path="res://data/skill/throw_rock.tres" id="6_m8t01"]
+[ext_resource type="Script" uid="uid://1b4s8nyecy85" path="res://entity/character/_behavior/push_skill_state.gd" id="6_p2oko"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="6_wepgb"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="7_uk5et"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_07m0v"]
+[ext_resource type="Texture2D" uid="uid://coa7cv3cuilvn" path="res://ui/skill_select/_sprite/skill_select_throw.png" id="9_5r8g6"]
 [ext_resource type="Texture2D" uid="uid://u465lrggcsnd" path="res://entity/character/ally/izzy/_sprite/izzy_unit_sprite.png" id="11_apuu4"]
+[ext_resource type="Script" uid="uid://1npnrcot15ef" path="res://entity/character/_behavior/shove_skill_state.gd" id="11_ldv45"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="12_ldv45"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="13_xmewg"]
 [ext_resource type="Resource" uid="uid://cwkld7s34m6sk" path="res://entity/character/_skill/collision_reaction.tres" id="14_pwuw8"]
 [ext_resource type="Resource" uid="uid://c0hqpa4cff4gb" path="res://entity/character/_skill/cheer_reaction.tres" id="15_fladx"]
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="18_cf37p"]
+[ext_resource type="AnimationLibrary" uid="uid://ewg20gm6aiio" path="res://entity/character/_data/basic_animations.tres" id="20_beaqm"]
 [ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="23_5r8g6"]
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="24_3ab3v"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="25_uhu1q"]
@@ -28,6 +32,47 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_beaqm"]
 atlas = ExtResource("3_xebcl")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="Resource" id="Resource_2sh2k"]
+script = ExtResource("3_jkw71")
+value = 4
+metadata/_custom_type_script = "uid://c5gnxjiq5craw"
+
+[sub_resource type="Resource" id="Resource_yuh5r"]
+script = ExtResource("3_jkw71")
+status = 1
+metadata/_custom_type_script = "uid://c5gnxjiq5craw"
+
+[sub_resource type="Resource" id="Resource_pwuw8"]
+script = ExtResource("2_d2041")
+ui_small = ExtResource("9_5r8g6")
+name = "Batttering Ram"
+flavor_text = "Knock down the door on a bozo and send them back and tile to take their place."
+character_animation = "basic"
+move_position = Vector2i(1, 0)
+push_position = Vector2i(1, 0)
+state = ExtResource("11_ldv45")
+status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_2sh2k"), SubResource("Resource_yuh5r")])
+metadata/_custom_type_script = "uid://de4pxhpt4mw5u"
+
+[sub_resource type="Resource" id="Resource_dj1am"]
+script = ExtResource("3_jkw71")
+value = 6
+
+[sub_resource type="Resource" id="Resource_jr16b"]
+script = ExtResource("3_jkw71")
+status = 1
+value = 4
+
+[sub_resource type="Resource" id="Resource_xmewg"]
+script = ExtResource("2_d2041")
+ui_small = ExtResource("9_5r8g6")
+name = "Push"
+flavor_text = "Hold A to send the opponent flying up to 5 spaces"
+character_animation = "basic"
+push_position = Vector2i(4, 0)
+state = ExtResource("6_p2oko")
+status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_dj1am"), SubResource("Resource_jr16b")])
 
 [sub_resource type="Resource" id="Resource_xdj1t"]
 script = ExtResource("3_jkw71")
@@ -46,177 +91,6 @@ shader = ExtResource("8_07m0v")
 shader_parameter/highlighted = false
 shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 
-[sub_resource type="Animation" id="Animation_tjtew"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_0tlu4"]
-resource_name = "idle_down"
-length = 1.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_a75ug"]
-resource_name = "idle_left"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_hv0d0"]
-resource_name = "idle_right"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_6us76"]
-resource_name = "idle_up"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 2)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hs5m1"]
-_data = {
-&"RESET": SubResource("Animation_tjtew"),
-&"idle_down": SubResource("Animation_0tlu4"),
-&"idle_left": SubResource("Animation_a75ug"),
-&"idle_right": SubResource("Animation_hv0d0"),
-&"idle_up": SubResource("Animation_6us76")
-}
-
 [node name="Izzy" type="Node2D" unique_id=907728875 groups=["ally"]]
 y_sort_enabled = true
 script = ExtResource("1_5r8g6")
@@ -225,15 +99,17 @@ large_portrait = SubResource("AtlasTexture_beaqm")
 skill_select_description = "A hot head who likes to knock people around the map. Push specialist."
 character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
-skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), ExtResource("4_dvrs6"), ExtResource("5_j3bli"), ExtResource("5_j3bli"), ExtResource("6_m8t01")])
+skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), SubResource("Resource_pwuw8"), SubResource("Resource_pwuw8"), SubResource("Resource_xmewg"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), SubResource("Resource_pwuw8"), SubResource("Resource_xmewg"), SubResource("Resource_xmewg"), ExtResource("6_m8t01")])
 basic_skill = SubResource("Resource_v85yj")
 reactions = Array[ExtResource("12_ldv45")]([ExtResource("13_xmewg"), ExtResource("14_pwuw8"), ExtResource("15_fladx")])
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
 material = SubResource("ShaderMaterial_hcp3d")
+position = Vector2(0, 1)
 texture = ExtResource("11_apuu4")
 offset = Vector2(0, -17)
-vframes = 4
+hframes = 12
+vframes = 9
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("18_cf37p")]
 
@@ -245,7 +121,7 @@ avoidance_enabled = true
 radius = 20.0
 
 [node name="ActionAnimator" type="AnimationPlayer" parent="." unique_id=2058618678]
-libraries/ = SubResource("AnimationLibrary_hs5m1")
+libraries/ = ExtResource("20_beaqm")
 script = ExtResource("24_3ab3v")
 
 [node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=846521504]

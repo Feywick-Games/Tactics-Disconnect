@@ -33,7 +33,7 @@ func enter() -> void:
 	_start_tile = _character.current_tile
 	_highlighted_tile = _start_tile
 	_calc_default_ranges()
-	_character.animator.play_directional("idle")
+	_character.animator.play_directional("move_idle")
 	_starting_movement_range = _movement_range
 
 

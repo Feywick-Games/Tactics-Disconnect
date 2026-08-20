@@ -57,6 +57,7 @@ func update(delta: float) -> State:
 		else:
 			_wait(delta)
 	elif _exiting or (_tile_path.is_empty() and not _is_acting):
+		_character.animator.play_directional("idle")
 		_enemy.end_turn()
 		return CharacterIdleState.new()
 	return
@@ -206,4 +207,4 @@ func _wait(delta: float) -> void:
 	_time_highlight += delta
 	if _character.facing != Vector2i(VectorF.snap_direction(_target.current_tile - _enemy.current_tile)):
 		_character.facing = Vector2i(VectorF.snap_direction(_target.current_tile - _enemy.current_tile))
-		_character.animator.play_directional("idle", _character.facing)
+	_character.animator.play_directional("idle", _character.facing)

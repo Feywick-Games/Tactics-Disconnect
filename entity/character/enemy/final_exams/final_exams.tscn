@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="13_vmpgi"]
 [ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="14_4jtjg"]
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="15_3uidr"]
+[ext_resource type="AnimationLibrary" uid="uid://ewg20gm6aiio" path="res://entity/character/_data/basic_animations.tres" id="15_gdiig"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="16_vrsj4"]
 [ext_resource type="PackedScene" uid="uid://438qt7ha3hj6" path="res://entity/character/_packed_scene/dialolgue_sprite.tscn" id="17_ykbv8"]
 
@@ -35,177 +36,6 @@ shader = ExtResource("2_spjto")
 shader_parameter/highlighted = false
 shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 
-[sub_resource type="Animation" id="Animation_tjtew"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_0tlu4"]
-resource_name = "idle_down"
-length = 1.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_a75ug"]
-resource_name = "idle_left"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_hv0d0"]
-resource_name = "idle_right"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_6us76"]
-resource_name = "idle_up"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 2)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xttrt"]
-_data = {
-&"RESET": SubResource("Animation_tjtew"),
-&"idle_down": SubResource("Animation_0tlu4"),
-&"idle_left": SubResource("Animation_a75ug"),
-&"idle_right": SubResource("Animation_hv0d0"),
-&"idle_up": SubResource("Animation_6us76")
-}
-
 [node name="FinalExams" type="Node2D" unique_id=1334997669 groups=["enemy"]]
 y_sort_enabled = true
 script = ExtResource("1_agxuy")
@@ -220,7 +50,7 @@ material = SubResource("ShaderMaterial_0k1lt")
 position = Vector2(1, -13)
 texture = ExtResource("3_e8262")
 offset = Vector2(-1, -4)
-vframes = 3
+vframes = 6
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("13_vmpgi")]
 
@@ -232,7 +62,7 @@ avoidance_enabled = true
 radius = 20.0
 
 [node name="ActionAnimator" type="AnimationPlayer" parent="." unique_id=1763945507]
-libraries/ = SubResource("AnimationLibrary_xttrt")
+libraries/ = ExtResource("15_gdiig")
 script = ExtResource("15_3uidr")
 
 [node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1397917838]

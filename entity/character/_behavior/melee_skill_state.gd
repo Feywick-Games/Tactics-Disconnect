@@ -4,7 +4,7 @@ extends SkillState
 func update(delta:float) -> State:
 	if mini_game and mini_game.completed and not _started:
 		_hit_targets()
-	elif _started and not _character.animator.is_playing():
+	elif _started and not _character.animator.is_playing() and _impact_emitted:
 		return CharacterIdleState.new()
 	return super.update(delta)
 
