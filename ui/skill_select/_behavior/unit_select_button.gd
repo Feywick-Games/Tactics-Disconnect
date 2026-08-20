@@ -3,6 +3,7 @@ extends TextureButton
 
 signal unit_selected
 signal shuffle_canceled
+signal unit_focused(unit: Ally)
 
 var _ally: Ally
 var focus_material: ShaderMaterial = load("res://ui/skill_select/_material/unit_select_focus_material.tres")
@@ -20,6 +21,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_focus_entered() -> void:
 	material = focus_material
+	unit_focused.emit(_ally)
 
 
 func _on_focus_exited() -> void:

@@ -5,6 +5,7 @@
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="2_ri0w7"]
 [ext_resource type="Texture2D" uid="uid://dugubdiu3p37y" path="res://entity/character/ally/peggy/_sprite/peggy_turn_portrait_small.png" id="2_t6stc"]
 [ext_resource type="Resource" uid="uid://1olldk31cxwg" path="res://data/skill/flirty_gaze.tres" id="3_65p3h"]
+[ext_resource type="Texture2D" uid="uid://b8f8ysrw5xkkm" path="res://entity/character/ally/peggy/_sprite/peggy_turn_portrait.png" id="3_b74mv"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="3_d8pu4"]
 [ext_resource type="Texture2D" uid="uid://du5dqjq2h7wkl" path="res://entity/character/ally/peggy/_sprite/peggy_unit_sprite.png" id="3_h77kg"]
 [ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_pi3iu"]
@@ -23,6 +24,10 @@
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="20_21nt3"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="21_banqh"]
 [ext_resource type="PackedScene" uid="uid://438qt7ha3hj6" path="res://entity/character/_packed_scene/dialolgue_sprite.tscn" id="22_u0rnj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxu0d"]
+atlas = ExtResource("3_b74mv")
+region = Rect2(0, 0, 64, 0)
 
 [sub_resource type="Resource" id="Resource_o0dns"]
 script = ExtResource("3_d8pu4")
@@ -47,26 +52,26 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/path = NodePath("CharacterSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2i(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/path = NodePath("CharacterSprite:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
+"update": 0,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_0tlu4"]
@@ -80,26 +85,26 @@ markers = [{
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/path = NodePath("CharacterSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2i(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/path = NodePath("CharacterSprite:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
+"update": 0,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_a75ug"]
@@ -114,26 +119,26 @@ markers = [{
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/path = NodePath("CharacterSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"update": 0,
+"values": [Vector2i(0, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/path = NodePath("CharacterSprite:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 1)]
+"update": 0,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_hv0d0"]
@@ -148,26 +153,26 @@ markers = [{
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/path = NodePath("CharacterSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2i(0, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/path = NodePath("CharacterSprite:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 1)]
+"update": 0,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_6us76"]
@@ -182,26 +187,26 @@ markers = [{
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/path = NodePath("CharacterSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2i(0, 2)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/path = NodePath("CharacterSprite:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 2)]
+"update": 0,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m48ys"]
@@ -217,6 +222,8 @@ _data = {
 y_sort_enabled = true
 script = ExtResource("1_cygd0")
 small_portrait = ExtResource("2_t6stc")
+large_portrait = SubResource("AtlasTexture_bxu0d")
+skill_select_description = "Makes the Boy and Girls weak in the knees. Debuff Specialist."
 character_name = "Peggy"
 turn_portrait_scene = ExtResource("7_rx68n")
 skill_deck = Array[ExtResource("2_neqen")]([ExtResource("3_65p3h"), ExtResource("3_65p3h"), ExtResource("4_rx68n"), ExtResource("5_wpkbw"), ExtResource("5_wpkbw"), ExtResource("4_rx68n"), ExtResource("3_65p3h"), ExtResource("6_e75kd"), ExtResource("4_rx68n"), ExtResource("6_e75kd")])
@@ -225,6 +232,7 @@ reactions = Array[ExtResource("12_t6stc")]([ExtResource("13_b74mv"), ExtResource
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=588471571]
 material = SubResource("ShaderMaterial_2e4av")
+position = Vector2(0, 1)
 texture = ExtResource("3_h77kg")
 offset = Vector2(0, -17)
 vframes = 3

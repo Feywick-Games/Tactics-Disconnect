@@ -3,8 +3,12 @@ extends Character
 
 @export
 var small_portrait: Texture2D
+@export
+var large_portrait: Texture2D
+@export_multiline
+var skill_select_description: String
 
-var skills_dealt: int = 4
+var skills_dealt: int = 3
 
 var current_skill_deck: Array[Skill]
 var current_skill_hand: Array[Skill]
