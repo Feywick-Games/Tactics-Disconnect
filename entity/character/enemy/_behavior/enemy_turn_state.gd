@@ -172,7 +172,8 @@ func _pick_tile() -> Vector2i:
 				desired_tile = tile
 	else:
 		var desired_favoribility: float = 0
-		var skill_range := GameState.current_level.grid.request_range(_target.current_tile, _enemy.active_skill.min_range, _enemy.active_skill.max_range, _enemy.active_skill.range_shape, true, _enemy.active_skill.direct)
+		# is not really a skill range but rather movement tiles within range of the target. Hence the false argument.
+		var skill_range := GameState.current_level.grid.request_range(_target.current_tile, _enemy.active_skill.min_range, _enemy.active_skill.max_range, _enemy.active_skill.range_shape, false, _enemy.active_skill.direct)
 		var total_range := RangeStruct.new()
 		total_range.range_tiles = skill_range.range_tiles.duplicate()
 		total_range.absorb(_movement_range)

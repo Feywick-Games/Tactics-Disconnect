@@ -39,15 +39,22 @@ character_scene = ExtResource("10_7q5it")
 facing = Vector2i(-1, 0)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
+[sub_resource type="Resource" id="Resource_tql3s"]
+script = ExtResource("23_dfity")
+value = 6
+character_scene = ExtResource("10_7q5it")
+metadata/_custom_type_script = "uid://ujs5udtg6jxg"
+
 [sub_resource type="Resource" id="Resource_s57jr"]
 script = ExtResource("23_dfity")
+value = 6
 character_scene = ExtResource("10_yprxc")
 facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_6imhl"]
 script = ExtResource("23_dfity")
-value = 4
+value = 6
 character_scene = ExtResource("10_7q5it")
 facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
@@ -109,7 +116,7 @@ tile_map_data = PackedByteArray("AAAOAAIAAAADAAoAAAAOAAEAAAADAAkAAAARAAEAAAADAAk
 tile_set = ExtResource("2_ndno1")
 
 [node name="IzzySpawnPoint" type="Node2D" parent="." unique_id=132906090]
-position = Vector2(535, 135)
+position = Vector2(475, 165)
 script = ExtResource("21_sldol")
 is_ally = true
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_phexs")])
@@ -123,7 +130,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_34pil")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="ChazSpawnPoint" type="Node2D" parent="." unique_id=736651583]
-position = Vector2(445, 135)
+position = Vector2(445, 105)
 script = ExtResource("21_sldol")
 is_ally = true
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_yuh5r")])
@@ -139,11 +146,17 @@ metadata/_custom_type_script = "uid://cfuxemb15nlab"
 [node name="SpawnPoint8" type="Node2D" parent="." unique_id=583347185]
 position = Vector2(655, 225)
 script = ExtResource("21_sldol")
-spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_vcdsl")])
+spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_vcdsl"), SubResource("Resource_tql3s")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="SpawnPoint" type="Node2D" parent="." unique_id=1799894307]
 position = Vector2(385, 255)
+script = ExtResource("21_sldol")
+spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_s57jr"), SubResource("Resource_6imhl")])
+metadata/_custom_type_script = "uid://cfuxemb15nlab"
+
+[node name="SpawnPoint2" type="Node2D" parent="." unique_id=1259741078]
+position = Vector2(655, 315)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_s57jr"), SubResource("Resource_6imhl")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
@@ -155,7 +168,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_7q5it"), SubR
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="SpawnPoint7" type="Node2D" parent="." unique_id=2048682465]
-position = Vector2(265, 195)
+position = Vector2(235, 195)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_l4cyh"), SubResource("Resource_qbfaq")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"

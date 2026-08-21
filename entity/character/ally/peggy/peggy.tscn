@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://41q5krao87lt" path="res://entity/character/ally/peggy/_packed_scene/peggy_turn_portrait.tscn" id="7_rx68n"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="12_t6stc"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="13_b74mv"]
+[ext_resource type="PackedScene" uid="uid://b5cbmx24r5gkk" path="res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn" id="14_637ed"]
 [ext_resource type="Resource" uid="uid://cwkld7s34m6sk" path="res://entity/character/_skill/collision_reaction.tres" id="14_dli33"]
 [ext_resource type="Resource" uid="uid://c0hqpa4cff4gb" path="res://entity/character/_skill/cheer_reaction.tres" id="15_637ed"]
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="18_eqa8o"]
@@ -32,12 +33,12 @@ region = Rect2(0, 0, 64, 0)
 
 [sub_resource type="Resource" id="Resource_o0dns"]
 script = ExtResource("3_d8pu4")
-value = 4
+value = 3
 metadata/_custom_type_script = "uid://c5gnxjiq5craw"
 
 [sub_resource type="Resource" id="Resource_ybr77"]
 script = ExtResource("2_neqen")
-name = "Scratch"
+name = "Slap"
 state = ExtResource("3_pi3iu")
 status_effects = Array[ExtResource("3_d8pu4")]([SubResource("Resource_o0dns")])
 metadata/_custom_type_script = "uid://de4pxhpt4mw5u"
@@ -47,177 +48,6 @@ resource_local_to_scene = true
 shader = ExtResource("2_ri0w7")
 shader_parameter/highlighted = false
 shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
-
-[sub_resource type="Animation" id="Animation_tjtew"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2i(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_0tlu4"]
-resource_name = "idle_down"
-length = 1.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2i(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_a75ug"]
-resource_name = "idle_left"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2i(0, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_hv0d0"]
-resource_name = "idle_right"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2i(0, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_6us76"]
-resource_name = "idle_up"
-length = 1.5
-step = 0.5
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"notify_impact",
-"time": 1.5
-}]
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2i(0, 2)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_m48ys"]
-_data = {
-&"RESET": SubResource("Animation_tjtew"),
-&"idle_down": SubResource("Animation_0tlu4"),
-&"idle_left": SubResource("Animation_a75ug"),
-&"idle_right": SubResource("Animation_hv0d0"),
-&"idle_up": SubResource("Animation_6us76")
-}
 
 [node name="Peggy" type="Node2D" unique_id=264392964 groups=["ally"]]
 y_sort_enabled = true
@@ -230,6 +60,8 @@ turn_portrait_scene = ExtResource("7_rx68n")
 skill_deck = Array[ExtResource("2_neqen")]([ExtResource("3_65p3h"), ExtResource("3_65p3h"), ExtResource("4_rx68n"), ExtResource("5_wpkbw"), ExtResource("5_wpkbw"), ExtResource("4_rx68n"), ExtResource("3_65p3h"), ExtResource("6_e75kd"), ExtResource("4_rx68n"), ExtResource("6_e75kd")])
 basic_skill = SubResource("Resource_ybr77")
 reactions = Array[ExtResource("12_t6stc")]([ExtResource("13_b74mv"), ExtResource("14_dli33"), ExtResource("15_637ed")])
+max_health = 28
+_movement_range = 4
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=588471571]
 material = SubResource("ShaderMaterial_2e4av")

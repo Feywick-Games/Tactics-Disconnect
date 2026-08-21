@@ -101,6 +101,7 @@ turn_portrait_scene = ExtResource("2_y0p6f")
 skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), SubResource("Resource_pwuw8"), SubResource("Resource_pwuw8"), SubResource("Resource_xmewg"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), SubResource("Resource_pwuw8"), SubResource("Resource_xmewg"), SubResource("Resource_xmewg"), ExtResource("6_m8t01")])
 basic_skill = SubResource("Resource_v85yj")
 reactions = Array[ExtResource("12_ldv45")]([ExtResource("13_xmewg"), ExtResource("14_pwuw8"), ExtResource("15_fladx")])
+max_health = 36
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
 material = SubResource("ShaderMaterial_hcp3d")

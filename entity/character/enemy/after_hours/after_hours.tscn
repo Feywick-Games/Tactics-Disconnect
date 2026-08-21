@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="7_qjpgr"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="8_q1hkv"]
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="9_5ygt6"]
+[ext_resource type="PackedScene" uid="uid://b5cbmx24r5gkk" path="res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn" id="9_mm3wl"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="10_w2mjb"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="11_3scgl"]
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="14_43t37"]
@@ -43,6 +44,7 @@ turn_portrait_scene = ExtResource("2_d0if8")
 skill_deck = Array[ExtResource("4_mm3wl")]([ExtResource("9_5ygt6")])
 basic_skill = SubResource("Resource_3dmcj")
 reactions = Array[ExtResource("10_w2mjb")]([ExtResource("11_3scgl")])
+max_health = 16
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=588471571]
 material = SubResource("ShaderMaterial_muyru")
