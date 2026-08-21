@@ -4,7 +4,10 @@
 [ext_resource type="TileSet" uid="uid://ds2bj4u4yhws6" path="res://scene/level/alley/alley_tile_set.tres" id="2_ndno1"]
 [ext_resource type="PackedScene" uid="uid://c3ow1ifjec62m" path="res://entity/character/ally/izzy/izzy.tscn" id="5_c38kb"]
 [ext_resource type="PackedScene" uid="uid://bldhlyqoqot1v" path="res://entity/character/enemy/final_exams/final_exams.tscn" id="10_7q5it"]
+[ext_resource type="PackedScene" uid="uid://r5sdcdlxfmjr" path="res://entity/character/ally/chaz/chaz.tscn" id="10_ymq17"]
 [ext_resource type="PackedScene" uid="uid://bxmucc7oqfyuj" path="res://entity/character/enemy/after_hours/after_hours.tscn" id="10_yprxc"]
+[ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="11_0hr4q"]
+[ext_resource type="PackedScene" uid="uid://bvmot03d4vcap" path="res://entity/character/ally/peggy/peggy.tscn" id="13_qbfaq"]
 [ext_resource type="Script" uid="uid://8xawka3fldcr" path="res://node/camera/tracking_camera.gd" id="16_vcdsl"]
 [ext_resource type="Script" uid="uid://cfuxemb15nlab" path="res://node/spawn/spawn_point.gd" id="21_sldol"]
 [ext_resource type="Script" uid="uid://ujs5udtg6jxg" path="res://node/spawn/spawn_data.gd" id="23_dfity"]
@@ -16,18 +19,18 @@ metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_34pil"]
 script = ExtResource("23_dfity")
-character_scene = ExtResource("5_c38kb")
+character_scene = ExtResource("11_0hr4q")
 facing = Vector2i(-1, 0)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_yuh5r"]
 script = ExtResource("23_dfity")
-character_scene = ExtResource("5_c38kb")
+character_scene = ExtResource("10_ymq17")
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_yprxc"]
 script = ExtResource("23_dfity")
-character_scene = ExtResource("5_c38kb")
+character_scene = ExtResource("13_qbfaq")
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_vcdsl"]

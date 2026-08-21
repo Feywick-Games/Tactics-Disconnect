@@ -56,9 +56,9 @@ func _set_targets() -> void:
 		_max_is_collision = true
 		
 		var unit := GameState.current_level.grid.get_unit_from_tile(collision_point)
-		targets.append(unit)
 		if unit and unit is Ally != _character is Ally:
 			_o_target = unit
+			targets.append(unit)
 
 
 func _hit_targets() -> void:
@@ -78,3 +78,10 @@ func _hit_targets() -> void:
 	if _o_target:
 		var damage_state := DamageState.new(skill, direction, push_damage_state.collided, _multiplier)
 		_o_target.set_state(damage_state)
+		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
+		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, push_damage_state.collided)
+		GameState.current_level.add_child(vfx)
+	if _max_is_collision:
+		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
+		vfx.setup(direction, _push_tile_path[-1], [Vector2i.ZERO], [_target_unit], false, push_damage_state.collided)
+		GameState.current_level.add_child(vfx)

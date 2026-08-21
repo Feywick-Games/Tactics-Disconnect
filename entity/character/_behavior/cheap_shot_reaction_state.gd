@@ -22,12 +22,18 @@ func _react() -> void:
 	super._react()
 	_character.request_skill_text(_reaction.name)
 	var direction: Vector2i = _target.current_tile - _character.current_tile
+	
+	var vfx :=  _reaction.visual_effect_scene.instantiate() as VisualEffect
+	vfx.setup(direction, _target.current_tile, _reaction.aoe, [_target], _reaction.visual_effect_targets_only, impact)
+	GameState.current_level.add_child(vfx)
+	
 	_character.facing = _target.facing
 	_character.animator.play_directional(_reaction.character_animation, _character.facing)
 	_character.play_dialogue("taunt")
 	_impact_time = _character.get_impact_time(_character.animator.current_animation)
 	var damage_state := DamageState.new(_reaction, direction, impact)
 	_target.set_state(damage_state)
+	
 
 
 func can_use(skill_state: SkillState, _actor: Character) -> bool:

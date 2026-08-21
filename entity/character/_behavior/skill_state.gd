@@ -35,6 +35,10 @@ func _init(character: Character, i_skill: Skill, target_tile_: Vector2i, current
 func enter() -> void:
 	super.enter()
 	impact_time = _character.get_impact_time(_character.animator.get_directional_animation_name(skill.character_animation, direction))
+	var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
+	vfx.setup(direction, target_tile, skill.aoe, targets, skill.visual_effect_targets_only, impact)
+	GameState.current_level.add_child(vfx)
+	
 	if skill.name != "":
 		_character.request_skill_text(skill.name)
 

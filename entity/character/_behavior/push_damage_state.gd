@@ -4,6 +4,7 @@ extends DamageState
 signal collided
 
 var _tile_path: Array[Vector2i]
+var _has_collided := false
 
 func _init(tile_path: Array[Vector2i],
 skill: Skill, direction: Vector2, impact_signal: Signal, multiplier: float = 1) -> void:
@@ -26,7 +27,8 @@ func update(delta: float) -> State:
 	if _damage_taken:
 		if not _tile_path.is_empty():
 			_tile_path = _character.process_movement(delta, _tile_path, "")
-		else:
+		elif not _has_collided:
+			_has_collided = true
 			GameState.current_level.grid.update_unit_registry(_character.current_tile, _character)
 			collided.emit()
 	return

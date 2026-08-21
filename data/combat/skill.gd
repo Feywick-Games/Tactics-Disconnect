@@ -6,6 +6,7 @@ const UI_SMALL_DIMENSIONS: Vector2i = Vector2i(20,20)
 const UI_LARGE_DIMENSIONS: Vector2i = Vector2i(60,60)
 const DEFAULT_UI_SMALL: Texture2D = preload("res://ui/skill_select/_sprite/skill_select_small.png")
 const DEFAULT_UI_LARGE: Texture2D = preload("res://ui/skill_select/_sprite/skill_select_large.png")
+const DEFAULT_VISUAL_EFFECT_SCENE: PackedScene = preload("res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn")
 
 @export
 var ui_small: Texture2D = DEFAULT_UI_SMALL
@@ -18,7 +19,9 @@ var flavor_text: String
 @export
 var character_animation: String = "idle"
 @export
-var skill_animation: String
+var visual_effect_scene: PackedScene = DEFAULT_VISUAL_EFFECT_SCENE
+@export
+var visual_effect_targets_only := true
 @export
 var max_range: int = 1
 @export
