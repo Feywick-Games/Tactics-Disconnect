@@ -19,11 +19,6 @@ func enter() -> void:
 	_character.facing = _direction * -1
 
 func update(delta: float) -> State:
-	var parent_state: State = super.update(delta)
-	if parent_state:
-		if _tile_path.is_empty():
-			return parent_state
-	
 	if _damage_taken:
 		if not _tile_path.is_empty():
 			_tile_path = _character.process_movement(delta, _tile_path, "")
@@ -31,4 +26,10 @@ func update(delta: float) -> State:
 			_has_collided = true
 			GameState.current_level.grid.update_unit_registry(_character.current_tile, _character)
 			collided.emit()
+	
+	var parent_state: State = super.update(delta)
+	if parent_state:
+		if _tile_path.is_empty() and _has_collided:
+			return parent_state
+
 	return

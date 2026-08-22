@@ -244,17 +244,18 @@ offset_right = 96.0
 offset_bottom = 29.0
 grow_vertical = 2
 
-[node name="ReactionQteManager" type="MarginContainer" parent="." unique_id=2056286782]
+[node name="ReactionQteManager" type="Control" parent="." unique_id=1507045187]
 unique_name_in_owner = true
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -32.0
-offset_right = 32.0
-offset_bottom = 32.0
+offset_left = -320.0
+offset_top = -180.0
+offset_right = -256.0
+offset_bottom = -116.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 8
@@ -262,4 +263,8 @@ script = ExtResource("31_pxq7u")
 
 [node name="TextureProgressBar" parent="ReactionQteManager" unique_id=869123022 instance=ExtResource("31_cx76p")]
 material = SubResource("ShaderMaterial_783s8")
-layout_mode = 2
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 64.0
+offset_bottom = 64.0

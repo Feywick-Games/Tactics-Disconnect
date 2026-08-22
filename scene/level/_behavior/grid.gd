@@ -126,24 +126,24 @@ func is_path_blocked(from_tile: Vector2i, to_tile: Vector2i, blocked_tiles: Arra
 
 
 func request_range(unit_tile: Vector2i, min_distance: int, max_distance: int, range_shape: Combat.RangeShape,
-is_range := false, direct := false) -> RangeStruct:
+is_range := false, direct := false, force_remove_unit_tiles := false) -> RangeStruct:
 	var range_struct := RangeStruct.new()
-	var _pass_tiles: Array[Vector2i]
-	var _unit_tiles: Array[Vector2i]
+	var pass_tiles: Array[Vector2i]
+	var unit_tiles: Array[Vector2i]
 	var unit : Character = get_unit_from_tile(unit_tile)
 	
 	if unit:
 		set_point_solid(unit_tile, false)
-		_pass_tiles.append(unit_tile)
+		pass_tiles.append(unit_tile)
 	
 	if is_range:
 		for tile in _passable_tiles:
 			set_point_solid(tile, false)
-			_pass_tiles.append(tile)
+			pass_tiles.append(tile)
 		for tile: Vector2i in _unit_registry.keys():
 			if tile != unit_tile:
 				set_point_solid(tile, false)
-				_unit_tiles.append(tile)
+				unit_tiles.append(tile)
 
 	var max_range_rect: Rect2i
 	max_range_rect.position = unit_tile - Vector2i(max_distance, max_distance)
@@ -158,20 +158,25 @@ is_range := false, direct := false) -> RangeStruct:
 			
 			var tile := Vector2i(x,y)
 			
+			if tile == Vector2i(11,7):
+				print("gotcha")
+			
 			if region.has_point(tile):
 				var id_path: Array[Vector2i] = get_id_path(unit_tile, tile)
 				if id_path.size() <= max_distance + 1 and id_path.size() > min_distance:
 					if not is_point_solid(tile):
 						if direct:
 							range_struct.range_tiles.append(tile)
-						elif not is_path_blocked(unit_tile, tile, _unit_tiles):
+						elif not is_path_blocked(unit_tile, tile, unit_tiles):
 							range_struct.range_tiles.append(tile)
 
-	for tile in _unit_tiles:
+	for tile in unit_tiles:
 		set_point_solid(tile, true)
+		if force_remove_unit_tiles:
+			range_struct.range_tiles.erase(tile)
 	
 	# remove tiles that can be passed through but not stood on.
-	for tile in _pass_tiles:
+	for tile in pass_tiles:
 		if tile != unit_tile:
 			var tile_idx: int = range_struct.range_tiles.find(tile)
 			
@@ -181,8 +186,10 @@ is_range := false, direct := false) -> RangeStruct:
 		set_point_solid(tile, true)
 	
 	if is_range:
-		for tile in _unit_tiles:
+		for tile in unit_tiles:
 			set_point_solid(tile, true)
+	
+
 	
 	return range_struct
 

@@ -73,7 +73,7 @@ func physics_update(delta: float) -> State:
 
 func _populate_attack_ranges() -> void:
 	for tile: Vector2i in _movement_range.range_tiles:
-		var valid_tiles := GameState.current_level.grid.request_range(tile, _enemy.basic_skill.min_range, _enemy.basic_skill.max_range, _enemy.basic_skill.range_shape, true)
+		var valid_tiles := GameState.current_level.grid.request_range(tile, _enemy.basic_skill.min_range, _enemy.basic_skill.max_range, _enemy.basic_skill.range_shape, true, _enemy.basic_skill.direct)
 		_full_attack_range.absorb(valid_tiles)
 		
 	if _enemy.special:
@@ -173,10 +173,7 @@ func _pick_tile() -> Vector2i:
 	else:
 		var desired_favoribility: float = 0
 		# is not really a skill range but rather movement tiles within range of the target. Hence the false argument.
-		var skill_range := GameState.current_level.grid.request_range(_target.current_tile, _enemy.active_skill.min_range, _enemy.active_skill.max_range, _enemy.active_skill.range_shape, false, _enemy.active_skill.direct)
-		var total_range := RangeStruct.new()
-		total_range.range_tiles = skill_range.range_tiles.duplicate()
-		total_range.absorb(_movement_range)
+		var skill_range := GameState.current_level.grid.request_range(_target.current_tile, _enemy.active_skill.min_range, _enemy.active_skill.max_range, _enemy.active_skill.range_shape, true, _enemy.active_skill.direct, true)
 		var move_tiles: Array[Vector2i] = _movement_range.range_tiles.duplicate()
 		move_tiles.shuffle()
 		for tile in skill_range.range_tiles:

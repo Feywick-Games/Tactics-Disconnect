@@ -71,17 +71,32 @@ func _set_reaction_states() -> void:
 								reaction_state.id = cheer_reacting_id
 								cheer_reacting_id += 1
 								var cheer_reaction_state := reaction_state as CheerReactionState
-								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1,skill_state.impact_time))
+								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(
+									reacting_unit.get_screen_transform().get_origin(), 
+									true if reacting_unit.global_position.y < effected_unit.global_position.y else false
+									,skill_state.impact_time
+								))
 								if not _level.ui.reaction_qte_manager.reacted.is_connected(skill_state.on_cheer):
 									_level.ui.reaction_qte_manager.reacted.connect(skill_state.on_cheer)
 								_level.ui.reaction_qte_manager.reacted.connect(cheer_reaction_state.qte_succeeded)
 							elif reaction_state is CollisionReactionState:
-								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1, skill_state.impact_time + (skill_state as PushSkillState).push_time))
+								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(
+									reacting_unit.get_screen_transform().get_origin(), 
+									true if reacting_unit.global_position.y < effected_unit.global_position.y else false,
+									skill_state.impact_time + (skill_state as PushSkillState).push_time
+								))
 							elif reaction_state is GetBehindMeReactionState:
-								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1, skill_state.impact_time))
+								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(
+									reacting_unit.get_screen_transform().get_origin(), 
+									true if reacting_unit.global_position.y < effected_unit.global_position.y else false,
+									skill_state.impact_time
+								))
 								_level.ui.reaction_qte_manager.reacted.connect(skill_state.get_behind_me)
 							elif reaction_state is CheapShotReactionState:
-								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(1, skill_state._character.animator.get_section_end_time()))
+								_qte_callbacks.append(_level.ui.reaction_qte_manager.dispatch_qtes.bind(
+									reacting_unit.get_screen_transform().get_origin(), 
+									true if reacting_unit.global_position.y < effected_unit.global_position.y else false,
+									skill_state._character.animator.get_section_end_time()))
 							if not _level.ui.reaction_qte_manager.reacted.is_connected(reaction_state.qte_succeeded):
 								_level.ui.reaction_qte_manager.reacted.connect(reaction_state.qte_succeeded)
 						else:

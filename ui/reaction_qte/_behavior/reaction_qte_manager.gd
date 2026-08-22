@@ -1,5 +1,5 @@
 class_name ReactionQteManager
-extends MarginContainer
+extends Control
 
 signal reacted(success: bool)
 
@@ -23,15 +23,22 @@ func _ready() -> void:
 		child.free()
 
 
-func dispatch_qtes(count: int, buffer_time: float) -> void:
+func dispatch_qtes(screen_position: Vector2, is_above: bool, buffer_time: float) -> void:
 	success_count = 0
 	_max_time = buffer_time
 	_tapped = false
 	_time_passed = 0
 	show()
-	for i: int in range(count):
-		_qtes.append(_reaction_qte_scene.instantiate())
-		
+	var qte : Control = _reaction_qte_scene.instantiate()
+	qte.global_position = screen_position
+	
+	if not is_above:
+		qte.global_position.y += 15
+	else:
+		qte.global_position.y -= 40
+	
+	_qtes.append(qte)
+	
 
 func _process(delta: float) -> void:
 	if not _qtes.is_empty() and not _current_qte:
@@ -45,7 +52,7 @@ func _process(delta: float) -> void:
 
 
 func _spawn_qte() -> void:
-	_current_qte = _qtes.pop_back()
+	_current_qte = _qtes.pop_front()
 	add_child(_current_qte)
 	_current_qte.max_value = _max_time - _time_passed
 	_current_qte.value = 0

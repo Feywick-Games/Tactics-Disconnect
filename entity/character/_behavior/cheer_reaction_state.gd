@@ -7,9 +7,13 @@ var _qte_count: int = -1
 func update(_delta: float) -> State:
 	if not _character.animator.is_playing() and _reacted:
 		return CharacterIdleState.new()
+	elif not _qte_pending and not _success:
+		return CharacterIdleState.new()
+		
 	if _success and not _reacted:
 		_reacted = true
 		_react()
+	
 	return
 
 
