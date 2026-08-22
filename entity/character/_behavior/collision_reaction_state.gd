@@ -19,7 +19,7 @@ func update(delta: float) -> State:
 	if not _qte_pending:
 		if not _success:
 			var dummy_signal: Signal
-			return DamageState.new(collided_skill, _character.current_tile - _target.current_tile, dummy_signal, 1, true)
+			return DamageState.new(collided_skill, _character.current_tile - _target.current_tile, dummy_signal, true)
 		else:
 			if not _turned:
 				_turned = true

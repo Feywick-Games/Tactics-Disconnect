@@ -12,6 +12,6 @@ func update(delta:float) -> State:
 func _hit_targets() -> void:
 	_started = true
 	_character.animator.play_directional(skill.character_animation, direction)
-	var range_challenge := mini_game as RangeChallenge
-	_multiplier *= .5 if not range_challenge.success else 1.0
+	var multiplier : int = -Global.MINIGAME_FAILURE_MULTIPLIER if not mini_game.success else Global.MINIGAME_SUCCESS_MULTIPLIER
+	skill.apply_damage_modifiers(multiplier)
 	super._hit_targets()

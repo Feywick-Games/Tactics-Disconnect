@@ -61,6 +61,22 @@ func get_hit_damage() -> int:
 		return 0
 
 
+func get_modifier(status_type: Combat.Status) -> int:
+	var out: int = 0
+	for effect: StatusEffect in status_effects:
+		if effect.status == status_type:
+			out += effect.value
+	return out
+
+
+func get_modifier_count(status_type: Combat.Status, positive: bool) -> int:
+	var out: int = 0
+	for effect: StatusEffect in status_effects:
+		if effect.status == status_type and effect.value > 0 == positive:
+			out += 1
+	return out
+
+
 func draw_range(attack_range: Array[Vector2i], is_special: bool) -> void:
 	if is_special:
 		GameState.current_level.reticle.draw_range(attack_range, Global.RETICLE_SPECIAL_ALTAS_COORDS)
@@ -68,11 +84,11 @@ func draw_range(attack_range: Array[Vector2i], is_special: bool) -> void:
 		GameState.current_level.reticle.draw_range(attack_range, Global.RETICLE_ATTACK_ATLAS_COORDS)
 
 
-func apply_status_effects(actor_status: Array[StatusEffect]) -> void:
-	for actor_effect: StatusEffect in actor_status:
-		for skill_effect: StatusEffect in status_effects:
-			if skill_effect.status == Combat.Status.HIT and actor_effect.status == Combat.Status.DAMAGE:
-				skill_effect.value = max(skill_effect.value - actor_effect.status, 0)
+func apply_damage_modifiers(val: int) -> void:
+	for status in status_effects:
+		if status.status == Combat.Status.HIT:
+			status.value += val
+			status.value = max(status.value, 0)
 
 
 func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_range: Array[Vector2i], direction: Vector2) -> void:	

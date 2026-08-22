@@ -7,8 +7,8 @@ var _tile_path: Array[Vector2i]
 var _has_collided := false
 
 func _init(tile_path: Array[Vector2i],
-skill: Skill, direction: Vector2, impact_signal: Signal, multiplier: float = 1) -> void:
-	super._init(skill, direction, impact_signal, multiplier)
+skill: Skill, direction: Vector2, impact_signal: Signal) -> void:
+	super._init(skill, direction, impact_signal)
 	_tile_path = tile_path
 
 

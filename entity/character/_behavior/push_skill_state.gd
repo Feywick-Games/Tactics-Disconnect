@@ -62,9 +62,8 @@ func _set_targets() -> void:
 
 
 func _hit_targets() -> void:
-	_multiplier *= .5 if not mini_game.success else 1.0
-	if _character is Ally:
-		_character.play_actor_status(true, mini_game.success)
+	var multiplier : int = -Global.MINIGAME_FAILURE_MULTIPLIER if not mini_game.success else Global.MINIGAME_SUCCESS_MULTIPLIER
+	skill.apply_damage_modifiers(multiplier)
 	_character.animator.play_directional(skill.character_animation, direction)
 	_started = true
 	
@@ -73,10 +72,10 @@ func _hit_targets() -> void:
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
 	_push_tile_path = _astar.get_id_path(target_tile, target_tile + (direction * _max_push_distance))	
-	var push_damage_state := PushDamageState.new(_push_tile_path, skill, direction, impact, _multiplier)
+	var push_damage_state := PushDamageState.new(_push_tile_path, skill, direction, impact)
 	_target_unit.set_state(push_damage_state)
 	if _o_target:
-		var damage_state := DamageState.new(skill, direction, push_damage_state.collided, _multiplier)
+		var damage_state := DamageState.new(skill, direction, push_damage_state.collided)
 		_o_target.set_state(damage_state)
 		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
 		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, push_damage_state.collided)

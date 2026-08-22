@@ -39,13 +39,17 @@ func update(delta: float) -> State:
 				_time_in_state = _time_in_state + delta
 			
 			if _time_in_state > _impact_time and _reacted:
-				impact.emit()
-				_impact_emitted = true
+				_impact()
 			if not is_instance_valid(_target):
 				return CharacterIdleState.new()
 		else:
 			return CharacterIdleState.new()
 	return
+
+
+func _impact()-> void:
+	impact.emit()
+	_impact_emitted = true
 
 
 func can_use(_skill_state: SkillState, _actor: Character) -> bool:

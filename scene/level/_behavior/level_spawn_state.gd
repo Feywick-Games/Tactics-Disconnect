@@ -12,7 +12,7 @@ func enter() -> void:
 	if _level.active_unit is Enemy and ordered_units[1] is Ally or _level.turn_number == -1:
 		_level.turn_number += 1
 		_level.ui.skill_progress.increment()
-		for child: Node in _level.find_children("*", "SpawnPoint"):
+		for child: Node in _level.find_children("*", "SpawnPoint", false):
 			_spawn_points.append(child as SpawnPoint)
 		_get_spawns_from_spawn_point()
 		if _level.ui.skill_progress.is_ready:

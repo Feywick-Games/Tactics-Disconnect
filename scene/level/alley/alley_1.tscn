@@ -160,31 +160,33 @@ script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_vcdsl"), SubResource("Resource_tql3s")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
-[node name="SpawnPoint" type="Node2D" parent="." unique_id=1799894307]
+[node name="Node2D" type="Node2D" parent="." unique_id=1484269366]
+
+[node name="SpawnPoint" type="Node2D" parent="Node2D" unique_id=1799894307]
 position = Vector2(625, 375)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_s57jr"), SubResource("Resource_axg8f")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
-[node name="SpawnPoint3" type="Node2D" parent="." unique_id=1947843771]
+[node name="SpawnPoint3" type="Node2D" parent="Node2D" unique_id=1947843771]
 position = Vector2(295, 345)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_s57jr"), SubResource("Resource_axg8f")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
-[node name="SpawnPoint2" type="Node2D" parent="." unique_id=1259741078]
+[node name="SpawnPoint2" type="Node2D" parent="Node2D" unique_id=1259741078]
 position = Vector2(655, 315)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_ik8ju"), SubResource("Resource_6imhl")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
-[node name="SpawnPoint6" type="Node2D" parent="." unique_id=209352088]
+[node name="SpawnPoint6" type="Node2D" parent="Node2D" unique_id=209352088]
 position = Vector2(355, 165)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_7q5it"), SubResource("Resource_ccadi")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
-[node name="SpawnPoint7" type="Node2D" parent="." unique_id=2048682465]
+[node name="SpawnPoint7" type="Node2D" parent="Node2D" unique_id=2048682465]
 position = Vector2(235, 195)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_l4cyh"), SubResource("Resource_qbfaq")])
