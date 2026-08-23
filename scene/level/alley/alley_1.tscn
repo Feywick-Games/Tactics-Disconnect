@@ -15,17 +15,19 @@
 [sub_resource type="Resource" id="Resource_phexs"]
 script = ExtResource("23_dfity")
 character_scene = ExtResource("5_c38kb")
+facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_34pil"]
 script = ExtResource("23_dfity")
 character_scene = ExtResource("11_0hr4q")
-facing = Vector2i(-1, 0)
+facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_yuh5r"]
 script = ExtResource("23_dfity")
 character_scene = ExtResource("10_ymq17")
+facing = Vector2i(0, -1)
 metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 
 [sub_resource type="Resource" id="Resource_yprxc"]
@@ -127,14 +129,14 @@ tile_map_data = PackedByteArray("AAAOAAIAAAADAAoAAAAOAAEAAAADAAkAAAARAAEAAAADAAk
 tile_set = ExtResource("2_ndno1")
 
 [node name="IzzySpawnPoint" type="Node2D" parent="." unique_id=132906090]
-position = Vector2(625, 255)
+position = Vector2(655, 255)
 script = ExtResource("21_sldol")
 is_ally = true
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_phexs")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="MeiSpawnPoint" type="Node2D" parent="." unique_id=1680334307]
-position = Vector2(655, 195)
+position = Vector2(625, 255)
 script = ExtResource("21_sldol")
 is_ally = true
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_34pil")])
@@ -148,7 +150,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_yuh5r")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="PeggySpawnPoint" type="Node2D" parent="." unique_id=174732216]
-position = Vector2(655, 255)
+position = Vector2(655, 195)
 script = ExtResource("21_sldol")
 is_ally = true
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_yprxc")])

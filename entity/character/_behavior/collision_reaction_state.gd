@@ -30,6 +30,11 @@ func update(delta: float) -> State:
 	return super.update(delta)
 
 
+func _impact()-> void:
+	super._impact()
+	_character.play_actor_status(true, false, false, true)
+
+
 func _react() -> void:
 	super._react()
 	_character.request_skill_text(_reaction.name)
@@ -42,7 +47,7 @@ func _react() -> void:
 	_character.facing = direction
 	_character.animator.play_directional(_reaction.character_animation, _character.facing)
 	_impact_time = _character.get_impact_time(_character.animator.current_animation)
-	var damage_state := DamageState.new(_reaction, direction, impact)
+	var damage_state := DamageState.new(_reaction, direction, impact, false, true)
 	_target.set_state(damage_state)
 
 

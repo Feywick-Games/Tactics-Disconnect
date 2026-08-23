@@ -1,6 +1,8 @@
 class_name PushSkillState
 extends SkillState
 
+signal target_collided
+
 const TIME_PER_INCREMENT: float = .3
 const TIME_TO_EXIT: float = 1.0
 const TIME_TO_PUSH: float = 3.0
@@ -13,6 +15,7 @@ var _o_target: Character
 var _push_distance: int
 var _push_tile_path: Array[Vector2i]
 var _astar: AStarGrid2D
+var _target_collided := false
 var pushing: bool = false
 var push_time: float
 
@@ -34,7 +37,7 @@ func update(delta: float) -> State:
 		if mini_game.completed and not pushing:
 			pushing = true
 			_hit_targets()
-		elif pushing and not _character.animator.is_playing():
+		elif _target_collided:
 			return CharacterIdleState.new() 
 	return super.update(delta)
 
@@ -73,6 +76,7 @@ func _hit_targets() -> void:
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
 	_push_tile_path = _astar.get_id_path(target_tile, target_tile + (direction * _max_push_distance))	
 	var push_damage_state := PushDamageState.new(_push_tile_path, skill, direction, impact)
+	push_damage_state.collided.connect(_on_collided)
 	_target_unit.set_state(push_damage_state)
 	if _o_target:
 		var damage_state := DamageState.new(skill, direction, push_damage_state.collided)
@@ -84,3 +88,8 @@ func _hit_targets() -> void:
 		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
 		vfx.setup(direction, _push_tile_path[-1], [Vector2i.ZERO], [_target_unit], false, push_damage_state.collided)
 		GameState.current_level.add_child(vfx)
+
+
+func _on_collided() -> void:
+	target_collided.emit()
+	_target_collided = true

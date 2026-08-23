@@ -2,6 +2,7 @@ class_name SkillState
 extends State
 
 signal impact
+signal exited
 
 const DEFAULT_DESIRED_TARGET_PCT: float = .75
 
@@ -18,6 +19,7 @@ var _time_in_state: float
 var _impact_emitted := false
 var _started := false
 var _current_tile : Vector2i
+var _cheer_count : int = 0
 
 
 func _init(character: Character, i_skill: Skill, target_tile_: Vector2i, current_tile_override := Vector2i.MAX) -> void:
@@ -60,11 +62,11 @@ func _impact() -> void:
 			break
 	if _character is Ally:
 		if mini_game:
-			_character.play_actor_status(is_rear_attack, true, mini_game.success)
+			_character.play_actor_status(is_rear_attack, true, mini_game.success, false, _cheer_count)
 		else:
-			_character.play_actor_status(is_rear_attack)
+			_character.play_actor_status(is_rear_attack, false, false, false, _cheer_count)
 	else:
-		_character.play_actor_status(is_rear_attack, false, false, true)
+		_character.play_actor_status(is_rear_attack, false, false, true, _cheer_count)
 
 
 func _hit_targets() -> void:
@@ -83,20 +85,18 @@ func _set_targets() -> void:
 
 func on_cheer(success: bool) -> void:
 	if success:
-		var cheer_status := StatusEffect.new()
-		cheer_status.status = Combat.Status.DAMAGE
-		cheer_status.value = 2
-		cheer_status.duration = 0
-		_character.process_status_effect(cheer_status)
-		skill.apply_damage_modifiers(2)
+		_cheer_count += 1
+		skill.apply_damage_modifiers(Global.CHEER_MULTIPLIER)
 
 
-func on_get_behind_me(pause: bool) -> void:
-	play(pause)
+func on_get_behind_me(success: bool) -> void:
+	if success:
+		pause(true)
 
 
 func exit() -> void:
 	super.exit()
+	exited.emit()
 	_character.end_turn()
 	if _character.special and skill.name == _character.special.name:
 		_character.special = null
@@ -159,9 +159,9 @@ func can_use(attack_range: RangeStruct) -> Global.SkillErrorCode:
 	return Global.SkillErrorCode.OK
 
 
-func play(pause:=false) -> void:
-	state_machine.set_process(!pause)
-	state_machine.set_physics_process(!pause)
+func pause(yep:=true) -> void:
+	state_machine.set_process(!yep)
+	state_machine.set_physics_process(!yep)
 	if pause:
 		_character.animator.pause()
 	else:

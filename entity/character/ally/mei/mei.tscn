@@ -222,7 +222,7 @@ length = 1.5
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"notify_impact",
-"time": 1.5
+"time": 0.8
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -252,11 +252,11 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_6wu5m"]
 resource_name = "idle_left"
 length = 1.5
-step = 0.5
+step = 0.1
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"notify_impact",
-"time": 1.5
+"time": 0.8
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -286,11 +286,11 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_x46yc"]
 resource_name = "idle_right"
 length = 1.5
-step = 0.5
+step = 0.1
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"notify_impact",
-"time": 1.5
+"time": 0.8
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -320,11 +320,11 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_5na0l"]
 resource_name = "idle_up"
 length = 1.5
-step = 0.5
+step = 0.1
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"notify_impact",
-"time": 1.5
+"time": 0.8
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
