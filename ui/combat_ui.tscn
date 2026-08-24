@@ -12,18 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://c4l71vu7ixwsl" path="res://ui/sticker/_sprite/sticker_basic_attack.png" id="7_k13u7"]
 [ext_resource type="Script" uid="uid://c207oty0e47rp" path="res://ui/skill_select/_behavior/skill_progress.gd" id="7_x5dgg"]
 [ext_resource type="Texture2D" uid="uid://c1xbsgyj5cgwq" path="res://ui/sticker/_sprite/sticker_push_punch.png" id="8_ibp8q"]
-[ext_resource type="Texture2D" uid="uid://cyc764exkgxfu" path="res://ui/skill_select/_sprite/skill_select.png" id="11_vmh3g"]
-[ext_resource type="Texture2D" uid="uid://ipqdqm3f4xnq" path="res://ui/skill_select/_sprite/skill_title_bg.png" id="12_0xnnb"]
-[ext_resource type="Script" uid="uid://c75u3t3tkruq1" path="res://ui/skill_select/_behavior/skill_select.gd" id="12_t6stw"]
-[ext_resource type="FontFile" uid="uid://cs5prw3u7po3j" path="res://ui/font/aseprite.otf" id="13_kie5x"]
 [ext_resource type="FontFile" uid="uid://csbndd6gje51v" path="res://ui/font/Early GameBoy.ttf" id="13_riw5p"]
-[ext_resource type="Texture2D" uid="uid://im7d1hlkamrm" path="res://ui/skill_select/_sprite/skill_portrait_large.tres" id="14_aodrh"]
-[ext_resource type="Texture2D" uid="uid://dgfvy6r6euw80" path="res://ui/skill_select/_sprite/skill_damage_bg.png" id="15_ldlo4"]
-[ext_resource type="PackedScene" uid="uid://df28cltbdfj46" path="res://ui/skill_select/_packed_scene/unit_skill_list.tscn" id="16_ldlo4"]
-[ext_resource type="Texture2D" uid="uid://c4uuseoxq4cs3" path="res://ui/skill_select/_sprite/go_button.tres" id="17_x2wyr"]
-[ext_resource type="Texture2D" uid="uid://j7vcaum0wxr6" path="res://ui/skill_select/_sprite/go_button_pressed.tres" id="22_ddd4e"]
-[ext_resource type="Texture2D" uid="uid://dgadll1iljejh" path="res://ui/skill_select/_sprite/go_button_hover.tres" id="22_werr3"]
-[ext_resource type="Texture2D" uid="uid://bqe6i14e2ixo5" path="res://ui/skill_select/_sprite/go_button_disabled.tres" id="24_riw5p"]
+[ext_resource type="PackedScene" uid="uid://cllwl1b33lyag" path="res://ui/skill_select/skill_select.tscn" id="14_783s8"]
+[ext_resource type="Texture2D" uid="uid://ha4b3jsb2hbf" path="res://ui/_sprite/button_indicator_small_a.png" id="22_werr3"]
 [ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="25_q4psh"]
 [ext_resource type="PackedScene" uid="uid://cxvt0qwavsjab" path="res://ui/mini_game/push_progress/push_progress.tscn" id="26_008rl"]
 [ext_resource type="PackedScene" uid="uid://jvcs0gdkyf1l" path="res://ui/mini_game/melee_combo/melee_combo.tscn" id="28_cx76p"]
@@ -31,15 +22,6 @@
 [ext_resource type="Script" uid="uid://8mjdxtckddf1" path="res://ui/reaction_qte/_behavior/reaction_qte_manager.gd" id="31_pxq7u"]
 [ext_resource type="PackedScene" uid="uid://tupbjmhn5tyk" path="res://ui/mini_game/range_challenge/range_challenge.tscn" id="32_egcjb"]
 [ext_resource type="Shader" uid="uid://df6avjvg2nbf6" path="res://ui/reaction_qte/_material/reaction_qte.gdshader" id="33_b6k0c"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tn4br"]
-texture = ExtResource("11_vmh3g")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s57jr"]
-bg_color = Color(0.32156864, 0.19607843, 0.45882353, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aodrh"]
-bg_color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_8jamv"]
 frequency = 0.1
@@ -61,7 +43,7 @@ generate_mipmaps = false
 noise = SubResource("FastNoiseLite_rxtpa")
 as_normal_map = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cx76p"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ddd4e"]
 resource_local_to_scene = true
 shader = ExtResource("33_b6k0c")
 shader_parameter/noise_tex_normal = SubResource("NoiseTexture2D_8jamv")
@@ -71,6 +53,11 @@ shader_parameter/strength = 3.02
 shader_parameter/failure_color = Color(0, 0, 0, 1)
 shader_parameter/failure_color_influence = 0.0
 shader_parameter/sprite_uv_center = Vector2(0.5, 0.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_riw5p"]
+resource_local_to_scene = true
+atlas = ExtResource("22_werr3")
+region = Rect2(8, 8, 16, 16)
 
 [node name="CombatUI" type="CanvasLayer" unique_id=788298229]
 follow_viewport_scale = 3.0
@@ -204,343 +191,8 @@ text = "My Skill"
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="SkillSelect" type="PanelContainer" parent="." unique_id=1241665158]
+[node name="SkillSelect" parent="." unique_id=756091630 instance=ExtResource("14_783s8")]
 unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(160, 360)
-custom_maximum_size = Vector2(160, 360)
-offset_right = 160.0
-offset_bottom = 360.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxTexture_tn4br")
-script = ExtResource("12_t6stw")
-aoe_empty_color = Color(0.22745098, 0.16078432, 0.36862746, 1)
-aoe_origin_color = Color(0.92941177, 1, 1, 1)
-aoe_fill_color = Color(0.9098039, 0.23921569, 0.42745098, 1)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SkillSelect" unique_id=367068634]
-layout_mode = 2
-
-[node name="SkillOverview" type="MarginContainer" parent="SkillSelect/VBoxContainer" unique_id=1091509329]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SkillSelect/VBoxContainer/SkillOverview" unique_id=1445535190]
-custom_minimum_size = Vector2(0, 80)
-custom_maximum_size = Vector2(-1, 80)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_constants/separation = 10
-
-[node name="SkillContainer" type="VBoxContainer" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer" unique_id=197870286]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="SkillNameBG" type="TextureRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/SkillContainer" unique_id=1985378104]
-layout_mode = 2
-texture = ExtResource("12_0xnnb")
-
-[node name="SkillName" type="Label" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/SkillContainer/SkillNameBG" unique_id=1126227107]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(56, 16)
-custom_maximum_size = Vector2(56, 16)
-layout_mode = 0
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 58.0
-offset_bottom = 18.0
-theme_override_fonts/font = ExtResource("13_kie5x")
-theme_override_font_sizes/font_size = 7
-text = "My Skill"
-
-[node name="SkillTexture" type="TextureRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/SkillContainer" unique_id=2073131016]
-layout_mode = 2
-texture = ExtResource("14_aodrh")
-
-[node name="SkillDamage" type="TextureRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/SkillContainer/SkillTexture" unique_id=212489175]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -16.0
-offset_top = -16.0
-grow_horizontal = 0
-grow_vertical = 0
-texture = ExtResource("15_ldlo4")
-stretch_mode = 2
-
-[node name="DamageLabel" type="Label" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/SkillContainer/SkillTexture/SkillDamage" unique_id=1475345999]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -3.5
-offset_right = 4.0
-offset_bottom = 3.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("13_kie5x")
-theme_override_font_sizes/font_size = 7
-text = "10"
-
-[node name="HBoxContainer" type="VBoxContainer" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer" unique_id=1992669373]
-custom_minimum_size = Vector2(56, 0)
-custom_maximum_size = Vector2(56, -1)
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer" unique_id=588889518]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/HBoxContainer" unique_id=549977349]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("13_kie5x")
-theme_override_font_sizes/font_size = 7
-text = "Range:"
-
-[node name="RangeLabel" type="Label" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/HBoxContainer" unique_id=1793196678]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("13_kie5x")
-theme_override_font_sizes/font_size = 7
-text = "10"
-
-[node name="AoeDisplay" type="PanelContainer" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer" unique_id=1763631034]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme_override_styles/panel = SubResource("StyleBoxFlat_s57jr")
-
-[node name="MarginContainer" type="MarginContainer" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay" unique_id=2069650285]
-layout_mode = 2
-theme_override_constants/margin_left = 1
-theme_override_constants/margin_top = 1
-theme_override_constants/margin_right = 1
-theme_override_constants/margin_bottom = 1
-
-[node name="GridContainer" type="GridContainer" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer" unique_id=1597759983]
-layout_mode = 2
-theme_override_constants/h_separation = 1
-theme_override_constants/v_separation = 2
-columns = 5
-
-[node name="ColorRect" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=758949624]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect2" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1071336175]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect3" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1752734660]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect4" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1563437656]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect5" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1452495650]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect6" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=240487472]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect7" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=571621113]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect8" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=179716546]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect9" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=234264262]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect10" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1411984737]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect11" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=395493470]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect12" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=582674055]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect13" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=36786285]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect14" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=984409956]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect15" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1802432763]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect16" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1916457542]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect17" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=41359733]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect18" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1713839754]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect19" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=173961725]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect20" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1337168540]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect21" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1922942447]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect22" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=664721974]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect23" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1072589792]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect24" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=1028155280]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="ColorRect25" type="ColorRect" parent="SkillSelect/VBoxContainer/SkillOverview/HBoxContainer/HBoxContainer/AoeDisplay/MarginContainer/GridContainer" unique_id=962115726]
-custom_minimum_size = Vector2(10, 10)
-custom_maximum_size = Vector2(10, 10)
-layout_mode = 2
-color = Color(0.07450981, 0.0627451, 0.23137255, 1)
-
-[node name="SkillTextContainer" type="MarginContainer" parent="SkillSelect/VBoxContainer" unique_id=528305178]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_right = 18
-
-[node name="PanelContainer" type="PanelContainer" parent="SkillSelect/VBoxContainer/SkillTextContainer" unique_id=1455160213]
-custom_minimum_size = Vector2(0, 44)
-custom_maximum_size = Vector2(-1, 44)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_aodrh")
-
-[node name="MarginContainer" type="MarginContainer" parent="SkillSelect/VBoxContainer/SkillTextContainer/PanelContainer" unique_id=702336314]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 2
-
-[node name="FlavorText" type="Label" parent="SkillSelect/VBoxContainer/SkillTextContainer/PanelContainer/MarginContainer" unique_id=522439901]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_fonts/font = ExtResource("13_kie5x")
-theme_override_font_sizes/font_size = 7
-text = "This is a test of the flavor text box it is so beautiful and super fun to use. You really feel lik"
-autowrap_mode = 3
-
-[node name="SkillSelector" type="MarginContainer" parent="SkillSelect/VBoxContainer" unique_id=1090718621]
-layout_mode = 2
-theme_override_constants/margin_top = 8
-
-[node name="UnitSkills" type="VBoxContainer" parent="SkillSelect/VBoxContainer/SkillSelector" unique_id=330220908]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="UnitSkillList" parent="SkillSelect/VBoxContainer/SkillSelector/UnitSkills" unique_id=1481095510 instance=ExtResource("16_ldlo4")]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="SkillSelect" unique_id=562735037]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-theme_override_constants/margin_right = 18
-theme_override_constants/margin_bottom = 12
-
-[node name="GoButton" type="TextureButton" parent="SkillSelect/MarginContainer" unique_id=1735347814]
-unique_name_in_owner = true
-layout_mode = 2
-texture_normal = ExtResource("17_x2wyr")
-texture_pressed = ExtResource("22_ddd4e")
-texture_hover = ExtResource("22_werr3")
-texture_disabled = ExtResource("24_riw5p")
-texture_focused = ExtResource("22_werr3")
 
 [node name="SkillShowcase" type="MarginContainer" parent="." unique_id=1438316497]
 custom_minimum_size = Vector2(640, 360)
@@ -567,31 +219,66 @@ horizontal_alignment = 1
 [node name="PushProgress" parent="." unique_id=213570333 instance=ExtResource("26_008rl")]
 unique_name_in_owner = true
 visible = false
+anchors_preset = 8
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -24.0
+offset_bottom = 24.0
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="RangeChallenge" parent="." unique_id=2018250628 instance=ExtResource("32_egcjb")]
 unique_name_in_owner = true
 visible = false
+anchors_preset = 8
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -24.0
+offset_bottom = 24.0
+grow_vertical = 2
 
 [node name="MeleeCombo" parent="." unique_id=1649245568 instance=ExtResource("28_cx76p")]
 unique_name_in_owner = true
 visible = false
+anchors_preset = 8
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -29.0
+offset_right = 96.0
+offset_bottom = 29.0
+grow_vertical = 2
 
-[node name="ReactionQteManager" type="MarginContainer" parent="." unique_id=2056286782]
+[node name="ReactionQteManager" type="Control" parent="." unique_id=1507045187]
 unique_name_in_owner = true
-visible = false
-anchors_preset = 7
+layout_mode = 3
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -32.0
-offset_top = -64.0
-offset_right = 32.0
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -180.0
+offset_right = -256.0
+offset_bottom = -116.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 size_flags_vertical = 8
 script = ExtResource("31_pxq7u")
 
 [node name="TextureProgressBar" parent="ReactionQteManager" unique_id=869123022 instance=ExtResource("31_cx76p")]
-material = SubResource("ShaderMaterial_cx76p")
-layout_mode = 2
+material = SubResource("ShaderMaterial_ddd4e")
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 1
+grow_vertical = 1
+texture = SubResource("AtlasTexture_riw5p")

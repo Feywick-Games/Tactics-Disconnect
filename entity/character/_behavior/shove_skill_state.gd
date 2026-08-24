@@ -13,7 +13,6 @@ func enter() -> void:
 
 func _hit_targets() -> void:
 	super._hit_targets()
-	_push_tile_path = _push_tile_path.slice(0, round(mini_game.value * _push_tile_path.size()) + 1)
 	if not _push_tile_path.is_empty() and _tile_path[-1] != _push_tile_path[-1]:
 		_moving = true
 

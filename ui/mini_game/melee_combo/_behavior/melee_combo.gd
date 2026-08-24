@@ -2,7 +2,7 @@ class_name MeleeCombo
 extends MiniGame
 
 const MAX_TIME := 3
-const MAX_AOE_SIZE := 5
+const MAX_AOE_SIZE := 6
 
 var game_pad_indicator_scene: PackedScene = load("res://ui/mini_game/melee_combo/_packed_scene/game_pad_indicator.tscn")
 var action_names:Array[String] = [
@@ -30,11 +30,13 @@ func _ready() -> void:
 func _end() -> void:
 	_running = false
 	await get_tree().create_timer(1).timeout
-	completed = true
-	value = 1 - (float(_buttons.size()) / float(_combo_length) * .5)
-	if _buttons.is_empty():
-		success = true
-	
+	var pct: float = 1 - (float(_buttons.size()) / float(_combo_length))
+	if pct == 1:
+		ranking = Rank.NICE
+	elif pct > .5:
+		ranking = Rank.NORMAL
+	else:
+		ranking = Rank.OOF
 	for child: Node in _button_container.get_children():
 		child.free()
 	hide()
@@ -42,7 +44,7 @@ func _end() -> void:
 
 func start(aoe_size: int) -> void:
 	show()
-	var button_cnt: int = min(aoe_size, MAX_AOE_SIZE)
+	var button_cnt: int = min(aoe_size + 1, MAX_AOE_SIZE)
 	for i in range(button_cnt):
 		var btn: GamePadIndicator = game_pad_indicator_scene.instantiate()
 		var action: String = action_names.pick_random()
@@ -50,7 +52,6 @@ func start(aoe_size: int) -> void:
 		btn.present(action)
 		_buttons.append(btn)
 	_get_next_button()
-	completed = false
 	_running = true
 	_combo_length = button_cnt
 	_timer_bar.max_value = MAX_TIME

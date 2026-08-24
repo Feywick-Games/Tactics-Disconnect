@@ -5,13 +5,16 @@
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="2_qq2rq"]
 [ext_resource type="Resource" uid="uid://bqo8sq4s2xdqn" path="res://data/skill/firecracker_skill.tres" id="3_a4nkn"]
 [ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="3_jfry1"]
+[ext_resource type="Texture2D" uid="uid://cc4g8expt00d5" path="res://entity/character/ally/chaz/_sprite/chaz_turn_portrait.png" id="3_l67kw"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="4_a4nkn"]
 [ext_resource type="Resource" uid="uid://fneqo5f1qdrk" path="res://data/skill/push_skill.tres" id="4_uuy70"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="5_p3pb6"]
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="6_78ula"]
 [ext_resource type="PackedScene" uid="uid://bejvnu8r38u2i" path="res://entity/character/ally/chaz/_packed_scene/chaz_turn_portrait.tscn" id="6_uuy70"]
+[ext_resource type="Texture2D" uid="uid://rm5xriq1mnnq" path="res://entity/character/ally/izzy/_sprite/chaz_turn_portrait_small.png" id="7_f6ndk"]
 [ext_resource type="Texture2D" uid="uid://co1ekey8q8lj4" path="res://entity/character/ally/chaz/_sprite/chaz_unit_sprite.png" id="10_p3pb6"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="11_l67kw"]
+[ext_resource type="PackedScene" uid="uid://b5cbmx24r5gkk" path="res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn" id="12_evk5q"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="12_smrb7"]
 [ext_resource type="Resource" uid="uid://cwkld7s34m6sk" path="res://entity/character/_skill/collision_reaction.tres" id="13_evk5q"]
 [ext_resource type="Resource" uid="uid://c0hqpa4cff4gb" path="res://entity/character/_skill/cheer_reaction.tres" id="14_vorty"]
@@ -21,6 +24,10 @@
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="19_siqaw"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="20_cyfp0"]
 [ext_resource type="PackedScene" uid="uid://438qt7ha3hj6" path="res://entity/character/_packed_scene/dialolgue_sprite.tscn" id="21_8y6ln"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xebcl"]
+atlas = ExtResource("3_l67kw")
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="Resource" id="Resource_n0ksn"]
 script = ExtResource("4_a4nkn")
@@ -43,12 +50,15 @@ shader_parameter/border_color = Color(0.968627, 0.968627, 0.960784, 1)
 [node name="Chaz" type="Node2D" unique_id=1270059331 groups=["ally"]]
 y_sort_enabled = true
 script = ExtResource("1_x7qae")
-skills_dealt = 5
+small_portrait = ExtResource("7_f6ndk")
+large_portrait = SubResource("AtlasTexture_xebcl")
+skill_select_description = "A chill guy till he pulls out his sling shot. Ranged Specialist."
 character_name = "Chaz"
 turn_portrait_scene = ExtResource("6_uuy70")
 skill_deck = Array[ExtResource("2_qq2rq")]([ExtResource("3_a4nkn"), ExtResource("4_uuy70"), ExtResource("3_a4nkn"), ExtResource("4_uuy70"), ExtResource("4_uuy70"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("4_uuy70")])
 basic_skill = SubResource("Resource_sfhtk")
 reactions = Array[ExtResource("11_l67kw")]([ExtResource("12_smrb7"), ExtResource("13_evk5q"), ExtResource("14_vorty")])
+max_health = 32
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=588471571]
 material = SubResource("ShaderMaterial_20l6v")

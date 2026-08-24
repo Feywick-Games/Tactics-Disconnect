@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://chq8hk2b7dwdl" path="res://entity/character/ally/_behavior/ally.gd" id="1_e1jjq"]
 [ext_resource type="PackedScene" uid="uid://0vhq1ufxesi7" path="res://entity/character/ally/mei/_packed_scene/mei_turn_portrait.tscn" id="2_6fea8"]
+[ext_resource type="Texture2D" uid="uid://ccjmy2rvtwx3p" path="res://entity/character/ally/mei/_sprite/mei_turn_portrait_small.png" id="2_wwsvf"]
 [ext_resource type="Resource" uid="uid://bk1spqs5rmrm8" path="res://data/skill/bash.tres" id="3_efk4d"]
+[ext_resource type="Texture2D" uid="uid://cvykfdprxavd1" path="res://entity/character/ally/mei/_sprite/mei_turn_portrait.png" id="3_pwl3y"]
 [ext_resource type="AudioStream" uid="uid://7yyjci604ojm" path="res://data/sfx/combat/swing.ogg" id="3_xs5to"]
 [ext_resource type="Script" uid="uid://de4pxhpt4mw5u" path="res://data/combat/skill.gd" id="3_y0fl4"]
 [ext_resource type="Script" uid="uid://csavsd3c4r7mi" path="res://entity/character/_behavior/basic_skill_state.gd" id="4_1eaca"]
@@ -18,12 +20,17 @@
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="14_wwsvf"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="15_pwl3y"]
 [ext_resource type="Resource" uid="uid://cwkld7s34m6sk" path="res://entity/character/_skill/collision_reaction.tres" id="16_bxu0d"]
+[ext_resource type="PackedScene" uid="uid://b5cbmx24r5gkk" path="res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn" id="16_tc08q"]
 [ext_resource type="Resource" uid="uid://c0hqpa4cff4gb" path="res://entity/character/_skill/cheer_reaction.tres" id="17_tc08q"]
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="20_565k6"]
 [ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="21_6wu5m"]
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="22_x46yc"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="23_5na0l"]
 [ext_resource type="PackedScene" uid="uid://438qt7ha3hj6" path="res://entity/character/_packed_scene/dialolgue_sprite.tscn" id="24_otur2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l67kw"]
+atlas = ExtResource("3_pwl3y")
+region = Rect2(0, 0, 64, 0)
 
 [sub_resource type="Resource" id="Resource_n0ksn"]
 script = ExtResource("4_u3oph")
@@ -215,7 +222,7 @@ length = 1.5
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"notify_impact",
-"time": 1.5
+"time": 0.8
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -245,11 +252,11 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_6wu5m"]
 resource_name = "idle_left"
 length = 1.5
-step = 0.5
+step = 0.1
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"notify_impact",
-"time": 1.5
+"time": 0.8
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -279,11 +286,11 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_x46yc"]
 resource_name = "idle_right"
 length = 1.5
-step = 0.5
+step = 0.1
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"notify_impact",
-"time": 1.5
+"time": 0.8
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -313,11 +320,11 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_5na0l"]
 resource_name = "idle_up"
 length = 1.5
-step = 0.5
+step = 0.1
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"notify_impact",
-"time": 1.5
+"time": 0.8
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -500,12 +507,15 @@ _data = {
 [node name="Mei" type="Node2D" unique_id=912296346 groups=["ally"]]
 y_sort_enabled = true
 script = ExtResource("1_e1jjq")
-skills_dealt = 5
+small_portrait = ExtResource("2_wwsvf")
+large_portrait = SubResource("AtlasTexture_l67kw")
+skill_select_description = "The only thing bigger than her heart is her baseball bat. Melee Specialist."
 character_name = "Mei"
 turn_portrait_scene = ExtResource("2_6fea8")
 skill_deck = Array[ExtResource("3_y0fl4")]([ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("5_ojfus"), ExtResource("4_ik6s2"), ExtResource("6_ewmoi"), ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("6_ewmoi")])
 basic_skill = SubResource("Resource_1kfok")
 reactions = Array[ExtResource("14_wwsvf")]([ExtResource("15_pwl3y"), ExtResource("16_bxu0d"), ExtResource("17_tc08q")])
+max_health = 36
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
 material = SubResource("ShaderMaterial_2exov")

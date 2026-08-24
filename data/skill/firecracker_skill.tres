@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://duot4oqxb7rxx" path="res://entity/character/_behavior/range_skill_state.gd" id="2_pppiw"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="3_pppiw"]
 [ext_resource type="Texture2D" uid="uid://y2pxumicolem" path="res://ui/skill_select/_sprite/skill_select_small_range.png" id="5_iuub7"]
+[ext_resource type="PackedScene" uid="uid://b5cbmx24r5gkk" path="res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn" id="6_pppiw"]
 
 [sub_resource type="Resource" id="Resource_4npnc"]
 script = ExtResource("2_iuub7")
@@ -16,6 +17,7 @@ script = ExtResource("1_mti8u")
 ui_small = ExtResource("5_iuub7")
 name = "Firecracker"
 flavor_text = "Toss a firecracker for a small scattered explosion. Make 'em dance."
+visual_effect_targets_only = false
 max_range = 3
 state = ExtResource("2_pppiw")
 status_effects = Array[ExtResource("2_iuub7")]([SubResource("Resource_4npnc")])

@@ -1,7 +1,7 @@
 class_name PushProgress
 extends MiniGame
 
-const PUSH_PROGRESS_SCALE: float = 4
+const PUSH_PROGRESS_SCALE: float = 3.5
 
 var _running := false
 var _time_progressing : float = 0
@@ -13,6 +13,8 @@ var _push_timer_bar: TextureProgressBar = $HBoxContainer/VBoxContainer/PushProgr
 
 func _ready() -> void:
 	hide()
+	#start(5)
+
 
 func start(distance: int) -> void:
 	show()
@@ -23,8 +25,7 @@ func start(distance: int) -> void:
 	_push_progress_bar.value = 0
 	_push_progress_bar.max_value = distance * PUSH_PROGRESS_SCALE
 	_time_progressing = 0
-	completed = false
-	
+
 
 func _process(delta: float) -> void:
 	if _running:
@@ -43,8 +44,11 @@ func _process(delta: float) -> void:
 func _end() -> void:
 	_running = false
 	await get_tree().create_timer(1).timeout
-	completed = true
-	value = _push_progress_bar.value / _push_progress_bar.max_value
+	
 	if _push_progress_bar.value == _push_progress_bar.max_value:
-		success = true
+		ranking = Rank.NICE
+	elif _push_progress_bar.value / _push_progress_bar.max_value > .75:
+		ranking = Rank.NORMAL
+	else:
+		ranking = Rank.OOF
 	hide()

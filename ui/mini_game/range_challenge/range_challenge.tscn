@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://hjrrnjdy8y07" path="res://ui/mini_game/range_challenge/_behavior/range_challenge.gd" id="1_ddprw"]
 [ext_resource type="Texture2D" uid="uid://072l0ycuos4c" path="res://ui/mini_game/push_progress/_sprite/push_button_a_push_progress.atlastex" id="2_s61wj"]
-[ext_resource type="Texture2D" uid="uid://cs5hy8jlgm6y4" path="res://ui/mini_game/push_progress/_sprite/push_progress_bg.png" id="3_1xr5h"]
-[ext_resource type="Texture2D" uid="uid://cx6jiqqgtogfw" path="res://ui/mini_game/push_progress/_sprite/push_progress_fill.png" id="4_02kut"]
+[ext_resource type="Texture2D" uid="uid://bhosqbeaba6wi" path="res://ui/mini_game/range_challenge/_sprite/range_challenge_bg.png" id="3_s61wj"]
+[ext_resource type="Texture2D" uid="uid://5hxbh3bcygch" path="res://ui/mini_game/range_challenge/_sprite/range_challenge_normal_fill.png" id="4_1xr5h"]
+[ext_resource type="Texture2D" uid="uid://dnc1xhfqq8m1u" path="res://ui/mini_game/range_challenge/_sprite/range_challenge_nice_fill.png" id="5_02kut"]
 [ext_resource type="Texture2D" uid="uid://bnpvcbj70llk2" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_bg.png" id="5_5x4xy"]
 [ext_resource type="Texture2D" uid="uid://chlq8s8hw8wbw" path="res://ui/mini_game/push_progress/_sprite/push_progress_timer_fill.png" id="6_ur5om"]
 
@@ -47,14 +48,14 @@ _data = {
 }
 
 [sub_resource type="Gradient" id="Gradient_w6xo5"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.73333335, 0.80784315, 0.9411765, 1, 0.92941177, 0.972549, 1, 1, 0.73333335, 0.80784315, 0.9411765, 1)
+metadata/_snap_enabled = true
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_byjs7"]
 gradient = SubResource("Gradient_w6xo5")
-width = 8
-height = 12
-fill_from = Vector2(1, 1)
+width = 3
+height = 10
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q4uxn"]
 
@@ -92,25 +93,37 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_constants/separation = 0
 
-[node name="RangeGoal" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=65535797]
+[node name="NormalGoal" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=1341942481]
 custom_maximum_size = Vector2(-1, 16)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+value = 69.0
+fill_mode = 6
+texture_under = ExtResource("3_s61wj")
+texture_progress = ExtResource("4_1xr5h")
+
+[node name="NiceGoal" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer/NormalGoal" unique_id=65535797]
+custom_maximum_size = Vector2(-1, 16)
+layout_mode = 1
+offset_right = 192.0
+offset_bottom = 16.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
 value = 50.0
 fill_mode = 6
-texture_under = ExtResource("3_1xr5h")
-texture_progress = ExtResource("4_02kut")
+texture_progress = ExtResource("5_02kut")
 
-[node name="Reticle" type="HSlider" parent="HBoxContainer/VBoxContainer/RangeGoal" unique_id=1507790661]
-custom_minimum_size = Vector2(192, 0)
+[node name="Reticle" type="HSlider" parent="HBoxContainer/VBoxContainer/NormalGoal/NiceGoal" unique_id=1507790661]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(188, 0)
 custom_maximum_size = Vector2(-1, 16)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -96.0
-offset_right = 96.0
+offset_left = -94.0
+offset_right = 94.0
 offset_bottom = 16.0
 grow_horizontal = 2
 size_flags_horizontal = 4

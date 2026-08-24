@@ -33,8 +33,11 @@ const RETICLE_FACING_UP := Vector2i(0,9)
 const GAME_SIZE := Vector2i(640,360)
 
 const TIMER_MAX_VALUE := 30
-const QUICK_MULTIPLIER : float = 1.25
-const BACK_MULTIPLIER : float = .5
-const SLOW_MULTIPLIER : float = .75
+const QUICK_MULTIPLIER : int = 2
+const BACK_MULTIPLIER : int = 2
+const SLOW_MULTIPLIER : int = 2
+const MINIGAME_SUCCESS_MULTIPLIER : int = 2
+const MINIGAME_FAILURE_MULTIPLIER : int = 2
+const CHEER_MULTIPLIER: int = 2
 const QUICK_TIME_PERCENT : float = .25
 const SLOW_TIME_PERCENT : float = .75

@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="7_n3fsy"]
 [ext_resource type="Resource" uid="uid://cwkw7cyw4d3gy" path="res://entity/character/enemy/final_exams/_skill/crocodile_tears.tres" id="8_agxuy"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="9_jpavx"]
+[ext_resource type="PackedScene" uid="uid://b5cbmx24r5gkk" path="res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn" id="9_pqity"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="10_pqity"]
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="13_vmpgi"]
 [ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="14_4jtjg"]
@@ -44,6 +45,7 @@ turn_portrait_scene = ExtResource("2_s4sbl")
 skill_deck = Array[ExtResource("3_0k1lt")]([ExtResource("8_agxuy")])
 basic_skill = SubResource("Resource_x3gxp")
 reactions = Array[ExtResource("9_jpavx")]([ExtResource("10_pqity")])
+max_health = 12
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
 material = SubResource("ShaderMaterial_0k1lt")

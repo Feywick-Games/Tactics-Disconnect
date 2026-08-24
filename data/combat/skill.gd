@@ -6,6 +6,7 @@ const UI_SMALL_DIMENSIONS: Vector2i = Vector2i(20,20)
 const UI_LARGE_DIMENSIONS: Vector2i = Vector2i(60,60)
 const DEFAULT_UI_SMALL: Texture2D = preload("res://ui/skill_select/_sprite/skill_select_small.png")
 const DEFAULT_UI_LARGE: Texture2D = preload("res://ui/skill_select/_sprite/skill_select_large.png")
+const DEFAULT_VISUAL_EFFECT_SCENE: PackedScene = preload("res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn")
 
 @export
 var ui_small: Texture2D = DEFAULT_UI_SMALL
@@ -18,7 +19,9 @@ var flavor_text: String
 @export
 var character_animation: String = "idle"
 @export
-var skill_animation: String
+var visual_effect_scene: PackedScene = DEFAULT_VISUAL_EFFECT_SCENE
+@export
+var visual_effect_targets_only := true
 @export
 var max_range: int = 1
 @export
@@ -58,6 +61,22 @@ func get_hit_damage() -> int:
 		return 0
 
 
+func get_modifier(status_type: Combat.Status) -> int:
+	var out: int = 0
+	for effect: StatusEffect in status_effects:
+		if effect.status == status_type:
+			out += effect.value
+	return out
+
+
+func get_modifier_count(status_type: Combat.Status, positive: bool) -> int:
+	var out: int = 0
+	for effect: StatusEffect in status_effects:
+		if effect.status == status_type and effect.value > 0 == positive:
+			out += 1
+	return out
+
+
 func draw_range(attack_range: Array[Vector2i], is_special: bool) -> void:
 	if is_special:
 		GameState.current_level.reticle.draw_range(attack_range, Global.RETICLE_SPECIAL_ALTAS_COORDS)
@@ -65,11 +84,11 @@ func draw_range(attack_range: Array[Vector2i], is_special: bool) -> void:
 		GameState.current_level.reticle.draw_range(attack_range, Global.RETICLE_ATTACK_ATLAS_COORDS)
 
 
-func apply_status_effects(actor_status: Array[StatusEffect]) -> void:
-	for actor_effect: StatusEffect in actor_status:
-		for skill_effect: StatusEffect in status_effects:
-			if skill_effect.status == Combat.Status.HIT and actor_effect.status == Combat.Status.DAMAGE:
-				skill_effect.value = max(skill_effect.value - actor_effect.status, 0)
+func apply_damage_modifiers(val: int) -> void:
+	for status in status_effects:
+		if status.status == Combat.Status.HIT:
+			status.value += val
+			status.value = max(status.value, 0)
 
 
 func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_range: Array[Vector2i], direction: Vector2) -> void:	

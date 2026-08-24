@@ -31,14 +31,14 @@ func _ready() -> void:
 
 
 
-func display_statuses() -> void:
+func display_statuses(rear: bool) -> void:
 	for i in range(_queued_statuses.size()):
 		_started_animations += 1
 		_play_status_effect(_queued_statuses[i])
 	if animator.current_animation == "":
 		_on_animation_completed("")
 	playing = true
-
+	
 
 func _play_status_effect(effect: StatusEffect) -> void:
 	if effect.status == Combat.Status.HIT:
@@ -54,6 +54,7 @@ func _play_status_effect(effect: StatusEffect) -> void:
 			animator.queue("dmg_down")
 		else:
 			animator.queue("dmg_up")
+	animator.speed_scale = animator.get_queue().size() + 1
 
 
 func preview(_effect: StatusEffect) -> void:
@@ -86,3 +87,5 @@ func set_damage_value() -> void:
 	
 func play_actor_status(anim: String) -> void:
 	animator.queue(anim)
+	var anim_count : int = animator.get_queue().size() + 1
+	animator.speed_scale = anim_count

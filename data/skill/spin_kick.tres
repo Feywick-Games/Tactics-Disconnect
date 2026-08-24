@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cguolmcxouel" path="res://entity/character/_behavior/melee_skill_state.gd" id="2_otfxc"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="3_otfxc"]
 [ext_resource type="Texture2D" uid="uid://ba7bcq1s0wxll" path="res://ui/skill_select/_sprite/skill_select_small_melee.png" id="4_kx7y0"]
+[ext_resource type="PackedScene" uid="uid://b5cbmx24r5gkk" path="res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn" id="6_otfxc"]
 
 [sub_resource type="Resource" id="Resource_tutbt"]
 script = ExtResource("2_h1q31")

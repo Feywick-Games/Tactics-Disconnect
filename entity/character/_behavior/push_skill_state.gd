@@ -1,6 +1,8 @@
 class_name PushSkillState
 extends SkillState
 
+signal target_collided
+
 const TIME_PER_INCREMENT: float = .3
 const TIME_TO_EXIT: float = 1.0
 const TIME_TO_PUSH: float = 3.0
@@ -13,6 +15,7 @@ var _o_target: Character
 var _push_distance: int
 var _push_tile_path: Array[Vector2i]
 var _astar: AStarGrid2D
+var _target_collided := false
 var pushing: bool = false
 var push_time: float
 
@@ -31,10 +34,10 @@ func _init(character: Character, i_skill: Skill, target_tile_: Vector2i) -> void
 
 func update(delta: float) -> State:
 	if mini_game:
-		if mini_game.completed and not pushing:
+		if mini_game.ranking != MiniGame.Rank.UNRANKED and not pushing:
 			pushing = true
 			_hit_targets()
-		elif pushing and not _character.animator.is_playing():
+		elif _target_collided:
 			return CharacterIdleState.new() 
 	return super.update(delta)
 
@@ -56,15 +59,18 @@ func _set_targets() -> void:
 		_max_is_collision = true
 		
 		var unit := GameState.current_level.grid.get_unit_from_tile(collision_point)
-		targets.append(unit)
 		if unit and unit is Ally != _character is Ally:
 			_o_target = unit
+			targets.append(unit)
 
 
 func _hit_targets() -> void:
-	_multiplier *= .5 if not mini_game.success else 1.0
-	if _character is Ally:
-		_character.play_actor_status(true, mini_game.success)
+	var multiplier : int = 0
+	if mini_game.ranking == MiniGame.Rank.OOF:
+		multiplier = -Global.MINIGAME_FAILURE_MULTIPLIER 
+	elif mini_game.ranking == MiniGame.Rank.NICE:
+		multiplier =  Global.MINIGAME_SUCCESS_MULTIPLIER
+	skill.apply_damage_modifiers(multiplier)
 	_character.animator.play_directional(skill.character_animation, direction)
 	_started = true
 	
@@ -73,8 +79,21 @@ func _hit_targets() -> void:
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
 	_push_tile_path = _astar.get_id_path(target_tile, target_tile + (direction * _max_push_distance))	
-	var push_damage_state := PushDamageState.new(_push_tile_path, skill, direction, impact, _multiplier)
+	var push_damage_state := PushDamageState.new(_push_tile_path, skill, direction, impact)
+	push_damage_state.collided.connect(_on_collided)
 	_target_unit.set_state(push_damage_state)
 	if _o_target:
-		var damage_state := DamageState.new(skill, direction, push_damage_state.collided, _multiplier)
+		var damage_state := DamageState.new(skill, direction, push_damage_state.collided)
 		_o_target.set_state(damage_state)
+		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
+		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, push_damage_state.collided)
+		GameState.current_level.add_child(vfx)
+	if _max_is_collision:
+		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
+		vfx.setup(direction, _push_tile_path[-1], [Vector2i.ZERO], [_target_unit], false, push_damage_state.collided)
+		GameState.current_level.add_child(vfx)
+
+
+func _on_collided() -> void:
+	target_collided.emit()
+	_target_collided = true

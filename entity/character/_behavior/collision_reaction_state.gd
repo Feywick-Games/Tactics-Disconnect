@@ -19,7 +19,7 @@ func update(delta: float) -> State:
 	if not _qte_pending:
 		if not _success:
 			var dummy_signal: Signal
-			return DamageState.new(collided_skill, _character.current_tile - _target.current_tile, dummy_signal, 1, true)
+			return DamageState.new(collided_skill, _character.current_tile - _target.current_tile, dummy_signal, true)
 		else:
 			if not _turned:
 				_turned = true
@@ -30,14 +30,24 @@ func update(delta: float) -> State:
 	return super.update(delta)
 
 
+func _impact()-> void:
+	super._impact()
+	_character.play_actor_status(true, false, false, true)
+
+
 func _react() -> void:
 	super._react()
 	_character.request_skill_text(_reaction.name)
 	var direction: Vector2i = _target.current_tile - _character.current_tile
+	
+	var vfx :=  _reaction.visual_effect_scene.instantiate() as VisualEffect
+	vfx.setup(direction, _target.current_tile, _reaction.aoe, [_target], _reaction.visual_effect_targets_only, impact)
+	GameState.current_level.add_child(vfx)
+	
 	_character.facing = direction
 	_character.animator.play_directional(_reaction.character_animation, _character.facing)
 	_impact_time = _character.get_impact_time(_character.animator.current_animation)
-	var damage_state := DamageState.new(_reaction, direction, impact)
+	var damage_state := DamageState.new(_reaction, direction, impact, false, true)
 	_target.set_state(damage_state)
 
 

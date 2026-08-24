@@ -1,11 +1,10 @@
 class_name CheerReactionState
 extends ReactionState
 
-var id: int
-var _qte_count: int = -1
-
 func update(_delta: float) -> State:
 	if not _character.animator.is_playing() and _reacted:
+		return CharacterIdleState.new()
+	elif not _qte_pending and not _success:
 		return CharacterIdleState.new()
 	if _success and not _reacted:
 		_reacted = true
@@ -18,12 +17,6 @@ func _react() -> void:
 	_character.animator.play_directional("idle", _character.facing)
 	_character.request_skill_text(_reaction.name)
 	_character.play_dialogue("cheer")
-
-
-func qte_succeeded(success: bool) -> void:
-	_qte_count += 1
-	if _qte_count == id:
-		super.qte_succeeded(success)
 
 
 func can_use(_skill_state: SkillState, actor: Character) -> bool:

@@ -82,6 +82,13 @@ func get_modifier(status_type: Combat.Status) -> int:
 	return out
 
 
+func get_modifier_count(status_type: Combat.Status, positive: bool) -> int:
+	var out: int = 0
+	for effect: StatusEffect in status:
+		if effect.status == status_type and effect.value > 0 == positive:
+			out += 1
+	return out
+
 func end_encounter() -> void:
 	#TODO: A fun animation!
 	pass
@@ -109,15 +116,10 @@ func show_health_bar(show_display: bool) -> void:
 		health_bar.hide()
 
 
-func process_status_effect(effect: StatusEffect, multiplier: float) -> void:
+func process_status_effect(effect: StatusEffect) -> void:
 	var new_effect: StatusEffect = effect.duplicate()
-	new_effect.value = round(new_effect.value * multiplier)
-	var statuses : Array[StatusEffect] = status.filter(func(x:StatusEffect) -> bool: return x.status == new_effect.status)
-	if statuses.is_empty() :
-		status.append(new_effect)
-	else:
-		statuses[0].duration = max(new_effect.duration, statuses[0].duration)
-		status[0].value = max(new_effect.value, statuses[0].value)
+	new_effect.value = new_effect.value
+	status.append(new_effect)
 
 	if effect.status == Combat.Status.HIT:
 		health -= effect.value
@@ -247,18 +249,19 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "mo
 	return tile_path
 
 
-func take_damage(skill: Skill, direction: Vector2, multiplier: float = 1) -> void:
-	
-	multiplier = _calc_damage_multiplier(direction) * multiplier
+func take_damage(skill: Skill, direction: Vector2, ignore_time_multi := false) -> void:
 	
 	for base_effect: StatusEffect in skill.status_effects:
-		process_status_effect(base_effect, multiplier)
+		if base_effect.status == Combat.Status.HIT:
+			var multiplier: int = _calc_damage_multiplier(direction, ignore_time_multi)			
+			base_effect.value += multiplier
+		process_status_effect(base_effect)
 		status_label_manager.add_status_effect(base_effect)
 	
 	health_bar.value = health
 	damage_bar.value = health_bar.value
-	
-	status_label_manager.display_statuses()
+	var is_rear_attack: bool = is_equal_approx(Vector2(direction).normalized().dot(Vector2(facing).normalized()), 1)
+	status_label_manager.display_statuses(is_rear_attack)
 
 
 func die() -> void:
@@ -274,13 +277,13 @@ func highlight(enable := true) -> void:
 	(sprite.material as ShaderMaterial).set_shader_parameter("highlighted", enable)
 
 
-func _calc_damage_multiplier(direction: Vector2i) -> float:
-	var multiplier: float = 1
-	if self is Enemy:
+func _calc_damage_multiplier(direction: Vector2i, ignore_time_muilti := false) -> int:
+	var multiplier: int = 0
+	if self is Enemy and not ignore_time_muilti:
 		if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_TIME_PERCENT:
-			multiplier = Global.QUICK_MULTIPLIER
+			multiplier += Global.QUICK_MULTIPLIER
 		elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_TIME_PERCENT:
-			multiplier = Global.SLOW_MULTIPLIER
+			multiplier -= Global.SLOW_MULTIPLIER
 	if is_equal_approx(Vector2(direction).normalized().dot(Vector2(facing).normalized()), 1):
 		multiplier += Global.BACK_MULTIPLIER
 	return multiplier
@@ -295,11 +298,11 @@ func display_modified_status(skill_state: SkillState) -> void:
 		highlight(false)
 		return
 
-	var multiplier: float = _calc_damage_multiplier(skill_state.direction)
+	var multiplier: int = _calc_damage_multiplier(skill_state.direction)
 
 	for base_effect: StatusEffect in skill_state.skill.status_effects:
 		var effect: StatusEffect = base_effect.duplicate()
-		effect.value = round(effect.value * multiplier)
+		effect.value = effect.value + multiplier
 		if effect.status == Combat.Status.HIT:
 			health_bar.value = health - round(effect.value)
 		else:
@@ -323,20 +326,28 @@ func request_skill_text(skill_name: String) -> void:
 	skill_text_requested.emit(skill_name)
 
 
-func play_actor_status(mini_game := false, perfect := false) -> void:
+func play_actor_status(rear: bool, mini_game := false, perfect := false, ignore_time_multi := false, cheer_count: int = 0) -> void:
+	if not ignore_time_multi:
 		if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_TIME_PERCENT:
 			status_label_manager.play_actor_status("quick")
 		elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_TIME_PERCENT:
 			status_label_manager.play_actor_status("slow")
-		if mini_game:
-			if perfect:
-				status_label_manager.play_actor_status("nice")
-			else:
-				status_label_manager.play_actor_status("oof")
-		if get_modifier(Combat.Status.HIT) > 0:
+	if mini_game:
+		if perfect:
+			status_label_manager.play_actor_status("nice")
+		else:
+			status_label_manager.play_actor_status("oof")
+	if get_modifier_count(Combat.Status.DAMAGE, true) > 0:
+		for i: int in range(get_modifier_count(Combat.Status.DAMAGE, true)):
 			status_label_manager.play_actor_status("strong")
-		elif get_modifier(Combat.Status.HIT) < 0:
+	elif get_modifier_count(Combat.Status.DAMAGE, true) < 0:
+		for i: int in range(abs(get_modifier_count(Combat.Status.DAMAGE, true))):
 			status_label_manager.play_actor_status("weak")
+	if rear:
+		status_label_manager.play_actor_status("ambush")
+	
+	for i in range(cheer_count):
+		status_label_manager.play_actor_status("stoked")
 
 
 func play_dialogue(anim: String = "") -> void:

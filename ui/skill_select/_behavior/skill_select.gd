@@ -2,6 +2,8 @@ class_name SkillSelect
 extends PanelContainer
 
 signal skills_selected
+signal units_shuffled(units: Array[Ally])
+
 
 @export
 var aoe_empty_color: Color = "#433045"
@@ -9,6 +11,10 @@ var aoe_empty_color: Color = "#433045"
 var aoe_origin_color: Color = "#d6d0c1"
 @export
 var aoe_fill_color: Color = "#a83649"
+@export_category("Debug")
+@export
+var ally_scenes: Array[PackedScene]
+
 
 const unit_skill_list_scene: PackedScene = preload("res://ui/skill_select/_packed_scene/unit_skill_list.tscn")
 
@@ -28,10 +34,22 @@ var flavor_text_label: Label = %FlavorText
 var unit_skill_lists: VBoxContainer = %UnitSkills
 @onready
 var go_button: TextureButton = %GoButton
+@onready
+var skill_data: Control = %SkillData
+@onready
+var ally_data: Control = %AllyData
 
 func _ready() -> void:
 	go_button.pressed.connect(_on_go_button_pressed)
-	hide()
+	go_button.focus_entered.connect(_on_go_button_focus_entered)
+	if not get_tree().root == get_parent():
+		hide()
+	else:
+		var allies: Array[Ally]
+		for scene: PackedScene in ally_scenes: 
+			var ally: Ally = scene.instantiate() as Ally
+			allies.append(ally)
+		open(allies)
 
 
 func _on_go_button_pressed() -> void:
@@ -53,7 +71,7 @@ func open(allies: Array[Ally]) -> void:
 
 
 func display_unit_skill_lists(allies: Array[Ally]) -> void:
-	for child: UnitSkillList in %UnitSkills.get_children():
+	for child: UnitSkillList in unit_skill_lists.get_children():
 		child.free()
 	
 	var first_button_grabbed := false
@@ -63,6 +81,9 @@ func display_unit_skill_lists(allies: Array[Ally]) -> void:
 		unit_skill_lists.add_child(unit_skill_list)
 		unit_skill_list.deal(unit)
 		unit_skill_list.child_focus_entered.connect(_on_unit_skill_list_focus_entered.bind(unit))
+		unit_skill_list.reordered.connect(_on_unit_skill_list_reordered)
+		unit_skill_list.shuffle_canceled.connect(_on_unit_skill_list_shuffle_canceled)
+		unit_skill_list.shuffle_confirmed.connect(_on_unit_skill_list_shuffle_confirmed)
 		for button: SkillSelectButton in unit_skill_list.skill_buttons:
 			if not first_button_grabbed:
 				first_button_grabbed = true
@@ -70,13 +91,47 @@ func display_unit_skill_lists(allies: Array[Ally]) -> void:
 			button.skill_selected.connect(_on_skill_selected)
 			button.skill_focused.connect(_on_skill_focused)
 			button.skill_canceled.connect(_on_skill_canceled)
+		unit_skill_list.unit_button.unit_focused.connect(_on_unit_focused)
 		
 	_generate_button_neighbors()
 
 
+func _on_unit_skill_list_shuffle_confirmed() -> void:
+	_generate_button_neighbors()
+	var allies: Array[Ally]
+	
+	for node: Node in unit_skill_lists.get_children():
+		var unit_skill_list := node as UnitSkillList
+		allies.append(unit_skill_list.ally)
+	
+	units_shuffled.emit(allies)
+
+
+func _on_unit_skill_list_shuffle_canceled(unit_skill_list: UnitSkillList, pos: int) -> void:
+	unit_skill_lists.move_child(unit_skill_list, pos)
+	_generate_button_neighbors()
+
+
+func _on_unit_skill_list_reordered(unit_skill_list: UnitSkillList, up: bool) -> void:
+	var idx := unit_skill_list.get_index()
+	if up:
+		if idx > 0:
+			idx -= 1
+		else:
+			idx = unit_skill_lists.get_child_count() - 1
+	else:
+		if idx < unit_skill_lists.get_child_count() - 1:
+			idx += 1
+		else:
+			idx = 0
+	
+	unit_skill_lists.move_child(unit_skill_list,idx)
+
+
 func _on_unit_skill_list_focus_entered(unit: Character) -> void:
-	var tracking_cam := GameState.current_level.get_viewport().get_camera_2d() as TrackingCamera
-	tracking_cam.follow(unit, Vector2(160,0))
+	if not get_tree().root == get_parent():
+		var tracking_cam := GameState.current_level.get_viewport().get_camera_2d() as TrackingCamera
+		tracking_cam.follow(unit, Vector2(160,0))
 
 
 func _generate_button_neighbors() -> void:
@@ -84,26 +139,30 @@ func _generate_button_neighbors() -> void:
 	go_button.focus_neighbor_right = go_button.get_path()
 	
 	var button_matrix: Array[Array] = []
-	for button_list: UnitSkillList in %UnitSkills.get_children():
+	for button_list: UnitSkillList in unit_skill_lists.get_children():
 		button_matrix.append([])
-		for button: SkillSelectButton in button_list.skill_buttons:
-			if button.has_skill and (not button.disabled or button.selected):
+		var all_buttons: Array[TextureButton] = [button_list.unit_button as TextureButton]
+		all_buttons.append_array(button_list.skill_buttons as Array[TextureButton])
+		for button: TextureButton in  all_buttons:
+			if button is UnitSelectButton or (button.has_skill and (not button.disabled or button.selected)):
 				button_matrix[-1].append(button)
 		
 	for y in range(button_matrix.size()):
 		for x in range(button_matrix[y].size()):
-			var button: SkillSelectButton = button_matrix[y][x]
-			if button.selected:
-				x = button.get_index()
+			var button: TextureButton = button_matrix[y][x]
+			if button is SkillSelectButton and button.selected:
+				x = button.get_index() - 1
 			
 			var left_neighbor := Vector2i(x-1,y)
 			var right_neighbor := Vector2i(x+1,y)
 			var up_neighbor := Vector2i(x,y-1)
 			var down_neighbor := Vector2i(x,y+1)
-			if x == 0 or button.selected:
+			if x == 0 or button is UnitSelectButton:
 				left_neighbor.x = button_matrix[y].size() - 1
 			if x >= button_matrix[y].size() - 1:
 				right_neighbor.x = 0
+			if (button is SkillSelectButton and button.selected):
+				left_neighbor.x = 0
 			
 			if y == 0:
 				up_neighbor.y = button_matrix.size() - 1
@@ -139,22 +198,41 @@ func _generate_button_neighbors() -> void:
 			else:
 				button.focus_neighbor_bottom = button_matrix[down_neighbor.y][down_neighbor.x].get_path()
 
-			
-
+func _on_unit_focused(ally: Ally) -> void:
+	skill_data.hide()
+	ally_data.show()
+	_fill_unit_display(ally)
+	%ActionContextLabel.text = "Reorder"
 
 func _on_skill_focused(skill: Skill) -> void:
+	skill_data.show()
+	ally_data.hide()
 	skill_name_label.text = skill.name
 	skill_damage_label.text = str(skill.get_hit_damage())
 	range_label.text = str(skill.max_range)
 	flavor_text_label.text = skill.flavor_text
 	_fill_aoe_display(skill.aoe)
-	
+	%ActionContextLabel.text = "Select"
+
+
+func _on_go_button_focus_entered() -> void:
+	%ActionContextLabel.text = "Start!"
 
 
 func _on_skill_canceled(ally: Ally, _skill: Skill) -> void:
 	unit_skills_selected[ally] = null
 	go_button.disabled = true
 	_generate_button_neighbors()
+
+
+func _fill_unit_display(ally: Ally) -> void:
+	%Power.text = str(ally.basic_skill.get_hit_damage())
+	%Range.text = str(ally.basic_skill.max_range)
+	%CharacterText.text = ally.skill_select_description
+	%CharacterName.text = ally.character_name
+	%Health.text = str(ally.max_health)
+	%MovementRange.text = str(ally.movement_range)
+	%UnitPortrait.texture = ally.large_portrait
 
 
 func _fill_aoe_display(aoe: Array[Vector2i]) -> void:

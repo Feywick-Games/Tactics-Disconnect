@@ -2,6 +2,7 @@ class_name SkillState
 extends State
 
 signal impact
+signal exited
 
 const DEFAULT_DESIRED_TARGET_PCT: float = .75
 
@@ -15,19 +16,19 @@ var ui: CombatUI
 var impact_time: float = 1.0
 var direction: Vector2i
 var _time_in_state: float
-var _multiplier: float = 1.0
 var _impact_emitted := false
 var _started := false
 var _current_tile : Vector2i
+var _cheer_count : int = 0
 
 
 func _init(character: Character, i_skill: Skill, target_tile_: Vector2i, current_tile_override := Vector2i.MAX) -> void:
 	_current_tile = character.current_tile if current_tile_override == Vector2i.MAX else current_tile_override
 	target_tile = target_tile_
-	skill = i_skill.duplicate(true)
-	skill.apply_status_effects(character.status)
-	_desired_target_count = round(skill.aoe.size() * DEFAULT_DESIRED_TARGET_PCT)
 	_character = character
+	skill = i_skill.duplicate(true)
+	skill.apply_damage_modifiers(_character.get_modifier(Combat.Status.DAMAGE))
+	_desired_target_count = round(skill.aoe.size() * DEFAULT_DESIRED_TARGET_PCT)
 	direction = VectorF.snap_direction(target_tile - _current_tile)
 	_set_targets()
 
@@ -35,6 +36,10 @@ func _init(character: Character, i_skill: Skill, target_tile_: Vector2i, current
 func enter() -> void:
 	super.enter()
 	impact_time = _character.get_impact_time(_character.animator.get_directional_animation_name(skill.character_animation, direction))
+	var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
+	vfx.setup(direction, target_tile, skill.aoe, targets, skill.visual_effect_targets_only, impact)
+	GameState.current_level.add_child(vfx)
+	
 	if skill.name != "":
 		_character.request_skill_text(skill.name)
 
@@ -43,20 +48,30 @@ func update(delta: float) -> State:
 	if _started:
 		_time_in_state = _time_in_state + delta
 	if _time_in_state > impact_time and not _impact_emitted:
-		impact.emit()
-		_impact_emitted = true
+		_impact()
 	return
 
 
-func _hit_targets() -> void:
+func _impact() -> void:
+	impact.emit()
+	_impact_emitted = true
+	var is_rear_attack := false
+	for target: Character in targets:
+		if is_equal_approx(Vector2(direction).normalized().dot(Vector2(target.facing).normalized()), 1):
+			is_rear_attack = true
+			break
 	if _character is Ally:
 		if mini_game:
-			_character.play_actor_status(true, mini_game.success)
+			_character.play_actor_status(is_rear_attack, mini_game.ranking != MiniGame.Rank.NORMAL, mini_game.ranking == MiniGame.Rank.NICE, false, _cheer_count)
 		else:
-			_character.play_actor_status()
-	
+			_character.play_actor_status(is_rear_attack, false, false, false, _cheer_count)
+	else:
+		_character.play_actor_status(is_rear_attack, false, false, true, _cheer_count)
+
+
+func _hit_targets() -> void:
 	for target in targets:
-		var damage_state := DamageState.new(skill, direction, impact, _multiplier)
+		var damage_state := DamageState.new(skill, direction, impact)
 		target.set_state(damage_state)
 
 
@@ -70,18 +85,18 @@ func _set_targets() -> void:
 
 func on_cheer(success: bool) -> void:
 	if success:
-		for target: Character in targets:
-			var damage_state := target.state_machine.current_state as DamageState
-			if damage_state:
-				damage_state.on_cheer()
+		_cheer_count += 1
+		skill.apply_damage_modifiers(Global.CHEER_MULTIPLIER)
 
 
-func on_get_behind_me(pause: bool) -> void:
-	play(pause)
+func on_get_behind_me(success: bool) -> void:
+	if success:
+		pause(true)
 
 
 func exit() -> void:
 	super.exit()
+	exited.emit()
 	_character.end_turn()
 	if _character.special and skill.name == _character.special.name:
 		_character.special = null
@@ -144,9 +159,9 @@ func can_use(attack_range: RangeStruct) -> Global.SkillErrorCode:
 	return Global.SkillErrorCode.OK
 
 
-func play(pause:=false) -> void:
-	state_machine.set_process(!pause)
-	state_machine.set_physics_process(!pause)
+func pause(yep:=true) -> void:
+	state_machine.set_process(!yep)
+	state_machine.set_physics_process(!yep)
 	if pause:
 		_character.animator.pause()
 	else:
