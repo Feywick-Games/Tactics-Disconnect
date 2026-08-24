@@ -15,7 +15,7 @@ var _qte_pending := true
 
 
 func _init(reaction: Reaction, character: Character, target: Character) -> void:
-	_reaction = reaction
+	_reaction = reaction.duplicate(true)
 	_character = character
 	_target = target
 
@@ -38,7 +38,7 @@ func update(delta: float) -> State:
 			if _reacted:
 				_time_in_state = _time_in_state + delta
 			
-			if _time_in_state > _impact_time and _reacted:
+			if _time_in_state > _impact_time and _reacted and not _impact_emitted:
 				_impact()
 			if not is_instance_valid(_target):
 				return CharacterIdleState.new()

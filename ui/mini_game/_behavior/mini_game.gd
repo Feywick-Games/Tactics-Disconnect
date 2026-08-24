@@ -3,11 +3,18 @@ extends Control
 
 signal finished
 
-var value: float
-var completed: bool = false:
+enum Rank {
+	UNRANKED,
+	OOF,
+	NORMAL,
+	NICE
+}
+
+var ranking: Rank = Rank.UNRANKED:
 	set(val):
-		if val == true:
+		if val != Rank.UNRANKED:
 			finished.emit()
-		completed = val
-		
-var success: bool = false
+		ranking = val
+
+func is_complete() -> bool:
+	return ranking != Rank.UNRANKED

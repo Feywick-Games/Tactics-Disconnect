@@ -36,10 +36,8 @@ func _prep_skill_state() -> void:
 			skill_state.mini_game = _mini_game
 	else:
 		var dummy_mini_game := MiniGame.new()
-		dummy_mini_game.completed = true
-		dummy_mini_game.value = 1
-		dummy_mini_game.success = true
 		skill_state.mini_game = dummy_mini_game
+		dummy_mini_game.ranking = MiniGame.Rank.NORMAL
 
 
 func _set_reaction_states() -> void:

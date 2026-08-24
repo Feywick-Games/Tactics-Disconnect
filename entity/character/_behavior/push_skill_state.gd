@@ -34,7 +34,7 @@ func _init(character: Character, i_skill: Skill, target_tile_: Vector2i) -> void
 
 func update(delta: float) -> State:
 	if mini_game:
-		if mini_game.completed and not pushing:
+		if mini_game.ranking != MiniGame.Rank.UNRANKED and not pushing:
 			pushing = true
 			_hit_targets()
 		elif _target_collided:
@@ -65,7 +65,11 @@ func _set_targets() -> void:
 
 
 func _hit_targets() -> void:
-	var multiplier : int = -Global.MINIGAME_FAILURE_MULTIPLIER if not mini_game.success else Global.MINIGAME_SUCCESS_MULTIPLIER
+	var multiplier : int = 0
+	if mini_game.ranking == MiniGame.Rank.OOF:
+		multiplier = -Global.MINIGAME_FAILURE_MULTIPLIER 
+	elif mini_game.ranking == MiniGame.Rank.NICE:
+		multiplier =  Global.MINIGAME_SUCCESS_MULTIPLIER
 	skill.apply_damage_modifiers(multiplier)
 	_character.animator.play_directional(skill.character_animation, direction)
 	_started = true

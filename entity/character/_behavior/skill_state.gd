@@ -62,7 +62,7 @@ func _impact() -> void:
 			break
 	if _character is Ally:
 		if mini_game:
-			_character.play_actor_status(is_rear_attack, true, mini_game.success, false, _cheer_count)
+			_character.play_actor_status(is_rear_attack, mini_game.ranking != MiniGame.Rank.NORMAL, mini_game.ranking == MiniGame.Rank.NICE, false, _cheer_count)
 		else:
 			_character.play_actor_status(is_rear_attack, false, false, false, _cheer_count)
 	else:
