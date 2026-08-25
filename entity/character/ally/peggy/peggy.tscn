@@ -39,6 +39,7 @@ metadata/_custom_type_script = "uid://c5gnxjiq5craw"
 [sub_resource type="Resource" id="Resource_ybr77"]
 script = ExtResource("2_neqen")
 name = "Slap"
+character_animation = "basic"
 state = ExtResource("3_pi3iu")
 status_effects = Array[ExtResource("3_d8pu4")]([SubResource("Resource_o0dns")])
 metadata/_custom_type_script = "uid://de4pxhpt4mw5u"
@@ -68,7 +69,8 @@ material = SubResource("ShaderMaterial_2e4av")
 position = Vector2(0, 1)
 texture = ExtResource("3_h77kg")
 offset = Vector2(0, -17)
-vframes = 6
+hframes = 12
+vframes = 9
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("18_eqa8o")]
 
