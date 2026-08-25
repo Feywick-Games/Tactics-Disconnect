@@ -34,7 +34,7 @@ func _init(character: Character, i_skill: Skill, target_tile_: Vector2i) -> void
 
 func update(delta: float) -> State:
 	if mini_game:
-		if mini_game.ranking != MiniGame.Rank.UNRANKED and not pushing:
+		if mini_game.is_complete() and not pushing:
 			pushing = true
 			_hit_targets()
 		elif _target_collided:

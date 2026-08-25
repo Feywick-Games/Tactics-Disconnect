@@ -18,3 +18,6 @@ var ranking: Rank = Rank.UNRANKED:
 
 func is_complete() -> bool:
 	return ranking != Rank.UNRANKED
+
+func reset() -> void:
+	ranking = Rank.UNRANKED

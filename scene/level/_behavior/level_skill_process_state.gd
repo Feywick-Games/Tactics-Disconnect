@@ -33,6 +33,7 @@ func _prep_skill_state() -> void:
 			_mini_game = _level.ui.melee_combo
 			_level.ui.melee_combo.start(skill_state.skill.aoe.size())
 		if _mini_game:
+			_mini_game.reset()
 			skill_state.mini_game = _mini_game
 	else:
 		var dummy_mini_game := MiniGame.new()
