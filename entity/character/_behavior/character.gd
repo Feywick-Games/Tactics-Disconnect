@@ -153,7 +153,6 @@ func clear_expired_statuses() -> void:
 
 func end_turn() -> void:
 	GameState.current_level.grid.update_unit_registry(current_tile, self)	
-	health_bar.hide()
 	
 	for effect: StatusEffect in status:
 		effect.duration -= 1

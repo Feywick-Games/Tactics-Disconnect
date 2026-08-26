@@ -150,7 +150,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_phexs")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="MeiSpawnPoint" type="Node2D" parent="." unique_id=1680334307]
-position = Vector2(685, 375)
+position = Vector2(685, 345)
 script = ExtResource("21_sldol")
 is_ally = true
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_34pil")])
@@ -177,7 +177,7 @@ spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_vcdsl"), SubR
 metadata/_custom_type_script = "uid://cfuxemb15nlab"
 
 [node name="SpawnPoint" type="Node2D" parent="." unique_id=1799894307]
-position = Vector2(625, 375)
+position = Vector2(655, 375)
 script = ExtResource("21_sldol")
 spawn_data = Array[ExtResource("23_dfity")]([SubResource("Resource_s57jr"), SubResource("Resource_axg8f")])
 metadata/_custom_type_script = "uid://cfuxemb15nlab"

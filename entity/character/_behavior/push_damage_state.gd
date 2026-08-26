@@ -14,7 +14,6 @@ skill: Skill, direction: Vector2, impact_signal: Signal) -> void:
 
 func enter() -> void:
 	_character = state_machine.state_owner as Character
-	_character.show_health_bar(true)
 	_character.animator.play_directional("idle", _direction * -1)
 	_character.facing = _direction * -1
 

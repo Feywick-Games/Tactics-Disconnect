@@ -9,12 +9,14 @@
 [node name="HealthBar" type="TextureProgressBar" unique_id=920212856]
 z_index = 1
 z_as_relative = false
-offset_left = -10.0
+offset_left = -9.0
 offset_top = -36.0
-offset_right = 22.0
-offset_bottom = -24.0
+offset_right = 11.0
+offset_bottom = -34.0
 rounded = true
 texture_progress = ExtResource("1_hk7ja")
+metadata/_edit_vertical_guides_ = [-16.0, 16.0]
+metadata/_edit_horizontal_guides_ = [-43.0, -45.0]
 
 [node name="HitChanceLabel" type="Label" parent="." unique_id=1316391677]
 layout_mode = 0
@@ -51,8 +53,8 @@ show_behind_parent = true
 z_index = 1
 z_as_relative = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 20.0
+offset_bottom = 2.0
 value = 100.0
 rounded = true
 texture_progress = ExtResource("3_lsloj")

@@ -32,6 +32,7 @@ class Serialization:
 		
 		
 
+var force_show_health := false
 var active_unit: Character
 var special_used: bool
 var attacked: bool
