@@ -84,5 +84,4 @@ script = ExtResource("19_siqaw")
 script = ExtResource("20_cyfp0")
 
 [node name="DialolgueSprite" parent="." unique_id=2130912011 instance=ExtResource("21_8y6ln")]
-visible = false
 position = Vector2(-9, 0)

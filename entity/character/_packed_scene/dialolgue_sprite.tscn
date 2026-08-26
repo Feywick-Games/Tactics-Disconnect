@@ -199,6 +199,7 @@ _data = {
 }
 
 [node name="DialolgueSprite" type="Sprite2D" unique_id=2130912011]
+visible = false
 z_index = 1
 texture = ExtResource("1_n8tst")
 offset = Vector2(-1, -36)

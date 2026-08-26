@@ -97,6 +97,7 @@ func on_get_behind_me(success: bool) -> void:
 func exit() -> void:
 	super.exit()
 	exited.emit()
+	print(_time_in_state)
 	_character.end_turn()
 	if _character.special and skill.name == _character.special.name:
 		_character.special = null

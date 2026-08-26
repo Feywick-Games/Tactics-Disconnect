@@ -158,9 +158,6 @@ is_range := false, direct := false, force_remove_unit_tiles := false) -> RangeSt
 			
 			var tile := Vector2i(x,y)
 			
-			if tile == Vector2i(11,7):
-				print("gotcha")
-			
 			if region.has_point(tile):
 				var id_path: Array[Vector2i] = get_id_path(unit_tile, tile)
 				if id_path.size() <= max_distance + 1 and id_path.size() > min_distance:

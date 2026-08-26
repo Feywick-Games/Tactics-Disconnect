@@ -20,10 +20,15 @@ custom_blend: float = -1,custom_speed: float = 1.0, from_end: bool = false) -> v
 		animation_finished.emit("")
 		return
 	
+	var previous_animation: StringName = current_animation
+	
 	if not queue_anim:
 		play(anim + "_" + anim_direction_str, custom_blend, custom_speed, from_end)
 	else:
 		queue(anim + "_" + anim_direction_str)
+		
+	if current_animation == previous_animation:
+		seek(0)
 
 
 func get_directional_animation_name(anim: String, direction: Vector2, alt_ext := "") -> String:
