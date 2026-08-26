@@ -54,7 +54,6 @@ func _ready() -> void:
 
 func _on_go_button_pressed() -> void:
 	for unit: Ally in unit_skills_selected.keys():
-		unit.special = unit_skills_selected[unit]
 		unit.current_skill_hand.erase(unit.special)
 	unit_skills_selected.clear()
 	skills_selected.emit()
@@ -221,6 +220,7 @@ func _on_go_button_focus_entered() -> void:
 
 func _on_skill_canceled(ally: Ally, _skill: Skill) -> void:
 	unit_skills_selected[ally] = null
+	ally.special = null
 	go_button.disabled = true
 	_generate_button_neighbors()
 
@@ -268,6 +268,7 @@ func _fill_aoe_display(aoe: Array[Vector2i]) -> void:
 
 func _on_skill_selected(ally: Ally, skill: Skill) -> void:
 	unit_skills_selected[ally] = skill	
+	ally.special = skill
 	var has_null_skills := false
 	for skill_value: Skill in unit_skills_selected.values():
 		if skill_value == null:
