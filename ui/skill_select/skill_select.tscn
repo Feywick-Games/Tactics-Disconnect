@@ -11,14 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://dgfvy6r6euw80" path="res://ui/skill_select/_sprite/skill_damage_bg.png" id="6_a0q3v"]
 [ext_resource type="PackedScene" uid="uid://bvmot03d4vcap" path="res://entity/character/ally/peggy/peggy.tscn" id="6_ltres"]
 [ext_resource type="PackedScene" uid="uid://df28cltbdfj46" path="res://ui/skill_select/_packed_scene/unit_skill_list.tscn" id="7_bmcsv"]
-[ext_resource type="Texture2D" uid="uid://c4uuseoxq4cs3" path="res://ui/skill_select/_sprite/go_button.tres" id="8_ltres"]
-[ext_resource type="Texture2D" uid="uid://j7vcaum0wxr6" path="res://ui/skill_select/_sprite/go_button_pressed.tres" id="9_0ucjg"]
-[ext_resource type="Texture2D" uid="uid://dgadll1iljejh" path="res://ui/skill_select/_sprite/go_button_hover.tres" id="10_xh2ao"]
 [ext_resource type="FontFile" uid="uid://b7g0kodqjdhv7" path="res://ui/font/dogicapixelbold.ttf" id="11_a0q3v"]
 [ext_resource type="Texture2D" uid="uid://bm2obdmybkcqr" path="res://entity/character/ally/izzy/_sprite/izzy_turn_portrait.png" id="11_bmcsv"]
-[ext_resource type="Texture2D" uid="uid://bqe6i14e2ixo5" path="res://ui/skill_select/_sprite/go_button_disabled.tres" id="11_h1m3f"]
 [ext_resource type="FontFile" uid="uid://c5u4kdxxyrrmr" path="res://ui/font/dogicabold.ttf" id="12_ltres"]
 [ext_resource type="FontFile" uid="uid://droraa6xvuskn" path="res://ui/font/dogicapixel.ttf" id="13_0ucjg"]
+[ext_resource type="Texture2D" uid="uid://tqj8t5e2t8qh" path="res://ui/skill_select/_sprite/skill_go_button.png" id="16_ltres"]
 [ext_resource type="Texture2D" uid="uid://mci8mhqok6vk" path="res://ui/_sprite/push_button_a_atlas.atlastex" id="20_xh2ao"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tn4br"]
@@ -33,6 +30,22 @@ bg_color = Color(0.07450981, 0.0627451, 0.23137255, 1)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bmcsv"]
 atlas = ExtResource("11_bmcsv")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ucjg"]
+atlas = ExtResource("16_ltres")
+region = Rect2(0, 0, 50, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xh2ao"]
+atlas = ExtResource("16_ltres")
+region = Rect2(100, 0, 50, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1m3f"]
+atlas = ExtResource("16_ltres")
+region = Rect2(50, 0, 50, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltres"]
+atlas = ExtResource("16_ltres")
+region = Rect2(150, 0, 50, 30)
 
 [node name="SkillSelect" type="PanelContainer" unique_id=756091630]
 custom_minimum_size = Vector2(160, 360)
@@ -529,11 +542,11 @@ theme_override_constants/separation = 4
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
-texture_normal = ExtResource("8_ltres")
-texture_pressed = ExtResource("9_0ucjg")
-texture_hover = ExtResource("10_xh2ao")
-texture_disabled = ExtResource("11_h1m3f")
-texture_focused = ExtResource("10_xh2ao")
+texture_normal = SubResource("AtlasTexture_0ucjg")
+texture_pressed = SubResource("AtlasTexture_xh2ao")
+texture_hover = SubResource("AtlasTexture_h1m3f")
+texture_disabled = SubResource("AtlasTexture_ltres")
+texture_focused = SubResource("AtlasTexture_h1m3f")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1050703249]
 layout_mode = 2

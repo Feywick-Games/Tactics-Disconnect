@@ -8,7 +8,6 @@ var force_redraw := false
 var _time_since_update_reticle : float = 0
 var _input_buffered: Callable
 var _wait_range: RangeStruct
-var _inspecting := false
 var _camera_leader_speed: float = 100
 var _camera_leader: Node2D
 var _tracking_cam: TrackingCamera
@@ -114,6 +113,7 @@ func _on_movement_input(input_vec: Vector2i) -> State:
 func _on_guard_pressed() -> State:
 	_ally.get_viewport().set_input_as_handled()
 	waited = true
+	acted = false
 	_ally.global_position = GameState.current_level.tile_to_world(_ally.current_tile)
 	_wait_range = RangeStruct.new()
 	_wait_range.range_tiles = [
@@ -136,6 +136,9 @@ func _on_guard_pressed() -> State:
 	_highlighted_tile = _ally.current_tile + _ally.facing
 	GameState.current_level.reticle.select_tile(_highlighted_tile)
 	
+	if _ally.animator.current_animation != "move_idle":
+		_ally.animator.play_directional("move_idle")
+	
 	return
 
 
@@ -147,6 +150,8 @@ func _on_cancel_pressed() -> State:
 		_turn_data.active_skill_state = null
 		_movement_range = _starting_movement_range
 		force_redraw = true
+		if _ally.animator.current_animation != "move_idle":
+			_ally.animator.play_directional("move_idle")
 	elif waited:
 		waited = false
 		_movement_range = _starting_movement_range

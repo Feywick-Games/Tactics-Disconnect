@@ -5,7 +5,7 @@ const SNAP_DISTANCE: float = 1
 
 var _target_position: Vector2
 var _character: Character
-var _waiting := true
+
 
 func enter() -> void:
 	_character = state_machine.state_owner as Character
