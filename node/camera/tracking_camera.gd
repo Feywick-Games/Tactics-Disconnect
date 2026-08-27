@@ -3,12 +3,13 @@ extends Camera2D
 
 @export
 var leader : Node2D
-@export_range(0,5)
-var lerp_speed: float = 4
 @onready
 var window_scale : Vector2i
 var actual_cam_pos: Vector2
 var in_position: bool = true
+var speed: float = 0
+var max_speed: float = .2
+
 
 func _ready() -> void:
 	get_tree().root.get_viewport().size_changed.connect(_set_window_scale)
@@ -25,8 +26,10 @@ func _physics_process(delta: float) -> void:
 	if leader and is_instance_valid(leader):
 		if leader.global_position.distance_to(global_position) < 10:
 			in_position = true
+			speed = 0
 		else:
-			var cam_pos: Vector2 = global_position.lerp(leader.global_position, .2)
+			speed = lerp(speed,max_speed, 5 * delta)
+			var cam_pos: Vector2 = global_position.lerp(leader.global_position, speed)
 			actual_cam_pos =  actual_cam_pos.lerp(cam_pos, 10 * delta)
 
 	var cam_subpixel_offset: = (actual_cam_pos.round() - actual_cam_pos)
@@ -34,7 +37,6 @@ func _physics_process(delta: float) -> void:
 	global_position = actual_cam_pos.round()
 
 
-func follow(node: Node2D, follow_offset: Vector2 = Vector2.ZERO) -> void:
+func follow(node: Node2D) -> void:
 	leader = node
-	offset = -follow_offset/2.0
 	in_position = false

@@ -130,7 +130,7 @@ func _on_unit_skill_list_reordered(unit_skill_list: UnitSkillList, up: bool) -> 
 func _on_unit_skill_list_focus_entered(unit: Character) -> void:
 	if not get_tree().root == get_parent():
 		var tracking_cam := GameState.current_level.get_viewport().get_camera_2d() as TrackingCamera
-		tracking_cam.follow(unit, Vector2(160,0))
+		tracking_cam.follow(unit)
 
 
 func _generate_button_neighbors() -> void:
