@@ -8,7 +8,7 @@ var force_redraw := false
 var _time_since_update_reticle : float = 0
 var _input_buffered: Callable
 var _wait_range: RangeStruct
-var _camera_leader_speed: float = 100
+var _camera_leader_speed: float = 120
 var _camera_leader: Node2D
 var _tracking_cam: TrackingCamera
 var waited := false

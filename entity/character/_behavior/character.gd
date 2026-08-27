@@ -105,7 +105,7 @@ func get_impact_time(anim_string: String) -> float:
 
 
 
-func show_health_bar(show_display: bool) -> void:
+func show_health_bar(show_display: bool, is_turn := false) -> void:
 	if show_display:
 		health_bar.show()
 		if not special:
@@ -114,6 +114,15 @@ func show_health_bar(show_display: bool) -> void:
 			health_bar.get_node("SpecialIcon").show()
 	else:
 		health_bar.hide()
+	
+	var bg := health_bar.get_node("Background") as TextureRect
+	var atlas_tex := bg.texture as AtlasTexture
+		
+	if is_turn:
+		atlas_tex.region.position.x = 30
+	else:
+		atlas_tex.region.position.x = 0
+		
 
 
 func process_status_effect(effect: StatusEffect) -> void:

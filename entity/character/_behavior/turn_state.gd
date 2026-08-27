@@ -29,7 +29,7 @@ func enter() -> void:
 	_character = state_machine.state_owner as Character
 	_character.health_bar.value = _character.health
 	_character.active_skill = _character.basic_skill
-	_character.show_health_bar(true)
+	_character.show_health_bar(true, true)
 	_start_tile = _character.current_tile
 	_highlighted_tile = _start_tile
 	_calc_default_ranges()

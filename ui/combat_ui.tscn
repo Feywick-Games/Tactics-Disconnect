@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://c1xbsgyj5cgwq" path="res://ui/sticker/_sprite/sticker_push_punch.png" id="8_ibp8q"]
 [ext_resource type="FontFile" uid="uid://csbndd6gje51v" path="res://ui/font/Early GameBoy.ttf" id="13_riw5p"]
 [ext_resource type="PackedScene" uid="uid://cllwl1b33lyag" path="res://ui/skill_select/skill_select.tscn" id="14_783s8"]
-[ext_resource type="Texture2D" uid="uid://ha4b3jsb2hbf" path="res://ui/_sprite/button_indicator_small_a.png" id="22_werr3"]
 [ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="25_q4psh"]
 [ext_resource type="PackedScene" uid="uid://cxvt0qwavsjab" path="res://ui/mini_game/push_progress/push_progress.tscn" id="26_008rl"]
 [ext_resource type="PackedScene" uid="uid://jvcs0gdkyf1l" path="res://ui/mini_game/melee_combo/melee_combo.tscn" id="28_cx76p"]
@@ -43,7 +42,7 @@ generate_mipmaps = false
 noise = SubResource("FastNoiseLite_rxtpa")
 as_normal_map = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ddd4e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_783s8"]
 resource_local_to_scene = true
 shader = ExtResource("33_b6k0c")
 shader_parameter/noise_tex_normal = SubResource("NoiseTexture2D_8jamv")
@@ -53,11 +52,6 @@ shader_parameter/strength = 3.02
 shader_parameter/failure_color = Color(0, 0, 0, 1)
 shader_parameter/failure_color_influence = 0.0
 shader_parameter/sprite_uv_center = Vector2(0.5, 0.5)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_riw5p"]
-resource_local_to_scene = true
-atlas = ExtResource("22_werr3")
-region = Rect2(8, 8, 16, 16)
 
 [node name="CombatUI" type="CanvasLayer" unique_id=788298229]
 follow_viewport_scale = 3.0
@@ -268,17 +262,7 @@ size_flags_vertical = 8
 script = ExtResource("31_pxq7u")
 
 [node name="TextureProgressBar" parent="ReactionQteManager" unique_id=869123022 instance=ExtResource("31_cx76p")]
-material = SubResource("ShaderMaterial_ddd4e")
+material = SubResource("ShaderMaterial_783s8")
 layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
 offset_right = 32.0
 offset_bottom = 32.0
-grow_horizontal = 1
-grow_vertical = 1
-texture = SubResource("AtlasTexture_riw5p")

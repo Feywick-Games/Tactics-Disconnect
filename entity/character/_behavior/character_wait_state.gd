@@ -13,7 +13,7 @@ func enter() -> void:
 	_character = state_machine.state_owner as Character
 	# TODO: Replace with combat idle
 	_character.animator.play_directional("idle", _character.facing)
-	_character.health_bar.hide()
+	_character.show_health_bar(false)
 	_character.clear_expired_statuses()
 
 
@@ -34,6 +34,9 @@ func update(_delta : float) -> State:
 	else:
 		_react_ready = false
 		_character.play_dialogue()
+	
+	if _turn_data.skill_started:
+		return CharacterIdleState.new()
 	
 	return
 

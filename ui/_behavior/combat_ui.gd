@@ -40,7 +40,6 @@ func _ready() -> void:
 	skill_select.skills_selected.connect(_on_skills_selected)
 	skill_select.skills_selected.connect(skill_progress.reset)
 
-
 func display_skill_error_code(code: Global.SkillErrorCode) -> void:
 	_error_queued = true
 	

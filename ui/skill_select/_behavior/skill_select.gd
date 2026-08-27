@@ -3,6 +3,7 @@ extends PanelContainer
 
 signal skills_selected
 signal units_shuffled(units: Array[Ally])
+signal unit_highlighted(unit: Ally)
 
 
 @export
@@ -19,6 +20,8 @@ var ally_scenes: Array[PackedScene]
 const unit_skill_list_scene: PackedScene = preload("res://ui/skill_select/_packed_scene/unit_skill_list.tscn")
 
 var unit_skills_selected: Dictionary[Ally, Skill]
+var last_active_control: Control
+var active := false
 
 @onready
 var skill_name_label: Label = %SkillName
@@ -52,12 +55,29 @@ func _ready() -> void:
 		open(allies)
 
 
+func _process(delta: float) -> void:
+	if active:
+		if Input.is_action_just_pressed("inspect"):
+			last_active_control = get_viewport().gui_get_focus_owner()
+			focus_behavior_recursive = Control.FocusBehaviorRecursive.FOCUS_BEHAVIOR_DISABLED
+			hide()
+		if Input.is_action_just_released("inspect"):
+			focus_behavior_recursive = Control.FocusBehaviorRecursive.FOCUS_BEHAVIOR_INHERITED
+			if not last_active_control:
+				unit_skill_lists.get_child(0).grab_focus()
+			else:
+				last_active_control.grab_focus()
+			show()
+
+
+
 func _on_go_button_pressed() -> void:
 	for unit: Ally in unit_skills_selected.keys():
 		unit.current_skill_hand.erase(unit.special)
 	unit_skills_selected.clear()
 	skills_selected.emit()
 	hide()
+	active = false
 
 
 func open(allies: Array[Ally]) -> void:
@@ -65,7 +85,7 @@ func open(allies: Array[Ally]) -> void:
 	go_button.disabled = true
 	for ally in allies:
 		unit_skills_selected[ally] = null
-	
+	active = true
 	display_unit_skill_lists(allies)
 
 
@@ -131,6 +151,7 @@ func _on_unit_skill_list_focus_entered(unit: Character) -> void:
 	if not get_tree().root == get_parent():
 		var tracking_cam := GameState.current_level.get_viewport().get_camera_2d() as TrackingCamera
 		tracking_cam.follow(unit)
+		unit_highlighted.emit(unit)
 
 
 func _generate_button_neighbors() -> void:

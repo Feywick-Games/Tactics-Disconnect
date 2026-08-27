@@ -17,6 +17,7 @@ func enter() -> void:
 	_character.animator.play_directional("idle", _direction * -1)
 	_character.facing = _direction * -1
 
+
 func update(delta: float) -> State:
 	if _damage_taken:
 		if not _tile_path.is_empty():

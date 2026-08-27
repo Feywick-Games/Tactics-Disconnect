@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://f11b60dmq00t"]
 
 [ext_resource type="Texture2D" uid="uid://b34r5h2blmmla" path="res://ui/health_bar/_sprite/health_bar_progress.png" id="1_hk7ja"]
-[ext_resource type="Texture2D" uid="uid://b8k687sb6a6rk" path="res://ui/health_bar/_sprite/health_bar_background.png" id="2_43108"]
+[ext_resource type="Texture2D" uid="uid://bq5cqryvw6h4d" path="res://ui/health_bar/_sprite/health_bar.atlastex" id="3_hk7ja"]
 [ext_resource type="Texture2D" uid="uid://dka74tswf81nh" path="res://ui/health_bar/_sprite/damage_bar_progress.png" id="3_lsloj"]
 [ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="4_a8nyx"]
 [ext_resource type="Texture2D" uid="uid://cp2w6gq2tcppv" path="res://ui/health_bar/_sprite/health_bar_skill_light.png" id="5_fxjyc"]
@@ -37,7 +37,7 @@ offset_left = -7.0
 offset_top = -5.0
 offset_right = 33.0
 offset_bottom = 35.0
-texture = ExtResource("2_43108")
+texture = ExtResource("3_hk7ja")
 stretch_mode = 2
 
 [node name="SpecialIcon" type="TextureRect" parent="." unique_id=638695669]

@@ -39,6 +39,7 @@ var attacked: bool
 var start_position: Vector2i
 var turn_number: int
 var skill_started := false
+var ended := false
 
 var active_skill_state: SkillState:
 	set(val):

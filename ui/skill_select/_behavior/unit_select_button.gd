@@ -14,10 +14,6 @@ func _ready() -> void:
 	focus_entered.connect(_on_focus_entered)
 	focus_exited.connect(_on_focus_exited)
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action("cancel") and has_focus():
-		shuffle_canceled.emit()
-
 
 func _on_focus_entered() -> void:
 	material = focus_material
