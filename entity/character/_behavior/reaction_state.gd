@@ -2,6 +2,7 @@ class_name ReactionState
 extends State
 
 signal impact
+signal exited
 
 var _character: Character
 var _reaction: Reaction
@@ -54,3 +55,7 @@ func _impact()-> void:
 
 func can_use(_skill_state: SkillState, _actor: Character) -> bool:
 	return false
+
+
+func exit() -> void:
+	exited.emit()

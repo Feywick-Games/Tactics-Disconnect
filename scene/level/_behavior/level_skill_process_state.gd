@@ -106,13 +106,14 @@ func _set_reaction_states() -> void:
 	
 	for effected_unit: Character in _targets:
 		for reacting_unit in _level.get_unit_list():
-			if reacting_unit is Ally and reacting_unit != _level.active_unit and reacting_unit != effected_unit:
+			if reacting_unit is Ally and reacting_unit != _level.active_unit and reacting_unit != effected_unit and not reacting_unit in _targets:
 				for reaction: Reaction in reacting_unit.reactions:
 					var reaction_state: ReactionState = reaction.state.new(reaction, reacting_unit, effected_unit)
 					if reaction_state is GetBehindMeReactionState and reaction_state.can_use(skill_state, _level.active_unit):
 						_level.ui.reaction_qte_manager.dispatch_qtes(
 							reacting_unit.get_screen_transform().get_origin(), 
-							instant_dispatch_requested, skill_state.impact, [reaction_state.qte_succeeded, skill_state.get_behind_me])
+							instant_dispatch_requested, skill_state.impact, [reaction_state.qte_succeeded, skill_state.on_get_behind_me])
+						reaction_state.exited.connect(skill_state.pause.bind(false))
 						instant_dispatch_requested.emit()
 						_reacting_units.append(reacting_unit)
 						reacting_unit.set_state(reaction_state)

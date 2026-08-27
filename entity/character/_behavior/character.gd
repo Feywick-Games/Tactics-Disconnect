@@ -224,7 +224,7 @@ func update_ranges(movement_tiles: RangeStruct) -> RangeStruct:
 	return out
 
 
-func process_movement(delta: float, tile_path: Array[Vector2i], animation := "move_idle") -> Array[Vector2i]:
+func process_movement(delta: float, tile_path: Array[Vector2i], animation := "move_idle", skip_facing := false) -> Array[Vector2i]:
 	if not tile_path.is_empty():
 		var path_position :=  GameState.current_level.tile_to_world(tile_path[0])
 		var map_position := GameState.current_level.tile_to_world(current_tile)
@@ -234,7 +234,10 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "mo
 			global_position = sub_pixel_position.round()
 			var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
 			if not animation.is_empty():
-				animator.play_directional(animation, anim_dir)
+				if not skip_facing:
+					animator.play_directional(animation, anim_dir)
+				else:
+					animator.play_directional(animation, facing)
 		if not path_position.distance_to(global_position) > SNAP_DISTANCE:
 			if len(tile_path) == 1:
 				sub_pixel_position = path_position
@@ -242,7 +245,8 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "mo
 			tile_path.pop_front()
 		if not tile_path.is_empty() and \
 		path_position.distance_to(global_position) < map_position.distance_to(global_position):
-			facing =  tile_path[0] - current_tile
+			if not skip_facing:
+				facing =  tile_path[0] - current_tile
 			current_tile = tile_path[0]
 			GameState.current_level.grid.update_unit_registry(current_tile, self)
 	return tile_path
@@ -309,7 +313,7 @@ func display_modified_status(skill_state: SkillState) -> void:
 
 
 func can_react(turn_data: TurnData) -> bool:
-	if turn_data.active_skill_state:
+	if turn_data.active_skill_state and not turn_data.skill_started:
 		var skill_state: SkillState = turn_data.active_skill_state
 		
 		for effected_unit: Character in skill_state.targets:
@@ -364,3 +368,7 @@ func play_dialogue(anim: String = "") -> void:
 	else:
 		dialogue_sprite.hide()
 		dialogue_animation_player.stop()
+		
+		
+func is_dialogue_playing() -> bool:
+	return ($DialolgueSprite/AnimationPlayer as AnimationPlayer).is_playing()

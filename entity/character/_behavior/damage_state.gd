@@ -21,7 +21,6 @@ func _init(skill: Skill, direction: Vector2, hit_signal: Signal, ignore_signal :
 func enter() -> void:
 	super.enter()
 	_character = state_machine.state_owner as Character
-	#_character.show_health_bar(true)
 
 
 func update(delta: float) -> State:
@@ -42,3 +41,7 @@ func exit() -> void:
 	super.exit()
 	if _character.health <= 0:
 		_character.die()
+
+
+func skip_damage() -> void:
+	_damage_taken = true

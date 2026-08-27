@@ -23,6 +23,7 @@
 [ext_resource type="Resource" uid="uid://c0hqpa4cff4gb" path="res://entity/character/_skill/cheer_reaction.tres" id="15_fladx"]
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="18_cf37p"]
 [ext_resource type="AnimationLibrary" uid="uid://ewg20gm6aiio" path="res://entity/character/_data/basic_animations.tres" id="20_beaqm"]
+[ext_resource type="Resource" uid="uid://dq4uu64uoxw8c" path="res://entity/character/_skill/get_behind_me.tres" id="20_xmewg"]
 [ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="23_5r8g6"]
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="24_3ab3v"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="25_uhu1q"]
@@ -100,7 +101,7 @@ character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
 skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), SubResource("Resource_pwuw8"), SubResource("Resource_pwuw8"), SubResource("Resource_xmewg"), ExtResource("6_m8t01"), ExtResource("3_apuu4"), SubResource("Resource_pwuw8"), SubResource("Resource_xmewg"), SubResource("Resource_xmewg"), ExtResource("6_m8t01")])
 basic_skill = SubResource("Resource_v85yj")
-reactions = Array[ExtResource("12_ldv45")]([ExtResource("13_xmewg"), ExtResource("14_pwuw8"), ExtResource("15_fladx")])
+reactions = Array[ExtResource("12_ldv45")]([ExtResource("13_xmewg"), ExtResource("14_pwuw8"), ExtResource("15_fladx"), ExtResource("20_xmewg")])
 max_health = 40
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
@@ -128,5 +129,4 @@ script = ExtResource("24_3ab3v")
 script = ExtResource("25_uhu1q")
 
 [node name="DialolgueSprite" parent="." unique_id=2130912011 instance=ExtResource("26_ldv45")]
-visible = false
 position = Vector2(-9, 0)

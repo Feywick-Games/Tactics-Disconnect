@@ -12,7 +12,7 @@ func _init(turn_data: TurnData) -> void:
 func enter() -> void:
 	_character = state_machine.state_owner as Character
 	# TODO: Replace with combat idle
-	_character.animator.play_directional("idle", Vector2.ZERO)
+	_character.animator.play_directional("idle", _character.facing)
 	_character.health_bar.hide()
 	_character.clear_expired_statuses()
 

@@ -12,7 +12,7 @@ func update(delta: float) -> State:
 		_character.play_dialogue("shock")
 	
 	if is_instance_valid(_target):
-		if _impact_emitted and not _character.animator.is_playing():
+		if _impact_emitted and not _character.animator.is_playing() and not _character.is_dialogue_playing():
 			return CharacterIdleState.new()
 	else:
 		return CharacterIdleState.new()

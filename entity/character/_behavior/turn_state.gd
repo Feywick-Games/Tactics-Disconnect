@@ -33,7 +33,7 @@ func enter() -> void:
 	_start_tile = _character.current_tile
 	_highlighted_tile = _start_tile
 	_calc_default_ranges()
-	_character.animator.play_directional("move_idle")
+	_character.animator.play_directional("move_idle", _character.facing)
 	_starting_movement_range = _movement_range
 
 
@@ -67,6 +67,8 @@ func end_turn() -> void:
 	
 
 func exit() -> void:
+	_turn_data.force_show_health = false
+	_turn_data.skill_started = true
 	GameState.current_level.reset_map()
 
 
@@ -77,7 +79,7 @@ func _select_action(tile: Vector2i, attack_range: RangeStruct, state: TurnState)
 		
 		
 		if can_use == Global.SkillErrorCode.OK:
-			_character.facing = Vector2i(Vector2(tile - _character.current_tile).normalized().round())
+			#_character.facing = Vector2i(Vector2(tile - _character.current_tile).normalized().round())
 			return skill_state
 		else:
 			skill_error_encountered.emit(can_use)

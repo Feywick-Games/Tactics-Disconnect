@@ -57,7 +57,7 @@ func update(delta: float) -> State:
 		else:
 			_wait(delta)
 	elif _exiting or (_tile_path.is_empty() and not _is_acting):
-		_character.animator.play_directional("idle")
+		_character.animator.play_directional("idle", _character.facing)
 		_enemy.end_turn()
 		return CharacterIdleState.new()
 	return

@@ -20,7 +20,7 @@ func enter() -> void:
 func update(delta: float) -> State:
 	if _damage_taken:
 		if not _tile_path.is_empty():
-			_tile_path = _character.process_movement(delta, _tile_path, "")
+			_tile_path = _character.process_movement(delta, _tile_path, "", true)
 		elif not _has_collided:
 			_has_collided = true
 			GameState.current_level.grid.update_unit_registry(_character.current_tile, _character)

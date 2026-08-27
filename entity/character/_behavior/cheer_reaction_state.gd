@@ -2,7 +2,7 @@ class_name CheerReactionState
 extends ReactionState
 
 func update(_delta: float) -> State:
-	if not _character.animator.is_playing() and _reacted:
+	if not _character.animator.is_playing() and _reacted and not _character.is_dialogue_playing():
 		return CharacterIdleState.new()
 	elif not _qte_pending and not _success:
 		return CharacterIdleState.new()

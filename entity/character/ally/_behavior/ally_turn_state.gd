@@ -137,7 +137,7 @@ func _on_guard_pressed() -> State:
 	GameState.current_level.reticle.select_tile(_highlighted_tile)
 	
 	if _ally.animator.current_animation != "move_idle":
-		_ally.animator.play_directional("move_idle")
+		_ally.animator.play_directional("move_idle", _ally.facing)
 	
 	return
 
@@ -151,7 +151,7 @@ func _on_cancel_pressed() -> State:
 		_movement_range = _starting_movement_range
 		force_redraw = true
 		if _ally.animator.current_animation != "move_idle":
-			_ally.animator.play_directional("move_idle")
+			_ally.animator.play_directional("move_idle", _ally.facing)
 	elif waited:
 		waited = false
 		_movement_range = _starting_movement_range
@@ -173,7 +173,7 @@ func _on_accept_pressed() -> State:
 		return next_state 
 	else:
 		acted = true
-		_character.animator.play_directional("idle")
+		_character.animator.play_directional("idle", _character.facing)
 		force_redraw = true
 		_movement_range = RangeStruct.new()
 		_highlighted_tile = _ally.current_tile + _ally.facing
@@ -192,7 +192,6 @@ func physics_update(delta: float) -> State:
 
 
 func exit() -> void:
-	_turn_data.force_show_health = false
 	if waited:
-		_character.animator.play_directional("idle")
+		_character.animator.play_directional("idle", _character.facing)
 	super.exit()

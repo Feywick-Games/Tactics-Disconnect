@@ -1,17 +1,10 @@
 class_name CheapShotReactionState
 extends ReactionState
 
-#var _tracking_cam: TrackingCamera
-
-#func enter() -> void:
-	#super.enter()
-	#_tracking_cam = (_character.get_viewport().get_camera_2d() as TrackingCamera)
-	#_tracking_cam.follow(_character)
-
 
 func update(delta: float) -> State:
 	if is_instance_valid(_target):
-		if _impact_emitted and not _character.animator.is_playing():
+		if _impact_emitted and not _character.animator.is_playing() and not _character.is_dialogue_playing():
 			return CharacterIdleState.new()
 	else:
 		return CharacterIdleState.new()

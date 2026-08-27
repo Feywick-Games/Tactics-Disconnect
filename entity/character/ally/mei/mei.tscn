@@ -24,6 +24,7 @@
 [ext_resource type="Resource" uid="uid://c0hqpa4cff4gb" path="res://entity/character/_skill/cheer_reaction.tres" id="17_tc08q"]
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="20_565k6"]
 [ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="21_6wu5m"]
+[ext_resource type="Resource" uid="uid://dq4uu64uoxw8c" path="res://entity/character/_skill/get_behind_me.tres" id="21_tc08q"]
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="22_x46yc"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="23_5na0l"]
 [ext_resource type="PackedScene" uid="uid://438qt7ha3hj6" path="res://entity/character/_packed_scene/dialolgue_sprite.tscn" id="24_otur2"]
@@ -514,7 +515,7 @@ character_name = "Mei"
 turn_portrait_scene = ExtResource("2_6fea8")
 skill_deck = Array[ExtResource("3_y0fl4")]([ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("5_ojfus"), ExtResource("4_ik6s2"), ExtResource("6_ewmoi"), ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("6_ewmoi")])
 basic_skill = SubResource("Resource_1kfok")
-reactions = Array[ExtResource("14_wwsvf")]([ExtResource("15_pwl3y"), ExtResource("16_bxu0d"), ExtResource("17_tc08q")])
+reactions = Array[ExtResource("14_wwsvf")]([ExtResource("15_pwl3y"), ExtResource("16_bxu0d"), ExtResource("17_tc08q"), ExtResource("21_tc08q")])
 max_health = 36
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
@@ -542,5 +543,4 @@ script = ExtResource("22_x46yc")
 script = ExtResource("23_5na0l")
 
 [node name="DialolgueSprite" parent="." unique_id=2130912011 instance=ExtResource("24_otur2")]
-visible = false
 position = Vector2(-9, 0)
