@@ -108,6 +108,7 @@ func get_impact_time(anim_string: String) -> float:
 func show_health_bar(show_display: bool, is_turn := false) -> void:
 	if show_display:
 		health_bar.show()
+		health_bar.value = health
 		if not special:
 			health_bar.get_node("SpecialIcon").hide()
 		else:
@@ -322,7 +323,7 @@ func display_modified_status(skill_state: SkillState) -> void:
 
 
 func can_react(turn_data: TurnData) -> bool:
-	if turn_data.active_skill_state and not turn_data.skill_started:
+	if turn_data.active_skill_state and not turn_data.skill_started and not self in turn_data.active_skill_state.targets:
 		var skill_state: SkillState = turn_data.active_skill_state
 		
 		for effected_unit: Character in skill_state.targets:

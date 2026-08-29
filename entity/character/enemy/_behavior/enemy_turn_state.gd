@@ -179,6 +179,9 @@ func _pick_tile() -> Vector2i:
 			if not _target in skill_state.targets or not skill_state.can_use(skill_range) == Global.SkillErrorCode.OK:
 				continue
 			var likelihood: float = skill_state.calc_skill_likelihood(_turn_history)
+			if likelihood == 0:
+				continue
+			
 			# multiply by .1 to normalize at a value less than skill likelihood
 			var tile_distance: float = GameState.current_level.grid.get_tile_distance(_enemy.current_tile, tile)
 			var distance_preference: float = tile_distance / float(_enemy.movement_range) * Enemy.DISTANCE_PRIORITY

@@ -36,6 +36,9 @@ window/size/viewport_height=360
 window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
+window/size/mode.editor=0
+window/stretch/aspect.editor="keep_width"
+window/stretch/mode.editor="canvas_items"
 
 [global_group]
 

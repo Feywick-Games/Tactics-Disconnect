@@ -39,6 +39,7 @@ func _react() -> void:
 	super._react()
 	_character.request_skill_text(_reaction.name)
 	_character.show_health_bar(true)
+	_target.show_health_bar(false)
 	_character.facing = _target.facing
 	_moving = true
 	_stolen_damage_state = _target.state_machine.current_state
