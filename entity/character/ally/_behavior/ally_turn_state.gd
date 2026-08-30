@@ -59,6 +59,7 @@ func update(delta: float) -> State:
 	
 	if Input.is_action_pressed("inspect") and not acted:
 		_camera_leader.position += Input.get_vector("move_left", "move_right", "move_up", "move_down") * _camera_leader_speed * delta
+		_camera_leader.global_position = _camera_leader.global_position.clamp(_tracking_cam.bounds.position, _tracking_cam.bounds.end)
 	
 	elif not _input_buffered.is_null() and not _moving:
 		current_state = _input_buffered.call()

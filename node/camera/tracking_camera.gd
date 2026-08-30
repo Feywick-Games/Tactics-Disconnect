@@ -9,6 +9,7 @@ var actual_cam_pos: Vector2
 var in_position: bool = true
 var speed: float = 0
 var max_speed: float = .2
+var bounds: Rect2
 
 
 func _ready() -> void:
@@ -24,13 +25,15 @@ func _set_window_scale() -> void:
 
 func _physics_process(delta: float) -> void:
 	if leader and is_instance_valid(leader):
-		if leader.global_position.distance_to(global_position) < 10:
+		# messes up when the lines overlap but don't "intersect" so there is a small shrinking offset passed in to make sure they interserct.
+		var point : Vector2 = leader.global_position if bounds.has_point(leader.global_position) else VectorF.get_rect_line_intersection(bounds.grow(-.01), bounds.get_center(), leader.global_position)
+		if point.distance_to(global_position) < 10:
 			in_position = true
 			speed = 0
 		else:
 			speed = lerp(speed,max_speed, 5 * delta)
-			var cam_pos: Vector2 = global_position.lerp(leader.global_position, speed)
-			actual_cam_pos =  actual_cam_pos.lerp(cam_pos, 10 * delta)
+			var cam_pos: Vector2 = global_position.lerp(point, speed)
+			actual_cam_pos =  actual_cam_pos.lerp(cam_pos, 10 * delta).clamp(bounds.position, bounds.end)
 
 	var cam_subpixel_offset: = (actual_cam_pos.round() - actual_cam_pos)
 	GameState.game.viewport_container.material.set_shader_parameter("cam_offset", cam_subpixel_offset)

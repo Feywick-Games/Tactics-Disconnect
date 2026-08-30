@@ -11,6 +11,7 @@ var success_scene : PackedScene = load("res://scene/title_screen/title_screen.ts
 
 var map_complete: bool
 var grid: Grid
+var region: Rect2
 
 var _prop_layers: Array[TileMapLayer]
 
@@ -29,7 +30,6 @@ var active_unit: Character
 var unit_spawned := false
 var turn_history : Array[TurnData.Serialization]
 
-
 func _ready() -> void:
 	map = GRID_TILE_MAP_SCENE.instantiate()
 	_floor_layer.add_child(map)
@@ -37,8 +37,22 @@ func _ready() -> void:
 	GameState.current_level = self
 	for child: Node in find_children("Prop*", "TileMapLayer"):
 		_prop_layers.append(child as TileMapLayer)
+	
+	region = _floor_layer.get_used_rect()
+	for layer: TileMapLayer in _prop_layers:
+		region = region.merge(layer.get_used_rect())
+	region.position *= Vector2(Global.TILE_SIZE)
+	region.position += _floor_layer.global_position
+	region.size *= Vector2(Global.TILE_SIZE)
+	tracking_cam.bounds = region
+	var x : float = Global.GAME_SIZE.x /2.0
+	var y : float = Global.GAME_SIZE.y /2.0
+	tracking_cam.bounds = tracking_cam.bounds.grow_individual(-x,-y,-x,-y)
+	
 	await get_tree().create_timer(2).timeout
 	_start_encounter()
+	
+	
 
 
 
