@@ -12,10 +12,10 @@ var success_scene : PackedScene = load("res://scene/title_screen/title_screen.ts
 var map_complete: bool
 var grid: Grid
 
+var _prop_layers: Array[TileMapLayer]
+
 @onready
 var _floor_layer: TileMapLayer = $Floor
-@onready
-var _prop_layer: TileMapLayer = $Props
 @onready
 var tracking_cam: TrackingCamera = $TrackingCamera
 
@@ -35,13 +35,16 @@ func _ready() -> void:
 	_floor_layer.add_child(map)
 	reticle = map.reticle
 	GameState.current_level = self
+	for child: Node in find_children("Prop*", "TileMapLayer"):
+		_prop_layers.append(child as TileMapLayer)
 	await get_tree().create_timer(2).timeout
 	_start_encounter()
 
 
+
 func _start_encounter() -> void:
 	grid = Grid.new()
-	grid.populate(_floor_layer, _prop_layer)
+	grid.populate(_floor_layer, _prop_layers)
 	map.intialize(grid)
 	map.set_up(true)
 	var state_machine := StateMachine.new(self, LevelSpawnState.new()) 

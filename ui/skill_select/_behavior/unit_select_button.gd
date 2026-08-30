@@ -2,7 +2,6 @@ class_name UnitSelectButton
 extends TextureButton
 
 signal unit_selected
-signal shuffle_canceled
 signal unit_focused(unit: Ally)
 
 var _ally: Ally

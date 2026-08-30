@@ -55,7 +55,7 @@ func _ready() -> void:
 		open(allies)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if active:
 		if Input.is_action_just_pressed("inspect"):
 			last_active_control = get_viewport().gui_get_focus_owner()

@@ -28,7 +28,6 @@ func _ready() -> void:
 		button.focus_entered.connect(_on_child_focus_entered)
 	unit_button.focus_entered.connect(_on_child_focus_entered)
 	unit_button.unit_selected.connect(_on_unit_selected)
-	unit_button.shuffle_canceled.connect(_on_shuffle_canceled)
 	reorder_pointer.hide()
 
 

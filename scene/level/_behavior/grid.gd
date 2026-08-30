@@ -213,7 +213,7 @@ func get_path_ignore_passables(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	return out
 
 
-func populate(floor_layer: TileMapLayer, prop_layer: TileMapLayer) -> void:
+func populate(floor_layer: TileMapLayer, prop_layers: Array[TileMapLayer]) -> void:
 	region = floor_layer.get_used_rect()
 	update()
 	
@@ -221,22 +221,18 @@ func populate(floor_layer: TileMapLayer, prop_layer: TileMapLayer) -> void:
 		for x:int in range(region.position.x, region.end.x):
 			var tile := Vector2i(x,y)
 			var source_id : int = floor_layer.get_cell_source_id(tile)
-			var prop_source_id : int = -1 
-			prop_source_id = prop_layer.get_cell_source_id(tile)
+			var prop_source_ids : Array[int] = []
+			for prop_layer: TileMapLayer in prop_layers:
+				prop_source_ids.append(prop_layer.get_cell_source_id(tile))
 			if source_id == -1:
 				lock_cell(tile)
-			elif prop_source_id != -1:
-				var tile_data: TileData
-				var passable := true
-				var range_passable := true
-				
-				tile_data = prop_layer.get_cell_tile_data(tile)
-				if tile_data.has_custom_data("passable"):
-					passable = tile_data.get_custom_data("passable")
-				if tile_data.has_custom_data("range_passable"):
-					range_passable = tile_data.get_custom_data("passable")
-					
-				if not passable:
+			elif prop_source_ids.max() != -1:
+				var tile_data: Array[TileData]
+				for prop_layer: TileMapLayer in prop_layers:
+					var data : TileData = prop_layer.get_cell_tile_data(tile)
+					if data:
+						tile_data.append(data)
+				if tile_data.all(func(p: TileData) -> bool: return p.has_custom_data("passable")):
 					lock_cell(tile)
-				if range_passable:
+				if tile_data.all(func(p: TileData) -> bool: return p.has_custom_data("range_passable")):
 					add_passable(tile)

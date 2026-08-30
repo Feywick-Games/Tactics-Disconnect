@@ -37,8 +37,9 @@ window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 window/size/mode.editor=0
-window/stretch/aspect.editor="keep_width"
 window/stretch/mode.editor="canvas_items"
+window/stretch/scale_mode.editor="fractional"
+window/stretch/aspect.editor="keep"
 
 [global_group]
 
@@ -179,7 +180,7 @@ inspect={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.07450981, 0.0627451, 0.23137255, 1)
+environment/defaults/default_clear_color=Color(0.019607844, 0.019607844, 0.07058824, 1)
 
 [shader_globals]
 
