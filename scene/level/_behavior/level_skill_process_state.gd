@@ -58,7 +58,7 @@ func _set_reaction_states() -> void:
 	
 	for effected_unit: Character in _targets:
 		for reacting_unit in _level.get_unit_list():
-			if reacting_unit is Ally and  reacting_unit != _level.active_unit and reacting_unit != effected_unit:
+			if reacting_unit is Ally and  reacting_unit != _level.active_unit and reacting_unit != effected_unit and reacting_unit not in _reacting_units:
 				for reaction: Reaction in reacting_unit.reactions:
 					var reaction_state: ReactionState = reaction.state.new(reaction, reacting_unit, effected_unit)
 					if reaction_state is CheerReactionState and reaction_state.can_use(skill_state, _level.active_unit):
@@ -80,7 +80,7 @@ func _set_reaction_states() -> void:
 	
 	for effected_unit: Character in _targets:
 		for reacting_unit in _level.get_unit_list():
-			if reacting_unit is Ally and reacting_unit != _level.active_unit and reacting_unit != effected_unit:
+			if reacting_unit is Ally and reacting_unit != _level.active_unit and reacting_unit != effected_unit and reacting_unit not in _reacting_units:
 				for reaction: Reaction in reacting_unit.reactions:
 					var reaction_state: ReactionState = reaction.state.new(reaction, reacting_unit, effected_unit)
 					if reaction_state is CheapShotReactionState and reaction_state.can_use(skill_state, _level.active_unit):
@@ -94,7 +94,7 @@ func _set_reaction_states() -> void:
 
 	for effected_unit: Character in _targets:
 		for reacting_unit in _level.get_unit_list():
-			if reacting_unit is Ally and reacting_unit != _level.active_unit and reacting_unit != effected_unit:
+			if reacting_unit is Ally and reacting_unit != _level.active_unit and reacting_unit != effected_unit and reacting_unit not in _reacting_units:
 				for reaction: Reaction in reacting_unit.reactions:
 					var reaction_state: ReactionState = reaction.state.new(reaction, reacting_unit, effected_unit)
 					if reaction_state is CollisionReactionState and reaction_state.can_use(skill_state, _level.active_unit):
@@ -106,7 +106,7 @@ func _set_reaction_states() -> void:
 	
 	for effected_unit: Character in _targets:
 		for reacting_unit in _level.get_unit_list():
-			if reacting_unit is Ally and reacting_unit != _level.active_unit and reacting_unit != effected_unit and not reacting_unit in _targets:
+			if reacting_unit is Ally and reacting_unit != _level.active_unit and reacting_unit != effected_unit and not reacting_unit in _targets and reacting_unit not in _reacting_units:
 				for reaction: Reaction in reacting_unit.reactions:
 					var reaction_state: ReactionState = reaction.state.new(reaction, reacting_unit, effected_unit)
 					if reaction_state is GetBehindMeReactionState and reaction_state.can_use(skill_state, _level.active_unit):

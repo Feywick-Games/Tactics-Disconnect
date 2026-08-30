@@ -25,7 +25,10 @@ func highlight() -> void:
 
 func explode() -> void:
 	for react_call: Callable in _react_callables:
-		react_call.call(true)
+		if is_instance_valid(react_call.get_object()):
+			react_call.call(true)
+		else:
+			printerr("?")
 	animator.play("explode")
 	animator.animation_finished.connect(queue_free.unbind(1))
 	processed.emit()
