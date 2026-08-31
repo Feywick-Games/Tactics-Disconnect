@@ -361,7 +361,7 @@ func request_skill_text(skill_name: String) -> void:
 	skill_text_requested.emit(skill_name)
 
 
-func play_actor_status(rear: bool, mini_game := false, perfect := false, ignore_time_multi := false, cheer_count: int = 0) -> void:
+func play_actor_status(rear: bool, mini_game := false, perfect := false, ignore_time_multi := false, cheer_count: int = 0, tactical := false) -> void:
 	if not ignore_time_multi:
 		if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_TIME_PERCENT:
 			status_label_manager.play_actor_status("quick")
@@ -383,6 +383,9 @@ func play_actor_status(rear: bool, mini_game := false, perfect := false, ignore_
 	
 	for i in range(cheer_count):
 		status_label_manager.play_actor_status("stoked")
+	
+	if tactical:
+		status_label_manager.play_actor_status("tactical")
 
 
 func play_dialogue(anim: String = "") -> void:

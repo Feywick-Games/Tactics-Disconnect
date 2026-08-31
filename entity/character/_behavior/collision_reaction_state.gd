@@ -58,7 +58,7 @@ func can_use(skill_state: SkillState, _actor: Character) -> bool:
 		var terminus: Vector2i = push_skill_state.target_tile + (push_skill_state.direction * push_skill_state.max_push_distance)
 		var start: Vector2i = push_skill_state.target_tile + push_skill_state.direction
 		if start == _character.current_tile:
-			return true
+			return false
 		var path: Array[Vector2i] = GameState.current_level.grid.get_id_path(start, terminus)
 		if _character.current_tile - push_skill_state.direction in path:
 			return true

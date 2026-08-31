@@ -40,6 +40,7 @@ const BACK_MULTIPLIER : int = 1
 const SLOW_MULTIPLIER : int = 1
 const MINIGAME_SUCCESS_MULTIPLIER : int = 1
 const MINIGAME_FAILURE_MULTIPLIER : int = 1
+const COLLISION_MULTIPLIER: int = 1
 const CHEER_MULTIPLIER: int = 1
 const QUICK_TIME_PERCENT : float = .25
 const SLOW_TIME_PERCENT : float = .75

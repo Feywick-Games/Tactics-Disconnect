@@ -98,9 +98,10 @@ func _set_reaction_states() -> void:
 				for reaction: Reaction in reacting_unit.reactions:
 					var reaction_state: ReactionState = reaction.state.new(reaction, reacting_unit, effected_unit)
 					if reaction_state is CollisionReactionState and reaction_state.can_use(skill_state, _level.active_unit):
+						var push_skill_state := skill_state as PushSkillState
 						_level.ui.reaction_qte_manager.dispatch_qtes(
 							reacting_unit.get_screen_transform().get_origin(), 
-							skill_state.impact, (skill_state as PushSkillState).target_collided, [reaction_state.qte_succeeded])
+							skill_state.impact, push_skill_state.target_collided, [reaction_state.qte_succeeded])
 						_reacting_units.append(reacting_unit)
 						reacting_unit.set_state(reaction_state)
 	

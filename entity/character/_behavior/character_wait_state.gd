@@ -17,8 +17,6 @@ func enter() -> void:
 	_character.clear_expired_statuses()
 
 
-
-
 func update(_delta : float) -> State:
 	if _turn_data.active_skill_state and not _character in _turn_data.active_skill_state.targets \
 	and _character.health_bar.visible and not _turn_data.force_show_health:

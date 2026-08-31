@@ -20,6 +20,7 @@ var _impact_emitted := false
 var _started := false
 var _current_tile : Vector2i
 var _cheer_count : int = 0
+var _tactical := false
 
 
 func _init(character: Character, i_skill: Skill, target_tile_: Vector2i, current_tile_override := Vector2i.MAX) -> void:
@@ -62,11 +63,11 @@ func _impact() -> void:
 			break
 	if _character is Ally:
 		if mini_game:
-			_character.play_actor_status(is_rear_attack, mini_game.ranking != MiniGame.Rank.NORMAL, mini_game.ranking == MiniGame.Rank.NICE, false, _cheer_count)
+			_character.play_actor_status(is_rear_attack, mini_game.ranking != MiniGame.Rank.NORMAL, mini_game.ranking == MiniGame.Rank.NICE, false, _cheer_count, _tactical)
 		else:
-			_character.play_actor_status(is_rear_attack, false, false, false, _cheer_count)
+			_character.play_actor_status(is_rear_attack, false, false, false, _cheer_count, _tactical)
 	else:
-		_character.play_actor_status(is_rear_attack, false, false, true, _cheer_count)
+		_character.play_actor_status(is_rear_attack, false, false, true, _cheer_count, _tactical)
 
 
 func _hit_targets() -> void:

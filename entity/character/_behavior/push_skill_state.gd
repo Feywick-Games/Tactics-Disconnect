@@ -16,6 +16,7 @@ var _push_distance: int
 var _push_tile_path: Array[Vector2i]
 var _astar: AStarGrid2D
 var _target_collided := false
+var _push_damage_state : PushDamageState
 var pushing: bool = false
 var push_time: float
 
@@ -54,12 +55,13 @@ func _set_targets() -> void:
 			break
 	
 	var collision_point := target_tile + (direction * (_max_push_distance + 1))
-	if GameState.current_level.grid.region.has_point(collision_point) and \
-	GameState.current_level.grid.is_point_solid(collision_point):
+	if (GameState.current_level.grid.region.has_point(collision_point) and \
+	GameState.current_level.grid.is_point_solid(collision_point)) or not GameState.current_level.grid.region.has_point(collision_point):
 		_max_is_collision = true
+		_tactical = true
 		
 		var unit := GameState.current_level.grid.get_unit_from_tile(collision_point)
-		if unit and unit is Ally != _character is Ally:
+		if unit:
 			_o_target = unit
 			targets.append(unit)
 
@@ -74,26 +76,43 @@ func _hit_targets() -> void:
 	_character.animator.play_directional(skill.character_animation, direction)
 	_started = true
 	
+	var tracking_cam: TrackingCamera = GameState.current_level.get_viewport().get_camera_2d()
+	
+	tracking_cam.follow(_target_unit)
+	
 	var skill_range: RangeStruct = GameState.current_level.grid.request_range(target_tile, 0, 
 		_max_push_distance, Combat.RangeShape.CROSS, true, true
 	)
 	_astar = _target_unit.create_range_astar(skill_range, _max_push_distance)
 	_push_tile_path = _astar.get_id_path(target_tile, target_tile + (direction * _max_push_distance))	
-	var push_damage_state := PushDamageState.new(_push_tile_path, skill, direction, impact)
-	push_damage_state.collided.connect(_on_collided)
-	_target_unit.set_state(push_damage_state)
-	if _o_target:
-		var damage_state := DamageState.new(skill, direction, push_damage_state.collided)
+	if _max_is_collision:
+		skill.apply_damage_modifiers(Global.COLLISION_MULTIPLIER)
+	_push_damage_state = PushDamageState.new(_push_tile_path, skill, direction, impact)
+	_push_damage_state.collided.connect(_on_collided)
+	_target_unit.set_state(_push_damage_state)
+	if _o_target and (_o_target is Enemy or _max_push_distance == 0):
+		var damage_state := DamageState.new(skill, direction, _push_damage_state.collided)
 		_o_target.set_state(damage_state)
 		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
-		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, push_damage_state.collided)
+		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, _push_damage_state.collided)
 		GameState.current_level.add_child(vfx)
 	if _max_is_collision:
 		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
-		vfx.setup(direction, _push_tile_path[-1], [Vector2i.ZERO], [_target_unit], false, push_damage_state.collided)
+		vfx.setup(direction, _push_tile_path[-1], [Vector2i.ZERO], [_target_unit], false, _push_damage_state.collided)
 		GameState.current_level.add_child(vfx)
 
 
 func _on_collided() -> void:
 	target_collided.emit()
 	_target_collided = true
+	
+	
+func on_collision_reaction(success: bool) -> void:
+	if not success:
+		var insta_sig := Signal(self, "instant")
+		var damage_state := DamageState.new(skill, direction, insta_sig)
+		_o_target.set_state(damage_state)
+		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
+		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, insta_sig)
+		GameState.current_level.add_child(vfx)
+		insta_sig.emit()
