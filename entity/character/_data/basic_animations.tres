@@ -1,6 +1,7 @@
 [gd_resource type="AnimationLibrary" format=3 uid="uid://ewg20gm6aiio"]
 
 [sub_resource type="Animation" id="Animation_tjtew"]
+resource_name = "RESET"
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false

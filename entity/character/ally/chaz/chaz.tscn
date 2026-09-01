@@ -37,6 +37,7 @@ value = 4
 [sub_resource type="Resource" id="Resource_sfhtk"]
 script = ExtResource("2_qq2rq")
 name = "Slingshot"
+character_animation = "basic"
 max_range = 4
 state = ExtResource("3_jfry1")
 status_effects = Array[ExtResource("4_a4nkn")]([SubResource("Resource_n0ksn")])
@@ -66,7 +67,8 @@ material = SubResource("ShaderMaterial_20l6v")
 position = Vector2(0, -2)
 texture = ExtResource("10_p3pb6")
 offset = Vector2(0, -15)
-vframes = 6
+hframes = 12
+vframes = 9
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("17_ophor")]
 

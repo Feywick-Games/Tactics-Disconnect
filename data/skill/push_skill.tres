@@ -21,6 +21,7 @@ script = ExtResource("1_20208")
 ui_small = ExtResource("5_20208")
 name = "Push"
 flavor_text = "Hold A to send the opponent flying up to 5 spaces"
+character_animation = "basic"
 push_position = Vector2i(4, 0)
 state = ExtResource("2_m6ah6")
 status_effects = Array[ExtResource("3_f2nxr")]([SubResource("Resource_dj1am"), SubResource("Resource_jr16b")])
