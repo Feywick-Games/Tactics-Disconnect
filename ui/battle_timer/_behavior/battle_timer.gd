@@ -9,12 +9,10 @@ func _ready() -> void:
 	GameState.battle_timer = self
 	value = 0
 	max_value = Global.TIMER_MAX_VALUE
-	#hide()
 
 
 func stop() -> void:
 	running = false
-	
 
 
 func start(unit: Character) -> void:
