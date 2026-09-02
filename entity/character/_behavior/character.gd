@@ -185,7 +185,9 @@ func create_range_astar(range_struct: RangeStruct, manhattan_range: int) -> ASta
 
 
 func update_ranges(movement_tiles: RangeStruct) -> RangeStruct:
-	# color tiles differently when attacks overlap with movement 
+	var aoe_fill : bool = not movement_tiles.range_tiles.is_empty()
+	
+	# color tiles differently when attacks overlap with movement
 	var skill_range: Array[Vector2i]
 	var aoe: Array[Vector2i] = active_skill.aoe
 	
@@ -227,7 +229,11 @@ func update_ranges(movement_tiles: RangeStruct) -> RangeStruct:
 	var overlap_tiles: Array[Vector2i]
 	var attack_only_tiles: Array[Vector2i]
 	
-	for tile in skill_range + skill_aoe_range:
+	if aoe_fill:
+		skill_range.append_array(skill_aoe_range)
+	
+	
+	for tile in skill_range:
 		if tile in movement_tiles.range_tiles:
 			overlap_tiles.append(tile)
 		else:
@@ -247,9 +253,13 @@ func update_ranges(movement_tiles: RangeStruct) -> RangeStruct:
 	GameState.current_level.reticle.draw_range(movement_tiles.range_tiles, Global.RETICLE_MOVE_ALTAS_COORDS)
 	active_skill.draw_range(attack_only_tiles, active_skill == special)
 	GameState.current_level.reticle.draw_range(overlap_tiles, overlap_atlas_coords)
+	if not aoe_fill:
+		GameState.current_level.reticle.draw_range(skill_aoe_range, full_range_atlas_coords)
+
 	if not movement_tiles.range_tiles.is_empty():
 		GameState.current_level.reticle.set_cell(current_tile, 0, Global.RETICLE_MOVE_ALTAS_COORDS)
 		GameState.current_level.reticle.select_tile(current_tile)
+
 	
 	var out := RangeStruct.new()
 	out.range_tiles = skill_range
