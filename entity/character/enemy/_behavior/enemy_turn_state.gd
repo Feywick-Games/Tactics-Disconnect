@@ -162,10 +162,10 @@ func _pick_tile() -> Vector2i:
 	
 	if not _is_acting:
 		# dont worry about desired distance if you are literally out of range
-		var start_distance: int = GameState.current_level.grid.get_tile_distance(_start_tile, _target.current_tile)
+		var start_distance: int = GameState.current_level.grid.get_tile_distance(_start_tile, _target.current_tile, true)
 		var min_distance: int = start_distance
 		for tile: Vector2i in _movement_range.range_tiles:
-			var dist: int = GameState.current_level.grid.get_tile_distance(tile, _target.current_tile)
+			var dist: int = GameState.current_level.grid.get_tile_distance(tile, _target.current_tile, true)
 			if dist < min_distance:
 				min_distance = dist
 				desired_tile = tile
