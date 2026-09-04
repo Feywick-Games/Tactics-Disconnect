@@ -21,6 +21,7 @@ metadata/_custom_type_script = "uid://c5gnxjiq5craw"
 [resource]
 script = ExtResource("1_3julk")
 name = "Crocodile Tears"
+character_animation = "basic"
 state = ExtResource("2_geof3")
 status_effects = Array[ExtResource("2_fspno")]([SubResource("Resource_3bajt"), SubResource("Resource_dw0xx")])
 metadata/_custom_type_script = "uid://de4pxhpt4mw5u"

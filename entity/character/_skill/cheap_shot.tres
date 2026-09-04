@@ -15,6 +15,6 @@ metadata/_custom_type_script = "uid://c5gnxjiq5craw"
 [resource]
 script = ExtResource("1_bh517")
 name = "Cheap Shot"
-character_animation = "bas"
+character_animation = "basic"
 state = ExtResource("2_3hmip")
 status_effects = Array[ExtResource("3_fqle7")]([SubResource("Resource_rx68n")])

@@ -116,8 +116,8 @@ metadata/_custom_type_script = "uid://ujs5udtg6jxg"
 [node name="Alley" type="Node2D" unique_id=2146508345]
 y_sort_enabled = true
 script = ExtResource("1_q1hxj")
-metadata/_edit_horizontal_guides_ = [60.0]
-metadata/_edit_vertical_guides_ = [599.0]
+metadata/_edit_horizontal_guides_ = [60.0, -120.0]
+metadata/_edit_vertical_guides_ = [600.0, 710.0]
 
 [node name="TrackingCamera" type="Camera2D" parent="." unique_id=738522487]
 process_priority = 1
