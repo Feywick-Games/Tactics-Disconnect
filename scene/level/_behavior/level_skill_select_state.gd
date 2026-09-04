@@ -52,7 +52,10 @@ func update(delta : float) -> State:
 		return LevelTurnState.new()
 	if Input.is_action_just_pressed("inspect"):
 		if _highlighted_unit:
-			_camera_leader = Node2D.new()
+			if not _camera_leader:
+				_camera_leader = Node2D.new()
+				_camera_leader.name = "Camera Leader"
+				_level.add_child(_camera_leader)
 			_camera_leader.global_position = _highlighted_unit.global_position
 			_tracking_cam.follow(_camera_leader)
 	
@@ -65,6 +68,9 @@ func update(delta : float) -> State:
 
 
 func exit() -> void:
+	if _camera_leader:
+		_camera_leader.queue_free()
+	
 	for ally: Ally in _allies:
 		ally.show_health_bar(false)
 	for enemy: Enemy in _enemies:

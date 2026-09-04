@@ -19,8 +19,11 @@ func enter() -> void:
 	_start_tile = _ally.current_tile
 	_attack_range = _ally.update_ranges(_movement_range)
 	_tracking_cam = _character.get_viewport().get_camera_2d()
-	_camera_leader = Node2D.new()
-	_character.add_child(_camera_leader)
+	_camera_leader = _character.get_node_or_null("CameraLeader")
+	if not _camera_leader:
+		_camera_leader = Node2D.new()
+		_camera_leader.name = "CameraLeader"
+		_character.add_child(_camera_leader)
 	_tracking_cam.follow(_camera_leader)
 
 
