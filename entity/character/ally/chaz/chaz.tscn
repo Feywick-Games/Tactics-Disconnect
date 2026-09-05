@@ -55,6 +55,7 @@ script = ExtResource("1_x7qae")
 small_portrait = ExtResource("7_f6ndk")
 large_portrait = SubResource("AtlasTexture_xebcl")
 skill_select_description = "A chill guy till he pulls out his sling shot. Ranged Specialist."
+move_animation = "move"
 character_name = "Chaz"
 turn_portrait_scene = ExtResource("6_uuy70")
 skill_deck = Array[ExtResource("2_qq2rq")]([ExtResource("3_a4nkn"), ExtResource("4_uuy70"), ExtResource("3_a4nkn"), ExtResource("4_uuy70"), ExtResource("4_uuy70"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("3_a4nkn"), ExtResource("4_uuy70")])
@@ -68,7 +69,7 @@ position = Vector2(0, -2)
 texture = ExtResource("10_p3pb6")
 offset = Vector2(0, -15)
 hframes = 12
-vframes = 9
+vframes = 12
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("17_ophor")]
 

@@ -352,6 +352,36 @@ tracks/1/keys = {
 "values": [Vector2i(0, 2)]
 }
 
+[sub_resource type="Animation" id="Animation_fpdvp"]
+resource_name = "move_down"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 9), Vector2i(1, 9), Vector2i(2, 9), Vector2i(3, 9), Vector2i(4, 9), Vector2i(5, 9), Vector2i(6, 9), Vector2i(7, 9)]
+}
+
 [sub_resource type="Animation" id="Animation_otur2"]
 resource_name = "move_idle_down"
 length = 1.5
@@ -488,6 +518,96 @@ tracks/1/keys = {
 "values": [Vector2i(0, 8)]
 }
 
+[sub_resource type="Animation" id="Animation_iijdm"]
+resource_name = "move_left"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 10), Vector2i(1, 10), Vector2i(2, 10), Vector2i(3, 10), Vector2i(4, 10), Vector2i(5, 10), Vector2i(6, 10), Vector2i(7, 10)]
+}
+
+[sub_resource type="Animation" id="Animation_aip50"]
+resource_name = "move_right"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 10), Vector2i(1, 10), Vector2i(2, 10), Vector2i(3, 10), Vector2i(4, 10), Vector2i(5, 10), Vector2i(6, 10), Vector2i(7, 10)]
+}
+
+[sub_resource type="Animation" id="Animation_rp4y8"]
+resource_name = "move_up"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 11), Vector2i(1, 11), Vector2i(2, 11), Vector2i(3, 11), Vector2i(4, 11), Vector2i(5, 11), Vector2i(6, 11), Vector2i(7, 11)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fpdvp"]
 _data = {
 &"RESET": SubResource("Animation_e1jjq"),
@@ -499,10 +619,14 @@ _data = {
 &"idle_left": SubResource("Animation_6wu5m"),
 &"idle_right": SubResource("Animation_x46yc"),
 &"idle_up": SubResource("Animation_5na0l"),
+&"move_down": SubResource("Animation_fpdvp"),
 &"move_idle_down": SubResource("Animation_otur2"),
 &"move_idle_left": SubResource("Animation_2exov"),
 &"move_idle_right": SubResource("Animation_eb7yy"),
-&"move_idle_up": SubResource("Animation_tce71")
+&"move_idle_up": SubResource("Animation_tce71"),
+&"move_left": SubResource("Animation_iijdm"),
+&"move_right": SubResource("Animation_aip50"),
+&"move_up": SubResource("Animation_rp4y8")
 }
 
 [node name="Mei" type="Node2D" unique_id=912296346 groups=["ally"]]
@@ -511,6 +635,7 @@ script = ExtResource("1_e1jjq")
 small_portrait = ExtResource("2_wwsvf")
 large_portrait = SubResource("AtlasTexture_l67kw")
 skill_select_description = "The only thing bigger than her heart is her baseball bat. Melee Specialist."
+move_animation = "move"
 character_name = "Mei"
 turn_portrait_scene = ExtResource("2_6fea8")
 skill_deck = Array[ExtResource("3_y0fl4")]([ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("5_ojfus"), ExtResource("4_ik6s2"), ExtResource("6_ewmoi"), ExtResource("3_efk4d"), ExtResource("4_ik6s2"), ExtResource("3_efk4d"), ExtResource("6_ewmoi")])
@@ -524,7 +649,7 @@ position = Vector2(0, -2)
 texture = ExtResource("13_f7r05")
 offset = Vector2(0, -14)
 hframes = 12
-vframes = 9
+vframes = 12
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("20_565k6")]
 

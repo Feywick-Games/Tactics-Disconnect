@@ -9,7 +9,7 @@ var current_direction : String = "down"
 
 # alt_ext can be used when dependent other animations
 func play_directional(anim: String, direction: Vector2, queue_anim := false, alt_ext := "",
-custom_blend: float = -1,custom_speed: float = 1.0, from_end: bool = false) -> void:
+custom_blend: float = -1,custom_speed: float = 1.0, from_end: bool = false, reset : bool = true) -> void:
 	var anim_direction_str : String = get_current_direction(direction)
 	anim_direction_str += alt_ext
 	
@@ -27,7 +27,7 @@ custom_blend: float = -1,custom_speed: float = 1.0, from_end: bool = false) -> v
 	else:
 		queue(anim + "_" + anim_direction_str)
 		
-	if current_animation == previous_animation:
+	if current_animation == previous_animation and reset:
 		seek(0)
 
 

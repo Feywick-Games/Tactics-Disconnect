@@ -8,6 +8,8 @@ const TIME_PER_MOVE := .03
 const HEALTH_BAR_PIXEL_WIDTH := 25
 
 @export_category("Debug")
+@export
+var move_animation : String = "move_idle"
 @export_category("UI")
 @export
 var character_name: String
@@ -277,9 +279,9 @@ func process_movement(delta: float, tile_path: Array[Vector2i], animation := "mo
 			var anim_dir := Vector2(tile_path[0] - current_tile).normalized()
 			if not animation.is_empty():
 				if not skip_facing:
-					animator.play_directional(animation, anim_dir)
+					animator.play_directional(animation, anim_dir, false, "", -1, 1, false, false)
 				else:
-					animator.play_directional(animation, facing)
+					animator.play_directional(animation, facing, false, "", -1, 1, false, false)
 		if not path_position.distance_to(global_position) > SNAP_DISTANCE:
 			if len(tile_path) == 1:
 				sub_pixel_position = path_position

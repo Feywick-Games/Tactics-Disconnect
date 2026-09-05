@@ -97,6 +97,7 @@ script = ExtResource("1_5r8g6")
 small_portrait = ExtResource("2_beaqm")
 large_portrait = SubResource("AtlasTexture_beaqm")
 skill_select_description = "A hot head who likes to knock people around the map. Push specialist."
+move_animation = "move"
 character_name = "Izzy"
 turn_portrait_scene = ExtResource("2_y0p6f")
 skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), SubResource("Resource_pwuw8"), SubResource("Resource_pwuw8"), SubResource("Resource_xmewg"), ExtResource("3_apuu4"), ExtResource("3_apuu4"), SubResource("Resource_pwuw8"), SubResource("Resource_xmewg"), SubResource("Resource_xmewg"), ExtResource("6_m8t01")])
@@ -110,7 +111,7 @@ position = Vector2(0, 1)
 texture = ExtResource("11_apuu4")
 offset = Vector2(0, -17)
 hframes = 12
-vframes = 9
+vframes = 12
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("18_cf37p")]
 

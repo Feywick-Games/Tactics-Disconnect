@@ -57,6 +57,7 @@ script = ExtResource("1_cygd0")
 small_portrait = ExtResource("2_t6stc")
 large_portrait = SubResource("AtlasTexture_bxu0d")
 skill_select_description = "Makes the Boy and Girls weak in the knees. Debuff Specialist."
+move_animation = "move"
 character_name = "Peggy"
 turn_portrait_scene = ExtResource("7_rx68n")
 skill_deck = Array[ExtResource("2_neqen")]([ExtResource("3_65p3h"), ExtResource("3_65p3h"), ExtResource("4_rx68n"), ExtResource("5_wpkbw"), ExtResource("5_wpkbw"), ExtResource("4_rx68n"), ExtResource("3_65p3h"), ExtResource("6_e75kd"), ExtResource("4_rx68n"), ExtResource("6_e75kd")])
@@ -71,7 +72,7 @@ position = Vector2(0, 1)
 texture = ExtResource("3_h77kg")
 offset = Vector2(0, -17)
 hframes = 12
-vframes = 9
+vframes = 12
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("18_eqa8o")]
 

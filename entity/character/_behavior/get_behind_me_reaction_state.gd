@@ -24,9 +24,9 @@ func update(_delta: float) -> State:
 func physics_update(delta : float) -> State:
 	if _moving:
 		if not _tile_path.is_empty():
-			_tile_path = _character.process_movement(delta, _tile_path)
+			_tile_path = _character.process_movement(delta, _tile_path, _character.move_animation)
 		if not _target_tile_path.is_empty():
-			_target_tile_path = _target.process_movement(delta, _target_tile_path)
+			_target_tile_path = _target.process_movement(delta, _target_tile_path, _character.move_animation)
 		if _tile_path.is_empty() and _target_tile_path.is_empty():
 			_moving = false
 			_character.play_dialogue("knock_out")

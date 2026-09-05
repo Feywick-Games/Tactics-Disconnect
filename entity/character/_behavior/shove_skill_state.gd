@@ -28,7 +28,8 @@ func physics_update(delta : float) -> State:
 	if _moving:
 		if (not is_instance_valid(_target_unit) or _target_unit.state_machine.current_state is CharacterIdleState) \
 		and ((not _o_target or not is_instance_valid(_o_target)) or _o_target.state_machine.current_state is CharacterIdleState):
-			_tile_path =  _character.process_movement(delta, _tile_path)
+			_tile_path =  _character.process_movement(delta, _tile_path, _character.move_animation)
 			if _tile_path.is_empty():
 				_moving = false
+				_character.animator.play_directional("move_idle", _character.facing)
 	return super.physics_update(delta)

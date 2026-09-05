@@ -69,6 +69,9 @@ func update(delta: float) -> State:
 		_input_buffered = Callable()
 			
 		return current_state
+	elif not _moving and not acted:
+		_ally.animator.play_directional("move_idle", _ally.facing)
+		
 	
 	return current_state
 
@@ -110,7 +113,6 @@ func _on_movement_input(input_vec: Vector2i) -> State:
 				_tile_path = [_ally.current_tile + Vector2i(input_vec)]
 				_moving = true
 			_ally.facing = input_vec
-			_ally.animator.play_directional("move_idle", _ally.facing)
 	return
 
 

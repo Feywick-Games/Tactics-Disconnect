@@ -56,7 +56,7 @@ func update(_delta: float) -> State:
 
 
 func physics_update(delta: float) -> State:
-	_tile_path =  _character.process_movement(delta, _tile_path)
+	_tile_path =  _character.process_movement(delta, _tile_path, _character.move_animation)
 	if _tile_path.is_empty():
 		_moving = false
 	return
