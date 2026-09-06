@@ -66,7 +66,7 @@ func update(delta: float) -> State:
 func physics_update(delta: float) -> State:
 	var current_tile := _enemy.current_tile
 	super.physics_update(delta)
-	if current_tile != _enemy.current_tile:
+	if current_tile != _enemy.current_tile and not _has_highlighted:
 		_attack_range = _enemy.update_ranges(_movement_range)
 	return
 

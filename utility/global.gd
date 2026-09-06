@@ -34,7 +34,7 @@ const RETICLE_FACING_UP := Vector2i(0,9)
  
 const GAME_SIZE := Vector2i(640,360)
 
-const TIMER_MAX_VALUE := 24 * 200
+const TIMER_MAX_VALUE := 24
 const QUICK_MULTIPLIER : int = 1
 const BACK_MULTIPLIER : int = 1
 const SLOW_MULTIPLIER : int = 1
