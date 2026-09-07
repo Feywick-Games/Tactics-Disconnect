@@ -97,17 +97,17 @@ func highlight_targets(current_tile: Vector2i, target_tile: Vector2i, attack_ran
 		var offset_rotated: = Vector2i(Vector2(tile_offset).rotated(direction.angle()).round())
 		tile = target_tile + offset_rotated
 			
-		if not tile in attack_range:
-			# for aoe "direct/pierce" shouldn't matter
-			var is_valid := GameState.current_level.grid.region.has_point(tile) \
-			and not GameState.current_level.grid.is_point_solid_ignore_unit(tile)
+	
+		# for aoe "direct/pierce" shouldn't matter
+		var is_valid := GameState.current_level.grid.region.has_point(tile) \
+		and not GameState.current_level.grid.is_point_solid_ignore_unit(tile)
+		
+		if not is_valid:
+			continue
 			
-			if not is_valid:
-				continue
-				
-			var atlas_coords: Vector2i = GameState.current_level.reticle.get_cell_atlas_coords(target_tile)
-			GameState.current_level.reticle.set_cell(tile, 0, atlas_coords)
-			
+		var atlas_coords: Vector2i = GameState.current_level.reticle.get_cell_atlas_coords(target_tile)
+		GameState.current_level.reticle.set_cell(tile, 0, atlas_coords)
+		
 		GameState.current_level.reticle.select_tile(tile)
 	
 	if push_position != Vector2i.ZERO:

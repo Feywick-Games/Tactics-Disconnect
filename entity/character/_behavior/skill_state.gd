@@ -41,6 +41,11 @@ func enter() -> void:
 	vfx.setup(direction, target_tile, skill.aoe, targets, skill.visual_effect_targets_only, impact)
 	GameState.current_level.add_child(vfx)
 	
+	if _character.special and skill.name == _character.special.name:
+		_character.special = null
+	
+	_character.show_health_bar(true, true)
+	
 	if skill.name != "":
 		_character.request_skill_text(skill.name)
 
@@ -99,8 +104,7 @@ func exit() -> void:
 	super.exit()
 	exited.emit()
 	_character.end_turn()
-	if _character.special and skill.name == _character.special.name:
-		_character.special = null
+
 
 
 func calc_skill_likelihood(_turn_history: Array[TurnData.Serialization]) -> float:

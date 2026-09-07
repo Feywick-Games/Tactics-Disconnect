@@ -103,7 +103,14 @@ func _pick_target(target_list: Array[Ally], all_allys: Array[Ally]) -> Ally:
 		for target in all_allys:
 			var target_priority := TargetPriority.new(target)
 			target_priorities.append(target_priority)
-			target_priority.distance = GameState.current_level.grid.get_tile_distance(_enemy.current_tile, target.current_tile)
+			target_priority.distance = GameState.current_level.grid.get_tile_distance(_enemy.current_tile, target.current_tile, true)
+			var true_distance: int = GameState.current_level.grid.get_tile_distance(_enemy.current_tile, target.current_tile)
+			if true_distance > target_priority.distance or true_distance == -1:
+				if true_distance > 0:
+					target_priority.distance = min(true_distance, target_priority.distance + 1)
+				else:
+					target_priority.distance = target_priority.distance + 1
+			
 			if target_priority.distance < 0:
 				target_priority.distance = -100
 				continue
@@ -163,9 +170,24 @@ func _pick_tile() -> Vector2i:
 	if not _is_acting:
 		# dont worry about desired distance if you are literally out of range
 		var start_distance: int = GameState.current_level.grid.get_tile_distance(_start_tile, _target.current_tile, true)
+		var start_dist_actual: int = GameState.current_level.grid.get_tile_distance(_start_tile, _target.current_tile)
+		# add marginal favorability to direct approach
+		if start_dist_actual > start_distance or start_dist_actual == -1:
+			if start_dist_actual > 0:
+				start_distance = min(start_distance + 1, start_dist_actual)
+			else:
+				start_distance = start_distance + 1
 		var min_distance: int = start_distance
 		for tile: Vector2i in _movement_range.range_tiles:
 			var dist: int = GameState.current_level.grid.get_tile_distance(tile, _target.current_tile, true)
+			var dist_actual: int = GameState.current_level.grid.get_tile_distance(tile, _target.current_tile)
+			# add marginal favorability to direct approach
+			if dist_actual > dist or dist_actual == -1:
+				if dist_actual > 0:
+					dist = min(dist + 1, dist_actual)
+				else:
+					dist = dist + 1
+			
 			if dist < min_distance:
 				min_distance = dist
 				desired_tile = tile
