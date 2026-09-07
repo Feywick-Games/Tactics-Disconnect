@@ -35,9 +35,9 @@ var movement_range: int:
 	get:
 		return _movement_range + get_modifier(Combat.Status.MOVEMENT)
 
-@export_category("personal")
-@export
-var hit_sound: AudioStream
+#@export_category("personal")
+#@export
+#var hit_sound: AudioStream
 
 var health: int
 var current_tile: Vector2i
@@ -383,18 +383,18 @@ func play_actor_status(rear: bool, mini_game := false, perfect := false, ignore_
 		if GameState.battle_timer.value < GameState.battle_timer.max_value * Global.QUICK_TIME_PERCENT:
 			status_label_manager.play_actor_status("quick")
 		elif GameState.battle_timer.value > GameState.battle_timer.max_value * Global.SLOW_TIME_PERCENT:
-			status_label_manager.play_actor_status("slow")
+			status_label_manager.play_actor_status("slow", false)
 	if mini_game:
 		if perfect:
 			status_label_manager.play_actor_status("nice")
 		else:
-			status_label_manager.play_actor_status("oof")
+			status_label_manager.play_actor_status("oof", false)
 	if get_modifier_count(Combat.Status.DAMAGE, true) > 0:
 		for i: int in range(get_modifier_count(Combat.Status.DAMAGE, true)):
 			status_label_manager.play_actor_status("strong")
 	elif get_modifier_count(Combat.Status.DAMAGE, true) < 0:
 		for i: int in range(abs(get_modifier_count(Combat.Status.DAMAGE, true))):
-			status_label_manager.play_actor_status("weak")
+			status_label_manager.play_actor_status("weak", false)
 	if rear:
 		status_label_manager.play_actor_status("ambush")
 	

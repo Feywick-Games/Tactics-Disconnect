@@ -26,9 +26,9 @@ func enter() -> void:
 func update(delta: float) -> State:
 	if _hit and not _damage_taken:
 		_character.take_damage(_skill, _direction, _ignore_time_multi)
-		if _character.hit_sound:
-			_character.sfx_player.stream = _character.hit_sound
-			_character.sfx_player.play()
+		#if _character.hit_sound:
+			#_character.sfx_player.stream = _character.hit_sound
+			#_character.sfx_player.play()
 		_character.animator.play_directional(_character.hit_animation, _character.facing)
 		_damage_taken = true
 	elif not _character.status_label_manager.playing and _damage_taken:

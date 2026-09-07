@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cuotsodjscwta" path="res://entity/character/_behavior/status_label_manager.gd" id="1_uskvd"]
 [ext_resource type="FontFile" uid="uid://b3bass46yqae2" path="res://ui/font/dogica.ttf" id="2_vk715"]
+[ext_resource type="AudioStream" uid="uid://dqh1spuxq67sl" path="res://entity/character/_sfx/multiplier.mp3" id="2_yc6dx"]
+[ext_resource type="AudioStream" uid="uid://can8eb6xg0r74" path="res://entity/character/_sfx/demultiplier.mp3" id="3_nq61q"]
+[ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="5_nq61q"]
 
 [sub_resource type="Animation" id="Animation_2gelk"]
 length = 0.001
@@ -955,6 +958,8 @@ offset_bottom = 40.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_uskvd")
+multiplier_sound = ExtResource("2_yc6dx")
+demultiplier_sound = ExtResource("3_nq61q")
 
 [node name="LabelAnimator" type="AnimationPlayer" parent="." unique_id=956510930]
 libraries/ = SubResource("AnimationLibrary_2no37")
@@ -974,5 +979,9 @@ theme_override_colors/font_outline_color = Color(0.0470588, 0.0352941, 0.0509804
 theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("2_vk715")
 theme_override_font_sizes/font_size = 8
-text = "TACTICAL"
+text = "DMG DOWN"
 horizontal_alignment = 1
+
+[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="." unique_id=773456725]
+script = ExtResource("5_nq61q")
+metadata/_custom_type_script = "uid://dovv3nwp2xqt"

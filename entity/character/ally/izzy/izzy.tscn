@@ -10,11 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://bm2obdmybkcqr" path="res://entity/character/ally/izzy/_sprite/izzy_turn_portrait.png" id="3_xebcl"]
 [ext_resource type="Resource" uid="uid://dc72m6spxgmw0" path="res://data/skill/throw_rock.tres" id="6_m8t01"]
 [ext_resource type="Script" uid="uid://1b4s8nyecy85" path="res://entity/character/_behavior/push_skill_state.gd" id="6_p2oko"]
+[ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="6_wepgb"]
+[ext_resource type="Texture2D" uid="uid://ckm2dtiwblmmh" path="res://ui/skill_select/_sprite/skill_select_small.png" id="7_uk5et"]
 [ext_resource type="AudioStream" uid="uid://b30sxiykj4mbk" path="res://entity/character/_sfx/blunt_impact.ogg" id="8_3dhce"]
 [ext_resource type="Shader" uid="uid://5764ht7ewpal" path="res://entity/character/_material/character_sprite.gdshader" id="8_07m0v"]
 [ext_resource type="Texture2D" uid="uid://coa7cv3cuilvn" path="res://ui/skill_select/_sprite/skill_select_throw.png" id="9_5r8g6"]
 [ext_resource type="Texture2D" uid="uid://u465lrggcsnd" path="res://entity/character/ally/izzy/_sprite/izzy_unit_sprite.png" id="11_apuu4"]
 [ext_resource type="Script" uid="uid://1npnrcot15ef" path="res://entity/character/_behavior/shove_skill_state.gd" id="11_ldv45"]
+[ext_resource type="PackedScene" uid="uid://b5cbmx24r5gkk" path="res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn" id="11_xmewg"]
 [ext_resource type="AudioStream" uid="uid://s7loby1qwyxr" path="res://entity/character/_sfx/wind_up.mp3" id="12_fladx"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="12_ldv45"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="13_xmewg"]
@@ -24,7 +27,6 @@
 [ext_resource type="PackedScene" uid="uid://f11b60dmq00t" path="res://entity/character/_packed_scene/health_bar.tscn" id="18_cf37p"]
 [ext_resource type="AnimationLibrary" uid="uid://ewg20gm6aiio" path="res://entity/character/_data/basic_animations.tres" id="20_beaqm"]
 [ext_resource type="Resource" uid="uid://dq4uu64uoxw8c" path="res://entity/character/_skill/get_behind_me.tres" id="20_xmewg"]
-[ext_resource type="AudioStream" uid="uid://b0umgrvkmcs1u" path="res://entity/character/ally/izzy/_sfx/oof_izzy.mp3" id="21_pwuw8"]
 [ext_resource type="PackedScene" uid="uid://blfnogxipkcoo" path="res://entity/character/_packed_scene/status_label_manager.tscn" id="23_5r8g6"]
 [ext_resource type="Script" uid="uid://ca55goan130ce" path="res://node/animation/directional_animator.gd" id="24_3ab3v"]
 [ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="25_uhu1q"]
@@ -50,19 +52,11 @@ ui_small = ExtResource("9_5r8g6")
 name = "Batttering Ram"
 flavor_text = "Knock down the door on a bozo and send them back and tile to take their place."
 character_animation = "basic"
-visual_effect_targets_only = null
-max_range = null
-min_range = null
 move_position = Vector2i(1, 0)
 push_position = Vector2i(1, 0)
-range_shape = null
 state = ExtResource("11_ldv45")
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_2sh2k"), SubResource("Resource_yuh5r")])
-aoe = null
-range_type = null
-direct = null
 cast_sfx = ExtResource("12_fladx")
-hit_sfx = ExtResource("8_3dhce")
 metadata/_custom_type_script = "uid://de4pxhpt4mw5u"
 
 [sub_resource type="Resource" id="Resource_dj1am"]
@@ -80,17 +74,9 @@ ui_small = ExtResource("9_5r8g6")
 name = "Push"
 flavor_text = "Hold A to send the opponent flying up to 5 spaces"
 character_animation = "basic"
-visual_effect_targets_only = null
-max_range = null
-min_range = null
-move_position = null
 push_position = Vector2i(4, 0)
-range_shape = null
 state = ExtResource("6_p2oko")
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_dj1am"), SubResource("Resource_jr16b")])
-aoe = null
-range_type = null
-direct = null
 cast_sfx = ExtResource("12_fladx")
 hit_sfx = ExtResource("14_ijp4a")
 
@@ -101,20 +87,9 @@ value = 4
 [sub_resource type="Resource" id="Resource_v85yj"]
 script = ExtResource("2_d2041")
 name = "Punch"
-flavor_text = null
 character_animation = "basic"
-visual_effect_targets_only = null
-max_range = null
-min_range = null
-move_position = null
-push_position = null
-range_shape = null
 state = ExtResource("3_tnq7t")
 status_effects = Array[ExtResource("3_jkw71")]([SubResource("Resource_xdj1t")])
-aoe = null
-range_type = null
-direct = null
-hit_sfx = ExtResource("8_3dhce")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hcp3d"]
 resource_local_to_scene = true
@@ -136,7 +111,6 @@ skill_deck = Array[ExtResource("2_d2041")]([ExtResource("3_apuu4"), SubResource(
 basic_skill = SubResource("Resource_v85yj")
 reactions = Array[ExtResource("12_ldv45")]([ExtResource("13_xmewg"), ExtResource("14_pwuw8"), ExtResource("15_fladx"), ExtResource("20_xmewg")])
 max_health = 40
-hit_sound = ExtResource("21_pwuw8")
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=129952542]
 material = SubResource("ShaderMaterial_hcp3d")
