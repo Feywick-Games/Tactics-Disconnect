@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dxcebxn28i3pb" path="res://entity/visual_effect/_behavior/visual_effect.gd" id="1_2yeyk"]
 [ext_resource type="Texture2D" uid="uid://qgqsg1a6rudh" path="res://entity/visual_effect/_sprite/strike.png" id="2_bdv1e"]
+[ext_resource type="Script" uid="uid://dovv3nwp2xqt" path="res://node/sfx_player/sfx_player.gd" id="3_bdv1e"]
 
 [sub_resource type="Animation" id="Animation_thrl7"]
 length = 0.001
@@ -102,3 +103,7 @@ hframes = 32
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1727691654]
 libraries/ = SubResource("AnimationLibrary_o683o")
+
+[node name="SfxPlayer" type="AudioStreamPlayer2D" parent="Sprite2D" unique_id=841183709]
+script = ExtResource("3_bdv1e")
+metadata/_custom_type_script = "uid://dovv3nwp2xqt"

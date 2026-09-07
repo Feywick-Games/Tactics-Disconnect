@@ -38,8 +38,12 @@ func enter() -> void:
 	super.enter()
 	impact_time = _character.get_impact_time(_character.animator.get_directional_animation_name(skill.character_animation, direction))
 	var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
-	vfx.setup(direction, target_tile, skill.aoe, targets, skill.visual_effect_targets_only, impact)
+	vfx.setup(direction, target_tile, skill.aoe, targets, skill.visual_effect_targets_only, impact, skill.hit_sfx)
 	GameState.current_level.add_child(vfx)
+	
+	if skill.cast_sfx:
+		_character.sfx_player.stream = skill.cast_sfx
+		_character.sfx_player.play()
 	
 	if _character.special and skill.name == _character.special.name:
 		_character.special = null

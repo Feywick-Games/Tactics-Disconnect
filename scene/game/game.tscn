@@ -39,6 +39,7 @@ script = SubResource("GDScript_42g76")
 [node name="LevelViewport" type="SubViewport" parent="LevelViewportContainer" unique_id=1672208821]
 unique_name_in_owner = true
 handle_input_locally = false
+audio_listener_enable_2d = true
 canvas_cull_mask = 4294967293
 size = Vector2i(642, 362)
 render_target_update_mode = 4

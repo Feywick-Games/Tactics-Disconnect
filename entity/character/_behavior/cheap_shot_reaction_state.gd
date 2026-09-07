@@ -22,7 +22,7 @@ func _react() -> void:
 	var direction: Vector2i = _target.current_tile - _character.current_tile
 	
 	var vfx :=  _reaction.visual_effect_scene.instantiate() as VisualEffect
-	vfx.setup(direction, _target.current_tile, _reaction.aoe, [_target], _reaction.visual_effect_targets_only, impact)
+	vfx.setup(direction, _target.current_tile, _reaction.aoe, [_target], _reaction.visual_effect_targets_only, impact, _reaction.hit_sfx)
 	GameState.current_level.add_child(vfx)
 	
 	_character.facing = _target.facing

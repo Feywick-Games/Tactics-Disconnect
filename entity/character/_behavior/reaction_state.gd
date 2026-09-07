@@ -59,3 +59,4 @@ func can_use(_skill_state: SkillState, _actor: Character) -> bool:
 
 func exit() -> void:
 	exited.emit()
+	_character.play_dialogue()

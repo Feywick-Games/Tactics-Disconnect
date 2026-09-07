@@ -7,6 +7,8 @@ const UI_LARGE_DIMENSIONS: Vector2i = Vector2i(60,60)
 const DEFAULT_UI_SMALL: Texture2D = preload("res://ui/skill_select/_sprite/skill_select_small.png")
 const DEFAULT_UI_LARGE: Texture2D = preload("res://ui/skill_select/_sprite/skill_select_large.png")
 const DEFAULT_VISUAL_EFFECT_SCENE: PackedScene = preload("res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn")
+const DEFAULT_HIT_SFX: AudioStream = preload("res://entity/character/_sfx/blunt_impact.ogg")
+const DEFAULT_CAST_SFX: AudioStream = preload("res://entity/character/_sfx/swing.ogg")
 
 @export
 var ui_small: Texture2D = DEFAULT_UI_SMALL
@@ -46,7 +48,7 @@ var direct := false
 @export
 var cast_sfx: AudioStream
 @export
-var hit_sfx: AudioStream
+var hit_sfx: AudioStream = DEFAULT_HIT_SFX
 
 
 func _init() -> void:

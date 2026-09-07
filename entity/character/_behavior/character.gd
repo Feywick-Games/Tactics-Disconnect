@@ -9,7 +9,9 @@ const HEALTH_BAR_PIXEL_WIDTH := 25
 
 @export_category("Debug")
 @export
-var move_animation : String = "move_idle"
+var move_animation: String = "move_idle"
+@export
+var hit_animation: String = "move_idle"
 @export_category("UI")
 @export
 var character_name: String
@@ -32,6 +34,10 @@ var _movement_range: int = 3
 var movement_range: int:
 	get:
 		return _movement_range + get_modifier(Combat.Status.MOVEMENT)
+
+@export_category("personal")
+@export
+var hit_sound: AudioStream
 
 var health: int
 var current_tile: Vector2i
@@ -304,7 +310,6 @@ func take_damage(skill: Skill, direction: Vector2, ignore_time_multi := false) -
 			base_effect.value += multiplier
 		process_status_effect(base_effect)
 		status_label_manager.add_status_effect(base_effect)
-	
 	health_bar.value = health
 	damage_bar.value = health_bar.value
 	var is_rear_attack: bool = is_equal_approx(Vector2(direction).normalized().dot(Vector2(facing).normalized()), 1)

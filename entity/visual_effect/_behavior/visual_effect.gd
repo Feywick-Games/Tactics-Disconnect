@@ -7,27 +7,32 @@ const OFFSET := Vector2(0, 15)
 var _sprite: Sprite2D = $Sprite2D
 @onready
 var _animator: AnimationPlayer = $Sprite2D/AnimationPlayer
+@onready
+var _sfx_player: AudioStreamPlayer2D = $Sprite2D/SfxPlayer
+
 var _detonated := false
 var _direction: Vector2i
 var _aoe: Array[Vector2i]
 var _target_tiles : Array[Vector2i]
 var _targets_only := false
 var _target_tile : Vector2
+var _hit_sfx: AudioStream
 
 func _ready() -> void:
 	_sprite.hide()
 
 
 func _process(_delta: float) -> void:
-	if not _animator.is_playing() and _detonated:
+	if not _animator.is_playing() and not _sfx_player.playing and _detonated:
 		queue_free()
 
 
-func setup(direction: Vector2i, target_tile: Vector2i, aoe: Array[Vector2i], targets: Array[Character], targets_only : bool, hit_signal: Signal) -> void:
+func setup(direction: Vector2i, target_tile: Vector2i, aoe: Array[Vector2i], targets: Array[Character], targets_only : bool, hit_signal: Signal, hit_sfx: AudioStream) -> void:
 	for target: Character in targets:
 		_target_tiles.append(target.current_tile)
 	_target_tile = target_tile
 	_targets_only = targets_only
+	_hit_sfx = hit_sfx
 	hit_signal.connect(_detonate)
 	global_position = GameState.current_level.tile_to_world(target_tile) - OFFSET
 	_direction = direction
@@ -58,3 +63,7 @@ func _detonate() -> void:
 		o_sprite.show()
 		_animator = o_sprite.get_node("AnimationPlayer")
 		_animator.play(anim)
+		_sfx_player = o_sprite.get_node("SfxPlayer")
+		if _hit_sfx:
+			_sfx_player.stream = _hit_sfx
+			_sfx_player.play()

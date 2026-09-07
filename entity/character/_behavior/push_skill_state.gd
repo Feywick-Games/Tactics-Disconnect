@@ -94,11 +94,11 @@ func _hit_targets() -> void:
 		var damage_state := DamageState.new(skill, direction, _push_damage_state.collided)
 		_o_target.set_state(damage_state)
 		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
-		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, _push_damage_state.collided)
+		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, _push_damage_state.collided, skill.hit_sfx)
 		GameState.current_level.add_child(vfx)
 	if _max_is_collision:
 		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
-		vfx.setup(direction, _push_tile_path[-1], [Vector2i.ZERO], [_target_unit], false, _push_damage_state.collided)
+		vfx.setup(direction, _push_tile_path[-1], [Vector2i.ZERO], [_target_unit], false, _push_damage_state.collided, skill.hit_sfx)
 		GameState.current_level.add_child(vfx)
 
 
@@ -113,6 +113,6 @@ func on_collision_reaction(success: bool) -> void:
 		var damage_state := DamageState.new(skill, direction, insta_sig)
 		_o_target.set_state(damage_state)
 		var vfx :=  skill.visual_effect_scene.instantiate() as VisualEffect
-		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, insta_sig)
+		vfx.setup(direction, _o_target.current_tile, [Vector2i.ZERO], [_o_target], false, insta_sig, skill.hit_sfx)
 		GameState.current_level.add_child(vfx)
 		insta_sig.emit()
