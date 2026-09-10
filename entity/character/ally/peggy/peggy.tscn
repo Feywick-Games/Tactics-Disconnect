@@ -15,6 +15,7 @@
 [ext_resource type="Resource" uid="uid://dc72m6spxgmw0" path="res://data/skill/throw_rock.tres" id="5_wpkbw"]
 [ext_resource type="Resource" uid="uid://d1edna7vnjr4j" path="res://data/skill/spin_kick.tres" id="6_e75kd"]
 [ext_resource type="PackedScene" uid="uid://41q5krao87lt" path="res://entity/character/ally/peggy/_packed_scene/peggy_turn_portrait.tscn" id="7_rx68n"]
+[ext_resource type="AudioStream" uid="uid://b30sxiykj4mbk" path="res://entity/character/_sfx/blunt_impact.ogg" id="10_8fyth"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="12_t6stc"]
 [ext_resource type="Resource" uid="uid://dhfa1k013dq5o" path="res://entity/character/_skill/cheap_shot.tres" id="13_b74mv"]
 [ext_resource type="PackedScene" uid="uid://b5cbmx24r5gkk" path="res://entity/visual_effect/_packed_scene/strike_visual_effect.tscn" id="14_637ed"]
@@ -58,6 +59,7 @@ small_portrait = ExtResource("2_t6stc")
 large_portrait = SubResource("AtlasTexture_bxu0d")
 skill_select_description = "Makes the Boy and Girls weak in the knees. Debuff Specialist."
 move_animation = "move"
+hit_animation = "hit"
 character_name = "Peggy"
 turn_portrait_scene = ExtResource("7_rx68n")
 skill_deck = Array[ExtResource("2_neqen")]([ExtResource("3_65p3h"), ExtResource("3_65p3h"), ExtResource("4_rx68n"), ExtResource("5_wpkbw"), ExtResource("5_wpkbw"), ExtResource("4_rx68n"), ExtResource("3_65p3h"), ExtResource("6_e75kd"), ExtResource("4_rx68n"), ExtResource("6_e75kd")])
@@ -72,7 +74,7 @@ position = Vector2(0, 1)
 texture = ExtResource("3_h77kg")
 offset = Vector2(0, -17)
 hframes = 12
-vframes = 12
+vframes = 15
 
 [node name="HealthBar" parent="." unique_id=920212856 instance=ExtResource("18_eqa8o")]
 

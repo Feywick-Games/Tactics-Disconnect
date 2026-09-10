@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="Reaction" format=3 uid="uid://cwkld7s34m6sk"]
 
+[ext_resource type="AudioStream" uid="uid://b30sxiykj4mbk" path="res://entity/character/_sfx/blunt_impact.ogg" id="1_6hdmh"]
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="1_26mb0"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="2_1tn4t"]
 [ext_resource type="Script" uid="uid://bjd0r6s0xrws7" path="res://entity/character/_behavior/collision_reaction_state.gd" id="2_dyt6r"]

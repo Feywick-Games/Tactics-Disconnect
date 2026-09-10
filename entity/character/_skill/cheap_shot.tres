@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="Reaction" format=3 uid="uid://dhfa1k013dq5o"]
 
 [ext_resource type="Script" uid="uid://dbao6o0pxlhr4" path="res://data/combat/reaction.gd" id="1_bh517"]
+[ext_resource type="AudioStream" uid="uid://b30sxiykj4mbk" path="res://entity/character/_sfx/blunt_impact.ogg" id="1_gw60x"]
 [ext_resource type="Script" uid="uid://k0aef4avj0d7" path="res://entity/character/_behavior/cheap_shot_reaction_state.gd" id="2_3hmip"]
 [ext_resource type="Script" uid="uid://c5gnxjiq5craw" path="res://data/combat/status_effect.gd" id="3_fqle7"]
 [ext_resource type="Texture2D" uid="uid://b8i08506xouvt" path="res://ui/skill_select/_sprite/skill_select_large.png" id="4_dl62m"]
