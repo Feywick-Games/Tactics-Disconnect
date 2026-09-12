@@ -84,7 +84,7 @@ func get_unit_list(ordered := true) -> Array[Character]:
 			units.append(node as Character)
 	
 	if ordered:
-		var unit_idx : int = units.find(active_unit)		
+		var unit_idx : int = units.find(active_unit)
 		var ordered_units : Array[Character] = units.slice(unit_idx)
 		ordered_units.append_array(units.slice(0, unit_idx))
 		units = ordered_units

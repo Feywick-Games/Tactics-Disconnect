@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://nti3u5lqo4sy"]
 
 [ext_resource type="Script" uid="uid://7pypr8grgl4t" path="res://scene/level/_behavior/level.gd" id="1_q1hxj"]
-[ext_resource type="TileSet" uid="uid://ds2bj4u4yhws6" path="res://scene/level/alley/alley_tile_set.tres" id="2_ndno1"]
+[ext_resource type="TileSet" uid="uid://ds2bj4u4yhws6" path="res://scene/level/_sprite/alley_tile_set.tres" id="2_ndno1"]
 [ext_resource type="PackedScene" uid="uid://bvmot03d4vcap" path="res://entity/character/ally/peggy/peggy.tscn" id="6_34pil"]
 [ext_resource type="PackedScene" uid="uid://c3ow1ifjec62m" path="res://entity/character/ally/izzy/izzy.tscn" id="6_yuh5r"]
 [ext_resource type="PackedScene" uid="uid://bctkkdhwjgs0u" path="res://entity/character/ally/mei/mei.tscn" id="8_yprxc"]

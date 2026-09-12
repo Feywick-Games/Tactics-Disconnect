@@ -6,25 +6,40 @@ extends Node2D
 var is_ally: bool
 @export
 var spawn_data: Array[SpawnData]
+var direction_occupied: Array[bool] = [false, false, false, false, false]
+
+
+func begin_process() -> void:
+	direction_occupied = [false, false, false, false, false]
 
 
 func get_units_from_trigger(trigger:SpawnData.Trigger, value: Variant) -> Array[SpawnData]:
 	var valid_spawns: Array[SpawnData]
+	var spawn_tile: Vector2i = GameState.current_level.world_to_tile(global_position)
 	
 	for data: SpawnData in spawn_data:
 		if data.trigger == trigger:
-			if data.value == value or (trigger == SpawnData.Trigger.ENEMIES_REMAINING and data.value <= value):
+			var can_spawn_enemies_remaining: bool = (trigger == SpawnData.Trigger.ENEMIES_REMAINING and data.value >= value)
+			var can_spawn_turn_number: bool = (trigger == SpawnData.Trigger.TURN_NUMBER and data.value <= value)
+			var can_spawn_special: bool = (trigger == SpawnData.Trigger.SPECIAL and value == true)
+			var can_spawn_aoe := false
+			if trigger == SpawnData.Trigger.AOE:
+				var aoe_tiles := value as Array
+				for tile: Vector2i in aoe_tiles:
+					if GameState.current_level.grid.get_tile_distance(spawn_tile, tile) < data.value:
+						can_spawn_aoe = true
+						break
+			 
+			if can_spawn_enemies_remaining or can_spawn_turn_number or can_spawn_special or can_spawn_aoe:
 				valid_spawns.append(data)
 	
 
 	var directions: Array[Vector2i] = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
 	directions.shuffle()
 	directions.insert(0, Vector2i.ZERO)
-	var direction_occupied : Array[bool] = [false, false, false, false, false]
 	
 	var out: Array[SpawnData]
-	
-	var spawn_tile: Vector2i = GameState.current_level.world_to_tile(global_position)
+
 	for spawn_datum:SpawnData in valid_spawns:
 		for i in range(len(directions)):
 			if not GameState.current_level.grid.is_point_solid(spawn_tile + directions[i]) and not direction_occupied[i]:

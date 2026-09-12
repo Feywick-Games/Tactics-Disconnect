@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dy3tg7p4dvch7"]
 
 [ext_resource type="Script" uid="uid://dnd5pb7eyuwqd" path="res://scene/title_screen/_behavior/title_screen.gd" id="1_i2feo"]
-[ext_resource type="PackedScene" uid="uid://nti3u5lqo4sy" path="res://scene/level/alley/alley_1.tscn" id="2_3ryo6"]
+[ext_resource type="PackedScene" uid="uid://bun0r2rjrur3q" path="res://scene/level/level1/level1-1.tscn" id="2_3ryo6"]
 
 [node name="TitleSceen" type="Node2D" unique_id=1879450692]
 script = ExtResource("1_i2feo")

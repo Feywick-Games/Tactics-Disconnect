@@ -5,6 +5,7 @@ enum Trigger
 {
 	TURN_NUMBER,
 	ENEMIES_REMAINING,
+	AOE,
 	SPECIAL
 }
 
